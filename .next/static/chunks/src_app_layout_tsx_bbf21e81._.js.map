@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/f0131464/dev/react-ssr-corp-hubv-dinamic-journey/src/app/layout.tsx"],"sourcesContent":["'use client';\nimport '@porto/js-library-corp-hubv-porto-ocean/index.css';\nimport \"./globals.css\";\n\nexport default function RootLayout({\n  children,\n}: Readonly<{\n  children: React.ReactNode;\n}>) {\n  return (\n    <html lang=\"pt-BR\">\n      <body>\n        <main>\n          {children}\n        </main>\n      </body>\n    </html>\n  );\n}\n"],"names":[],"mappings":";;;;;;;;;AAAA;;;;AAIe,SAAS,WAAW,KAIjC;QAJiC,EACjC,QAAQ,EAGR,GAJiC;IAKjC,qBACE,6LAAC;QAAK,MAAK;kBACT,cAAA,6LAAC;sBACC,cAAA,6LAAC;0BACE;;;;;;;;;;;;;;;;AAKX;KAdwB","debugId":null}}]
+}
