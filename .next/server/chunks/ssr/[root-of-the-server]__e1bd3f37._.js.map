@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///Users/f0131464/dev/react-ssr-corp-hubv-dinamic-journey/src/app/contrate/%5B%5B...slug%5D%5D/page.tsx"],"sourcesContent":["interface PageProps {\n  params: { slug: string };\n}\n\n/**\n * Usuário acessa /contrate/seguro-auto\n * -> SlugPage busca no CMS o um endpoint respectivo para buscar o JSON do serviço\n *  ->\n *   ->\n*/\n\nexport default async function SlugPage({ params }: PageProps) {\n  const currentSlug = params.slug;\n\n\n\n  return (\n    <div>\n      <h1>Rota dinâmica: {currentSlug}</h1>\n      <p>ID da jornada ou conteúdo para: {currentSlug}</p>\n    </div>\n  );\n}\n"],"names":[],"mappings":";;;;;AAWe,eAAe,SAAS,EAAE,MAAM,EAAa;IAC1D,MAAM,cAAc,OAAO,IAAI;IAI/B,qBACE,8OAAC;;0BACC,8OAAC;;oBAAG;oBAAgB;;;;;;;0BACpB,8OAAC;;oBAAE;oBAAiC;;;;;;;;;;;;;AAG1C","debugId":null}}]
+}

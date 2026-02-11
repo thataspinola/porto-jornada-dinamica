@@ -1,0 +1,66 @@
+.radio {
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  outline: none;
+  gap: 8px;
+
+  &.--default {
+    .radio__input {
+      background-color: var(--neutral-0);
+    }
+
+    .radio__svg {
+      display: none;
+    }
+  }
+
+  &.--checked {
+    .radio__input {
+      background-color: var(--insurance-900);
+      border-color: var(--insurance-900);
+    }
+
+    .radio__svg {
+      display: unset;
+    }
+  }
+
+  &.--disabled {
+    .radio__input {
+      background-color: var(--neutral-200);
+      border-color: var(--color-neutral-550);
+    }
+
+    .radio__svg {
+      display: none;
+    }
+
+    .radio__label {
+      color: var(--color-neutral-550);
+    }
+  }
+}
+
+.radio__label {
+  font-family: var(--font-open-sans);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.radio__input {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+  border-width: 0.2rem;
+  border-style: solid;
+  border-color: var(--neutral-700);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}

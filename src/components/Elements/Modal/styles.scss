@@ -1,0 +1,124 @@
+.modal__overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  animation: fade-in 0.4s ease forwards;
+  z-index: var(--layer-6);
+}
+
+.modal__root {
+  background-color: var(--neutral-0);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 48rem;
+  height: 100vh;
+  overflow: hidden;
+  box-shadow: var(--shadow-4);
+  border-radius: var(--radius-1) 0 0 var(--radius-1);
+  animation: slide-in-right 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  z-index: var(--layer-7);
+}
+
+.modal__content {
+  padding: var(--space-4);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.modal__header-icon-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+
+  svg {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  &:focus {
+    outline: 2px solid var(--insurance-550);
+    outline-offset: 2px;
+  }
+}
+
+.modal__header-title {
+  font-family: var(--porto-robert);
+  color: var(--neutral-900);
+  font-size: var(--size-6);
+  font-weight: var(--bold);
+  line-height: 1.2;
+}
+
+.modal__header-subtitle {
+  font-family: var(--open-sans);
+  font-size: var(--size-4);
+  color: var(--neutral-700);
+  margin-top: var(--space-1);
+}
+
+.modal__body {
+  font-family: var(--open-sans);
+  overflow-y: auto;
+  padding-bottom: var(--space-12);
+  padding-top: var(--space-8);
+
+  &::-webkit-scrollbar-track {
+    background: var(--neutral-100);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--neutral-200);
+    border-radius: var(--radius-1);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--neutral-300);
+  }
+}
+
+.modal--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal--hidden .modal__root {
+  transform: translateX(100%);
+}
+
+@media (min-width: var(--landscape)) {
+  .modal__root {
+    width: 35vw;
+    border-radius: var(--radius-1) 0 0 var(--radius-1);
+  }
+
+  .modal__header-title {
+    font-size: var(--size-7);
+  }
+
+  .modal__content {
+    padding: var(--space-8);
+  }
+}
+
+@media (min-width: var(--wide)) {
+  .modal__content {
+    max-width: 120rem;
+    margin: 0 auto;
+  }
+}
