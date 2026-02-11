@@ -29,3 +29,14 @@ Contras:
 Complexidade de Estado: O motor precisa gerenciar "promessas" de dados. Se o usuário chegar ao fim e a elegibilidade der erro, o motor precisa saber como voltar e comunicar isso de forma amigável.
 
 Desenvolvimento: Exige uma lógica de polling (consultas recorrentes) ou WebSockets no Frontend.
+
+### Gerenciamento de estado
+
+- O gerenciamento de estado é feito unicamente pelo zustand, todos os dados são
+lidos e gravados diretamente no localStorage.
+
+#### Ajustes
+
+- Foi ajustado a forma que com que lidamos com os espacamentos dos componentes,
+antes era preciso colocarmos um elemento Spacing, agora temos a opcao de colocar
+as props marginBottom e marginTop nos componentes.

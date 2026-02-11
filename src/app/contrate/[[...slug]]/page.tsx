@@ -1,21 +1,23 @@
-import { Journey } from "../../../components";
-import { getJourneyConfig } from "../../../service/getJourneyService";
+import { Journey } from "@/components";
+import { getJourneyConfig } from "@/service";
 
 interface PageProps {
-  params: { slug: string };
+  params: { slug: string[] };
 }
 
-/**
- * Usuário acessa /contrate/seguro-auto
- * -> SlugPage busca no CMS o um endpoint respectivo para buscar o JSON do serviço
- *  ->
- *   ->
-*/
+export default async function Page({ params }: PageProps) {
+  const [journeySlug, slug] = params.slug;
+  const pageConfig = await getJourneyConfig(journeySlug);
 
-export default async function SlugPage({ params }: PageProps) {
-  const currentSlug = params.slug;
+  const step = pageConfig.steps.find(
+    (step) => step.slug === slug,
+  );
 
-  const config = await getJourneyConfig(currentSlug);
-
-  return (<Journey config={config} slug={currentSlug} />);
+  return (
+    <Journey
+      journeySlug={journeySlug}
+      currentStepName={slug}
+      step={step}
+    />
+  );
 }

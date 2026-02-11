@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
 
 export interface FieldOption {
   label: string
@@ -18,17 +19,9 @@ export interface ApiValidation {
   invalidValue: unknown;
 }
 
-export interface FieldValidation {
-  minLength?: number;
-  maxLength?: number;
-  pattern?: string;
-  api?: ApiValidation;
-  messages?: Record<string, string>
-}
-
 export interface Element {
   id: string
-  label: string
+  label?: string
   type:
   | 'text'
   | 'email'
@@ -43,64 +36,63 @@ export interface Element {
   | 'textarea'
   | 'appointment'
   | 'spacing'
-  | 'typography';
-
+  | 'typography'
+  | 'button';
+  layout: {
+    marginTop: string;
+    marginBottom: string;
+  };
+  uiProps: any;
   required?: boolean
   placeholder?: string
   options?: FieldOption[]
-  fetchOptions?: FetchOptions
-  validate?: FieldValidation
-  validators?: string[]
-  rules?: Rule[]
-}
-
-export type RuleFunction =
-  | { name: 'ageAtLeast'; args: { field: string; min: number } }
-  | { name: 'cpfValid'; args: { field: string } }
-
-export interface Rule {
-  compare?: any;
-  func: RuleFunction;
-  message: string;
 }
 
 export interface Seo {
   title?: string;
   description?: string;
   canonical?: string;
+  keywords?: string;
   robots?: {
     index?: boolean;
     follow?: boolean;
   }
 }
 
-export interface Step {
-  slug: string;
-  title: string;
-  subtitle?: string;
-  kind: string;
-  path: string;
-  link: {
-    next: string;
-    back: string;
-  }
-  elements: Element[];
-  rules?: Rule[];
-  validators: string[];
-  seo: Seo;
-  layout?: {
-    groups: Array<{ title?: string; description: string; fields: string[]; columns?: number }>
+export interface Action {
+  type?: string;
+  service?: string;
+  onSuccess?: {
+    type: string;
+    target: string;
   }
 }
-export interface JourneyConfig {
+export interface Step {
+  id: string,
   slug: string;
-  title: string;
-  steps: Step[];
-  seo?: Seo;
+  kind?: string;
+  seo: Seo;
+  layout?: {
+    width?: string,
+    progressbar?: {
+      start?: number,
+      end?: number,
+    },
+  },
+  elements: Element[];
+  action: Action;
+}
+
+export interface JourneyConfig {
+  steps: Step
+}
+
+export interface FormStepProps {
+  step: Step
 }
 
 export interface JourneyProps {
-  config: JourneyConfig;
-  slug: string;
-  initialData?: Record<string, unknown>;
+  step: Step;
+  currentStepName: string;
+  journeySlug: string;
 }

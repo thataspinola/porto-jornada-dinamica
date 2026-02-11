@@ -1,36 +1,33 @@
-'use client'
-import { useEffect } from "react";
-import { useJourneyStore } from "../../context/clientStore";
+import Head from "next/head";
 import type { JourneyProps } from "../../types";
+
+import { Header } from "../Elements/Header";
+import { ProgressBar } from "../Elements/ProgressBar";
 import { FormStep } from "../FormStep";
 
-export const Journey = ({ config, initialData, slug }: JourneyProps) => {
-  const journey = config.slug;
-  const hydrate = useJourneyStore((state) => state.hydrate);
-  const setValue = useJourneyStore((state) => state.setValue);
-  const setMany = useJourneyStore((state) => state.setMany);
-  const data = useJourneyStore((state) => state.data[journey] || {});
-  const step = config.steps.find((step) => step.slug === slug);
-  const onChange = (id: string, value: any) => setValue(journey, id, value);
-
-  function loadInitialData() {
-    if (!initialData) return;
-    if (!Object.keys(initialData).length) return;
-
-    setMany(journey, initialData);
-  }
-
-  if (!step) return null;
-
-  useEffect(() => {
-    hydrate(journey);
-  }, [journey, hydrate]);
-
-  useEffect(() => {
-    loadInitialData();
-  }, [journey, initialData, setMany]);
-
+export const Journey = ({
+  journeySlug,
+  currentStepName,
+  step,
+}: JourneyProps) => {
   return (
-    <FormStep config={config} data={data} step={step} onChange={onChange} />
+    <>
+      <Head>
+        <title>{step?.seo?.title}</title>
+        <link rel="canonical" href={step?.seo?.canonical} />
+        <meta name="keywords" content={step?.seo?.keywords} />
+        <meta name="description" content={step?.seo?.description} />
+      </Head>
+      <Header />
+      {!!step?.layout?.progressbar && (
+        <ProgressBar
+          initialValue={step?.layout?.progressbar?.start}
+          value={step?.layout?.progressbar?.end}
+        />
+      )}
+      <div style={{ maxWidth: step?.layout?.width, margin: "0 auto" }}>
+        <FormStep step={step} />
+      </div>
+    </>
   );
 };

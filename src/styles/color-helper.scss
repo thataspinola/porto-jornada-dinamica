@@ -1,0 +1,34 @@
+@import "./tokens/colors.scss";
+
+// Background color utilities
+.--bg {
+  @each $category, $shades in $colors {
+    @each $shade, $value in $shades {
+      &-#{$category}-#{$shade} {
+        background-color: #{$value};
+      }
+    }
+  }
+}
+
+// Text color utilities
+.--color {
+  @each $category, $shades in $colors {
+    @each $shade, $value in $shades {
+      &-#{$category}-#{$shade} {
+        color: #{$value};
+      }
+    }
+  }
+}
+
+// Border color utilities
+.--border {
+  @each $category, $shades in $colors {
+    @each $shade, $value in $shades {
+      &-#{$category}-#{$shade} {
+        border-color: #{$value};
+      }
+    }
+  }
+}

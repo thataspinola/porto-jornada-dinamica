@@ -1,21 +1,33 @@
 
 // Tipos de elementos suportados
+/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
 export type ElementType =
+  | "number"
   | "text"
   | "button"
   | "select"
   | "typography"
   | "cpf"
-  | "phone";
+  | "phone"
+  | "textarea"
+  | "email"
+  | "cnpj"
+  | "date"
+  | "radio"
+  | "checkbox"
+  | "appointment"
+  | "spacing";
 
 // Definição das ações assíncronas
-export interface AsyncAction {
-  trigger: "onBlur" | "onChange";
-  service: string;
-  target?: string; // para onde ir após sucesso
+export interface Action {
+  type?: string;
+  service?: string;
+  onSuccess?: {
+    type: string;
+    target: string;
+  }
 }
 
-// O Elemento Genérico
 export interface BaseElement {
   id: string;
   type: ElementType;
@@ -24,17 +36,11 @@ export interface BaseElement {
     pattern?: string;
     message?: string;
   };
-  asyncActions?: AsyncAction[];
-  // Aqui usamos Record para aceitar as props de qualquer componente da Ocean
+  action?: Action;
   uiProps: Record<string, any>;
 }
 
-
 export interface FormElementProps {
   element: BaseElement;
-  value: any;
-  error?: string;
-  onChange: (value: any) => void;
-  // Callback opcional caso uma ação assíncrona precise mudar o step
-  onActionComplete?: (result: any, target?: string) => void;
+  action: Action;
 }
