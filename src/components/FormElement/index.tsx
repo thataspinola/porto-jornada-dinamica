@@ -1,38 +1,41 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
 "use client";
-import { Button, ElementNotFound } from "@/components";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ElementNotFound } from "@/components";
+import { createJourneyStore } from "@/store";
 import { ElementRegistry } from "./elementRegistry";
 import type { FormElementProps } from "./type";
 
-export const FormElement = ({ element, action }: FormElementProps) => {
-  const [values, setValue] = useState({});
-  const router = useRouter();
+export const FormElement = ({
+  journeySlug,
+  element,
+  onStepAction,
+}: FormElementProps) => {
+  const useStore = createJourneyStore(journeySlug);
+  const fields = useStore((state) => state.fields);
+  const setValue = useStore((state) => state.setValue);
 
   const Component = ElementRegistry[element.type];
 
   if (!Component) return <ElementNotFound />;
 
-  function handleClick() {
-    const isFormValid = true;
-    console.log(`...validando campos`, values);
-    console.log(`...Chamando serviço: ${action?.service}`);
+  if (element.dependsOn) {
+    const { field, value, operator } = element.dependsOn;
+    const fieldValue = fields[field];
 
-    if (isFormValid) {
-      router.push(action.onSuccess.target);
-    }
+    const isVisible = operator === "===" ? fieldValue === value : false;
+
+    if (!isVisible) return null;
   }
 
-  if (element.type === "button") {
-    return <Button width="fluid" onClick={handleClick} {...element.uiProps} />;
-  }
+  // Se o elemento for um botão, vinculamos o clique à action do STEP
+  const handleClick =
+    element.type === "button" ? onStepAction : (value) => setValue([element.id], value);
 
   return (
     <Component
-      value={values[element.id]}
-      onChange={(value) => setValue({ ...value, [element.id]: value })}
-      handleClick={(value) => setValue({ ...value, [element.id]: value })}
+      value={fields[element.id]}
+      onChange={(value) => setValue([element.id], value)}
+      handleClick={handleClick}
       errorMessage={""}
       {...element.uiProps}
     />

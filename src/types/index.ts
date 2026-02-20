@@ -38,14 +38,19 @@ export interface Element {
   | 'spacing'
   | 'typography'
   | 'button';
-  layout: {
+  layout?: {
     marginTop: string;
     marginBottom: string;
   };
   uiProps: any;
-  required?: boolean
-  placeholder?: string
-  options?: FieldOption[]
+  required?: boolean;
+  placeholder?: string;
+  options?: FieldOption[];
+  dependsOn?: {
+    field: string;
+    value: string;
+    operator: string;
+  }
 }
 
 export interface Seo {
@@ -74,6 +79,10 @@ export interface Step {
   seo: Seo;
   layout?: {
     width?: string,
+    header: {
+      goBackLink: string;
+      hasShoppingCart: boolean;
+    };
     progressbar?: {
       start?: number,
       end?: number,
@@ -88,11 +97,11 @@ export interface JourneyConfig {
 }
 
 export interface FormStepProps {
-  step: Step
+  step: Step;
+  journeySlug: string;
 }
 
 export interface JourneyProps {
   step: Step;
-  currentStepName: string;
   journeySlug: string;
 }

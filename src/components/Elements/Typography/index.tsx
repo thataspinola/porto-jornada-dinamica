@@ -47,13 +47,12 @@ export const Typography = ({
   children = "Typography",
   variant = "title1",
   as = "h1",
-  color = "neutral-900",
+  color = "brand-insurance-900",
   weight = "regular",
   fontStyle = "normal",
   className = "",
 }: TypographyProps) => {
   const Component = as;
-
   const classes = clsx(
     "typography",
     `--${variant}`,

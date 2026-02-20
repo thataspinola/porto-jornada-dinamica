@@ -39,7 +39,7 @@ export const Button = ({
   isLoading = false,
   disabled = false,
   className = "",
-  onClick,
+  handleClick,
   children,
 }: ButtonProps) => {
   const variantClass = disabled ? `--disabled-${styles}` : `--${variant}-${styles}`;
@@ -49,7 +49,7 @@ export const Button = ({
   const composedClassName = `btn ${variantClass} ${sizeClass} ${widthClass} ${className}`.trim();
 
   return (
-    <button type="button" className={composedClassName} disabled={disabled} onClick={onClick} >
+    <button type="button" className={composedClassName} disabled={disabled} onClick={handleClick} >
       {isLoading ? <span className="btn__loader" /> : children}
     </button>
   );

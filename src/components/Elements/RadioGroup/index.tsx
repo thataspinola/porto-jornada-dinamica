@@ -10,10 +10,23 @@ export type RadioGroupProps = {
   options: {
     description: string;
   }[];
+  defaultValue: string;
+  handleClick: (value: string) => void;
 };
 
-export const RadioGroup = ({ label, options }: RadioGroupProps) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+export const RadioGroup = ({
+  label,
+  options,
+  defaultValue = '',
+  handleClick
+}: RadioGroupProps) => {
+
+  const [selectedOption, setSelectedOption] = useState(defaultValue);
+
+  function onClick(option: { description: string }) {
+    setSelectedOption(option.description);
+    handleClick(option.description);
+  }
 
   return (
     <Flex direction="column">
@@ -28,7 +41,7 @@ export const RadioGroup = ({ label, options }: RadioGroupProps) => {
             variant={
               selectedOption === option.description ? "checked" : "default"
             }
-            onClick={() => setSelectedOption(option.description)}
+            onClick={() => onClick(option)}
             description={option.description}
           />
         ))}

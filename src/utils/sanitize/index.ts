@@ -1,12 +1,32 @@
-import sanitizeHtml from "sanitize-html";
+import sanitizeHtml from 'sanitize-html';
 
 /**
  * Sanitizes a string by removing special characters and sanitizing HTML.
- * @param dirtyValue - The input string to sanitize.
+ * @param value - The input string to sanitize.
  * @returns The sanitized string.
  */
-export const sanitize = (dirtyValue: string): string => {
-	const value = String(dirtyValue);
-	const valueWithoutSpecialCharacter = value.replace(/[^a-zA-Z0-9@_. ]/g, "");
-	return sanitizeHtml(valueWithoutSpecialCharacter);
+
+export const sanitize = {
+  string: (value: string) => {
+    return value.replace(/[^a-zA-Z\u00C0-\u00FF\s'-]/g, '');
+  },
+  number: (value: string) => {
+    const newValue = value?.replace(/\D/g, '').trim();
+
+    if (newValue === '') return '';
+    return Number(newValue);
+  },
+  email: (value: string) => {
+    const lowerValue = value.toLocaleLowerCase();
+    return lowerValue.replace(/[^a-zA-Z0-9@._-]/g, '');
+  },
+  alphanumeric: (value: string) => {
+    return value.replace(/[^a-zA-Z0-9\u00C0-\u00FF\s]/g, '');
+  },
+  dom: (input: string) => {
+    return sanitizeHtml(input, {
+      allowedTags: [],
+      allowedAttributes: {},
+    });
+  },
 };

@@ -12,4 +12,5 @@ export type ButtonProps = HTMLAttributes<HTMLButtonElement> & {
   disabled?: boolean;
   isLoading?: boolean;
   type?: "button" | "submit" | "reset";
+  handleClick?: () => void;
 };

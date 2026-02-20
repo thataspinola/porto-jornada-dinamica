@@ -38,9 +38,15 @@ export interface BaseElement {
   };
   action?: Action;
   uiProps: Record<string, any>;
+  dependsOn?: {
+    field: string;
+    value: string;
+    operator: string;
+  }
 }
 
 export interface FormElementProps {
+  journeySlug: string;
   element: BaseElement;
-  action: Action;
+  onStepAction: () => void;
 }

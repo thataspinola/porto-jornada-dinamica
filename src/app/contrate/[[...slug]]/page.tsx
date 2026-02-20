@@ -1,5 +1,5 @@
 import { Journey } from "@/components";
-import { getJourneyConfig } from "@/service";
+import { getJourneyConfig } from "@/services";
 
 interface PageProps {
   params: { slug: string[] };
@@ -16,7 +16,6 @@ export default async function Page({ params }: PageProps) {
   return (
     <Journey
       journeySlug={journeySlug}
-      currentStepName={slug}
       step={step}
     />
   );

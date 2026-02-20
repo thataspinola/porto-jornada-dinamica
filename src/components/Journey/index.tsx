@@ -7,7 +7,6 @@ import { FormStep } from "../FormStep";
 
 export const Journey = ({
   journeySlug,
-  currentStepName,
   step,
 }: JourneyProps) => {
   return (
@@ -18,7 +17,7 @@ export const Journey = ({
         <meta name="keywords" content={step?.seo?.keywords} />
         <meta name="description" content={step?.seo?.description} />
       </Head>
-      <Header />
+      <Header {...step.layout.header} />
       {!!step?.layout?.progressbar && (
         <ProgressBar
           initialValue={step?.layout?.progressbar?.start}
@@ -26,7 +25,7 @@ export const Journey = ({
         />
       )}
       <div style={{ maxWidth: step?.layout?.width, margin: "0 auto" }}>
-        <FormStep step={step} />
+        <FormStep step={step} journeySlug={journeySlug} />
       </div>
     </>
   );
