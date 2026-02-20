@@ -1,4 +1,4 @@
-import { journeyRegistryServices } from "@/services"; // Onde você coloca as chamadas de API
+import { journeyRegistryServices } from "@/services";
 import { createJourneyStore } from "@/store";
 import { useRouter } from "next/navigation";
 
