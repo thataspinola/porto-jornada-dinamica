@@ -12,16 +12,13 @@ export const useJourneyValidation = (journeySlug: string, elements: any[]) => {
     let isValid = true;
 
     for (const element of elements) {
-      // 1. Verifica Condicional (dependsOn)
       if (element.dependsOn) {
         const { field, value: expectedValue } = element.dependsOn;
         if (fields[field] !== expectedValue) continue;
       }
 
-      // 2. Monta o validador via Builder (POO)
       const validator = ValidationBuilder.fromJson(element.rules || []);
 
-      // 3. Executa a validação (Composite)
       const error = validator.validate(fields[element.id]);
 
       if (error) {

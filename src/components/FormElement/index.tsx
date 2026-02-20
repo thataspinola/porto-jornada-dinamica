@@ -27,7 +27,6 @@ export const FormElement = ({
     if (!isVisible) return null;
   }
 
-  // Se o elemento for um botão, vinculamos o clique à action do STEP
   const handleClick =
     element.type === "button" ? onStepAction : (value) => setValue([element.id], value);
 
