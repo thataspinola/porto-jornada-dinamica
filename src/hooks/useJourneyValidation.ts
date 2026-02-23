@@ -1,7 +1,11 @@
 import { createJourneyStore } from "@/store";
+import type { Element } from "@/types";
 import { ValidationBuilder } from "@/validations";
 
-export const useJourneyValidation = (journeySlug: string, elements: any[]) => {
+export const useJourneyValidation = (
+  journeySlug: string,
+  elements: Element[],
+) => {
   const useStore = createJourneyStore(journeySlug);
   const fields = useStore.getState().fields;
   const setError = useStore.getState().setError;
@@ -20,7 +24,7 @@ export const useJourneyValidation = (journeySlug: string, elements: any[]) => {
       const validator = ValidationBuilder.fromJson(element.rules || []);
 
       const error = validator.validate(fields[element.id]);
-
+      console.log('validateStep', error)
       if (error) {
         setError(element.id, error);
         isValid = false;
@@ -32,6 +36,6 @@ export const useJourneyValidation = (journeySlug: string, elements: any[]) => {
 
   return {
     validateStep,
-    errors: useStore((state: any) => state.errors)
+    errors: useStore((state: any) => state.errors),
   };
 };

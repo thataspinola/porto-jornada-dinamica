@@ -77,7 +77,7 @@ export const Input = ({
     if (disabled) return;
     setFocused(isFocus);
   };
-  const isError = errorMessage.length > 0;
+  const isError = errorMessage?.length > 0;
   const isFilled = value?.toString().length > 0;
   const classes = clsx(
     "input__root",
@@ -113,9 +113,7 @@ export const Input = ({
         />
       </div>
 
-      {isLoading && (
-        <Loader className="input__loader" color="brand-insurance-900" />
-      )}
+      {isLoading && <Loader className="input__loader" color="neutral-100" />}
 
       {helperText && <p className="input__helper-text">{helperText}</p>}
       {isError && <p className="input__error-message">{errorMessage}</p>}

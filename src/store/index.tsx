@@ -12,6 +12,11 @@ export const createJourneyStore = (journeyId: string) => {
       (set) => ({
         fields: {},
         errors: {},
+        isLoading: false,
+        actionsData: {},
+        setActionResponse: (id, data) => set(state => ({
+          actionsData: { ...state.actionsData, [id]: data }
+        })),
         setValue: (field: string, value: any) => {
           set((state) => ({
             fields: {
@@ -24,7 +29,7 @@ export const createJourneyStore = (journeyId: string) => {
             },
           }));
         },
-
+        setLoading: (loading: boolean) => set({ isLoading: loading }),
         setError: (field: string, message: string | null) => {
           set((state) => ({
             errors: {

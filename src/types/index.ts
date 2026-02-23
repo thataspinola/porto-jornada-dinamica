@@ -19,30 +19,17 @@ export interface ApiValidation {
   invalidValue: unknown;
 }
 
+type Rule = { [key: string]: string }
+
 export interface Element {
   id: string
   label?: string
-  type:
-  | 'text'
-  | 'email'
-  | 'phone'
-  | 'cpf'
-  | 'cnpj'
-  | 'date'
-  | 'number'
-  | 'select'
-  | 'radio'
-  | 'checkbox'
-  | 'textarea'
-  | 'appointment'
-  | 'spacing'
-  | 'typography'
-  | 'button';
+  type?: string;
   layout?: {
-    marginTop: string;
-    marginBottom: string;
+    marginTop?: string;
+    marginBottom?: string;
   };
-  uiProps: any;
+  uiProps?: any;
   required?: boolean;
   placeholder?: string;
   options?: FieldOption[];
@@ -51,6 +38,8 @@ export interface Element {
     value: string;
     operator: string;
   }
+  rules?: Rule[];
+  action?: Action;
 }
 
 export interface Seo {
@@ -67,6 +56,8 @@ export interface Seo {
 export interface Action {
   type?: string;
   service?: string;
+  target?: string;
+  trigger?: string;
   onSuccess?: {
     type: string;
     target: string;
@@ -76,10 +67,10 @@ export interface Step {
   id: string,
   slug: string;
   kind?: string;
-  seo: Seo;
+  seo?: Seo;
   layout?: {
     width?: string,
-    header: {
+    header?: {
       goBackLink: string;
       hasShoppingCart: boolean;
     };
@@ -88,8 +79,8 @@ export interface Step {
       end?: number,
     },
   },
-  elements: Element[];
-  action: Action;
+  elements?: Element[];
+  action?: Action;
 }
 
 export interface JourneyConfig {

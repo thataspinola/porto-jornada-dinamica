@@ -9,7 +9,6 @@ export const FormStep = ({ step, journeySlug }: FormStepProps) => {
 
   const handleTriggerAction = async () => {
     const isValid = validateStep();
-    console.log('isValid:', isValid);
 
     if (isValid) {
       await executeStepAction();
@@ -30,4 +29,3 @@ export const FormStep = ({ step, journeySlug }: FormStepProps) => {
     </>
   );
 };
-

@@ -1,3 +1,4 @@
+import { Loader } from "../Loader";
 import "./styles.scss";
 
 import type { ButtonProps } from "./types";
@@ -41,6 +42,7 @@ export const Button = ({
   className = "",
   handleClick,
   children,
+  ...props
 }: ButtonProps) => {
   const variantClass = disabled ? `--disabled-${styles}` : `--${variant}-${styles}`;
   const sizeClass = `--${size}`;
@@ -49,8 +51,13 @@ export const Button = ({
   const composedClassName = `btn ${variantClass} ${sizeClass} ${widthClass} ${className}`.trim();
 
   return (
-    <button type="button" className={composedClassName} disabled={disabled} onClick={handleClick} >
-      {isLoading ? <span className="btn__loader" /> : children}
+    <button
+      className={composedClassName}
+      disabled={disabled}
+      onClick={handleClick}
+      {...props}
+    >
+      {isLoading ? <Loader /> : children}
     </button>
   );
 };

@@ -95,7 +95,7 @@ export const InputCurrency = ({
   function handleChange(value) {
     console.log("string", value);
     console.log("number", Number(value));
-    console.log("sanetize", sanitize.number(value));
+    console.log("sanetize", sanitize.digits(value));
     console.log("currencyToNumber", currencyToNumber(value));
     console.log("formatToCurrency", formatToCurrency(value));
 

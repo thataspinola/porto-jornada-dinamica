@@ -2,11 +2,12 @@ import { Journey } from "@/components";
 import { getJourneyConfig } from "@/services";
 
 interface PageProps {
-  params: { slug: string[] };
+  params: Promise<{ slug: string[] }>;
 }
 
 export default async function Page({ params }: PageProps) {
-  const [journeySlug, slug] = params.slug;
+  const resolvedParams = await params;
+  const [journeySlug, slug] = resolvedParams.slug;
   const pageConfig = await getJourneyConfig(journeySlug);
 
   const step = pageConfig.steps.find(

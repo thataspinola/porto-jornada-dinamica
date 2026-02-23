@@ -26,6 +26,7 @@ export interface Action {
     type: string;
     target: string;
   }
+  trigger: 'onChange' | 'onClick' | 'onInit';
 }
 
 export interface BaseElement {

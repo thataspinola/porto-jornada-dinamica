@@ -6,33 +6,37 @@ export const useJourneyActions = (
   journeySlug: string,
   currentStepConfig: any,
 ) => {
-  const router = useRouter();
   const useStore = createJourneyStore(journeySlug);
-  const fields = useStore.getState().fields;
-  const setError = useStore.getState().setError;
+  const setLoading = useStore.getState().setLoading;
+  const router = useRouter();
 
   const executeStepAction = async () => {
     const action = currentStepConfig.action;
     if (!action) return;
 
-    console.log("currentStepConfig", currentStepConfig.action);
     if (action.type === "SERVICE_CALL") {
       try {
-        const serviceFunction = journeyRegistryServices[action.service];
-        const response = await serviceFunction(fields);
+        setLoading(true);
+
+        const serviceFn = journeyRegistryServices[action.service];
+        const response = await serviceFn(useStore.getState().fields);
 
         if (response.success && action.onSuccess?.type === "NAVIGATE") {
           router.push(action.onSuccess.target);
         }
       } catch (err) {
-        console.error("Erro na action de serviço:", err);
-        setError("global", "Erro ao processar serviço.");
+        console.error("Error:", err);
+      } finally {
+        setLoading(false);
       }
-      return;
     }
 
     if (action.type === "NAVIGATE") {
-      router.push(action.target);
+      try {
+        router.push(action.target);
+      } catch (err) {
+        console.error("Error:", err);
+      }
     }
   };
 
