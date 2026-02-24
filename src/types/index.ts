@@ -93,6 +93,12 @@ export interface FormStepProps {
 }
 
 export interface JourneyProps {
-  step: Step;
-  journeySlug: string;
+  data: {
+    step: Step
+    position: number;
+    isFirst: boolean;
+    isLast: boolean;
+    progress: number;
+  };
+  slug: string;
 }

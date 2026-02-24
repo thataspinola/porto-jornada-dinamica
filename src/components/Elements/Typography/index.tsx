@@ -51,6 +51,7 @@ export const Typography = ({
   weight = "regular",
   fontStyle = "normal",
   className = "",
+  ...props
 }: TypographyProps) => {
   const Component = as;
   const classes = clsx(
@@ -63,7 +64,7 @@ export const Typography = ({
   );
 
   return (
-    <Component className={classes}>
+    <Component className={classes} {...props}>
       {children}
     </Component>
   );

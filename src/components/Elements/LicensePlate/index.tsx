@@ -94,6 +94,7 @@ export const LicensePlate = ({
       className={classes}
       onFocus={() => handleFocus(true)}
       onBlur={() => handleFocus(false)}
+      style={{ marginBottom: "32px" }}
     >
       <div className="input__box">
         {label && (

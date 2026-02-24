@@ -70,6 +70,7 @@ export const Input = ({
   errorMessage = "",
   label = "",
   onChange,
+  ...props
 }: InputProps) => {
   const [focused, setFocused] = useState(false);
 
@@ -95,6 +96,7 @@ export const Input = ({
       className={classes}
       onFocus={() => handleFocus(true)}
       onBlur={() => handleFocus(false)}
+      style={{ marginBottom: "32px" }}
     >
       <div className="input__box">
         {label && (

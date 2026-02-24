@@ -1,4 +1,4 @@
-'use client';
+"use client";
 // ELEMENTS
 export { Button } from "./Elements/Button";
 export { Carousel } from "./Elements/Carousel";
@@ -14,6 +14,7 @@ export { Link } from "./Elements/Link";
 export { Loader } from "./Elements/Loader";
 export { Modal } from "./Elements/Modal";
 export { Notification } from "./Elements/Notification";
+export { Paragraph } from "./Elements/Paragraph";
 export { ProgressBar } from "./Elements/ProgressBar";
 export { Radio } from "./Elements/Radio";
 export { Block, Root } from "./Elements/Skeleton";

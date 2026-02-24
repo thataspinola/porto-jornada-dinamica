@@ -94,6 +94,7 @@ export const Dropdown = ({
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
       {...props}
+      style={{ marginBottom: '32px' }}
     >
       <div
         className="dropdown__trigger"

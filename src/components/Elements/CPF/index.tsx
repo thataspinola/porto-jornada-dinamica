@@ -9,6 +9,7 @@ export const CPF = ({ value, onChange, label, isLoading, errorMessage }: any) =>
       label={label}
       isLoading={isLoading}
       errorMessage={errorMessage}
+      style={{ marginBottom: '32px' }}
     />
   );
 }

@@ -60,6 +60,7 @@ export const Checkbox = ({
       onClick={handleClickChange}
       className={`checkbox__root --${checked ? "checked" : "default"} ${disabledClass} ${className}`}
       {...props}
+      style={{ marginBottom: '32px' }}
     >
       <div className="checkbox__input" title={title}>
         <svg
