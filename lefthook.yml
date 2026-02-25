@@ -1,0 +1,36 @@
+pre-push:
+  parallel: false
+  jobs:
+    - name: test
+      tags:
+        - frontend
+        - unit tests
+        - integration tests
+      run: npm run test
+
+    - name: build
+      tags:
+        - frontend
+        - build project
+      run: npm run build
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: Code format
+      tags:
+        - frontend
+        - quality
+      run: npm run formater
+
+    - name: Code linter
+      tags:
+        - frontend
+        - quality
+      run: npm run lint
+
+    - name: Typecheck
+      tags:
+        - frontend
+        - quality
+      run: npm run type-check

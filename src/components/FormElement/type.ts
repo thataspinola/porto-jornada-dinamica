@@ -1,6 +1,6 @@
-
-// Tipos de elementos suportados
 /** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+
+import type { Element } from "@/types";
 export type ElementType =
   | "number"
   | "text"
@@ -17,37 +17,17 @@ export type ElementType =
   | "checkbox"
   | "appointment"
   | "spacing";
-
-// Definição das ações assíncronas
 export interface Action {
   type?: string;
   service?: string;
   onSuccess?: {
     type: string;
     target: string;
-  }
-  trigger: 'onChange' | 'onClick' | 'onInit';
-}
-
-export interface BaseElement {
-  id: string;
-  type: ElementType;
-  validation?: {
-    required?: boolean;
-    pattern?: string;
-    message?: string;
   };
-  action?: Action;
-  uiProps: Record<string, any>;
-  dependsOn?: {
-    field: string;
-    value: string;
-    operator: string;
-  }
+  trigger: "onChange" | "onClick" | "onInit";
 }
 
 export interface FormElementProps {
-  journeySlug: string;
-  element: BaseElement;
-  onStepAction: () => void;
+  element: Element;
+  slug: string;
 }

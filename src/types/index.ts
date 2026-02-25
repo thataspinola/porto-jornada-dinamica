@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
-
 export interface FieldOption {
   label: string
   value: string
@@ -19,27 +17,11 @@ export interface ApiValidation {
   invalidValue: unknown;
 }
 
-type Rule = { [key: string]: string }
-
 export interface Element {
   id: string
   label?: string
   type?: string;
-  layout?: {
-    marginTop?: string;
-    marginBottom?: string;
-  };
-  uiProps?: any;
-  required?: boolean;
-  placeholder?: string;
-  options?: FieldOption[];
-  dependsOn?: {
-    field: string;
-    value: string;
-    operator: string;
-  }
-  rules?: Rule[];
-  action?: Action;
+  config: any;
 }
 
 export interface Seo {
@@ -66,21 +48,8 @@ export interface Action {
 export interface Step {
   id: string,
   slug: string;
-  kind?: string;
-  seo?: Seo;
-  layout?: {
-    width?: string,
-    header?: {
-      goBackLink: string;
-      hasShoppingCart: boolean;
-    };
-    progressbar?: {
-      start?: number,
-      end?: number,
-    },
-  },
+  backStepSlug: string;
   elements?: Element[];
-  action?: Action;
 }
 
 export interface JourneyConfig {
@@ -89,7 +58,7 @@ export interface JourneyConfig {
 
 export interface FormStepProps {
   step: Step;
-  journeySlug: string;
+  slug: string;
 }
 
 export interface JourneyProps {

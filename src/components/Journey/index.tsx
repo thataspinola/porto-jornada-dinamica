@@ -19,7 +19,7 @@ export const Journey = ({
         style={{ marginBottom: '40px' }}
       />
       <div style={{ maxWidth: '600px', margin: "0 auto" }}>
-        <FormStep step={data.step} journeySlug={slug} />
+        <FormStep step={data.step} slug={slug} />
       </div>
     </>
   );
