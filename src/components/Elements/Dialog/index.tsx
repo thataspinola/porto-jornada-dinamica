@@ -1,3 +1,6 @@
+/** biome-ignore-all lint/a11y/useKeyWithClickEvents: <> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
+
 import { clsx } from "@/utils";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";

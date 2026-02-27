@@ -1,7 +1,6 @@
 "use client";
 import { clsx } from "@/utils";
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
 
 import "./styles.scss";
 
@@ -45,9 +44,9 @@ export const Link = ({
 	disabled = false,
 	className = "",
 	label,
+	children,
 	...restProps
 }: LinkProps) => {
-	const path = usePathname();
 	const classes = clsx(
 		"link",
 		{
@@ -58,20 +57,17 @@ export const Link = ({
 		`--${width}`,
 		className,
 	);
-	const [journey, slug] = path.split("/").filter(Boolean);
-
-	const newLink = `/${journey}/${slug}/${url}`;
 
 	return (
 		<NextLink
-			href={newLink}
+			href={url}
 			target="_self"
 			className={classes}
 			disabled={disabled}
 			{...restProps}
 			style={{ marginBottom: "8px" }}
 		>
-			{label}
+			{children}
 		</NextLink>
 	);
 };

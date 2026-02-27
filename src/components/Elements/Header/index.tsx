@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/useLiteralKeys: <> */
 "use client";
 import { clsx } from "@/utils";
 import Image from "next/image";

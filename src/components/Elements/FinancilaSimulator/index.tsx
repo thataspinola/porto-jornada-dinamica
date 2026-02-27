@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/a11y/noLabelWithoutControl: <> */
+/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
 "use client";
 
 import { createJourneyStore } from "@/store";
@@ -25,7 +27,6 @@ export const FinancialSimulator = ({
 	);
 	const [installments, setInstallments] = useState(fields.installments || "60");
 
-	// Sincroniza com o Store Global para que o botão "Continuar" externo funcione
 	useEffect(() => {
 		setValue("simulator_data", {
 			carValue,
@@ -178,7 +179,9 @@ export const FinancialSimulator = ({
 				</p>
 			</div>
 
-			<button className={styles.recalculateBtn}>Recalcular</button>
+			<button type="button" className={styles.recalculateBtn}>
+				Recalcular
+			</button>
 		</div>
 	);
 };

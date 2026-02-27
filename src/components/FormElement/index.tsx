@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
 "use client";
 import { ElementNotFound } from "@/components";
 import { createJourneyStore } from "@/store";

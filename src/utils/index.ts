@@ -11,4 +11,3 @@ export { onlyNumbers } from "./mask/onlyNumbers";
 export { phoneMask } from "./mask/phone";
 export { maskLicensePlate } from "./mask/plate";
 export { sanitize } from "./sanitize";
-

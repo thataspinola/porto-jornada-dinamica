@@ -83,7 +83,6 @@ describe("ProgressBar", () => {
 			backgroundColor: "rgb(0, 70, 192)",
 		});
 
-		// @ts-expect-error
 		rerender(<ProgressBar value={-20} data-testid="progress-bar" />);
 
 		progressBar = screen.getByTestId("progress-bar");

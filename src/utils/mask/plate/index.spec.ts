@@ -6,6 +6,6 @@ describe("plate.ts", () => {
 	});
 
 	it("should handle 7 digits max", () => {
-		expect(maskLicensePlate("xpz4567")).toBe("123-4567");
+		expect(maskLicensePlate("xpz4567")).toBe("XPZ-4567");
 	});
 });

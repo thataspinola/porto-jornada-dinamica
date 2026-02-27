@@ -1,9 +1,7 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Button } from "./index";
 
-// Helper para centralizar a criação do componente (SUT - System Under Test)
 const makeSut = (props: any = {}) => {
 	const defaultProps = {
 		children: "Button",
@@ -15,7 +13,6 @@ const makeSut = (props: any = {}) => {
 	return {
 		...result,
 		props: defaultProps,
-		// Facilitador para pegar o botão principal em todos os testes
 		button:
 			screen.queryByRole("button") ||
 			(result.container.firstChild as HTMLElement),
