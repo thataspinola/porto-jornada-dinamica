@@ -16,7 +16,7 @@ describe("cepMask", () => {
 	});
 
 	it("should handle empty string", () => {
-		// @ts-ignore
+		// @ts-expect-error
 		expect(cepMask(0)).toBe("");
 	});
 

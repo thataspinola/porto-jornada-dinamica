@@ -13,7 +13,7 @@ describe("Flex", () => {
 			<Flex>
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -38,7 +38,7 @@ describe("Flex", () => {
 			<Flex direction="column">
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -54,7 +54,7 @@ describe("Flex", () => {
 			<Flex align="center">
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -70,7 +70,7 @@ describe("Flex", () => {
 			<Flex justify="space-between">
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -86,7 +86,7 @@ describe("Flex", () => {
 			<Flex wrap="wrap">
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -102,7 +102,7 @@ describe("Flex", () => {
 			<Flex gap="1rem">
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -118,7 +118,7 @@ describe("Flex", () => {
 			<Flex inline>
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -132,7 +132,7 @@ describe("Flex", () => {
 			<Flex as="section">
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -149,7 +149,7 @@ describe("Flex", () => {
 			<Flex className="custom-class">
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -164,7 +164,7 @@ describe("Flex", () => {
 			<Flex style={{ color: "red" }}>
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");
@@ -175,10 +175,16 @@ describe("Flex", () => {
 
 	it("deve combinar múltiplas propriedades flex", () => {
 		render(
-			<Flex direction="column" align="center" justify="space-between" wrap="wrap" gap="2rem">
+			<Flex
+				direction="column"
+				align="center"
+				justify="space-between"
+				wrap="wrap"
+				gap="2rem"
+			>
 				<div>Item 1</div>
 				<div>Item 2</div>
-			</Flex>
+			</Flex>,
 		);
 
 		const element = screen.getByText("Item 1");

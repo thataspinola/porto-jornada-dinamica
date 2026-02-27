@@ -1,5 +1,6 @@
-/** biome-ignore-all lint/a11y/useKeyWithClickEvents: <explanation> */
-/** biome-ignore-all lint/a11y/noStaticElementInteractions: <explanation> */
+/** biome-ignore-all lint/a11y/useKeyWithClickEvents: <> */
+/** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
 "use client";
 import { useState } from "react";
 import "./styles.scss";
@@ -39,53 +40,52 @@ import type { CheckboxProps } from "./types";
  */
 
 export const Checkbox = ({
-  className = "",
-  value = false,
-  label = "",
-  title = "",
-  disabled = false,
-  handleClick,
-  ...props
+	className = "",
+	value = false,
+	label = "",
+	title = "",
+	disabled = false,
+	handleClick,
+	...props
 }: CheckboxProps) => {
-  const [checked, setChecked] = useState(value);
-  const disabledClass = disabled ? "--disabled" : "";
+	const [checked, setChecked] = useState(value);
+	const disabledClass = disabled ? "--disabled" : "";
 
-  const handleClickChange = () => {
-    setChecked((oldState) => !oldState);
-    handleClick(!checked);
-  };
+	const handleClickChange = () => {
+		setChecked((oldState) => !oldState);
+		handleClick(!checked);
+	};
 
-  return (
-    <div
-      onClick={handleClickChange}
-      className={`checkbox__root --${checked ? "checked" : "default"} ${disabledClass} ${className}`}
-      {...props}
-      style={{ marginBottom: '32px' }}
-    >
-      <div className="checkbox__input" title={title}>
-        <svg
-          width="21"
-          height="20"
-          viewBox="0 0 21 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="checkbox__svg"
-        >
-          <title>checkbox</title>
-          <path
-            d="M5.5 9.16604L9.61714 13.3334L15.5 6.66676"
-            stroke="white"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-      <span
-        className="checkbox__label"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-        dangerouslySetInnerHTML={{ __html: label }}
-      />
-    </div>
-  );
+	return (
+		<div
+			onClick={handleClickChange}
+			className={`checkbox__root --${checked ? "checked" : "default"} ${disabledClass} ${className}`}
+			{...props}
+			style={{ marginBottom: "32px" }}
+		>
+			<div className="checkbox__input" title={title}>
+				<svg
+					width="21"
+					height="20"
+					viewBox="0 0 21 20"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					className="checkbox__svg"
+				>
+					<title>checkbox</title>
+					<path
+						d="M5.5 9.16604L9.61714 13.3334L15.5 6.66676"
+						stroke="white"
+						strokeWidth="3"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+				</svg>
+			</div>
+			<span
+				className="checkbox__label"
+				dangerouslySetInnerHTML={{ __html: label }}
+			/>
+		</div>
+	);
 };

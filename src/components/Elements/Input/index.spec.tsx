@@ -1,217 +1,178 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
-
+import type { ComponentProps } from "react";
 import { Input } from "./index";
 
 jest.mock("./styles.scss", () => ({}));
 
 jest.mock("../Loader", () => ({
-  Loader: ({ className, color }: { className?: string; color?: string }) => (
-    <div data-testid="mock-loader" className={className} data-color={color} />
-  ),
+	Loader: ({ className, color }: { className?: string; color?: string }) => (
+		<div data-testid="mock-loader" className={className} data-color={color} />
+	),
 }));
 
+const makeSut = (props: Partial<ComponentProps<typeof Input>> = {}) => {
+	const result = render(<Input {...props} />);
+	return {
+		...result,
+		inputField: screen.queryByRole("textbox") as HTMLInputElement,
+		inputRoot: result.container.querySelector(".input__root"),
+		label: result.container.querySelector(".input__label"),
+		helperText: result.container.querySelector(".input__helper-text"),
+		errorMessage: result.container.querySelector(".input__error-message"),
+		loader: screen.queryByTestId("mock-loader"),
+	};
+};
+
 describe("Input", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
 
-  it("deve renderizar corretamente com valores padrão", () => {
-    const { container } = render(<Input data-testid="input-root" />);
+	it("should render correctly with default values", () => {
+		const { inputRoot, inputField, label, loader, helperText, errorMessage } =
+			makeSut();
 
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot).toBeInTheDocument();
-    expect(inputRoot).toHaveClass("--default");
-    expect(inputRoot).toHaveClass("--fluid");
+		expect(inputRoot).toBeInTheDocument();
+		expect(inputRoot).toHaveClass("--default");
+		expect(inputRoot).toHaveClass("--fluid");
 
-    const inputField = screen.getByRole("textbox");
-    expect(inputField).toBeInTheDocument();
-    expect(inputField).toHaveClass("input__field");
-    expect(inputField).toHaveAttribute("type", "text");
+		expect(inputField).toBeInTheDocument();
+		expect(inputField).toHaveClass("input__field");
+		expect(inputField).toHaveAttribute("type", "text");
 
-    const label = container.querySelector(".input__label");
-    expect(label).not.toBeInTheDocument();
+		expect(label).not.toBeInTheDocument();
+		expect(loader).not.toBeInTheDocument();
+		expect(helperText).not.toBeInTheDocument();
+		expect(errorMessage).not.toBeInTheDocument();
+	});
 
-    const loader = screen.queryByTestId("mock-loader");
-    expect(loader).not.toBeInTheDocument();
+	it("should render with label when provided", () => {
+		const { label } = makeSut({ label: "Name", name: "name" });
 
-    const helperText = container.querySelector(".input__helper-text");
-    expect(helperText).not.toBeInTheDocument();
+		expect(label).toBeInTheDocument();
+		expect(label).toHaveTextContent("Name");
+		expect(label).toHaveAttribute("for", "name");
+	});
 
-    const errorMessage = container.querySelector(".input__error-message");
-    expect(errorMessage).not.toBeInTheDocument();
-  });
+	it("should render with value when provided", () => {
+		const { inputField, inputRoot } = makeSut({ value: "Sample text" });
 
-  it("deve renderizar com label quando fornecido", () => {
-    const { container } = render(<Input label="Nome" name="name" />);
+		expect(inputField).toHaveValue("Sample text");
+		expect(inputRoot).toHaveClass("--filled");
+	});
 
-    const label = container.querySelector(".input__label");
-    expect(label).toBeInTheDocument();
-    expect(label).toHaveTextContent("Nome");
-    expect(label).toHaveAttribute("for", "name");
-  });
+	it("should render as disabled when disabled=true", () => {
+		const { inputField, inputRoot } = makeSut({ disabled: true });
 
-  it("deve renderizar com valor quando fornecido", () => {
-    const { container } = render(<Input value="Texto de exemplo" />);
+		expect(inputField).toBeDisabled();
+		expect(inputRoot).toHaveClass("--disabled");
+	});
 
-    const inputField = screen.getByRole("textbox");
-    expect(inputField).toHaveValue("Texto de exemplo");
+	it("should render with loader when isLoading=true", () => {
+		const { loader } = makeSut({ isLoading: true });
 
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot).toHaveClass("--filled");
-  });
+		expect(loader).toBeInTheDocument();
+		expect(loader).toHaveClass("input__loader");
+		expect(loader).toHaveAttribute("data-color", "neutral-100");
+	});
 
-  it("deve renderizar como desabilitado quando disabled=true", () => {
-    const { container } = render(<Input disabled />);
+	it("should render with helper text when provided", () => {
+		const { helperText } = makeSut({ helperText: "Helper text content" });
 
-    const inputField = screen.getByRole("textbox");
-    expect(inputField).toBeDisabled();
+		expect(helperText).toBeInTheDocument();
+		expect(helperText).toHaveTextContent("Helper text content");
+	});
 
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot).toHaveClass("--disabled");
-  });
+	it("should render with error message when provided", () => {
+		const { errorMessage, inputRoot } = makeSut({
+			errorMessage: "Error message content",
+		});
 
-  it("deve renderizar com loader quando isLoading=true", () => {
-    render(<Input isLoading />);
+		expect(errorMessage).toBeInTheDocument();
+		expect(errorMessage).toHaveTextContent("Error message content");
+		expect(inputRoot).toHaveClass("--error");
+	});
 
-    const loader = screen.getByTestId("mock-loader");
-    expect(loader).toBeInTheDocument();
-    expect(loader).toHaveClass("input__loader");
-    expect(loader).toHaveAttribute("data-color", "insurance-900");
-  });
+	it("should prioritize error message over helper text", () => {
+		const { errorMessage, helperText } = makeSut({
+			helperText: "Helper text",
+			errorMessage: "Error message",
+		});
 
-  it("deve renderizar com texto de ajuda quando fornecido", () => {
-    const { container } = render(<Input helperText="Texto de ajuda" />);
+		expect(errorMessage).toBeInTheDocument();
+		expect(helperText).not.toBeInTheDocument();
+	});
 
-    const helperText = container.querySelector(".input__helper-text");
-    expect(helperText).toBeInTheDocument();
-    expect(helperText).toHaveTextContent("Texto de ajuda");
-  });
+	it("should apply --focused class on focus and remove on blur", () => {
+		const { inputRoot, inputField } = makeSut();
 
-  it("deve renderizar com mensagem de erro quando fornecida", () => {
-    const { container } = render(<Input errorMessage="Mensagem de erro" />);
+		expect(inputRoot).not.toHaveClass("--focused");
 
-    const errorMessage = container.querySelector(".input__error-message");
-    expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent("Mensagem de erro");
+		fireEvent.focus(inputField);
+		expect(inputRoot).toHaveClass("--focused");
 
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot).toHaveClass("--error");
-  });
+		fireEvent.blur(inputField);
+		expect(inputRoot).not.toHaveClass("--focused");
+	});
 
-  it("deve priorizar mensagem de erro sobre texto de ajuda", () => {
-    const { container } = render(
-      <Input helperText="Texto de ajuda" errorMessage="Mensagem de erro" />
-    );
+	it("should not apply --focused class when disabled", () => {
+		const { inputRoot, inputField } = makeSut({ disabled: true });
 
-    const errorMessage = container.querySelector(".input__error-message");
-    expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent("Mensagem de erro");
+		fireEvent.focus(inputField);
+		expect(inputRoot).not.toHaveClass("--focused");
+	});
 
-    const helperText = container.querySelector(".input__helper-text");
-    expect(helperText).not.toBeInTheDocument();
-  });
+	it("should call onChange when value changes", () => {
+		const handleChange = jest.fn();
+		const { inputField } = makeSut({ onChange: handleChange });
 
-  it("deve aplicar classe --focused ao receber foco", () => {
-    const { container } = render(<Input data-testid="input-root" />);
+		fireEvent.change(inputField, { target: { value: "New value" } });
 
-    const inputRoot = container.querySelector(".input__root");
-    const inputField = screen.getByRole("textbox");
+		expect(handleChange).toHaveBeenCalledTimes(1);
+	});
 
-    expect(inputRoot).not.toHaveClass("--focused");
+	it("should render with outlined variant", () => {
+		const { inputRoot } = makeSut({ variant: "outlined" });
 
-    fireEvent.focus(inputField);
-    expect(inputRoot).toHaveClass("--focused");
+		expect(inputRoot).toHaveClass("--outlined");
+		expect(inputRoot).not.toHaveClass("--default");
+	});
 
-    fireEvent.blur(inputField);
-    expect(inputRoot).not.toHaveClass("--focused");
-  });
+	it("should render with fluid width", () => {
+		const { inputRoot } = makeSut({ width: "fluid" });
 
-  it("não deve aplicar classe --focused quando desabilitado", () => {
-    const { container } = render(<Input disabled />);
+		expect(inputRoot).toHaveClass("--fluid");
+	});
 
-    const inputRoot = container.querySelector(".input__root");
-    const inputField = screen.getByRole("textbox");
+	it("should apply custom CSS classes", () => {
+		const { inputRoot } = makeSut({ className: "custom-class" });
 
-    fireEvent.focus(inputField);
-    expect(inputRoot).not.toHaveClass("--focused");
-  });
+		expect(inputRoot).toHaveClass("custom-class");
+		expect(inputRoot).toHaveClass("input__root");
+	});
 
-  it("deve chamar onChange quando o valor é alterado", () => {
-    const handleChange = jest.fn();
-    render(<Input onChange={handleChange} />);
+	it("should pass additional HTML attributes to the root element", () => {
+		const { inputRoot } = makeSut({
+			"aria-label": "Text field",
+			title: "Input title",
+		} as any);
 
-    const inputField = screen.getByRole("textbox");
+		expect(inputRoot).toHaveAttribute("aria-label", "Text field");
+		expect(inputRoot).toHaveAttribute("title", "Input title");
+	});
 
-    fireEvent.change(inputField, { target: { value: "Novo texto" } });
+	it("should render with correct name and id", () => {
+		const { inputField } = makeSut({ name: "username" });
 
-    expect(handleChange).toHaveBeenCalledTimes(1);
-  });
+		expect(inputField).toHaveAttribute("name", "username");
+		expect(inputField).toHaveAttribute("id", "username");
+	});
 
-  it("deve renderizar com variante outlined", () => {
-    const { container } = render(<Input variant="outlined" />);
+	it("should handle non-string values correctly", () => {
+		const { inputField, inputRoot } = makeSut({ value: "123" });
 
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot).toHaveClass("--outlined");
-    expect(inputRoot).not.toHaveClass("--default");
-  });
-
-  it("deve renderizar com largura fluid", () => {
-    const { container } = render(<Input width="fluid" />);
-
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot).toHaveClass("--fluid");
-    expect(inputRoot).not.toHaveClass("--contain");
-  });
-
-  it("deve aplicar classes CSS adicionais", () => {
-    const { container } = render(<Input className="custom-class" />);
-
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot).toHaveClass("custom-class");
-    expect(inputRoot).toHaveClass("input__root");
-  });
-
-  it("deve passar atributos HTML adicionais para o elemento raiz", () => {
-    const { container } = render(
-      <Input aria-label="Campo de texto" title="Insira seu texto aqui" />
-    );
-
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot).toHaveAttribute("aria-label", "Campo de texto");
-    expect(inputRoot).toHaveAttribute("title", "Insira seu texto aqui");
-  });
-
-  it("deve renderizar com nome e id corretos", () => {
-    render(<Input name="username" />);
-
-    const inputField = screen.getByRole("textbox");
-    expect(inputField).toHaveAttribute("name", "username");
-    expect(inputField).toHaveAttribute("id", "username");
-  });
-
-  it("deve aplicar a classe --focused ao receber foco no campo de entrada", () => {
-    const { container } = render(<Input />);
-
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot).toBeInTheDocument();
-
-    const inputField = screen.getByRole("textbox");
-
-    expect(inputRoot?.className).not.toContain("--focused");
-
-    fireEvent.focus(inputField);
-
-    expect(inputRoot?.className).toContain("--focused");
-  });
-
-  it("deve lidar corretamente com valores não string", () => {
-    const { container } = render(<Input value={"123"} />);
-
-    const inputField = screen.getByRole("textbox");
-    expect(inputField).toHaveValue("123");
-
-    const inputRoot = container.querySelector(".input__root");
-    expect(inputRoot?.className).toContain("--filled");
-  });
+		expect(inputField).toHaveValue("123");
+		expect(inputRoot).toHaveClass("--filled");
+	});
 });

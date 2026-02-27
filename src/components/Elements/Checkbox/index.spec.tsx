@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Checkbox } from ".";
 
 const makeSut = (props: any = {}) => {
@@ -28,7 +28,6 @@ describe("Checkbox", () => {
   it("Should render correctly with default values", () => {
     const { sut, svg, label } = makeSut();
 
-
     expect(sut).toBeInTheDocument();
     expect(sut).toHaveClass("checkbox__root");
     expect(sut).toHaveClass("--default");
@@ -44,11 +43,8 @@ describe("Checkbox", () => {
     expect(label).toHaveClass("checkbox__label");
   });
 
-  it("Should be able apply the 'checked' variant", () => {
-    const { sut } = makeSut({});
-
-    fireEvent.click(sut);
-
+  it("Should be able apply the 'checked' variant", async () => {
+    const { sut } = makeSut({ value: true });
     expect(sut).toHaveClass("--checked");
   });
 

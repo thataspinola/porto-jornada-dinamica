@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/a11y/useAriaPropsSupportedByRole: <> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
 import { useState } from "react";
 
 import "./styles.scss";
@@ -50,106 +52,106 @@ import type { DropdownOption, DropdownProps } from "./types";
  */
 
 export const Dropdown = ({
-  className = "",
-  name = "",
-  variant = "default",
-  width = "contain",
-  disabled = false,
-  errorMessage = "",
-  helperText = "",
-  label = "",
-  isLoading = false,
-  options = [],
-  value = "",
-  readOnly = false,
-  onChange,
-  ...props
+	className = "",
+	name = "",
+	variant = "default",
+	width = "contain",
+	disabled = false,
+	errorMessage = "",
+	helperText = "",
+	label = "",
+	isLoading = false,
+	options = [],
+	value = "",
+	readOnly = false,
+	onChange,
+	...props
 }: DropdownProps) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const classes = clsx(
-    "dropdown__root",
-    `--${variant}`,
-    `--${width}`,
-    { "--filled": !!value },
-    { "--focused": isFocused },
-    { "--disabled": disabled },
-    { "--error": !!errorMessage },
-    className,
-  );
+	const [isFocused, setIsFocused] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const classes = clsx(
+		"dropdown__root",
+		`--${variant}`,
+		`--${width}`,
+		{ "--filled": !!value },
+		{ "--focused": isFocused },
+		{ "--disabled": disabled },
+		{ "--error": !!errorMessage },
+		className,
+	);
 
-  const handleSelectOption = (option: DropdownOption) => {
-    onChange?.(option.value);
-    setIsOpen(false);
-  };
+	const handleSelectOption = (option: DropdownOption) => {
+		onChange?.(option.value);
+		setIsOpen(false);
+	};
 
-  const toggleDropdown = () => {
-    if (disabled) return;
-    setIsOpen((prev) => !prev);
-  };
+	const toggleDropdown = () => {
+		if (disabled) return;
+		setIsOpen((prev) => !prev);
+	};
 
-  return (
-    <div
-      className={classes}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
-      {...props}
-      style={{ marginBottom: '32px' }}
-    >
-      <div
-        className="dropdown__trigger"
-        onClick={toggleDropdown}
-        onKeyDown={toggleDropdown}
-      >
-        {label && (
-          <label htmlFor={name} className="dropdown__label">
-            {label}
-          </label>
-        )}
+	return (
+		<div
+			className={classes}
+			onFocus={() => setIsFocused(true)}
+			onBlur={() => setIsFocused(false)}
+			{...props}
+			style={{ marginBottom: "32px" }}
+		>
+			<div
+				className="dropdown__trigger"
+				onClick={toggleDropdown}
+				onKeyDown={toggleDropdown}
+			>
+				{label && (
+					<label htmlFor={name} className="dropdown__label">
+						{label}
+					</label>
+				)}
 
-        <input
-          id={name}
-          name={name}
-          type="text"
-          className={`dropdown__field ${readOnly ? "--readonly" : ""}`}
-          value={value}
-          readOnly
-          tabIndex={-1}
-        />
+				<input
+					id={name}
+					name={name}
+					type="text"
+					className={`dropdown__field ${readOnly ? "--readonly" : ""}`}
+					value={value}
+					readOnly
+					tabIndex={-1}
+				/>
 
-        {isLoading ? (
-          <Loader color="insurance-900" data-testid="loader" />
-        ) : (
-          <ArrowSvg isOpen={isOpen} />
-        )}
-      </div>
+				{isLoading ? (
+					<Loader color="insurance-900" data-testid="loader" />
+				) : (
+					<ArrowSvg isOpen={isOpen} />
+				)}
+			</div>
 
-      {isOpen && (
-        <ul className="dropdown__list">
-          {options.map((option) => (
-            <li
-              key={option.value}
-              className="dropdown__item"
-              aria-selected={value === option.value}
-              onClick={() => handleSelectOption(option)}
-              onKeyDown={(e) =>
-                e.key === "Enter" || e.key === " "
-                  ? handleSelectOption(option)
-                  : undefined
-              }
-            >
-              {option.label}
-            </li>
-          ))}
-        </ul>
-      )}
+			{isOpen && (
+				<ul className="dropdown__list">
+					{options.map((option) => (
+						<li
+							key={option.value}
+							className="dropdown__item"
+							aria-selected={value === option.value}
+							onClick={() => handleSelectOption(option)}
+							onKeyDown={(e) =>
+								e.key === "Enter" || e.key === " "
+									? handleSelectOption(option)
+									: undefined
+							}
+						>
+							{option.label}
+						</li>
+					))}
+				</ul>
+			)}
 
-      {helperText && !errorMessage && (
-        <p className="dropdown__helper-text">{helperText}</p>
-      )}
-      {errorMessage && (
-        <p className="dropdown__error-message">{errorMessage}</p>
-      )}
-    </div>
-  );
+			{helperText && !errorMessage && (
+				<p className="dropdown__helper-text">{helperText}</p>
+			)}
+			{errorMessage && (
+				<p className="dropdown__error-message">{errorMessage}</p>
+			)}
+		</div>
+	);
 };

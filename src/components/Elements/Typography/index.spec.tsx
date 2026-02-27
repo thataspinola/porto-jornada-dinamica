@@ -1,162 +1,124 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
+import type { ComponentProps } from "react";
 import { Typography } from "./index";
 
 jest.mock("./styles.scss", () => ({}));
 
+// Factory to simplify rendering and element selection
+const makeSut = (props: Partial<ComponentProps<typeof Typography>> = {}) => {
+	const result = render(
+		<Typography data-testid="typography" {...props}>
+			{props.children || "Typography"}
+		</Typography>,
+	);
+
+	return {
+		...result,
+		element: screen.getByTestId("typography"),
+	};
+};
+
 describe("Typography", () => {
-  it("deve renderizar corretamente com valores padrão", () => {
-    render(<Typography data-testid="typography" />);
+	it("should render correctly with default values", () => {
+		const { element } = makeSut();
 
-    const typography = screen.getByTestId("typography");
-    expect(typography).toBeInTheDocument();
-    expect(typography).toHaveClass("typography");
-    expect(typography).toHaveClass("--title1");
-    expect(typography).toHaveClass("--neutral-900");
-    expect(typography).toHaveClass("--regular");
-    expect(typography).toHaveClass("--normal");
-    expect(typography.tagName.toLowerCase()).toBe("h1");
-    expect(typography).toHaveTextContent("Typography");
-  });
+		expect(element).toBeInTheDocument();
+		expect(element).toHaveClass("typography");
+		expect(element).toHaveClass("--title1");
+		expect(element).toHaveClass("--insurance-900");
+		expect(element).toHaveClass("--regular");
+		expect(element).toHaveClass("--normal");
+		expect(element.tagName.toLowerCase()).toBe("h1");
+		expect(element).toHaveTextContent("Typography");
+	});
 
-  it("deve renderizar com variante personalizada", () => {
-    render(
-      <Typography variant="title3" data-testid="typography">
-        Título
-      </Typography>
-    );
+	it("should render with custom variant", () => {
+		const { element } = makeSut({ variant: "title3", children: "Title" });
 
-    const typography = screen.getByTestId("typography");
-    expect(typography).toHaveClass("--title3");
-    expect(typography).toHaveTextContent("Título");
-  });
+		expect(element).toHaveClass("--title3");
+		expect(element).toHaveTextContent("Title");
+	});
 
-  it("deve renderizar com tag HTML personalizada", () => {
-    render(
-      <Typography as="h2" data-testid="typography">
-        Subtítulo
-      </Typography>
-    );
+	it("should render with custom HTML tag", () => {
+		const { element } = makeSut({ as: "h2", children: "Subtitle" });
 
-    const typography = screen.getByTestId("typography");
-    expect(typography.tagName.toLowerCase()).toBe("h2");
-  });
+		expect(element.tagName.toLowerCase()).toBe("h2");
+	});
 
-  it("deve renderizar com cor personalizada", () => {
-    render(
-      <Typography color={"insurance-500" as any} data-testid="typography">
-        Texto colorido
-      </Typography>
-    );
+	it("should render with custom color", () => {
+		const { element } = makeSut({ color: "insurance-500" as any });
 
-    const typography = screen.getByTestId("typography");
-    expect(typography).toHaveClass("--insurance-500");
-  });
+		expect(element).toHaveClass("--insurance-500");
+	});
 
-  it("deve renderizar com peso de fonte personalizado", () => {
-    render(
-      <Typography weight="bold" data-testid="typography">
-        Texto em negrito
-      </Typography>
-    );
+	it("should render with custom font weight", () => {
+		const { element } = makeSut({ weight: "bold" });
 
-    const typography = screen.getByTestId("typography");
-    expect(typography).toHaveClass("--bold");
-  });
+		expect(element).toHaveClass("--bold");
+	});
 
-  it("deve renderizar com estilo de fonte personalizado", () => {
-    render(
-      <Typography fontStyle="italic" data-testid="typography">
-        Texto em itálico
-      </Typography>
-    );
+	it("should render with custom font style", () => {
+		const { element } = makeSut({ fontStyle: "italic" });
 
-    const typography = screen.getByTestId("typography");
-    expect(typography).toHaveClass("--italic");
-  });
+		expect(element).toHaveClass("--italic");
+	});
 
-  it("deve aplicar classes CSS adicionais", () => {
-    render(
-      <Typography className="custom-class" data-testid="typography">
-        Texto com classe
-      </Typography>
-    );
+	it("should apply custom CSS classes", () => {
+		const { element } = makeSut({ className: "custom-class" });
 
-    const typography = screen.getByTestId("typography");
-    expect(typography).toHaveClass("custom-class");
-    expect(typography).toHaveClass("typography");
-  });
+		expect(element).toHaveClass("custom-class");
+		expect(element).toHaveClass("typography");
+	});
 
-  it("deve passar atributos HTML adicionais para o elemento", () => {
-    render(
-      <Typography data-testid="typography" aria-label="Texto de exemplo" title="Título do texto">
-        Texto com atributos
-      </Typography>
-    );
+	it("should pass additional HTML attributes to the element", () => {
+		const { element } = makeSut({
+			"aria-label": "Example text",
+			title: "Text title",
+		} as any);
 
-    const typography = screen.getByTestId("typography");
-    expect(typography).toHaveAttribute("aria-label", "Texto de exemplo");
-    expect(typography).toHaveAttribute("title", "Título do texto");
-  });
+		expect(element).toHaveAttribute("aria-label", "Example text");
+		expect(element).toHaveAttribute("title", "Text title");
+	});
 
-  it("deve renderizar como parágrafo", () => {
-    render(
-      <Typography as="p" variant="body1" data-testid="typography">
-        Parágrafo de texto
-      </Typography>
-    );
+	it("should render as a paragraph", () => {
+		const { element } = makeSut({ as: "p", variant: "body1" });
 
-    const typography = screen.getByTestId("typography");
-    expect(typography.tagName.toLowerCase()).toBe("p");
-    expect(typography).toHaveClass("--body1");
-  });
+		expect(element.tagName.toLowerCase()).toBe("p");
+		expect(element).toHaveClass("--body1");
+	});
 
-  it("deve renderizar como span", () => {
-    render(
-      <Typography as="span" variant="caption" data-testid="typography">
-        Texto pequeno
-      </Typography>
-    );
+	it("should render as a span", () => {
+		const { element } = makeSut({ as: "span", variant: "caption" });
 
-    const typography = screen.getByTestId("typography");
-    expect(typography.tagName.toLowerCase()).toBe("span");
-    expect(typography).toHaveClass("--caption");
-  });
+		expect(element.tagName.toLowerCase()).toBe("span");
+		expect(element).toHaveClass("--caption");
+	});
 
-  it("deve renderizar como label", () => {
-    render(
-      <Typography as="label" variant="label" data-testid="typography">
-        Rótulo
-      </Typography>
-    );
+	it("should render as a label", () => {
+		const { element } = makeSut({ as: "label", variant: "label" });
 
-    const typography = screen.getByTestId("typography");
-    expect(typography.tagName.toLowerCase()).toBe("label");
-    expect(typography).toHaveClass("--label");
-  });
+		expect(element.tagName.toLowerCase()).toBe("label");
+		expect(element).toHaveClass("--label");
+	});
 
-  it("deve combinar múltiplas propriedades personalizadas", () => {
-    render(
-      <Typography
-        as="h3"
-        variant="title4"
-        color={"insurance-700" as any}
-        weight="semibold"
-        fontStyle="italic"
-        className="custom-class"
-        data-testid="typography"
-      >
-        Texto personalizado
-      </Typography>
-    );
+	it("should combine multiple custom properties", () => {
+		const { element } = makeSut({
+			as: "h3",
+			variant: "title4",
+			color: "insurance-700" as any,
+			weight: "semibold",
+			fontStyle: "italic",
+			className: "custom-class",
+			children: "Customized Text",
+		});
 
-    const typography = screen.getByTestId("typography");
-    expect(typography.tagName.toLowerCase()).toBe("h3");
-    expect(typography).toHaveClass("--title4");
-    expect(typography).toHaveClass("--insurance-700");
-    expect(typography).toHaveClass("--semibold");
-    expect(typography).toHaveClass("--italic");
-    expect(typography).toHaveClass("custom-class");
-    expect(typography).toHaveTextContent("Texto personalizado");
-  });
+		expect(element.tagName.toLowerCase()).toBe("h3");
+		expect(element).toHaveClass("--title4");
+		expect(element).toHaveClass("--insurance-700");
+		expect(element).toHaveClass("--semibold");
+		expect(element).toHaveClass("--italic");
+		expect(element).toHaveClass("custom-class");
+		expect(element).toHaveTextContent("Customized Text");
+	});
 });

@@ -19,15 +19,12 @@ export interface GTMData {
 export const formatGtmText = (text: string | undefined): string => {
 	if (!text?.trim()) return "";
 
-	return (
-		text
-			.normalize("NFD")
-			// biome-ignore lint/suspicious/noMisleadingCharacterClass: <explanation>
-			.replace(/[\u0300-\u036f]/g, "") // Remove acentos
-			.toLocaleLowerCase()
-			.trim()
-			.replace(/(<([^>]+)>)|[`~!@#$%^&*()_|+=?;:'",.<>{}[\]\\/]/gi, "") // Remove caracteres especiais e tags HTML
-			.split(/\s+/) // Split em qualquer quantidade de espaços
-			.join("-")
-	);
+	return text
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.toLocaleLowerCase()
+		.trim()
+		.replace(/(<([^>]+)>)|[`~!@#$%^&*()_|+=?;:'",.<>{}[\]\\/]/gi, "")
+		.split(/\s+/)
+		.join("-");
 };

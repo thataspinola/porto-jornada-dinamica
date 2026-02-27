@@ -12,7 +12,10 @@ export const Notification = ({
 	...restProps
 }: NotificationProps) => {
 	return (
-		<div className={`notification --${variant}${className ? ` ${className}` : ""}`} {...restProps}>
+		<div
+			className={`notification --${variant}${className ? ` ${className}` : ""}`}
+			{...restProps}
+		>
 			<div className="notification__icon">{icon}</div>
 			<div className="notification__content">
 				<p className="notification__title">{title}</p>

@@ -1,7 +1,13 @@
 import type { HTMLAttributes, ReactNode } from "react";
 
 export type NotificationProps = HTMLAttributes<HTMLDivElement> & {
-	variant?: "default" | "outlined" | "information" | "attention" | "success" | "error";
+	variant?:
+		| "default"
+		| "outlined"
+		| "information"
+		| "attention"
+		| "success"
+		| "error";
 
 	title: string;
 	icon: ReactNode;

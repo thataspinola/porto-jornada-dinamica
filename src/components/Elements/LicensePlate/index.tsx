@@ -1,6 +1,6 @@
-/** biome-ignore-all lint/a11y/noStaticElementInteractions: <explanation> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
 
-import { clsx, plateMask } from "@/utils";
+import { clsx, maskLicensePlate } from "@/utils";
 import { useState } from "react";
 
 import "./styles.scss";
@@ -58,65 +58,69 @@ import type { LicensePlateProps } from "./types";
  */
 
 export const LicensePlate = ({
-  className = "",
-  name = "",
-  variant = "default",
-  width = "fluid",
-  disabled = false,
-  value = "",
-  isLoading = false,
-  helperText = "",
-  errorMessage = "",
-  label = "Placa do veículo",
-  onChange,
+	className = "",
+	name = "",
+	variant = "default",
+	width = "fluid",
+	disabled = false,
+	value = "",
+	isLoading = false,
+	helperText = "",
+	errorMessage = "",
+	label = "Placa do veículo",
+	onChange,
+	...restProps
 }: LicensePlateProps) => {
-  const [focused, setFocused] = useState(false);
+	const [focused, setFocused] = useState(false);
 
-  const handleFocus = (isFocus: boolean) => {
-    if (disabled) return;
-    setFocused(isFocus);
-  };
-  const isError = errorMessage.length > 0;
-  const isFilled = value?.toString().length > 0;
-  const classes = clsx(
-    "input__root",
-    `--${variant}`,
-    `--${width}`,
-    { "--filled": !!isFilled },
-    { "--focused": focused },
-    { "--disabled": disabled },
-    { "--error": isError },
-    className,
-  );
+	const handleFocus = (isFocus: boolean) => {
+		if (disabled) return;
+		setFocused(isFocus);
+	};
+	const isError = errorMessage.length > 0;
+	const isFilled = value?.toString().length > 0;
+	const classes = clsx(
+		"input__root",
+		`--${variant}`,
+		`--${width}`,
+		{ "--filled": !!isFilled },
+		{ "--focused": focused },
+		{ "--disabled": disabled },
+		{ "--error": isError },
+		className,
+	);
 
-  return (
-    <div
-      className={classes}
-      onFocus={() => handleFocus(true)}
-      onBlur={() => handleFocus(false)}
-      style={{ marginBottom: "32px" }}
-    >
-      <div className="input__box">
-        {label && (
-          <label htmlFor={name} className="input__label">
-            {label}
-          </label>
-        )}
-        <input
-          id={name}
-          name={name}
-          type="text"
-          className="input__field"
-          value={value}
-          disabled={disabled}
-          onChange={(e) => onChange(plateMask(e.target.value))}
-        />
-      </div>
+	return (
+		<div
+			className={classes}
+			onFocus={() => handleFocus(true)}
+			onBlur={() => handleFocus(false)}
+			style={{ marginBottom: "32px" }}
+			{...restProps}
+		>
+			<div className="input__box">
+				{label && (
+					<label htmlFor={name} className="input__label">
+						{label}
+					</label>
+				)}
+				<input
+					id={name}
+					name={name}
+					type="text"
+					className="input__field"
+					value={value}
+					disabled={disabled}
+					onChange={(e) => onChange(maskLicensePlate(e.target.value))}
+				/>
+			</div>
 
-      {isLoading && <Loader className="input__loader" color="insurance-900" />}
+			{isLoading && <Loader className="input__loader" color="insurance-900" />}
 
-      {helperText && <p className="input__helper-text">{helperText}</p>}
-      {isError && <p className="input__error-message">{errorMessage}</p>}
-    </div>
-  );
+			{!isError && helperText && (
+				<p className="input__helper-text">{helperText}</p>
+			)}
+			{isError && <p className="input__error-message">{errorMessage}</p>}
+		</div>
+	);
 };

@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
+/** biome-ignore-all lint/a11y/useAriaPropsSupportedByRole: <> */
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -7,7 +9,12 @@ import { clsx } from "@/utils";
 
 import type { ModalProps } from "./types";
 
-export const Modal = ({ title, subtitle, name, children }: ModalProps & { name: string }) => {
+export const Modal = ({
+	title,
+	subtitle,
+	name,
+	children,
+}: ModalProps & { name: string }) => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const isOpen = searchParams.get("modal") === name;
@@ -21,7 +28,11 @@ export const Modal = ({ title, subtitle, name, children }: ModalProps & { name: 
 	return (
 		<>
 			{isOpen && (
-				<div className={"modal__overlay"} onClick={handleCloseModal} onKeyDown={handleCloseModal} />
+				<div
+					className={"modal__overlay"}
+					onClick={handleCloseModal}
+					onKeyDown={handleCloseModal}
+				/>
 			)}
 			<div
 				className={clsx("modal__root", { "modal--hidden": !isOpen })}

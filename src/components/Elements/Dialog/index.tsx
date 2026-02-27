@@ -1,3 +1,6 @@
+/** biome-ignore-all lint/a11y/useKeyWithClickEvents: <> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
+
 import { clsx } from "@/utils";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -104,13 +107,19 @@ export const Dialog = ({
 					</div>
 				)}
 
-				{description && <div className="dialog__description">{description}</div>}
+				{description && (
+					<div className="dialog__description">{description}</div>
+				)}
 
 				{children && <div className="dialog__body">{children}</div>}
 
-				{footer && <div className={clsx("dialog__footer", `--${footerVariant}`)}>{footer}</div>}
+				{footer && (
+					<div className={clsx("dialog__footer", `--${footerVariant}`)}>
+						{footer}
+					</div>
+				)}
 			</div>
 		</div>,
-		document.body
+		document.body,
 	);
 };

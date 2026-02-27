@@ -10,14 +10,19 @@ type MakeSut = {
 	dataTestId?: string;
 };
 
-const makeSut = ({ value, initialValue = 0, color = "rgb(0, 70, 192)", dataTestId }: MakeSut) => {
+const makeSut = ({
+	value,
+	initialValue = 0,
+	color = "rgb(0, 70, 192)",
+	dataTestId,
+}: MakeSut) => {
 	return render(
 		<ProgressBar
 			initialValue={initialValue}
 			value={value}
 			color={color}
 			data-testid={dataTestId ? dataTestId : "progress-bar"}
-		/>
+		/>,
 	);
 };
 
@@ -78,7 +83,6 @@ describe("ProgressBar", () => {
 			backgroundColor: "rgb(0, 70, 192)",
 		});
 
-		// @ts-ignore
 		rerender(<ProgressBar value={-20} data-testid="progress-bar" />);
 
 		progressBar = screen.getByTestId("progress-bar");

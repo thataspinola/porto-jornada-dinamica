@@ -15,7 +15,9 @@ jest.mock("next/navigation", () => ({
 }));
 
 jest.mock("@/utils", () => {
-	const mockClsx = jest.fn((...args: unknown[]) => args.filter(Boolean).join(" "));
+	const mockClsx = jest.fn((...args: unknown[]) =>
+		args.filter(Boolean).join(" "),
+	);
 	return {
 		clsx: mockClsx,
 	};
@@ -48,9 +50,13 @@ describe("Modal", () => {
 
 	it("deve renderizar corretamente quando aberto", () => {
 		const { container } = render(
-			<Modal name="test-modal" title="Título do Modal" subtitle="Subtítulo do Modal">
+			<Modal
+				name="test-modal"
+				title="Título do Modal"
+				subtitle="Subtítulo do Modal"
+			>
 				<p>Conteúdo do modal</p>
-			</Modal>
+			</Modal>,
 		);
 
 		const modal = container.querySelector(".modal__root");
@@ -84,7 +90,7 @@ describe("Modal", () => {
 		render(
 			<Modal name="test-modal" title="Título do Modal">
 				<p>Conteúdo do modal</p>
-			</Modal>
+			</Modal>,
 		);
 
 		const closeButton = screen.getByRole("button", { name: /fechar modal/i });
@@ -97,7 +103,7 @@ describe("Modal", () => {
 		const { container } = render(
 			<Modal name="test-modal" title="Título do Modal">
 				<p>Conteúdo do modal</p>
-			</Modal>
+			</Modal>,
 		);
 
 		const overlay = container.querySelector(".modal__overlay");
@@ -110,7 +116,9 @@ describe("Modal", () => {
 	});
 
 	it("não deve estar visível quando o parâmetro de URL não corresponder ao nome do modal", () => {
-		const mockGet = jest.fn((param) => (param === "modal" ? "outro-modal" : null));
+		const mockGet = jest.fn((param) =>
+			param === "modal" ? "outro-modal" : null,
+		);
 		const { useSearchParams } = require("next/navigation");
 		useSearchParams.mockReturnValue({
 			get: mockGet,
@@ -119,7 +127,7 @@ describe("Modal", () => {
 		const { container } = render(
 			<Modal name="test-modal" title="Título do Modal">
 				<p>Conteúdo do modal</p>
-			</Modal>
+			</Modal>,
 		);
 
 		const overlay = container.querySelector(".modal__overlay");
@@ -128,9 +136,13 @@ describe("Modal", () => {
 
 	it("deve renderizar o subtítulo quando fornecido", () => {
 		render(
-			<Modal name="test-modal" title="Título do Modal" subtitle="Subtítulo do Modal">
+			<Modal
+				name="test-modal"
+				title="Título do Modal"
+				subtitle="Subtítulo do Modal"
+			>
 				<p>Conteúdo do modal</p>
-			</Modal>
+			</Modal>,
 		);
 
 		const subtitle = screen.getByText("Subtítulo do Modal");
@@ -143,7 +155,7 @@ describe("Modal", () => {
 		const { container } = render(
 			<Modal name="test-modal" title="Título do Modal">
 				<p>Conteúdo do modal</p>
-			</Modal>
+			</Modal>,
 		);
 
 		const subtitleElement = container.querySelector("#modal-subtitle");
@@ -155,7 +167,7 @@ describe("Modal", () => {
 		const { container } = render(
 			<Modal name="test-modal" title="Título do Modal">
 				<p>Conteúdo do modal</p>
-			</Modal>
+			</Modal>,
 		);
 
 		const modal = container.querySelector(".modal__root");
@@ -169,7 +181,7 @@ describe("Modal", () => {
 		render(
 			<Modal name="test-modal" title="Título do Modal">
 				<p>Conteúdo do modal</p>
-			</Modal>
+			</Modal>,
 		);
 
 		const closeButton = screen.getByRole("button", { name: /fechar modal/i });
@@ -196,7 +208,7 @@ describe("Modal", () => {
 		const { container } = render(
 			<Modal name="test-modal" title="Título do Modal">
 				<p>Conteúdo do modal</p>
-			</Modal>
+			</Modal>,
 		);
 
 		const modal = container.querySelector(".modal__root");

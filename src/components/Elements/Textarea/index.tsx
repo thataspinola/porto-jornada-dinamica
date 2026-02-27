@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
+
 import { clsx } from "@/utils";
 import { useState } from "react";
 
@@ -39,7 +41,7 @@ export const Textarea = ({
 			"--disabled": disabled,
 			"--error": isError,
 		},
-		className
+		className,
 	);
 
 	return (
@@ -61,10 +63,12 @@ export const Textarea = ({
 				rows={rows}
 				value={value}
 				disabled={disabled}
-				onChange={onChange}
+				onChange={(e) => onChange(e.target.value)}
 			/>
 			<span className="textarea__counter">{value.toString().length} / 200</span>
-			{helperText && !isError && <p className="input__helper-text">{helperText}</p>}
+			{helperText && !isError && (
+				<p className="input__helper-text">{helperText}</p>
+			)}
 			{isError && <p className="input__error-message">{errorMessage}</p>}
 		</div>
 	);
