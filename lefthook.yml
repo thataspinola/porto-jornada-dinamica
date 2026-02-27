@@ -21,7 +21,7 @@ pre-commit:
       tags:
         - frontend
         - quality
-      run: npm run formater
+      run: npm run format
 
     - name: Code linter
       tags:
