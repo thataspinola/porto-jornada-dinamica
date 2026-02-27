@@ -84,7 +84,7 @@ describe("<Carousel />", () => {
 		render(
 			<Carousel autoPlay autoPlayInterval={1000}>
 				{createTestSlides(3)}
-			</Carousel>
+			</Carousel>,
 		);
 		const track = screen.getByTestId("carousel-track");
 
@@ -121,7 +121,7 @@ describe("<Carousel />", () => {
 		render(
 			<Carousel arrows slidesToScroll={2}>
 				{createTestSlides(6)}
-			</Carousel>
+			</Carousel>,
 		);
 		const next = screen.getAllByRole("button")[1];
 		const track = screen.getByTestId("carousel-track");
@@ -167,7 +167,7 @@ describe("<Carousel />", () => {
 		const { unmount } = render(
 			<Carousel autoPlay autoPlayInterval={1000}>
 				{createTestSlides(3)}
-			</Carousel>
+			</Carousel>,
 		);
 
 		expect(setIntervalSpy).toHaveBeenCalled();
@@ -196,7 +196,7 @@ describe("<Carousel />", () => {
 		render(
 			<Carousel autoPlay autoPlayInterval={1000}>
 				{createTestSlides(3)}
-			</Carousel>
+			</Carousel>,
 		);
 
 		const track = screen.getByTestId("carousel-track");
@@ -223,7 +223,7 @@ describe("<Carousel />", () => {
 		render(
 			<Carousel slidesToShow={2} slidesToScroll={2}>
 				{createTestSlides(4)}
-			</Carousel>
+			</Carousel>,
 		);
 
 		const track = screen.getByTestId("carousel-track");

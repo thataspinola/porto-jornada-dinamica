@@ -4,5 +4,8 @@ export function onlyLetterMask(value: string): string {
 	const REGEX_ONLY_LETTERS = /[0-9]/gi;
 	const SPECIAL_CHARS = /[^\w\s]/gi;
 
-	return value.replace(REGEX_ONLY_LETTERS, "").normalize("NFD").replace(SPECIAL_CHARS, "");
+	return value
+		.replace(REGEX_ONLY_LETTERS, "")
+		.normalize("NFD")
+		.replace(SPECIAL_CHARS, "");
 }

@@ -5,7 +5,8 @@ export interface IconProps {
 	[key: string]: unknown;
 }
 
-export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+export interface DialogProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	isOpen: boolean;
 	variant?: "small" | "medium" | "large";
 	title?: ReactNode;

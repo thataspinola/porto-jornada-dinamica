@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/a11y/noStaticElementInteractions: <explanation> */
 
-import { clsx, plateMask } from "@/utils";
+import { clsx, maskLicensePlate } from "@/utils";
 import { useState } from "react";
 
 import "./styles.scss";
@@ -109,7 +109,7 @@ export const LicensePlate = ({
           className="input__field"
           value={value}
           disabled={disabled}
-          onChange={(e) => onChange(plateMask(e.target.value))}
+          onChange={(e) => onChange(maskLicensePlate(e.target.value))}
         />
       </div>
 

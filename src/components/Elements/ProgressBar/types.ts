@@ -1,6 +1,7 @@
 import type { HTMLAttributes } from "react";
 
-export interface ProgressBarProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
+export interface ProgressBarProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
 	/** Valor inicial da barra de progresso (0-100) */
 	initialValue?: number;
 

@@ -18,7 +18,16 @@ export type HeadingTypes =
 	| "overline"
 	| "button";
 
-export type HeadingTags = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "label";
+export type HeadingTags =
+	| "h1"
+	| "h2"
+	| "h3"
+	| "h4"
+	| "h5"
+	| "h6"
+	| "p"
+	| "span"
+	| "label";
 
 export type TypographyProps = React.HTMLAttributes<HTMLElement> & {
 	children?: ReactNode;

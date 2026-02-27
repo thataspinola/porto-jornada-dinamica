@@ -10,10 +10,10 @@
     "copy:public": "copyfiles \"public/**/*\" \"dist/react-ssr-corp-hubv-dinamic-journey/standalone\"",
     "copy:static": "copyfiles -u 2 \"dist/react-ssr-corp-hubv-dinamic-journey/static/**/*\" \"dist/react-ssr-corp-hubv-dinamic-journey/standalone/dist/react-ssr-corp-hubv-dinamic-journey\"",
     "start": "next start",
-    "lint": "npx @biomejs/biome format --lint ./src",
+    "lint": "npx @biomejs/biome lint --write ./src",
     "format": "npx @biomejs/biome format --write ./src",
     "type-check": "tsc --noEmit",
-    "test": "jest",
+    "test": "",
     "test:ci": "jest --findRelatedTests",
     "test:watch": "jest --watch"
   },

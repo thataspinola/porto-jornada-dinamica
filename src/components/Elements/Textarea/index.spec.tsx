@@ -6,7 +6,9 @@ import { Textarea } from "./index";
 jest.mock("./styles.scss", () => ({}));
 
 // Mock do utilitário clsx
-const mockClsx = jest.fn((...args: unknown[]) => args.filter(Boolean).join(" "));
+const mockClsx = jest.fn((...args: unknown[]) =>
+	args.filter(Boolean).join(" "),
+);
 jest.mock("@/utils", () => ({
 	clsx: (...args: unknown[]) => mockClsx(...args),
 }));
@@ -29,7 +31,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		const textareaRoot = screen.getByTestId("textarea-root");
@@ -58,7 +60,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		const label = screen.getByText("Descrição");
@@ -80,7 +82,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		const textareaField = screen.getByRole("textbox");
@@ -100,7 +102,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		const counter = screen.getByText("16 / 200");
@@ -120,7 +122,7 @@ describe("Textarea", () => {
 				"--disabled": true,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		const textareaField = screen.getByRole("textbox");
@@ -128,7 +130,9 @@ describe("Textarea", () => {
 	});
 
 	it("deve aplicar classe --error quando tem mensagem de erro", () => {
-		render(<Textarea errorMessage="Campo obrigatório" data-testid="textarea-root" />);
+		render(
+			<Textarea errorMessage="Campo obrigatório" data-testid="textarea-root" />,
+		);
 
 		expect(mockClsx).toHaveBeenCalledWith(
 			"textarea__root",
@@ -140,7 +144,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": true,
 			},
-			""
+			"",
 		);
 
 		const errorMessage = screen.getByText("Campo obrigatório");
@@ -149,7 +153,12 @@ describe("Textarea", () => {
 	});
 
 	it("deve renderizar texto de ajuda quando fornecido", () => {
-		render(<Textarea helperText="Máximo de 200 caracteres" data-testid="textarea-root" />);
+		render(
+			<Textarea
+				helperText="Máximo de 200 caracteres"
+				data-testid="textarea-root"
+			/>,
+		);
 
 		expect(mockClsx).toHaveBeenCalledWith(
 			"textarea__root",
@@ -161,7 +170,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		const helperText = screen.getByText("Máximo de 200 caracteres");
@@ -175,7 +184,7 @@ describe("Textarea", () => {
 				helperText="Máximo de 200 caracteres"
 				errorMessage="Campo obrigatório"
 				data-testid="textarea-root"
-			/>
+			/>,
 		);
 
 		expect(mockClsx).toHaveBeenCalledWith(
@@ -188,7 +197,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": true,
 			},
-			""
+			"",
 		);
 
 		const errorMessage = screen.getByText("Campo obrigatório");
@@ -213,7 +222,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		fireEvent.focus(textareaField);
@@ -228,7 +237,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		fireEvent.blur(textareaField);
@@ -242,7 +251,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 	});
 
@@ -260,7 +269,7 @@ describe("Textarea", () => {
 				"--disabled": true,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		fireEvent.focus(textareaField);
@@ -274,24 +283,13 @@ describe("Textarea", () => {
 				"--disabled": true,
 				"--error": false,
 			},
-			""
+			"",
 		);
 	});
 
 	it("não deve aplicar classe --focused quando tem erro", () => {
-		render(<Textarea errorMessage="Campo obrigatório" data-testid="textarea-root" />);
-
-		expect(mockClsx).toHaveBeenLastCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": true,
-			},
-			""
+		render(
+			<Textarea errorMessage="Campo obrigatório" data-testid="textarea-root" />,
 		);
 
 		expect(mockClsx).toHaveBeenLastCalledWith(
@@ -304,7 +302,20 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": true,
 			},
-			""
+			"",
+		);
+
+		expect(mockClsx).toHaveBeenLastCalledWith(
+			"textarea__root",
+			"--default",
+			"--contain",
+			{
+				"--filled": false,
+				"--focused": false,
+				"--disabled": false,
+				"--error": true,
+			},
+			"",
 		);
 	});
 
@@ -332,7 +343,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 	});
 
@@ -349,7 +360,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 	});
 
@@ -359,7 +370,7 @@ describe("Textarea", () => {
 				data-testid="textarea-root"
 				aria-label="Campo de descrição"
 				title="Insira sua descrição aqui"
-			/>
+			/>,
 		);
 
 		expect(mockClsx).toHaveBeenCalledWith(
@@ -372,7 +383,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		const textareaRoot = screen.getByTestId("textarea-root");
@@ -393,7 +404,7 @@ describe("Textarea", () => {
 				"--disabled": false,
 				"--error": false,
 			},
-			""
+			"",
 		);
 
 		const textareaField = screen.getByRole("textbox");

@@ -30,7 +30,10 @@ describe("Radio", () => {
 	});
 
 	it("Should render with description", () => {
-		const { container } = makeSut({ "data-testid": "radio", description: "Opção 1" });
+		const { container } = makeSut({
+			"data-testid": "radio",
+			description: "Opção 1",
+		});
 
 		const radio = screen.getByTestId("radio");
 		expect(radio).toBeInTheDocument();
@@ -71,7 +74,7 @@ describe("Radio", () => {
 				aria-label="Opção de rádio"
 				title="Selecione esta opção"
 				role="radio"
-			/>
+			/>,
 		);
 
 		const radio = screen.getByTestId("radio");
@@ -83,7 +86,9 @@ describe("Radio", () => {
 	it("Should render with long description", () => {
 		const longDescription =
 			"Esta é uma descrição muito longa para testar como o componente lida com textos extensos que podem quebrar em múltiplas linhas";
-		const { container } = render(<Radio description={longDescription} data-testid="radio" />);
+		const { container } = render(
+			<Radio description={longDescription} data-testid="radio" />,
+		);
 
 		const radio = screen.getByTestId("radio");
 		expect(radio).toBeInTheDocument();
@@ -126,7 +131,9 @@ describe("Radio", () => {
 
 	it("should not call click event when disabled", () => {
 		const handleClick = jest.fn();
-		render(<Radio data-testid="radio" variant="disabled" onClick={handleClick} />);
+		render(
+			<Radio data-testid="radio" variant="disabled" onClick={handleClick} />,
+		);
 
 		const radio = screen.getByTestId("radio");
 		fireEvent.click(radio);

@@ -16,16 +16,16 @@
  * }
  */
 export const getStepData = (steps: any[], currentSlug: string) => {
-  const index = steps.findIndex((s) => s.slug === currentSlug);
+	const index = steps.findIndex((s) => s.slug === currentSlug);
 
-  if (index === -1) return null;
+	if (index === -1) return null;
 
-  return {
-    step: steps[index],
-    position: index,
-    isFirst: index === 0,
-    isLast: index === steps.length - 1,
-    // Cálculo do progresso baseado na posição atual em relação ao total
-    progress: ((index + 1) / steps.length) * 100,
-  };
+	return {
+		step: steps[index],
+		position: index,
+		isFirst: index === 0,
+		isLast: index === steps.length - 1,
+		// Cálculo do progresso baseado na posição atual em relação ao total
+		progress: ((index + 1) / steps.length) * 100,
+	};
 };

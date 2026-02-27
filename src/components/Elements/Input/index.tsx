@@ -59,66 +59,66 @@ import type { InputProps } from "./types";
  */
 
 export const Input = ({
-  className = "",
-  name = "",
-  variant = "default",
-  width = "fluid",
-  disabled = false,
-  value = "",
-  isLoading = false,
-  helperText = "",
-  errorMessage = "",
-  label = "",
-  onChange,
-  ...props
+	className = "",
+	name = "",
+	variant = "default",
+	width = "fluid",
+	disabled = false,
+	value = "",
+	isLoading = false,
+	helperText = "",
+	errorMessage = "",
+	label = "",
+	onChange,
+	...props
 }: InputProps) => {
-  const [focused, setFocused] = useState(false);
+	const [focused, setFocused] = useState(false);
 
-  const handleFocus = (isFocus: boolean) => {
-    if (disabled) return;
-    setFocused(isFocus);
-  };
-  const isError = errorMessage?.length > 0;
-  const isFilled = value?.toString().length > 0;
-  const classes = clsx(
-    "input__root",
-    `--${variant}`,
-    `--${width}`,
-    { "--filled": !!isFilled },
-    { "--focused": focused },
-    { "--disabled": disabled },
-    { "--error": isError },
-    className,
-  );
+	const handleFocus = (isFocus: boolean) => {
+		if (disabled) return;
+		setFocused(isFocus);
+	};
+	const isError = errorMessage?.length > 0;
+	const isFilled = value?.toString().length > 0;
+	const classes = clsx(
+		"input__root",
+		`--${variant}`,
+		`--${width}`,
+		{ "--filled": !!isFilled },
+		{ "--focused": focused },
+		{ "--disabled": disabled },
+		{ "--error": isError },
+		className,
+	);
 
-  return (
-    <div
-      className={classes}
-      onFocus={() => handleFocus(true)}
-      onBlur={() => handleFocus(false)}
-      style={{ marginBottom: "32px" }}
-    >
-      <div className="input__box">
-        {label && (
-          <label htmlFor={name} className="input__label">
-            {label}
-          </label>
-        )}
-        <input
-          id={name}
-          name={name}
-          type="text"
-          className="input__field"
-          value={value}
-          disabled={disabled}
-          onChange={(e) => onChange(e.target.value)}
-        />
-      </div>
+	return (
+		<div
+			className={classes}
+			onFocus={() => handleFocus(true)}
+			onBlur={() => handleFocus(false)}
+			style={{ marginBottom: "32px" }}
+		>
+			<div className="input__box">
+				{label && (
+					<label htmlFor={name} className="input__label">
+						{label}
+					</label>
+				)}
+				<input
+					id={name}
+					name={name}
+					type="text"
+					className="input__field"
+					value={value}
+					disabled={disabled}
+					onChange={(e) => onChange(e.target.value)}
+				/>
+			</div>
 
-      {isLoading && <Loader className="input__loader" color="neutral-100" />}
+			{isLoading && <Loader className="input__loader" color="neutral-100" />}
 
-      {helperText && <p className="input__helper-text">{helperText}</p>}
-      {isError && <p className="input__error-message">{errorMessage}</p>}
-    </div>
-  );
+			{helperText && <p className="input__helper-text">{helperText}</p>}
+			{isError && <p className="input__error-message">{errorMessage}</p>}
+		</div>
+	);
 };
