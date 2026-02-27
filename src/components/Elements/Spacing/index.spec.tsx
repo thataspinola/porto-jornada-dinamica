@@ -28,7 +28,15 @@ describe("<Spacing />", () => {
 	});
 
 	it("converte valores numéricos para rem", () => {
-		render(<Spacing top={2} bottom={1} left={0.5} right={1.5} data-testid="spacing" />);
+		render(
+			<Spacing
+				top={2}
+				bottom={1}
+				left={0.5}
+				right={1.5}
+				data-testid="spacing"
+			/>,
+		);
 		const el = screen.getByTestId("spacing");
 
 		expect(el.style.marginTop).toBe("2rem");
@@ -51,7 +59,9 @@ describe("<Spacing />", () => {
 	});
 
 	it("aplica classes CSS personalizadas", () => {
-		render(<Spacing className="custom-class another-class" data-testid="spacing" />);
+		render(
+			<Spacing className="custom-class another-class" data-testid="spacing" />,
+		);
 		const el = screen.getByTestId("spacing");
 
 		expect(el.className).toContain("custom-class");
@@ -69,7 +79,7 @@ describe("<Spacing />", () => {
 				}}
 				top="10px"
 				data-testid="spacing"
-			/>
+			/>,
 		);
 
 		const el = screen.getByTestId("spacing");
@@ -99,7 +109,7 @@ describe("<Spacing />", () => {
 		const { container } = render(
 			<Spacing data-testid="spacing">
 				<div data-testid="child">Conteúdo ignorado</div>
-			</Spacing>
+			</Spacing>,
 		);
 
 		// Verifica que o componente retornou null (sem renderizar nada)

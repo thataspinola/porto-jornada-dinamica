@@ -37,7 +37,13 @@ describe("<Notification />", () => {
 	});
 
 	it("deve renderizar com variante outlined", () => {
-		render(<Notification {...defaultProps} variant="outlined" data-testid="notification" />);
+		render(
+			<Notification
+				{...defaultProps}
+				variant="outlined"
+				data-testid="notification"
+			/>,
+		);
 
 		const notification = screen.getByTestId("notification");
 		expect(notification).toHaveClass("--outlined");
@@ -45,28 +51,52 @@ describe("<Notification />", () => {
 	});
 
 	it("deve renderizar com variante information", () => {
-		render(<Notification {...defaultProps} variant="information" data-testid="notification" />);
+		render(
+			<Notification
+				{...defaultProps}
+				variant="information"
+				data-testid="notification"
+			/>,
+		);
 
 		const notification = screen.getByTestId("notification");
 		expect(notification).toHaveClass("--information");
 	});
 
 	it("deve renderizar com variante attention", () => {
-		render(<Notification {...defaultProps} variant="attention" data-testid="notification" />);
+		render(
+			<Notification
+				{...defaultProps}
+				variant="attention"
+				data-testid="notification"
+			/>,
+		);
 
 		const notification = screen.getByTestId("notification");
 		expect(notification).toHaveClass("--attention");
 	});
 
 	it("deve renderizar com variante success", () => {
-		render(<Notification {...defaultProps} variant="success" data-testid="notification" />);
+		render(
+			<Notification
+				{...defaultProps}
+				variant="success"
+				data-testid="notification"
+			/>,
+		);
 
 		const notification = screen.getByTestId("notification");
 		expect(notification).toHaveClass("--success");
 	});
 
 	it("deve renderizar com variante error", () => {
-		render(<Notification {...defaultProps} variant="error" data-testid="notification" />);
+		render(
+			<Notification
+				{...defaultProps}
+				variant="error"
+				data-testid="notification"
+			/>,
+		);
 
 		const notification = screen.getByTestId("notification");
 		expect(notification).toHaveClass("--error");
@@ -78,7 +108,9 @@ describe("<Notification />", () => {
 			href: "https://exemplo.com",
 		};
 
-		render(<Notification {...defaultProps} link={link} data-testid="notification" />);
+		render(
+			<Notification {...defaultProps} link={link} data-testid="notification" />,
+		);
 
 		const linkElement = screen.getByText("Saiba mais");
 		expect(linkElement).toBeInTheDocument();
@@ -92,14 +124,22 @@ describe("<Notification />", () => {
 			href: "https://exemplo.com",
 		};
 
-		render(<Notification {...defaultProps} link={link} data-testid="notification" />);
+		render(
+			<Notification {...defaultProps} link={link} data-testid="notification" />,
+		);
 
 		const linkElement = screen.queryByRole("link");
 		expect(linkElement).not.toBeInTheDocument();
 	});
 
 	it("deve aplicar classes CSS adicionais", () => {
-		render(<Notification {...defaultProps} className="custom-class" data-testid="notification" />);
+		render(
+			<Notification
+				{...defaultProps}
+				className="custom-class"
+				data-testid="notification"
+			/>,
+		);
 
 		const notification = screen.getByTestId("notification");
 		expect(notification).toHaveClass("custom-class");
@@ -113,11 +153,14 @@ describe("<Notification />", () => {
 				data-testid="notification"
 				aria-label="Notificação importante"
 				role="alert"
-			/>
+			/>,
 		);
 
 		const notification = screen.getByTestId("notification");
-		expect(notification).toHaveAttribute("aria-label", "Notificação importante");
+		expect(notification).toHaveAttribute(
+			"aria-label",
+			"Notificação importante",
+		);
 		expect(notification).toHaveAttribute("role", "alert");
 	});
 
@@ -135,7 +178,7 @@ describe("<Notification />", () => {
 				description="Esta notificação usa um ícone SVG"
 				icon={svgIcon}
 				data-testid="notification"
-			/>
+			/>,
 		);
 
 		const icon = screen.getByTestId("svg-icon");
@@ -153,7 +196,7 @@ describe("<Notification />", () => {
 				description={longDescription}
 				icon={<span>🔔</span>}
 				data-testid="notification"
-			/>
+			/>,
 		);
 
 		const description = screen.getByText(longDescription);
@@ -168,7 +211,9 @@ describe("<Notification />", () => {
 			href: "https://exemplo.com",
 		};
 
-		render(<Notification {...defaultProps} link={link} data-testid="notification" />);
+		render(
+			<Notification {...defaultProps} link={link} data-testid="notification" />,
+		);
 
 		const linkElement = screen.getByText("Clique aqui");
 		linkElement.onclick = mockOnClick;
@@ -190,7 +235,9 @@ describe("<Notification />", () => {
 			},
 		};
 
-		render(<Notification {...completeProps} data-testid="complete-notification" />);
+		render(
+			<Notification {...completeProps} data-testid="complete-notification" />,
+		);
 
 		const notification = screen.getByTestId("complete-notification");
 		expect(notification).toHaveClass("notification");

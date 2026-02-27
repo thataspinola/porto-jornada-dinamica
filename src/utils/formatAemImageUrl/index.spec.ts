@@ -24,7 +24,8 @@ describe("formatAemImageUrl.ts", () => {
 
 	it("should handle URLs with query parameters", () => {
 		const path = "/content/dam/image.jpg?width=100";
-		const expected = "https://www.portoseguro.com.br/content/dam/image.jpg?width=100";
+		const expected =
+			"https://www.portoseguro.com.br/content/dam/image.jpg?width=100";
 		expect(formatAemImageUrl(path)).toBe(expected);
 	});
 });

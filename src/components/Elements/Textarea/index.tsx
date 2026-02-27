@@ -39,7 +39,7 @@ export const Textarea = ({
 			"--disabled": disabled,
 			"--error": isError,
 		},
-		className
+		className,
 	);
 
 	return (
@@ -64,7 +64,9 @@ export const Textarea = ({
 				onChange={onChange}
 			/>
 			<span className="textarea__counter">{value.toString().length} / 200</span>
-			{helperText && !isError && <p className="input__helper-text">{helperText}</p>}
+			{helperText && !isError && (
+				<p className="input__helper-text">{helperText}</p>
+			)}
 			{isError && <p className="input__error-message">{errorMessage}</p>}
 		</div>
 	);

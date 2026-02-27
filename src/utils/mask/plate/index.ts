@@ -5,9 +5,9 @@
  * @returns {string} Valor formatado
  */
 export const maskLicensePlate = (value: string): string => {
-  return value
-    .toUpperCase()
-    .replace(/[^A-Z0-9]/g, "")
-    .slice(0, 7)
-    .replace(/^([A-Z]{3})([0-9A-Z]{1,4})$/, "$1-$2");
+	return value
+		.toUpperCase()
+		.replace(/[^A-Z0-9]/g, "")
+		.slice(0, 7)
+		.replace(/^([A-Z]{3})([0-9A-Z]{1,4})$/, "$1-$2");
 };

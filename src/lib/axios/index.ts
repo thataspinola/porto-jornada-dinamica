@@ -1,2 +1,2 @@
-export { authorizedApi } from './authorizedApi';
-export { api } from './axiosInstance';
+export { authorizedApi } from "./authorizedApi";
+export { api } from "./axiosInstance";

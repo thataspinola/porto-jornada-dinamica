@@ -21,7 +21,7 @@ describe("phoneMask", () => {
 	});
 
 	it("should handle empty string", () => {
-		// @ts-ignore
+		// @ts-expect-error
 		expect(phoneMask(0)).toBe("");
 	});
 

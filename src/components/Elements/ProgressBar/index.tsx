@@ -34,53 +34,56 @@ import type { ProgressBarProps } from "./types";
  */
 
 export const ProgressBar = ({
-  initialValue = 0,
-  value,
-  color = "#0046c0",
-  className,
-  style,
-  ...props
+	initialValue = 0,
+	value,
+	color = "#0046c0",
+	className,
+	style,
+	...props
 }: ProgressBarProps) => {
-  const [barWidth, setBarWidth] = useState(initialValue);
+	const [barWidth, setBarWidth] = useState(initialValue);
 
-  const normalizeValue = useCallback((val: number) => Math.min(100, Math.max(0, val)), []);
+	const normalizeValue = useCallback(
+		(val: number) => Math.min(100, Math.max(0, val)),
+		[],
+	);
 
-  useEffect(() => {
-    const updateWidth = () => {
-      setBarWidth(normalizeValue(value));
-    };
+	useEffect(() => {
+		const updateWidth = () => {
+			setBarWidth(normalizeValue(value));
+		};
 
-    // Em ambiente de teste, atualiza imediatamente sem animação
-    if (process.env.NODE_ENV === "test") {
-      updateWidth();
-      return;
-    }
+		// Em ambiente de teste, atualiza imediatamente sem animação
+		if (process.env.NODE_ENV === "test") {
+			updateWidth();
+			return;
+		}
 
-    // No navegador, usa requestAnimationFrame para animação suave
-    const animationFrame = requestAnimationFrame(updateWidth);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [value, normalizeValue]);
+		// No navegador, usa requestAnimationFrame para animação suave
+		const animationFrame = requestAnimationFrame(updateWidth);
+		return () => cancelAnimationFrame(animationFrame);
+	}, [value, normalizeValue]);
 
-  return (
-    <div
-      className={`${s.progressBar} ${className || ""}`}
-      role="progressbar"
-      aria-valuenow={barWidth}
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuetext={`${barWidth}%`}
-      aria-label="barra de progresso"
-      style={style}
-      tabIndex={0}
-      {...props}
-    >
-      <div
-        className={s.progressBarFill}
-        style={{
-          width: `${barWidth}%`,
-          backgroundColor: color,
-        }}
-      />
-    </div>
-  );
+	return (
+		<div
+			className={`${s.progressBar} ${className || ""}`}
+			role="progressbar"
+			aria-valuenow={barWidth}
+			aria-valuemin={0}
+			aria-valuemax={100}
+			aria-valuetext={`${barWidth}%`}
+			aria-label="barra de progresso"
+			style={style}
+			tabIndex={0}
+			{...props}
+		>
+			<div
+				className={s.progressBarFill}
+				style={{
+					width: `${barWidth}%`,
+					backgroundColor: color,
+				}}
+			/>
+		</div>
+	);
 };

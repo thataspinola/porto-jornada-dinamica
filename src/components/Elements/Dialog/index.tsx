@@ -104,13 +104,19 @@ export const Dialog = ({
 					</div>
 				)}
 
-				{description && <div className="dialog__description">{description}</div>}
+				{description && (
+					<div className="dialog__description">{description}</div>
+				)}
 
 				{children && <div className="dialog__body">{children}</div>}
 
-				{footer && <div className={clsx("dialog__footer", `--${footerVariant}`)}>{footer}</div>}
+				{footer && (
+					<div className={clsx("dialog__footer", `--${footerVariant}`)}>
+						{footer}
+					</div>
+				)}
 			</div>
 		</div>,
-		document.body
+		document.body,
 	);
 };
