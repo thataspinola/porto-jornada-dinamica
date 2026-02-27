@@ -1,1 +1,0 @@
-export { getJourneyConfig } from './getJourneyService';

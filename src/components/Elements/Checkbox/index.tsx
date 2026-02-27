@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/a11y/useKeyWithClickEvents: <explanation> */
 /** biome-ignore-all lint/a11y/noStaticElementInteractions: <explanation> */
-'use client';
+"use client";
 import { useState } from "react";
 import "./styles.scss";
 
@@ -43,17 +43,25 @@ export const Checkbox = ({
   value = false,
   label = "",
   title = "",
+  disabled = false,
   handleClick,
+  ...props
 }: CheckboxProps) => {
   const [checked, setChecked] = useState(value);
+  const disabledClass = disabled ? "--disabled" : "";
 
   const handleClickChange = () => {
-    setChecked(oldState => !oldState);
+    setChecked((oldState) => !oldState);
     handleClick(!checked);
-  }
+  };
 
   return (
-    <div onClick={handleClickChange} className={`checkbox__root --${checked ? 'checked' : 'default'} ${className}`}>
+    <div
+      onClick={handleClickChange}
+      className={`checkbox__root --${checked ? "checked" : "default"} ${disabledClass} ${className}`}
+      {...props}
+      style={{ marginBottom: '32px' }}
+    >
       <div className="checkbox__input" title={title}>
         <svg
           width="21"

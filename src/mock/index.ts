@@ -1,0 +1,1 @@
+export { journeis } from './journeyMock';
