@@ -1,5 +1,5 @@
 export async function getJourneyConfig(slug: string) {
-  const response = await fetch(`http://localhost:3001/finaciamento-de-veiculos`);
+  const response = await fetch(`http://localhost:3001/${slug}`);
   const parsedResponse = await response.json();
 
   if (!parsedResponse) {

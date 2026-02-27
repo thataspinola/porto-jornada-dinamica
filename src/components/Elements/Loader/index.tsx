@@ -24,7 +24,7 @@ type LoaderProps = HTMLAttributes<HTMLSpanElement> & {
  *
  * @example
  * // Loader com cor e tamanho personalizados
- * <Loader color="brand-insurance-900" size={32} />
+ * <Loader color="insurance-900" size={32} />
  *
  * @example
  * // Loader com classe CSS adicional

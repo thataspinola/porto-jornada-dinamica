@@ -113,9 +113,7 @@ export const LicensePlate = ({
         />
       </div>
 
-      {isLoading && (
-        <Loader className="input__loader" color="brand-insurance-900" />
-      )}
+      {isLoading && <Loader className="input__loader" color="insurance-900" />}
 
       {helperText && <p className="input__helper-text">{helperText}</p>}
       {isError && <p className="input__error-message">{errorMessage}</p>}
