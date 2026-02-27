@@ -44,28 +44,28 @@ import type { TypographyProps } from "./types";
  */
 
 export const Typography = ({
-  children = "Typography",
-  variant = "title1",
-  as = "h1",
-  color = "brand-insurance-900",
-  weight = "regular",
-  fontStyle = "normal",
-  className = "",
-  ...props
+	children = "Typography",
+	variant = "title1",
+	as = "h1",
+	color = "insurance-900",
+	weight = "regular",
+	fontStyle = "normal",
+	className = "",
+	...props
 }: TypographyProps) => {
-  const Component = as;
-  const classes = clsx(
-    "typography",
-    `--${variant}`,
-    `--${color}`,
-    `--${weight}`,
-    `--${fontStyle}`,
-    className
-  );
+	const Component = as;
+	const classes = clsx(
+		"typography",
+		`--${variant}`,
+		`--${color}`,
+		`--${weight}`,
+		`--${fontStyle}`,
+		className,
+	);
 
-  return (
-    <Component className={classes} {...props}>
-      {children}
-    </Component>
-  );
+	return (
+		<Component className={classes} {...props}>
+			{children}
+		</Component>
+	);
 };

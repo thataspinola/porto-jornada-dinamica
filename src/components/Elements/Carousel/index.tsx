@@ -84,7 +84,9 @@ export function Carousel({
 
 	useEffect(() => {
 		if (wrapperRef.current && containerRef.current) {
-			const activeSlide = containerRef.current.children[currentSlide] as HTMLElement;
+			const activeSlide = containerRef.current.children[
+				currentSlide
+			] as HTMLElement;
 			if (activeSlide) {
 				wrapperRef.current.style.height = `${activeSlide.offsetHeight}px`;
 			}
@@ -197,14 +199,16 @@ export function Carousel({
 
 				{dots && (
 					<div className="carousel__dots">
-						{Array.from({ length: Math.ceil(slideCount / slidesToScroll) }).map((_, index) => (
-							<button
-								type="button"
-								key={index}
-								onClick={() => goToSlide(index * slidesToScroll)}
-								className={`carousel__dot ${index * slidesToScroll === currentSlide ? "active" : ""}`}
-							/>
-						))}
+						{Array.from({ length: Math.ceil(slideCount / slidesToScroll) }).map(
+							(_, index) => (
+								<button
+									type="button"
+									key={index}
+									onClick={() => goToSlide(index * slidesToScroll)}
+									className={`carousel__dot ${index * slidesToScroll === currentSlide ? "active" : ""}`}
+								/>
+							),
+						)}
 					</div>
 				)}
 			</div>

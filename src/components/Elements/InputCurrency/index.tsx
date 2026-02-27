@@ -61,76 +61,74 @@ import type { InputProps } from "./types";
  */
 
 export const InputCurrency = ({
-  className = "",
-  name = "",
-  variant = "default",
-  width = "fluid",
-  disabled = false,
-  value = "",
-  isLoading = false,
-  helperText = "",
-  errorMessage = "",
-  label = "",
-  onChange,
+	className = "",
+	name = "",
+	variant = "default",
+	width = "fluid",
+	disabled = false,
+	value = "",
+	isLoading = false,
+	helperText = "",
+	errorMessage = "",
+	label = "",
+	onChange,
 }: InputProps) => {
-  const [focused, setFocused] = useState(false);
+	const [focused, setFocused] = useState(false);
 
-  const handleFocus = (isFocus: boolean) => {
-    if (disabled) return;
-    setFocused(isFocus);
-  };
-  const isError = errorMessage.length > 0;
-  const isFilled = value?.toString().length > 0;
-  const classes = clsx(
-    "input__root",
-    `--${variant}`,
-    `--${width}`,
-    { "--filled": !!isFilled },
-    { "--focused": focused },
-    { "--disabled": disabled },
-    { "--error": isError },
-    className,
-  );
+	const handleFocus = (isFocus: boolean) => {
+		if (disabled) return;
+		setFocused(isFocus);
+	};
+	const isError = errorMessage.length > 0;
+	const isFilled = value?.toString().length > 0;
+	const classes = clsx(
+		"input__root",
+		`--${variant}`,
+		`--${width}`,
+		{ "--filled": !!isFilled },
+		{ "--focused": focused },
+		{ "--disabled": disabled },
+		{ "--error": isError },
+		className,
+	);
 
-  function handleChange(value) {
-    console.log("string", value);
-    console.log("number", Number(value));
-    console.log("sanetize", sanitize.digits(value));
-    console.log("currencyToNumber", currencyToNumber(value));
-    console.log("formatToCurrency", formatToCurrency(value));
+	function handleChange(value) {
+		console.log("string", value);
+		console.log("number", Number(value));
+		console.log("sanetize", sanitize.digits(value));
+		console.log("currencyToNumber", currencyToNumber(value));
+		console.log("formatToCurrency", formatToCurrency(value));
 
-    onChange(value);
-  }
+		onChange(value);
+	}
 
-  return (
-    <div
-      className={classes}
-      onFocus={() => handleFocus(true)}
-      onBlur={() => handleFocus(false)}
-    >
-      <div className="input__box">
-        {label && (
-          <label htmlFor={name} className="input__label">
-            {label}
-          </label>
-        )}
-        <input
-          id={name}
-          name={name}
-          type="text"
-          className="input__field"
-          value={value}
-          disabled={disabled}
-          onChange={(e) => handleChange(e.target.value)}
-        />
-      </div>
+	return (
+		<div
+			className={classes}
+			onFocus={() => handleFocus(true)}
+			onBlur={() => handleFocus(false)}
+		>
+			<div className="input__box">
+				{label && (
+					<label htmlFor={name} className="input__label">
+						{label}
+					</label>
+				)}
+				<input
+					id={name}
+					name={name}
+					type="text"
+					className="input__field"
+					value={value}
+					disabled={disabled}
+					onChange={(e) => handleChange(e.target.value)}
+				/>
+			</div>
 
-      {isLoading && (
-        <Loader className="input__loader" color="brand-insurance-900" />
-      )}
+			{isLoading && <Loader className="input__loader" color="insurance-900" />}
 
-      {helperText && <p className="input__helper-text">{helperText}</p>}
-      {isError && <p className="input__error-message">{errorMessage}</p>}
-    </div>
-  );
+			{helperText && <p className="input__helper-text">{helperText}</p>}
+			{isError && <p className="input__error-message">{errorMessage}</p>}
+		</div>
+	);
 };

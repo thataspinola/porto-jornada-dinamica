@@ -118,7 +118,9 @@ describe("Dropdown", () => {
 	it("Should apply variant classes correctly", () => {
 		render(<Dropdown variant="outlined" />);
 
-		const dropdown = screen.getByRole("textbox", { hidden: true }).closest(".dropdown__root");
+		const dropdown = screen
+			.getByRole("textbox", { hidden: true })
+			.closest(".dropdown__root");
 		expect(dropdown).toHaveClass("--outlined");
 		expect(dropdown).not.toHaveClass("--default");
 	});
@@ -126,7 +128,9 @@ describe("Dropdown", () => {
 	it("Should apply width classes correctly", () => {
 		render(<Dropdown width="fluid" />);
 
-		const dropdown = screen.getByRole("textbox", { hidden: true }).closest(".dropdown__root");
+		const dropdown = screen
+			.getByRole("textbox", { hidden: true })
+			.closest(".dropdown__root");
 		expect(dropdown).toHaveClass("--fluid");
 		expect(dropdown).not.toHaveClass("--contain");
 	});
@@ -134,14 +138,18 @@ describe("Dropdown", () => {
 	it("Should apply custom class", () => {
 		render(<Dropdown className="custom-class" />);
 
-		const dropdown = screen.getByRole("textbox", { hidden: true }).closest(".dropdown__root");
+		const dropdown = screen
+			.getByRole("textbox", { hidden: true })
+			.closest(".dropdown__root");
 		expect(dropdown).toHaveClass("custom-class");
 	});
 
 	it("Should apply class --filled when it has value", () => {
 		render(<Dropdown value="option1" />);
 
-		const dropdown = screen.getByRole("textbox", { hidden: true }).closest(".dropdown__root");
+		const dropdown = screen
+			.getByRole("textbox", { hidden: true })
+			.closest(".dropdown__root");
 		expect(dropdown).toHaveClass("--filled");
 	});
 

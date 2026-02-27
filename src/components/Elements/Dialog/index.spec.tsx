@@ -14,7 +14,9 @@ jest.mock("react-dom", () => ({
 jest.mock("./styles.scss", () => ({}));
 
 // Mock do utilitário clsx
-const mockClsx = jest.fn((...args: unknown[]) => args.filter(Boolean).join(" "));
+const mockClsx = jest.fn((...args: unknown[]) =>
+	args.filter(Boolean).join(" "),
+);
 jest.mock("@/utils", () => ({
 	clsx: (...args: unknown[]) => mockClsx(...args),
 }));
@@ -27,7 +29,7 @@ describe("<Dialog />", () => {
 		render(
 			<Dialog isOpen={true} title="Título do Diálogo">
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(mockClsx).toHaveBeenCalledWith("dialog", "dialog__overlay", {
@@ -44,7 +46,7 @@ describe("<Dialog />", () => {
 		render(
 			<Dialog isOpen={false} title="Título do Diálogo">
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(mockClsx).toHaveBeenCalledWith("dialog", "dialog__overlay", {
@@ -56,7 +58,7 @@ describe("<Dialog />", () => {
 		render(
 			<Dialog isOpen={true} variant="medium">
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(mockClsx).toHaveBeenCalledWith("dialog__box", "--medium");
@@ -66,7 +68,7 @@ describe("<Dialog />", () => {
 		render(
 			<Dialog isOpen={true} title="Título de Teste">
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(screen.getByText("Título de Teste")).toBeInTheDocument();
@@ -77,29 +79,37 @@ describe("<Dialog />", () => {
 		render(
 			<Dialog isOpen={true} subtitle="Subtítulo de Teste">
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(screen.getByText("Subtítulo de Teste")).toBeInTheDocument();
-		expect(screen.getByText("Subtítulo de Teste")).toHaveClass("dialog__subtitle");
+		expect(screen.getByText("Subtítulo de Teste")).toHaveClass(
+			"dialog__subtitle",
+		);
 	});
 
 	it("deve renderizar a descrição corretamente", () => {
 		render(
 			<Dialog isOpen={true} description="Descrição de Teste">
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(screen.getByText("Descrição de Teste")).toBeInTheDocument();
-		expect(screen.getByText("Descrição de Teste")).toHaveClass("dialog__description");
+		expect(screen.getByText("Descrição de Teste")).toHaveClass(
+			"dialog__description",
+		);
 	});
 
 	it("deve renderizar o ícone corretamente", () => {
 		render(
-			<Dialog isOpen={true} icon={{ iconName: "info" }} data-testid="dialog-container">
+			<Dialog
+				isOpen={true}
+				icon={{ iconName: "info" }}
+				data-testid="dialog-container"
+			>
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		// Verificar se o clsx foi chamado corretamente
@@ -117,11 +127,13 @@ describe("<Dialog />", () => {
 		render(
 			<Dialog isOpen={true}>
 				<p data-testid="dialog-content">Conteúdo principal</p>
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(screen.getByTestId("dialog-content")).toBeInTheDocument();
-		expect(screen.getByTestId("dialog-content").closest(".dialog__body")).toBeInTheDocument();
+		expect(
+			screen.getByTestId("dialog-content").closest(".dialog__body"),
+		).toBeInTheDocument();
 	});
 
 	it("deve renderizar o rodapé corretamente", () => {
@@ -135,11 +147,13 @@ describe("<Dialog />", () => {
 				}
 			>
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(screen.getByTestId("footer-button")).toBeInTheDocument();
-		expect(screen.getByTestId("footer-button").closest(".dialog__footer")).toBeInTheDocument();
+		expect(
+			screen.getByTestId("footer-button").closest(".dialog__footer"),
+		).toBeInTheDocument();
 	});
 
 	it("deve aplicar a variante de rodapé corretamente", () => {
@@ -150,11 +164,13 @@ describe("<Dialog />", () => {
 				footer={<button type="button">Botão de Rodapé</button>}
 			>
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		const clsxCalls = mockClsx.mock.calls;
-		const footerClsxCall = clsxCalls.find((call) => call.includes("dialog__footer"));
+		const footerClsxCall = clsxCalls.find((call) =>
+			call.includes("dialog__footer"),
+		);
 		expect(footerClsxCall).toEqual(["dialog__footer", "--column"]);
 	});
 
@@ -163,7 +179,7 @@ describe("<Dialog />", () => {
 		render(
 			<Dialog isOpen={true} onClose={handleClose} data-testid="dialog-overlay">
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(mockClsx).toHaveBeenCalledWith("dialog", "dialog__overlay", {
@@ -179,7 +195,7 @@ describe("<Dialog />", () => {
 		render(
 			<Dialog isOpen={true} className="custom-dialog">
 				Conteúdo do diálogo
-			</Dialog>
+			</Dialog>,
 		);
 
 		expect(mockClsx).toHaveBeenCalledWith("dialog", "dialog__overlay", {

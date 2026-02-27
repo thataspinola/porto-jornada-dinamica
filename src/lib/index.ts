@@ -1,1 +1,1 @@
-export { api, authorizedApi } from './axios';
+export { api, authorizedApi } from "./axios";

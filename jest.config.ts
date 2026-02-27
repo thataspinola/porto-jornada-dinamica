@@ -1,5 +1,7 @@
-import type { Config } from 'jest'
-import nextJest from 'next/jest.js'
+/**
+ * For a detailed explanation regarding each configuration property, visit:
+ * https://jestjs.io/docs/configuration
+ */
 
 import type { Config } from 'jest';
 import nextJest from 'next/jest';
@@ -8,8 +10,15 @@ const createJestConfig = nextJest({
   dir: './',
 });
 
-// Add any custom config to be passed to Jest
 const config: Config = {
+  // All imported modules in your tests should be mocked automatically
+  // automock: false,
+
+  // Stop running tests after `n` failures
+  // bail: 0,
+
+  // The directory where Jest should store its cached dependency information
+  // cacheDirectory: "/private/var/folders/hk/xv02_mvd0c7g3whcgskyxpq80000gq/T/jest_dz",
 
   // Automatically clear mock calls, instances, contexts and results before every test
   clearMocks: true,
@@ -21,10 +30,15 @@ const config: Config = {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
+
+  // An array of regexp pattern strings used to skip coverage collection
+  // coveragePathIgnorePatterns: [
+  //   "/node_modules/"
+  // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  coverageProvider: 'v8',
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -142,10 +156,56 @@ const config: Config = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "jsdom",
+  testEnvironment: 'jest-environment-jsdom',
 
-  // Ignore dist/
-  testPathIgnorePatterns: ["<rootDir>/dist/"]
-}
+  // Options that will be passed to the testEnvironment
+  // testEnvironmentOptions: {},
+
+  // Adds a location field to test results
+  // testLocationInResults: false,
+
+  // The glob patterns Jest uses to detect test files
+  // testMatch: [
+  //   "**/__tests__/**/*.?([mc])[jt]s?(x)",
+  //   "**/?(*.)+(spec|test).?([mc])[jt]s?(x)"
+  // ],
+
+  // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
+  // testPathIgnorePatterns: [
+  //   "/node_modules/"
+  // ],
+
+  // The regexp pattern or array of patterns that Jest uses to detect test files
+  // testRegex: [],
+
+  // This option allows the use of a custom results processor
+  // testResultsProcessor: undefined,
+
+  // This option allows use of a custom test runner
+  // testRunner: "jest-circus/runner",
+
+  // A map from regular expressions to paths to transformers
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest',
+  },
+
+  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
+  // transformIgnorePatterns: [
+  //   "/node_modules/",
+  //   "\\.pnp\\.[^\\/]+$"
+  // ],
+
+  // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
+  // unmockedModulePathPatterns: undefined,
+
+  // Indicates whether each individual test should be reported during the run
+  // verbose: undefined,
+
+  // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
+  // watchPathIgnorePatterns: [],
+
+  // Whether to use watchman for file crawling
+  // watchman: true,
+};
 
 export default createJestConfig(config);

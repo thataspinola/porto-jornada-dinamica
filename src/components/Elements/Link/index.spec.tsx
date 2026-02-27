@@ -66,7 +66,7 @@ describe("Link", () => {
 		render(
 			<Link href="/example" variant="disabled">
 				Link desabilitado
-			</Link>
+			</Link>,
 		);
 
 		const link = screen.getByRole("link");
@@ -78,7 +78,7 @@ describe("Link", () => {
 		render(
 			<Link href="/example" styles="secondary">
 				Link secundário
-			</Link>
+			</Link>,
 		);
 
 		const link = screen.getByRole("link");
@@ -90,7 +90,7 @@ describe("Link", () => {
 		render(
 			<Link href="/example" size="small">
 				Link pequeno
-			</Link>
+			</Link>,
 		);
 
 		const link = screen.getByRole("link");
@@ -102,7 +102,7 @@ describe("Link", () => {
 		render(
 			<Link href="/example" width="fluid">
 				Link fluido
-			</Link>
+			</Link>,
 		);
 
 		const link = screen.getByRole("link");
@@ -114,7 +114,7 @@ describe("Link", () => {
 		render(
 			<Link href="/example" disabled={true}>
 				Link desabilitado
-			</Link>
+			</Link>,
 		);
 
 		const link = screen.getByRole("link");
@@ -127,7 +127,7 @@ describe("Link", () => {
 		render(
 			<Link href="/example" className="custom-class">
 				Link customizado
-			</Link>
+			</Link>,
 		);
 
 		const link = screen.getByRole("link");
@@ -137,9 +137,14 @@ describe("Link", () => {
 
 	it("deve passar atributos HTML adicionais para o elemento link", () => {
 		render(
-			<Link href="/example" aria-label="Link de exemplo" title="Título do link" rel="nofollow">
+			<Link
+				href="/example"
+				aria-label="Link de exemplo"
+				title="Título do link"
+				rel="nofollow"
+			>
 				Link com atributos
-			</Link>
+			</Link>,
 		);
 
 		const link = screen.getByRole("link");
@@ -159,7 +164,7 @@ describe("Link", () => {
 				className="custom-class"
 			>
 				Link personalizado
-			</Link>
+			</Link>,
 		);
 
 		const link = screen.getByRole("link");
@@ -170,7 +175,7 @@ describe("Link", () => {
 	});
 
 	it("deve renderizar com href padrão quando não fornecido", () => {
-		// @ts-ignore - Testando comportamento quando href não é fornecido
+		// @ts-expect-error - Testando comportamento quando href não é fornecido
 		render(<Link>Link sem href</Link>);
 
 		const link = screen.getByRole("link");
@@ -182,7 +187,7 @@ describe("Link", () => {
 			<Link href="/example">
 				<span data-testid="icon">🔗</span>
 				<span>Texto do link</span>
-			</Link>
+			</Link>,
 		);
 
 		const link = screen.getByRole("link");

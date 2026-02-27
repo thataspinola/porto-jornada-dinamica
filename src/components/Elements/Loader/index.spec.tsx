@@ -49,7 +49,11 @@ describe("<Loader />", () => {
 
 	it("deve combinar múltiplas propriedades personalizadas", () => {
 		const { container } = render(
-			<Loader color={"secondary-700" as any} size={36} className="custom-class" />
+			<Loader
+				color={"secondary-700" as any}
+				size={36}
+				className="custom-class"
+			/>,
 		);
 		const loader = container.firstChild as HTMLElement;
 
@@ -88,7 +92,11 @@ describe("<Loader />", () => {
 
 	it("deve aceitar e propagar atributos HTML adicionais", () => {
 		const { container } = render(
-			<Loader aria-label="Carregando conteúdo" id="main-loader" role="status" />
+			<Loader
+				aria-label="Carregando conteúdo"
+				id="main-loader"
+				role="status"
+			/>,
 		);
 		const loader = container.firstChild as HTMLElement;
 

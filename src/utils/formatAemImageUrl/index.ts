@@ -1,4 +1,5 @@
-const AEM_BASE_URL = process.env.NEXT_PUBLIC_AEM_BASE_URL || "https://www.portoseguro.com.br";
+const AEM_BASE_URL =
+	process.env.NEXT_PUBLIC_AEM_BASE_URL || "https://www.portoseguro.com.br";
 
 /**
  * Formata uma URL do AEM adicionando o domínio base

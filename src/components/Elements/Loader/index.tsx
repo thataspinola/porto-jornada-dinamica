@@ -4,9 +4,9 @@ import { clsx } from "@/utils";
 import "./styles.scss";
 
 type LoaderProps = HTMLAttributes<HTMLSpanElement> & {
-  color?: ColorToken;
-  size?: number;
-  className?: string;
+	color?: ColorToken;
+	size?: number;
+	className?: string;
 };
 
 /**
@@ -24,7 +24,7 @@ type LoaderProps = HTMLAttributes<HTMLSpanElement> & {
  *
  * @example
  * // Loader com cor e tamanho personalizados
- * <Loader color="brand-insurance-900" size={32} />
+ * <Loader color="insurance-900" size={32} />
  *
  * @example
  * // Loader com classe CSS adicional
@@ -34,22 +34,22 @@ type LoaderProps = HTMLAttributes<HTMLSpanElement> & {
  */
 
 export const Loader = ({
-  color = "neutral-900",
-  size = 24,
-  className,
-  ...props
+	color = "neutral-900",
+	size = 24,
+	className,
+	...props
 }: LoaderProps): JSX.Element => {
-  const classes = clsx("loader", `--border-${color}`, className);
+	const classes = clsx("loader", `--border-${color}`, className);
 
-  return (
-    <span
-      className={classes}
-      style={{
-        width: size,
-        height: size - 1,
-        borderBottomColor: "transparent",
-      }}
-      {...props}
-    />
-  );
+	return (
+		<span
+			className={classes}
+			style={{
+				width: size,
+				height: size - 1,
+				borderBottomColor: "transparent",
+			}}
+			{...props}
+		/>
+	);
 };
