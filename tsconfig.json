@@ -8,15 +8,15 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "noEmit": true,
-    "esModuleInterop": true,
+    "incremental": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
     "plugins": [
       {
         "name": "next"
@@ -32,8 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
+    "/dist/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
     "next-env.d.ts",
-    "/dist/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts"
+    "/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

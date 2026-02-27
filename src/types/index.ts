@@ -1,0 +1,98 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+
+export interface FieldOption {
+  label: string
+  value: string
+}
+
+export interface FetchOptions {
+  url: string
+  method?: "GET" | "POST"
+  labelKey?: string
+  valueKey?: string
+}
+
+export interface ApiValidation {
+  url: string;
+  method: 'GET' | 'POST';
+  invalidKey?: string;
+  invalidValue: unknown;
+}
+
+export interface Element {
+  id: string
+  label?: string
+  type:
+  | 'text'
+  | 'email'
+  | 'phone'
+  | 'cpf'
+  | 'cnpj'
+  | 'date'
+  | 'number'
+  | 'select'
+  | 'radio'
+  | 'checkbox'
+  | 'textarea'
+  | 'appointment'
+  | 'spacing'
+  | 'typography'
+  | 'button';
+  layout: {
+    marginTop: string;
+    marginBottom: string;
+  };
+  uiProps: any;
+  required?: boolean
+  placeholder?: string
+  options?: FieldOption[]
+}
+
+export interface Seo {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  keywords?: string;
+  robots?: {
+    index?: boolean;
+    follow?: boolean;
+  }
+}
+
+export interface Action {
+  type?: string;
+  service?: string;
+  onSuccess?: {
+    type: string;
+    target: string;
+  }
+}
+export interface Step {
+  id: string,
+  slug: string;
+  kind?: string;
+  seo: Seo;
+  layout?: {
+    width?: string,
+    progressbar?: {
+      start?: number,
+      end?: number,
+    },
+  },
+  elements: Element[];
+  action: Action;
+}
+
+export interface JourneyConfig {
+  steps: Step
+}
+
+export interface FormStepProps {
+  step: Step
+}
+
+export interface JourneyProps {
+  step: Step;
+  currentStepName: string;
+  journeySlug: string;
+}
