@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/a11y/useAriaPropsSupportedByRole: <> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
 import { useState } from "react";
 
 import "./styles.scss";

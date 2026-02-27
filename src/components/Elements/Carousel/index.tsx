@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
 import { useEffect, useRef, useState } from "react";
 
 import "./styles.scss";

@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/a11y/noStaticElementInteractions: <explanation> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
 
 import { clsx } from "@/utils";
 import { useState } from "react";
@@ -97,6 +97,7 @@ export const Input = ({
 			onFocus={() => handleFocus(true)}
 			onBlur={() => handleFocus(false)}
 			style={{ marginBottom: "32px" }}
+			{...props}
 		>
 			<div className="input__box">
 				{label && (
@@ -117,7 +118,9 @@ export const Input = ({
 
 			{isLoading && <Loader className="input__loader" color="neutral-100" />}
 
-			{helperText && <p className="input__helper-text">{helperText}</p>}
+			{helperText && !isError && (
+				<p className="input__helper-text">{helperText}</p>
+			)}
 			{isError && <p className="input__error-message">{errorMessage}</p>}
 		</div>
 	);

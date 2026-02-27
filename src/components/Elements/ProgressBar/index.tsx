@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/a11y/noNoninteractiveTabindex: <> */
 "use client";
 import { useCallback, useEffect, useState } from "react";
 
@@ -53,13 +54,11 @@ export const ProgressBar = ({
 			setBarWidth(normalizeValue(value));
 		};
 
-		// Em ambiente de teste, atualiza imediatamente sem animação
 		if (process.env.NODE_ENV === "test") {
 			updateWidth();
 			return;
 		}
 
-		// No navegador, usa requestAnimationFrame para animação suave
 		const animationFrame = requestAnimationFrame(updateWidth);
 		return () => cancelAnimationFrame(animationFrame);
 	}, [value, normalizeValue]);

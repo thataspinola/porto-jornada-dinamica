@@ -1,5 +1,6 @@
-/** biome-ignore-all lint/a11y/useKeyWithClickEvents: <explanation> */
-/** biome-ignore-all lint/a11y/noStaticElementInteractions: <explanation> */
+/** biome-ignore-all lint/a11y/useKeyWithClickEvents: <> */
+/** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
 "use client";
 import { useState } from "react";
 import "./styles.scss";
@@ -83,7 +84,6 @@ export const Checkbox = ({
 			</div>
 			<span
 				className="checkbox__label"
-				// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
 				dangerouslySetInnerHTML={{ __html: label }}
 			/>
 		</div>

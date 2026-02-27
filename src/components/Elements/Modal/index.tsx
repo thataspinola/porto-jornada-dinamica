@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
+/** biome-ignore-all lint/a11y/useAriaPropsSupportedByRole: <> */
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 

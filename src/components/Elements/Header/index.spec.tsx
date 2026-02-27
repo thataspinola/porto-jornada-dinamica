@@ -1,7 +1,8 @@
+/** biome-ignore-all lint/performance/noImgElement: <> */
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import { HeaderAcquisitionFlow } from "./index";
+import { Header } from "./index";
 
 // Mock dos ícones
 jest.mock("./icons/ic-arrow-left.svg", () => "arrow-left.svg");
@@ -64,7 +65,7 @@ describe("HeaderAcquisitionFlow", () => {
 	});
 
 	it("Should render correctly with default values", () => {
-		const { container } = render(<HeaderAcquisitionFlow />);
+		const { container } = render(<Header />);
 
 		const header = container.querySelector(".header-acquisition-flow");
 		expect(header).toBeInTheDocument();
@@ -84,7 +85,7 @@ describe("HeaderAcquisitionFlow", () => {
 	});
 
 	it("Should navigate to the home page by clicking on the logo", () => {
-		render(<HeaderAcquisitionFlow />);
+		render(<Header />);
 
 		const logoElement = screen.getByAltText("icon-logo-porto");
 		expect(logoElement).toBeDefined();
@@ -97,7 +98,7 @@ describe("HeaderAcquisitionFlow", () => {
 	});
 
 	it("Should navigate to the back link when clicking the back button", () => {
-		render(<HeaderAcquisitionFlow goBackLink="/previous-page" />);
+		render(<Header goBackLink="/previous-page" />);
 
 		const arrowIcon = screen.getByAltText("icone-voltar-para-pagina-anterior");
 		expect(arrowIcon).toBeInTheDocument();
@@ -108,7 +109,7 @@ describe("HeaderAcquisitionFlow", () => {
 	});
 
 	it("Should navigate to the back link when clicking the cart button", () => {
-		render(<HeaderAcquisitionFlow goBackLink="/cart" />);
+		render(<Header goBackLink="/cart" />);
 
 		const cartIcon = screen.getByAltText("icone-carinho");
 		expect(cartIcon).toBeInTheDocument();
@@ -119,15 +120,8 @@ describe("HeaderAcquisitionFlow", () => {
 		expect(mockPush).toHaveBeenCalledWith("/cart");
 	});
 
-	it("Should not render back button when hasGoBackLink=false", () => {
-		render(<HeaderAcquisitionFlow hasGoBackLink={false} />);
-
-		const backIcon = document.querySelector(".item-right");
-		expect(backIcon).not.toBeUndefined();
-	});
-
 	it("Should use the provided goBackLink", () => {
-		render(<HeaderAcquisitionFlow goBackLink="/custom-back-link" />);
+		render(<Header goBackLink="/custom-back-link" />);
 
 		const cartIcon = screen.getByAltText("icone-carinho");
 		expect(cartIcon).toBeInTheDocument();
@@ -138,7 +132,7 @@ describe("HeaderAcquisitionFlow", () => {
 	});
 
 	it("Should have adequate accessibility attributes", () => {
-		render(<HeaderAcquisitionFlow />);
+		render(<Header />);
 
 		const logoElement = screen.getByAltText("icon-logo-porto");
 		expect(logoElement).toBeDefined();

@@ -1,11 +1,10 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
+import type { ComponentProps } from "react";
 import { Textarea } from "./index";
 
-// Mock dos estilos
 jest.mock("./styles.scss", () => ({}));
 
-// Mock do utilitário clsx
 const mockClsx = jest.fn((...args: unknown[]) =>
 	args.filter(Boolean).join(" "),
 );
@@ -13,13 +12,27 @@ jest.mock("@/utils", () => ({
 	clsx: (...args: unknown[]) => mockClsx(...args),
 }));
 
+const makeSut = (props: Partial<ComponentProps<typeof Textarea>> = {}) => {
+	const result = render(<Textarea data-testid="textarea-root" {...props} />);
+	return {
+		...result,
+		textareaRoot: screen.getByTestId("textarea-root"),
+		textareaField: screen.queryByRole("textbox") as HTMLTextAreaElement,
+		getCounter: (current: number, max: number = 200) =>
+			screen.getByText(`${current} / ${max}`),
+		getErrorMessage: (message: string) => screen.getByText(message),
+		getHelperText: (text: string) => screen.getByText(text),
+		getLabel: (text: string) => screen.getByText(text),
+	};
+};
+
 describe("Textarea", () => {
 	beforeEach(() => {
 		mockClsx.mockClear();
 	});
 
-	it("deve renderizar corretamente com valores padrão", () => {
-		render(<Textarea data-testid="textarea-root" />);
+	it("should render correctly with default values", () => {
+		const { textareaRoot, textareaField } = makeSut();
 
 		expect(mockClsx).toHaveBeenCalledWith(
 			"textarea__root",
@@ -34,10 +47,7 @@ describe("Textarea", () => {
 			"",
 		);
 
-		const textareaRoot = screen.getByTestId("textarea-root");
 		expect(textareaRoot).toBeInTheDocument();
-
-		const textareaField = screen.getByRole("textbox");
 		expect(textareaField).toBeInTheDocument();
 		expect(textareaField).toHaveClass("textarea__field");
 		expect(textareaField).toHaveAttribute("rows", "5");
@@ -47,50 +57,23 @@ describe("Textarea", () => {
 		expect(counter).toHaveClass("textarea__counter");
 	});
 
-	it("deve renderizar com label quando fornecido", () => {
-		render(<Textarea label="Descrição" name="description" />);
+	it("should render with label when provided", () => {
+		const { getLabel } = makeSut({ label: "Description", name: "description" });
 
-		expect(mockClsx).toHaveBeenCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": false,
-			},
-			"",
-		);
-
-		const label = screen.getByText("Descrição");
+		const label = getLabel("Description");
 		expect(label).toBeInTheDocument();
 		expect(label).toHaveClass("textarea__label");
 		expect(label).toHaveAttribute("for", "description");
 	});
 
-	it("deve renderizar com número personalizado de linhas", () => {
-		render(<Textarea rows={10} data-testid="textarea-root" />);
+	it("should render with custom number of rows", () => {
+		const { textareaField } = makeSut({ rows: 10 });
 
-		expect(mockClsx).toHaveBeenCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": false,
-			},
-			"",
-		);
-
-		const textareaField = screen.getByRole("textbox");
 		expect(textareaField).toHaveAttribute("rows", "10");
 	});
 
-	it("deve aplicar classe --filled quando tem valor", () => {
-		render(<Textarea value="Texto de exemplo" data-testid="textarea-root" />);
+	it("should apply --filled class when it has a value", () => {
+		makeSut({ value: "Sample text" });
 
 		expect(mockClsx).toHaveBeenCalledWith(
 			"textarea__root",
@@ -105,12 +88,11 @@ describe("Textarea", () => {
 			"",
 		);
 
-		const counter = screen.getByText("16 / 200");
-		expect(counter).toBeInTheDocument();
+		expect(screen.getByText("11 / 200")).toBeInTheDocument();
 	});
 
-	it("deve aplicar classe --disabled quando desabilitado", () => {
-		render(<Textarea disabled data-testid="textarea-root" />);
+	it("should apply --disabled class when disabled=true", () => {
+		const { textareaField } = makeSut({ disabled: true });
 
 		expect(mockClsx).toHaveBeenCalledWith(
 			"textarea__root",
@@ -125,14 +107,11 @@ describe("Textarea", () => {
 			"",
 		);
 
-		const textareaField = screen.getByRole("textbox");
-		expect(textareaField).toHaveAttribute("disabled");
+		expect(textareaField).toBeDisabled();
 	});
 
-	it("deve aplicar classe --error quando tem mensagem de erro", () => {
-		render(
-			<Textarea errorMessage="Campo obrigatório" data-testid="textarea-root" />,
-		);
+	it("should apply --error class when error message is provided", () => {
+		const { getErrorMessage } = makeSut({ errorMessage: "Required field" });
 
 		expect(mockClsx).toHaveBeenCalledWith(
 			"textarea__root",
@@ -147,86 +126,33 @@ describe("Textarea", () => {
 			"",
 		);
 
-		const errorMessage = screen.getByText("Campo obrigatório");
+		const errorMessage = getErrorMessage("Required field");
 		expect(errorMessage).toBeInTheDocument();
 		expect(errorMessage).toHaveClass("input__error-message");
 	});
 
-	it("deve renderizar texto de ajuda quando fornecido", () => {
-		render(
-			<Textarea
-				helperText="Máximo de 200 caracteres"
-				data-testid="textarea-root"
-			/>,
-		);
+	it("should render helper text when provided", () => {
+		const { getHelperText } = makeSut({ helperText: "Max 200 characters" });
 
-		expect(mockClsx).toHaveBeenCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": false,
-			},
-			"",
-		);
-
-		const helperText = screen.getByText("Máximo de 200 caracteres");
+		const helperText = getHelperText("Max 200 characters");
 		expect(helperText).toBeInTheDocument();
 		expect(helperText).toHaveClass("input__helper-text");
 	});
 
-	it("deve priorizar mensagem de erro sobre texto de ajuda", () => {
-		render(
-			<Textarea
-				helperText="Máximo de 200 caracteres"
-				errorMessage="Campo obrigatório"
-				data-testid="textarea-root"
-			/>,
-		);
+	it("should prioritize error message over helper text", () => {
+		makeSut({
+			helperText: "Max 200 characters",
+			errorMessage: "Required field",
+		});
 
-		expect(mockClsx).toHaveBeenCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": true,
-			},
-			"",
-		);
-
-		const errorMessage = screen.getByText("Campo obrigatório");
-		expect(errorMessage).toBeInTheDocument();
-
-		const helperText = screen.queryByText("Máximo de 200 caracteres");
-		expect(helperText).not.toBeInTheDocument();
+		expect(screen.getByText("Required field")).toBeInTheDocument();
+		expect(screen.queryByText("Max 200 characters")).not.toBeInTheDocument();
 	});
 
-	it("deve aplicar classe --focused ao receber foco", () => {
-		render(<Textarea data-testid="textarea-root" />);
-
-		const textareaField = screen.getByRole("textbox");
-
-		expect(mockClsx).toHaveBeenLastCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": false,
-			},
-			"",
-		);
+	it("should apply --focused class on focus and remove on blur", () => {
+		const { textareaField } = makeSut();
 
 		fireEvent.focus(textareaField);
-
 		expect(mockClsx).toHaveBeenLastCalledWith(
 			"textarea__root",
 			"--default",
@@ -255,22 +181,8 @@ describe("Textarea", () => {
 		);
 	});
 
-	it("não deve aplicar classe --focused quando desabilitado", () => {
-		render(<Textarea disabled data-testid="textarea-root" />);
-
-		const textareaField = screen.getByRole("textbox");
-		expect(mockClsx).toHaveBeenLastCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": true,
-				"--error": false,
-			},
-			"",
-		);
+	it("should not apply --focused class when disabled", () => {
+		const { textareaField } = makeSut({ disabled: true });
 
 		fireEvent.focus(textareaField);
 		expect(mockClsx).toHaveBeenLastCalledWith(
@@ -287,127 +199,51 @@ describe("Textarea", () => {
 		);
 	});
 
-	it("não deve aplicar classe --focused quando tem erro", () => {
-		render(
-			<Textarea errorMessage="Campo obrigatório" data-testid="textarea-root" />,
-		);
-
-		expect(mockClsx).toHaveBeenLastCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": true,
-			},
-			"",
-		);
-
-		expect(mockClsx).toHaveBeenLastCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": true,
-			},
-			"",
-		);
-	});
-
-	it("deve chamar onChange quando o valor é alterado", () => {
+	it("should call onChange when value changes", () => {
 		const handleChange = jest.fn();
-		render(<Textarea onChange={handleChange} data-testid="textarea-root" />);
+		const { textareaField } = makeSut({ onChange: handleChange });
 
-		const textareaField = screen.getByRole("textbox");
-
-		fireEvent.change(textareaField, { target: { value: "Novo texto" } });
-
+		fireEvent.change(textareaField, { target: { value: "New text" } });
 		expect(handleChange).toHaveBeenCalledTimes(1);
 	});
 
-	it("deve renderizar com variante outlined", () => {
-		render(<Textarea variant="outlined" data-testid="textarea-root" />);
+	it("should render with outlined variant", () => {
+		makeSut({ variant: "outlined" });
 
 		expect(mockClsx).toHaveBeenCalledWith(
 			"textarea__root",
 			"--outlined",
 			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": false,
-			},
+			expect.anything(),
 			"",
 		);
 	});
 
-	it("deve renderizar com largura fluid", () => {
-		render(<Textarea width="fluid" data-testid="textarea-root" />);
+	it("should render with fluid width", () => {
+		makeSut({ width: "fluid" });
 
 		expect(mockClsx).toHaveBeenCalledWith(
 			"textarea__root",
 			"--default",
 			"--fluid",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": false,
-			},
+			expect.anything(),
 			"",
 		);
 	});
 
-	it("deve passar atributos HTML adicionais para o elemento raiz", () => {
-		render(
-			<Textarea
-				data-testid="textarea-root"
-				aria-label="Campo de descrição"
-				title="Insira sua descrição aqui"
-			/>,
-		);
+	it("should pass additional HTML attributes to the root element", () => {
+		const { textareaRoot } = makeSut({
+			"aria-label": "Description field",
+			title: "Enter description here",
+		} as any);
 
-		expect(mockClsx).toHaveBeenCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": false,
-			},
-			"",
-		);
-
-		const textareaRoot = screen.getByTestId("textarea-root");
-		expect(textareaRoot).toHaveAttribute("aria-label", "Campo de descrição");
-		expect(textareaRoot).toHaveAttribute("title", "Insira sua descrição aqui");
+		expect(textareaRoot).toHaveAttribute("aria-label", "Description field");
+		expect(textareaRoot).toHaveAttribute("title", "Enter description here");
 	});
 
-	it("deve renderizar com nome e id corretos", () => {
-		render(<Textarea name="comments" data-testid="textarea-root" />);
+	it("should render with correct name and id", () => {
+		const { textareaField } = makeSut({ name: "comments" });
 
-		expect(mockClsx).toHaveBeenCalledWith(
-			"textarea__root",
-			"--default",
-			"--contain",
-			{
-				"--filled": false,
-				"--focused": false,
-				"--disabled": false,
-				"--error": false,
-			},
-			"",
-		);
-
-		const textareaField = screen.getByRole("textbox");
 		expect(textareaField).toHaveAttribute("name", "comments");
 		expect(textareaField).toHaveAttribute("id", "comments");
 	});

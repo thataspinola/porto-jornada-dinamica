@@ -1,4 +1,4 @@
-import type { ChangeEvent, DetailedHTMLProps } from "react";
+import type { DetailedHTMLProps } from "react";
 
 export type TextareaProps = DetailedHTMLProps<
 	React.HTMLAttributes<HTMLDivElement>,
@@ -13,5 +13,5 @@ export type TextareaProps = DetailedHTMLProps<
 	disabled?: boolean;
 	helperText?: string;
 	errorMessage?: string;
-	onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+	onChange?: (value: string) => void;
 };
