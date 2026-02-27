@@ -1,5 +1,7 @@
+"use client";
 import { clsx } from "@/utils";
 import NextLink from "next/link";
+import { usePathname } from "next/navigation";
 
 import "./styles.scss";
 
@@ -35,30 +37,41 @@ import type { LinkProps } from "./types";
  */
 
 export const Link = ({
-	variant = "insurance",
-	styles = "primary",
-	size = "large",
-	width = "fluid",
-	href = "#",
-	disabled = false,
-	className = "",
-	children,
-	...restProps
+  variant = "insurance",
+  styles = "primary",
+  size = "large",
+  width = "fluid",
+  url = "#",
+  disabled = false,
+  className = "",
+  label,
+  ...restProps
 }: LinkProps) => {
-	const classes = clsx(
-		"link",
-		{
-			[`--disabled-${styles}`]: disabled,
-			[`--${variant}-${styles}`]: !disabled,
-		},
-		`--${size}`,
-		`--${width}`,
-		className
-	);
+  const path = usePathname();
+  const classes = clsx(
+    "link",
+    {
+      [`--disabled-${styles}`]: disabled,
+      [`--${variant}-${styles}`]: !disabled,
+    },
+    `--${size}`,
+    `--${width}`,
+    className,
+  );
+  const [journey, slug] = path.split("/").filter(Boolean);
 
-	return (
-		<NextLink href={href} target="_blank" className={classes} disabled={disabled} {...restProps}>
-			{children}
-		</NextLink>
-	);
+  const newLink = `/${journey}/${slug}/${url}`;
+
+  return (
+    <NextLink
+      href={newLink}
+      target="_self"
+      className={classes}
+      disabled={disabled}
+      {...restProps}
+      style={{ marginBottom: "8px" }}
+    >
+      {label}
+    </NextLink>
+  );
 };

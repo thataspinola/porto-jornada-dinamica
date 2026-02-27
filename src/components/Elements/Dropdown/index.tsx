@@ -2,10 +2,9 @@ import { useState } from "react";
 
 import "./styles.scss";
 
-import { ArrowSvg } from "./Arrow";
-
 import { clsx } from "@/utils";
 import { Loader } from "../Loader";
+import { ArrowSvg } from "./Arrow";
 
 import type { DropdownOption, DropdownProps } from "./types";
 
@@ -76,7 +75,7 @@ export const Dropdown = ({
     { "--focused": isFocused },
     { "--disabled": disabled },
     { "--error": !!errorMessage },
-    className
+    className,
   );
 
   const handleSelectOption = (option: DropdownOption) => {
@@ -95,8 +94,13 @@ export const Dropdown = ({
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
       {...props}
+      style={{ marginBottom: '32px' }}
     >
-      <div className="dropdown__trigger" onClick={toggleDropdown} onKeyDown={toggleDropdown}>
+      <div
+        className="dropdown__trigger"
+        onClick={toggleDropdown}
+        onKeyDown={toggleDropdown}
+      >
         {label && (
           <label htmlFor={name} className="dropdown__label">
             {label}
@@ -129,7 +133,9 @@ export const Dropdown = ({
               aria-selected={value === option.value}
               onClick={() => handleSelectOption(option)}
               onKeyDown={(e) =>
-                e.key === "Enter" || e.key === " " ? handleSelectOption(option) : undefined
+                e.key === "Enter" || e.key === " "
+                  ? handleSelectOption(option)
+                  : undefined
               }
             >
               {option.label}
@@ -138,8 +144,12 @@ export const Dropdown = ({
         </ul>
       )}
 
-      {helperText && !errorMessage && <p className="dropdown__helper-text">{helperText}</p>}
-      {errorMessage && <p className="dropdown__error-message">{errorMessage}</p>}
+      {helperText && !errorMessage && (
+        <p className="dropdown__helper-text">{helperText}</p>
+      )}
+      {errorMessage && (
+        <p className="dropdown__error-message">{errorMessage}</p>
+      )}
     </div>
   );
 };

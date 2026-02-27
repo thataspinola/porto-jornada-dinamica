@@ -8,15 +8,29 @@ import "./style.scss";
 export type RadioGroupProps = {
   label: string;
   options: {
-    description: string;
+    label: string;
+    value: string;
   }[];
+  defaultValue: string;
+  handleClick: (value: string) => void;
 };
 
-export const RadioGroup = ({ label, options }: RadioGroupProps) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+export const RadioGroup = ({
+  label,
+  options,
+  defaultValue = '',
+  handleClick
+}: RadioGroupProps) => {
+
+  const [selectedOption, setSelectedOption] = useState(defaultValue);
+
+  function onClick(option: { label: string, value: string }) {
+    setSelectedOption(option.value);
+    handleClick(option.value);
+  }
 
   return (
-    <Flex direction="column">
+    <Flex direction="column" style={{ marginBottom: '32px' }}>
       <Typography as="p" variant="body1">
         {label}
       </Typography>
@@ -24,12 +38,12 @@ export const RadioGroup = ({ label, options }: RadioGroupProps) => {
       <Flex gap={24}>
         {options.map((option) => (
           <Radio
-            key={option.description}
+            key={option.label}
             variant={
-              selectedOption === option.description ? "checked" : "default"
+              selectedOption === option.value ? "checked" : "default"
             }
-            onClick={() => setSelectedOption(option.description)}
-            description={option.description}
+            onClick={() => onClick(option)}
+            description={option.label}
           />
         ))}
       </Flex>

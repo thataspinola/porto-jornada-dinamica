@@ -47,13 +47,13 @@ export const Typography = ({
   children = "Typography",
   variant = "title1",
   as = "h1",
-  color = "neutral-900",
+  color = "brand-insurance-900",
   weight = "regular",
   fontStyle = "normal",
   className = "",
+  ...props
 }: TypographyProps) => {
   const Component = as;
-
   const classes = clsx(
     "typography",
     `--${variant}`,
@@ -64,7 +64,7 @@ export const Typography = ({
   );
 
   return (
-    <Component className={classes}>
+    <Component className={classes} {...props}>
       {children}
     </Component>
   );

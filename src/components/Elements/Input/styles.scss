@@ -43,21 +43,21 @@
     }
 
     .input__helper-text {
-      color: var(--color-neutral-550);
+      color: var(--neutral-550);
     }
   }
 
   &.--error {
     .input__box {
-      border-color: var(--color-accent-red-500);
+      border-color: var(--red-500) !important;
     }
 
     .input__label {
-      color: var(--color-accent-red-500);
+      color: var(--red-500) !important;
     }
 
     .input__helper-text {
-      color: var(--color-accent-red-500);
+      color: var(--red-500) !important;
     }
   }
 
@@ -121,7 +121,7 @@
 }
 
 .input__error-message {
-  color: var(--color-accent-red-500);
+  color: var(--red-500);
 }
 
 .input__loader {

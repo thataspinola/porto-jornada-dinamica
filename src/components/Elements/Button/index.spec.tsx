@@ -1,149 +1,143 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Button } from "./index";
 
+// Helper para centralizar a criação do componente (SUT - System Under Test)
+const makeSut = (props: any = {}) => {
+  const defaultProps = {
+    children: "Button",
+    ...props,
+  };
+
+  const result = render(<Button {...defaultProps} />);
+
+  return {
+    ...result,
+    props: defaultProps,
+    // Facilitador para pegar o botão principal em todos os testes
+    button: screen.queryByRole("button") || result.container.firstChild as HTMLElement,
+  };
+};
+
 describe("Button", () => {
-	it("Should render correctly with default values", () => {
-		render(<Button>Clique aqui</Button>);
+  it("Should render correctly with default values", () => {
+    const { button } = makeSut({ children: "Clique aqui" });
 
-		const button = screen.getByRole("button");
-		expect(button).toBeInTheDocument();
-		expect(button).toHaveClass("btn");
-		expect(button).toHaveClass("--insurance-primary");
-		expect(button).toHaveClass("--large");
-		expect(button).toHaveClass("--fluid");
-		expect(button).toHaveTextContent("Clique aqui");
-		expect(button).not.toBeDisabled();
-	});
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("--insurance-primary");
+    expect(button).toHaveClass("--large");
+    expect(button).toHaveClass("--fluid");
+    expect(button).toHaveTextContent("Clique aqui");
+    expect(button).not.toBeDisabled();
+  });
 
-	it("Should render with custom variant", () => {
-		render(<Button variant="banking">Botão bancário</Button>);
+  it("Should render with custom variant", () => {
+    const { button } = makeSut({ variant: "banking", children: "Botão bancário" });
 
-		const button = screen.getByRole("button");
-		expect(button).toHaveClass("--banking-primary");
-		expect(button).not.toHaveClass("--insurance-primary");
-	});
+    expect(button).toHaveClass("--banking-primary");
+    expect(button).not.toHaveClass("--insurance-primary");
+  });
 
-	it("Should render with custom style", () => {
-		render(<Button styles="secondary">Botão secundário</Button>);
+  it("Should render with custom style", () => {
+    const { button } = makeSut({ styles: "secondary", children: "Botão secundário" });
 
-		const button = screen.getByRole("button");
-		expect(button).toHaveClass("--insurance-secondary");
-		expect(button).not.toHaveClass("--insurance-primary");
-	});
+    expect(button).toHaveClass("--insurance-secondary");
+    expect(button).not.toHaveClass("--insurance-primary");
+  });
 
-	it("Should render with custom size", () => {
-		render(<Button size="small">Botão pequeno</Button>);
+  it("Should render with custom size", () => {
+    const { button } = makeSut({ size: "small" });
 
-		const button = screen.getByRole("button");
-		expect(button).toHaveClass("--small");
-		expect(button).not.toHaveClass("--large");
-	});
+    expect(button).toHaveClass("--small");
+    expect(button).not.toHaveClass("--large");
+  });
 
-	it("Should render with custom width", () => {
-		render(<Button width="fluid">Botão fluido</Button>);
+  it("Should render with custom width", () => {
+    const { button } = makeSut({ width: "fluid" });
 
-		const button = screen.getByRole("button");
-		expect(button).toHaveClass("--fluid");
-		expect(button).not.toHaveClass("--contain");
-	});
+    expect(button).toHaveClass("--fluid");
+    expect(button).not.toHaveClass("--contain");
+  });
 
-	it("Should render as disabled", () => {
-		render(<Button disabled>Botão desabilitado</Button>);
+  it("Should render as disabled", () => {
+    const { button } = makeSut({ disabled: true });
 
-		const button = screen.getByRole("button");
-		expect(button).toBeDisabled();
-		expect(button).toHaveClass("--disabled-primary");
-		expect(button).not.toHaveClass("--insurance-primary");
-	});
+    expect(button).toBeDisabled();
+    expect(button).toHaveClass("--disabled-primary");
+    expect(button).not.toHaveClass("--insurance-primary");
+  });
 
-	it("Should render with loading state", () => {
-		render(<Button isLoading>Botão carregando</Button>);
+  it("Should render with loading state", () => {
+    const { button } = makeSut({ isLoading: true, children: "Botão carregando" });
 
-		const button = screen.getByRole("button");
-		expect(button).toBeInTheDocument();
+    expect(button).toBeInTheDocument();
+    const loader = button.querySelector(".loader");
+    expect(loader).toBeInTheDocument();
+    expect(button).not.toHaveTextContent("Botão carregando");
+  });
 
-		// Verificar se o loader está presente
-		const loader = button.querySelector(".btn__loader");
-		expect(loader).toBeInTheDocument();
+  it("Should apply additional CSS classes", () => {
+    const { button } = makeSut({ className: "custom-class" });
 
-		// Verificar se o conteúdo do botão não está visível
-		expect(button).not.toHaveTextContent("Botão carregando");
-	});
+    expect(button).toHaveClass("custom-class");
+    expect(button).toHaveClass("btn");
+  });
 
-	it("Should apply additional CSS classes", () => {
-		render(<Button className="custom-class">Botão customizado</Button>);
+  it("Should call onClick event when clicked", () => {
+    const handleClick = jest.fn();
+    const { button } = makeSut({ onClick: handleClick });
 
-		const button = screen.getByRole("button");
-		expect(button).toHaveClass("custom-class");
-		expect(button).toHaveClass("btn");
-	});
+    fireEvent.click(button);
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
 
-	it("Should call onClick event when clicked", () => {
-		const handleClick = jest.fn();
-		render(<Button onClick={handleClick}>Botão clicável</Button>);
+  it("Should not call onClick event when disabled", () => {
+    const handleClick = jest.fn();
+    const { button } = makeSut({ onClick: handleClick, disabled: true });
 
-		const button = screen.getByRole("button");
-		fireEvent.click(button);
+    fireEvent.click(button);
+    expect(handleClick).not.toHaveBeenCalled();
+  });
 
-		expect(handleClick).toHaveBeenCalledTimes(1);
-	});
+  it("Should pass additional HTML attributes to the button element", () => {
+    const { getByTestId } = makeSut({
+      type: "submit",
+      "aria-label": "Enviar formulário",
+      title: "Clique para enviar",
+      "data-testid": "submit-button",
+    });
 
-	it("Should not call onClick event when disabled", () => {
-		const handleClick = jest.fn();
-		render(
-			<Button onClick={handleClick} disabled>
-				Botão desabilitado
-			</Button>
-		);
+    const button = getByTestId("submit-button");
+    expect(button).toHaveAttribute("type", "submit");
+    expect(button).toHaveAttribute("aria-label", "Enviar formulário");
+    expect(button).toHaveAttribute("title", "Clique para enviar");
+  });
 
-		const button = screen.getByRole("button");
-		fireEvent.click(button);
+  it("Should combine multiple custom properties", () => {
+    const { button } = makeSut({
+      variant: "health",
+      styles: "ghost",
+      size: "small",
+      width: "fluid",
+      className: "custom-class",
+    });
 
-		expect(handleClick).not.toHaveBeenCalled();
-	});
+    expect(button).toHaveClass("--health-ghost");
+    expect(button).toHaveClass("--small");
+    expect(button).toHaveClass("--fluid");
+    expect(button).toHaveClass("custom-class");
+  });
 
-	it("Should pass additional HTML attributes to the button element", () => {
-		render(
-			<Button
-				type="submit"
-				aria-label="Enviar formulário"
-				title="Clique para enviar"
-				data-testid="submit-button"
-			>
-				Enviar
-			</Button>
-		);
+  it("Should prioritize disabled class over variant when disabled", () => {
+    const { button } = makeSut({
+      variant: "negative",
+      styles: "secondary",
+      disabled: true,
+    });
 
-		const button = screen.getByTestId("submit-button");
-		expect(button).toHaveAttribute("type", "submit");
-		expect(button).toHaveAttribute("aria-label", "Enviar formulário");
-		expect(button).toHaveAttribute("title", "Clique para enviar");
-	});
-
-	it("Should combine multiple custom properties", () => {
-		render(
-			<Button variant="health" styles="ghost" size="small" width="fluid" className="custom-class">
-				Botão personalizado
-			</Button>
-		);
-
-		const button = screen.getByRole("button");
-		expect(button).toHaveClass("--health-ghost");
-		expect(button).toHaveClass("--small");
-		expect(button).toHaveClass("--fluid");
-		expect(button).toHaveClass("custom-class");
-	});
-
-	it("Should prioritize disabled class over variant when disabled", () => {
-		render(
-			<Button variant="negative" styles="secondary" disabled>
-				Botão desabilitado
-			</Button>
-		);
-
-		const button = screen.getByRole("button");
-		expect(button).toHaveClass("--disabled-secondary");
-		expect(button).not.toHaveClass("--negative-secondary");
-	});
+    expect(button).toHaveClass("--disabled-secondary");
+    expect(button).not.toHaveClass("--negative-secondary");
+  });
 });

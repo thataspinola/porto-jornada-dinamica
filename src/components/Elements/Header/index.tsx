@@ -10,28 +10,24 @@ import s from "./styles.module.scss";
 export type HeaderProps = {
   goBackLink?: string;
   hasShoppingCart?: boolean;
-  hasGoBackLink?: boolean;
 };
 
 export const Header = ({
-  goBackLink = "",
-  hasGoBackLink = true,
+  goBackLink = "/",
   hasShoppingCart = true,
 }: HeaderProps) => {
   const router = useRouter();
 
   return (
     <div className={s["header-acquisition-flow"]}>
-      {hasGoBackLink && (
-        <Image
-          src={ArrowLeftSVG}
-          height={24}
-          width={24}
-          className={clsx(s["button"], s["item-left"])}
-          alt="icone-voltar-para-pagina-anterior"
-          onClick={() => router.push(goBackLink)}
-        />
-      )}
+      <Image
+        src={ArrowLeftSVG}
+        height={24}
+        width={24}
+        className={clsx(s["button"], s["item-left"])}
+        alt="icone-voltar-para-pagina-anterior"
+        onClick={() => router.push(goBackLink)}
+      />
 
       <Image
         className={clsx(s["button"], s["item-center"])}

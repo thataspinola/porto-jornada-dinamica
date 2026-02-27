@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
-
 export interface FieldOption {
   label: string
   value: string
@@ -22,30 +20,8 @@ export interface ApiValidation {
 export interface Element {
   id: string
   label?: string
-  type:
-  | 'text'
-  | 'email'
-  | 'phone'
-  | 'cpf'
-  | 'cnpj'
-  | 'date'
-  | 'number'
-  | 'select'
-  | 'radio'
-  | 'checkbox'
-  | 'textarea'
-  | 'appointment'
-  | 'spacing'
-  | 'typography'
-  | 'button';
-  layout: {
-    marginTop: string;
-    marginBottom: string;
-  };
-  uiProps: any;
-  required?: boolean
-  placeholder?: string
-  options?: FieldOption[]
+  type?: string;
+  config: any;
 }
 
 export interface Seo {
@@ -62,6 +38,8 @@ export interface Seo {
 export interface Action {
   type?: string;
   service?: string;
+  target?: string;
+  trigger?: string;
   onSuccess?: {
     type: string;
     target: string;
@@ -70,17 +48,8 @@ export interface Action {
 export interface Step {
   id: string,
   slug: string;
-  kind?: string;
-  seo: Seo;
-  layout?: {
-    width?: string,
-    progressbar?: {
-      start?: number,
-      end?: number,
-    },
-  },
-  elements: Element[];
-  action: Action;
+  backStepSlug: string;
+  elements?: Element[];
 }
 
 export interface JourneyConfig {
@@ -88,11 +57,17 @@ export interface JourneyConfig {
 }
 
 export interface FormStepProps {
-  step: Step
+  step: Step;
+  slug: string;
 }
 
 export interface JourneyProps {
-  step: Step;
-  currentStepName: string;
-  journeySlug: string;
+  data: {
+    step: Step
+    position: number;
+    isFirst: boolean;
+    isLast: boolean;
+    progress: number;
+  };
+  slug: string;
 }

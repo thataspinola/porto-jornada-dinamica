@@ -1,30 +1,34 @@
+import type { Step } from "@/types";
 import { render, screen } from "@testing-library/react";
 import { Journey } from ".";
-import { journeyWithSingleStepMock } from "../../mock";
-import type { JourneyConfig } from "../../types";
+import { journeis } from "../../mock";
 
-const makeSut = (
-  config: JourneyConfig,
-  initialData: Record<string, unknown>,
-  slug: string,
-) => {
-  const sut = render(
-    <Journey config={config} initialData={initialData} slug={slug} />,
-  );
+const vehicleFinancingJourney = journeis["financiamento-de-veiculos"];
+
+const makeSut = ({ slug, step }: { slug: string; step: Step }) => {
+  const sut = render(<Journey journeySlug={slug} step={step} />);
 
   return sut;
 };
 
-test("loads and displays greeting", async () => {
-  // ARRANGE
-  const sut = makeSut(journeyWithSingleStepMock, {}, "dados-do-equipamentos");
+describe("Journey", () => {
+  it("Should be able to render CPF step", async () => {
+    const cpfStep = vehicleFinancingJourney.steps[0];
+    const sut = makeSut({
+      slug: "dados-do-equipamentos",
+      step: cpfStep,
+    });
 
-  // ACT
-  // await userEvent.click(screen.getByText('Load Greeting'))
-  // await screen.findByRole('heading')
+    const title = "Qual é o seu CPF?";
+    const subtitle =
+      "Precisamos dele para confirmar se o financiamento está disponível para você.";
+    // ACT
+    // await userEvent.click(screen.getByText('Load Greeting'))
+    // await screen.findByRole('heading')
 
-  screen.debug(sut.container);
+    screen.debug(sut.container);
 
-  // ASSERT
-  // expect(screen.getByRole('heading')).toHaveTextContent('hello there')
+    // ASSERT
+    // expect(screen.getByRole('heading')).toHaveTextContent('hello there')
+  });
 });

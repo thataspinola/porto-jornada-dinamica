@@ -1,32 +1,24 @@
+import type { Step } from "@/types";
 
-export const journeis = {
+type JourneyProps = { [slug: string]: { steps: Step[] } };
+
+export const journeis: JourneyProps = {
   "financiamento-de-veiculos": {
     steps: [
       {
         id: "step_1",
-        slug: "cep",
+        slug: "cpf",
         kind: "shortform",
-        seo: {
-          title: "financiamento de veículos | Porto",
-          description: 'Financiamento de veículos',
-          keywords: 'financiamento veicular, financiamento de veiculo, financiamento de veiculo porto',
-          canonical: 'https://portoseguro.com.br/contrate/financiamento-de-veiculos/cep',
-        },
         layout: {
           width: "600px",
-          progressbar: {
-            start: 0,
-            end: 20,
-          },
+          header: { goBackLink: "/", hasShoppingCart: false },
+          progressbar: { start: 0, end: 20 },
         },
         elements: [
           {
             id: "title",
             type: "typography",
-            layout: {
-              marginTop: '40px',
-              marginBottom: '32px'
-            },
+            layout: { marginTop: "40px", marginBottom: "32px" },
             uiProps: {
               variant: "title4",
               as: "h3",
@@ -37,13 +29,10 @@ export const journeis = {
           {
             id: "paragraph",
             type: "typography",
-            layout: {
-              marginBottom: '32px'
-            },
+            layout: { marginBottom: "32px" },
             uiProps: {
               variant: "body1",
               as: "p",
-              weight: "",
               children:
                 "Precisamos dele para confirmar se o financiamento está disponível para você.",
             },
@@ -51,9 +40,7 @@ export const journeis = {
           {
             id: "cpf_input",
             type: "cpf",
-            layout: {
-              marginBottom: '32px'
-            },
+            layout: { marginBottom: "32px" },
             uiProps: {
               label: "Digite seu CPF",
               placeholder: "000.000.000-00",
@@ -61,21 +48,30 @@ export const journeis = {
               variant: "default",
               width: "fluid",
             },
-            rules: [
-              { type: 'required', message: '' }
-            ]
+            action: {
+              service: "elegibilityService",
+              trigger: "onChange",
+            },
+            rules: [{ type: "required", message: "CPF é obrigatório" }],
           },
           {
-            id: "marketingCommunication",
+            id: "optin_marketing",
             type: "checkbox",
-            layout: {
-              marginBottom: '40px'
-            },
+            layout: { marginBottom: "40px" },
             uiProps: {
               label:
                 "Tenho interesse em receber comunicação com condições especiais e ofertas de Produtos e Serviços Porto.",
               variant: "default",
             },
+            action: {
+              service: "verificar_elegibilidade_optin",
+              trigger: "onInit",
+            },
+            dependsOn: {
+              field: "optin_marketing",
+              value: "ELIGIBLE",
+              operator: "===",
+            },
           },
           {
             id: "btn_next_1",
@@ -89,70 +85,55 @@ export const journeis = {
           },
         ],
         action: {
-          type: 'SUBMIT',
-          service: 'consultar_cpf',
+          type: "SERVICE_CALL",
+          service: "elegibilityService",
           onSuccess: {
-            type: 'NAVIGATE',
-            target: '/contrate/financiamento-de-veiculos/placa'
-          }
-        }
+            type: "NAVIGATE",
+            target: "/contrate/financiamento-de-veiculos/placa",
+          },
+        },
       },
       {
         id: "step_2",
         slug: "placa",
         kind: "shortform",
-        seo: {
-          title: "financiamento de veículos | Porto",
-          description: 'Financiamento de veículos',
-          keywords: 'financiamento veicular, financiamento de veiculo, financiamento de veiculo porto',
-          canonical: 'https://portoseguro.com.br/contrate/financiamento-de-veiculos/cep',
-        },
         layout: {
           width: "600px",
-          progressbar: {
-            start: 0,
-            end: 20,
+          header: {
+            goBackLink: "/contrate/financiamento-de-veiculos/cpf",
+            hasShoppingCart: false,
           },
+          progressbar: { start: 20, end: 40 },
         },
         elements: [
           {
             id: "title",
             type: "typography",
-            layout: {
-              marginTop: '40px',
-              marginBottom: '32px'
-            },
+            layout: { marginTop: "40px", marginBottom: "32px" },
             uiProps: {
               variant: "title4",
               as: "h3",
               weight: "bold",
-              children: "Sobre o seu veículo",
+              children: "Qual veículo você quer financiar?",
             },
           },
           {
-            id: "radio_input",
-            type: "radio",
-            layout: {
-              marginBottom: '32px'
-            },
-            uiProps: {
-              label: "Já sabe qual modelo quer financiar?",
-              name: "financiamento_",
-              options: [
-                {
-                  description: "Sim"
-                },
-                {
-                  description: "Não"
-                }
-              ]
-            },
-            rules: [
-              { type: 'required', message: '' }
-            ]
+            id: "license",
+            type: "licensePlate",
+            layout: { marginBottom: "32px" },
           },
           {
             id: "btn_next_1",
+            type: "link",
+            layout: { marginBottom: "8px" },
+            uiProps: {
+              children: "Não sei a placa",
+              styles: "ghost",
+              href: "/contrate/financiamento-de-veiculos/nao-sei-a-placa",
+            },
+          },
+          {
+            id: "btn_next_2",
             type: "button",
             uiProps: {
               children: "Continuar",
@@ -163,13 +144,40 @@ export const journeis = {
           },
         ],
         action: {
-          type: 'SUBMIT',
-          service: 'consultar_cpf',
-          onSuccess: {
-            type: 'NAVIGATE',
-            target: '/contrate/financiamento-de-veiculos/placa'
-          }
-        }
+          type: "NAVIGATE",
+          target: "/contrate/financiamento-de-veiculos/simulador-finaceiro",
+        },
+      },
+      {
+        id: "step_4",
+        slug: "simulador-finaceiro",
+        kind: "shortform",
+        layout: {
+          width: "600px",
+          header: {
+            goBackLink: "/contrate/financiamento-de-veiculos/placa",
+            hasShoppingCart: false,
+          },
+          progressbar: { start: 40, end: 60 },
+        },
+        elements: [
+          {
+            id: "title",
+            type: "typography",
+            layout: { marginTop: "40px", marginBottom: "32px" },
+            uiProps: {
+              variant: "title4",
+              as: "h3",
+              weight: "bold",
+              color: "insurance-900",
+              children: "Vamos simular o financiamento",
+            },
+          },
+          {
+            id: "simulator",
+            type: "financialSimulator",
+          },
+        ],
       },
     ],
   },
