@@ -5,6 +5,9 @@
  * @returns {string} Valor formatado
  */
 export const maskLicensePlate = (value: string): string => {
+	if (!value) return "";
+	if (typeof value !== "string") return "";
+
 	return value
 		.toUpperCase()
 		.replace(/[^A-Z0-9]/g, "")
