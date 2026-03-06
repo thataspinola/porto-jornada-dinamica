@@ -33,7 +33,7 @@ export type TypographyProps = React.HTMLAttributes<HTMLElement> & {
 	children?: ReactNode;
 	as?: HeadingTags;
 	variant?: HeadingTypes;
-	color?: ColorToken;
+	color?: any;
 	weight?: Weight;
 	fontStyle?: FontStyle;
 };

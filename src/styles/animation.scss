@@ -2,7 +2,6 @@
 // Base Animations
 // ==================
 
-// --- Fades simples
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -23,7 +22,6 @@
   }
 }
 
-// --- Slides (entrada)
 @keyframes slide-in-left {
   0% {
     transform: translateX(-50px);
@@ -68,7 +66,6 @@
   }
 }
 
-// --- Scale (zoom)
 @keyframes scale-in {
   0% {
     transform: scale(0.8);
@@ -93,7 +90,6 @@
   }
 }
 
-// --- Rotations
 @keyframes rotate-in {
   0% {
     transform: rotate(-90deg);
@@ -128,7 +124,6 @@
   }
 }
 
-// --- Bounce (efeito elástico)
 @keyframes bounce {
 
   0%,
@@ -148,7 +143,6 @@
   }
 }
 
-// --- Especial (leftVisibility)
 @keyframes visibility-from-right {
   0% {
     opacity: 0;

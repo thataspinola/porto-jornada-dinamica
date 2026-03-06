@@ -2,7 +2,7 @@ import { cpfMask } from "@/utils";
 import { Input } from "../Input";
 
 export const CPF = ({
-	value,
+	value = "",
 	onChange,
 	label,
 	isLoading,

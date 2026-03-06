@@ -1,12 +1,9 @@
 /** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
 
-import { clsx, maskLicensePlate } from "@/utils";
-import { useState } from "react";
-
 import "./styles.scss";
 
-import { Loader } from "../Loader";
-import type { LicensePlateProps } from "./types";
+import { maskLicensePlate } from "@/utils";
+import { Input } from "../Input";
 
 /**
  * Componente LicensePlate que permite a entrada de texto com vários estados e feedbacks visuais.
@@ -58,69 +55,22 @@ import type { LicensePlateProps } from "./types";
  */
 
 export const LicensePlate = ({
-	className = "",
-	name = "",
-	variant = "default",
-	width = "fluid",
-	disabled = false,
 	value = "",
-	isLoading = false,
-	helperText = "",
-	errorMessage = "",
-	label = "Placa do veículo",
 	onChange,
-	...restProps
-}: LicensePlateProps) => {
-	const [focused, setFocused] = useState(false);
-
-	const handleFocus = (isFocus: boolean) => {
-		if (disabled) return;
-		setFocused(isFocus);
-	};
-	const isError = errorMessage.length > 0;
-	const isFilled = value?.toString().length > 0;
-	const classes = clsx(
-		"input__root",
-		`--${variant}`,
-		`--${width}`,
-		{ "--filled": !!isFilled },
-		{ "--focused": focused },
-		{ "--disabled": disabled },
-		{ "--error": isError },
-		className,
-	);
-
+	label,
+	isLoading,
+	errorMessage,
+	...props
+}: any) => {
 	return (
-		<div
-			className={classes}
-			onFocus={() => handleFocus(true)}
-			onBlur={() => handleFocus(false)}
+		<Input
+			value={value}
+			onChange={(value) => onChange(maskLicensePlate(value))}
+			label={label}
+			isLoading={isLoading}
+			errorMessage={errorMessage}
 			style={{ marginBottom: "32px" }}
-			{...restProps}
-		>
-			<div className="input__box">
-				{label && (
-					<label htmlFor={name} className="input__label">
-						{label}
-					</label>
-				)}
-				<input
-					id={name}
-					name={name}
-					type="text"
-					className="input__field"
-					value={value}
-					disabled={disabled}
-					onChange={(e) => onChange(maskLicensePlate(e.target.value))}
-				/>
-			</div>
-
-			{isLoading && <Loader className="input__loader" color="insurance-900" />}
-
-			{!isError && helperText && (
-				<p className="input__helper-text">{helperText}</p>
-			)}
-			{isError && <p className="input__error-message">{errorMessage}</p>}
-		</div>
+			{...props}
+		/>
 	);
 };

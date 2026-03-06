@@ -1,6 +1,5 @@
 import { Loader } from "../Loader";
 import "./styles.scss";
-
 import type { ButtonProps } from "./types";
 
 /**
@@ -33,34 +32,34 @@ import type { ButtonProps } from "./types";
  */
 
 export const Button = ({
-  variant = "insurance",
-  styles = "primary",
-  size = "large",
-  width = "fluid",
-  isLoading = false,
-  disabled = false,
-  className = "",
-  handleClick,
-  children,
-  ...props
+	variant = "insurance",
+	styles = "primary",
+	size = "large",
+	width = "fluid",
+	isLoading = false,
+	disabled = false,
+	className = "",
+	handleClick,
+	children,
+	...props
 }: ButtonProps) => {
-  const variantClass = disabled
-    ? `--disabled-${styles}`
-    : `--${variant}-${styles}`;
-  const sizeClass = `--${size}`;
-  const widthClass = `--${width}`;
+	const variantClass = disabled
+		? `--disabled-${styles}`
+		: `--${variant}-${styles}`;
+	const sizeClass = `--${size}`;
+	const widthClass = `--${width}`;
 
-  const composedClassName =
-    `btn ${variantClass} ${sizeClass} ${widthClass} ${className}`.trim();
+	const composedClassName =
+		`btn ${variantClass} ${sizeClass} ${widthClass} ${className}`.trim();
 
-  return (
-    <button
-      className={composedClassName}
-      disabled={disabled}
-      onClick={handleClick}
-      {...props}
-    >
-      {isLoading ? <Loader /> : children}
-    </button>
-  );
+	return (
+		<button
+			className={composedClassName}
+			disabled={disabled}
+			onClick={handleClick}
+			{...props}
+		>
+			{isLoading ? <Loader /> : children}
+		</button>
+	);
 };

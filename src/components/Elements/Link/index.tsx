@@ -36,38 +36,38 @@ import type { LinkProps } from "./types";
  */
 
 export const Link = ({
-  variant = "insurance",
-  styles = "primary",
-  size = "large",
-  width = "fluid",
-  url = "#",
-  disabled = false,
-  className = "",
-  label,
-  children,
-  ...restProps
+	variant = "insurance",
+	styles = "primary",
+	size = "large",
+	width = "fluid",
+	url = "#",
+	disabled = false,
+	className = "",
+	label,
+	children,
+	...restProps
 }: LinkProps) => {
-  const classes = clsx(
-    "link",
-    {
-      [`--disabled-${styles}`]: disabled,
-      [`--${variant}-${styles}`]: !disabled,
-    },
-    `--${size}`,
-    `--${width}`,
-    className,
-  );
+	const classes = clsx(
+		"link",
+		{
+			[`--disabled-${styles}`]: disabled,
+			[`--${variant}-${styles}`]: !disabled,
+		},
+		`--${size}`,
+		`--${width}`,
+		className,
+	);
 
-  return (
-    <NextLink
-      href={url}
-      target="_self"
-      className={classes}
-      disabled={disabled}
-      {...restProps}
-      style={{ marginBottom: "8px" }}
-    >
-      {label || children}
-    </NextLink>
-  );
+	return (
+		<NextLink
+			href={url}
+			target="_self"
+			className={classes}
+			disabled={disabled}
+			{...restProps}
+			style={{ marginBottom: "8px" }}
+		>
+			{label || children}
+		</NextLink>
+	);
 };

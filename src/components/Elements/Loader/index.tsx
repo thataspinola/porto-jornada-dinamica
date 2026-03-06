@@ -4,7 +4,7 @@ import { clsx } from "@/utils";
 import "./styles.scss";
 
 type LoaderProps = HTMLAttributes<HTMLSpanElement> & {
-	color?: ColorToken;
+	color?: any;
 	size?: number;
 	className?: string;
 };

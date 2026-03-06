@@ -1,4 +1,7 @@
 "use client";
+
+// OTHERS
+export { joinPaths } from "@/utils/joinPaths";
 // ELEMENTS
 export { Button } from "./Elements/Button";
 export { Carousel } from "./Elements/Carousel";
@@ -21,6 +24,7 @@ export { Block, Root } from "./Elements/Skeleton";
 export { Spacing } from "./Elements/Spacing";
 export { Textarea } from "./Elements/Textarea";
 export { Typography } from "./Elements/Typography";
-
-// COMPONENTS
-export { Journey } from "./Journey";
+// ELEMENT REGISTRY
+export { renderJourneyElement } from "./elementRegistry";
+// JOURNEY BUILDER
+export { JourneyBuilder } from "./JourneyBuilder";
