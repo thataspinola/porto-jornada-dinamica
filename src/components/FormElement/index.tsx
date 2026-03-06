@@ -12,11 +12,17 @@ export const FormElement = ({ slug, element }: FormElementProps) => {
   const Component = ElementRegistry[element.type];
   if (!Component) return <ElementNotFound />;
 
+  function handleSelectValueByClick(value: string, type: string) {
+    if (type === 'CPF_INPUT') return;
+    if (type === 'TEXT_INPUT') return;
+
+    setValue(element.config.name, value)
+  }
   return (
     <Component
-      value={fields[element.config.name]}
+      value={fields[element.config.name] || ""}
       onChange={(value) => setValue(element.config.name, value)}
-      onClick={(value) => setValue(element.config.name, value)}
+      onClick={(value) => handleSelectValueByClick(value, element.type)}
       errorMessage=""
       {...element.config}
     />

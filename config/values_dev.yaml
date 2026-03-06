@@ -1,7 +1,7 @@
 appFramework: react
 ingress:
   enabled: true
-  contextURL: /react-ssr-corp-hubv-dinamic-journey
+  contextURL: /
   host: ""
 
 namespace: corp-hubv
