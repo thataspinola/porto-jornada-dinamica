@@ -1,5 +1,5 @@
 import { cpfMask } from "@/utils";
-import { Input } from "../Input";
+import { Input } from "../../UI/Input";
 
 export const CPF = ({
 	value = "",

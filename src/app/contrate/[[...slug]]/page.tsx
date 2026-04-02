@@ -1,9 +1,8 @@
-import { JourneyBuilder } from "@/components/JourneyBuilder";
-import { sampleJourney } from "@/mock/sampleJourney";
+import { JourneyBuilder } from "@/components/Core/JourneyBuilder";
+import { leadJourney } from "@/mock/lead";
 import { injectProgressToSteps } from "@/utils";
 
 export default async function Page() {
-  const sampleJourneyWithProgress = injectProgressToSteps(sampleJourney);
-  console.log("Sample Journey with Progress:", sampleJourneyWithProgress);
-  return <JourneyBuilder journey={sampleJourneyWithProgress} />;
+	const sampleJourneyWithProgress = injectProgressToSteps(leadJourney);
+	return <JourneyBuilder journey={sampleJourneyWithProgress} />;
 }

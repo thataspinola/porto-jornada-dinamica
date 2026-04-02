@@ -13,5 +13,7 @@ export const selectElementSchema = baseElementSchema.extend({
 		required: z.boolean().default(false),
 		options: z.array(selectOptionSchema),
 		name: z.string(),
+		defaultValue: z.string().optional(),
+		defaultValueFrom: z.any().optional(),
 	}),
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/components/Elements/Input";
+import { Input } from "@/components/UI/Input";
 import type { JourneyDefinition } from "@/validation/schemaValidation/journey.schema";
 import { type Control, Controller } from "react-hook-form";
 import type { FormValues } from "./TextInputElement";

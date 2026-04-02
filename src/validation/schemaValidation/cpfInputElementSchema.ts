@@ -9,6 +9,8 @@ export const cpfInputElementSchema = baseElementSchema.extend({
 		placeholder: z.string().optional(),
 		required: z.boolean().default(false),
 		name: z.string(),
+		defaultValue: z.string().optional(),
+		defaultValueFrom: z.any().optional(),
 		ui: inputUiSchema,
 	}),
 });

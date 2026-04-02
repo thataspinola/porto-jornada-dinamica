@@ -20,7 +20,7 @@ export const Header = ({
 	const router = useRouter();
 
 	return (
-		<div className={s["header-acquisition-flow"]}>
+		<header className={s["header-acquisition-flow"]}>
 			<Image
 				src={ArrowLeftSVG}
 				height={24}
@@ -49,6 +49,6 @@ export const Header = ({
 					onClick={() => router.push(goBackLink)}
 				/>
 			)}
-		</div>
+		</header>
 	);
 };

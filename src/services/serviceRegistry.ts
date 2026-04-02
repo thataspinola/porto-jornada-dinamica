@@ -1,17 +1,8 @@
 "use server";
 
-export type ServiceResult = {
-	success: boolean;
-	error?: string;
-	data?: unknown;
-};
+import { eligibility } from "./EligibilityService";
 
-type ServiceHandler = (input: unknown) => Promise<ServiceResult>;
-
-const eligibility: ServiceHandler = async (input: unknown) => {
-	console.log("Eligibility service called with input:", input);
-	return { success: true, data: { eligible: true } };
-};
+import type { ServiceHandler, ServiceResult } from "./types";
 
 const handlers: Record<string, ServiceHandler> = {
 	eligibility,

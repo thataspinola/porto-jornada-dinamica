@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@/components/Elements/Link";
+import { Link } from "@/components/UI/Link";
 import { joinPaths } from "@/utils/joinPaths";
 import type { JourneyDefinition } from "@/validation/schemaValidation/journey.schema";
 
@@ -16,11 +16,10 @@ type NavigationElementProps = {
 export function NavigationElement({
 	element,
 	onNavigate,
-	bussines,
 }: NavigationElementProps) {
 	const url = element.config.url?.trim() ?? "";
-	const baseUrl =
-		typeof bussines.base_url === "string" ? bussines.base_url : "";
+	const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
+
 	const href = joinPaths(baseUrl, url);
 	const ui = element.config.ui;
 

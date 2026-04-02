@@ -38,7 +38,7 @@ export const sampleJourney = journeySchema.parse({
 					config: {
 						label: "CPF",
 						placeholder: "000.000.000-00",
-						required: false,
+						required: true,
 						name: "field_cpf-input_m7oqd4",
 					},
 				},
@@ -48,7 +48,7 @@ export const sampleJourney = journeySchema.parse({
 					order: 3,
 					config: {
 						label: "Iniciar simulação",
-						url: "/contrate/financiamento-de-veiculos/placa",
+						url: "/placa",
 					},
 				},
 				{
@@ -58,11 +58,11 @@ export const sampleJourney = journeySchema.parse({
 					config: {
 						label: "Submit",
 						service: "eligibility",
-						targetStepOnSuccess: "/contrate/financiamento-de-veiculos/placa",
+						targetStepOnSuccess: "placa",
 					},
 				},
 			],
-			backStepSlug: "/contrate/financiamento-de-veiculos/cpf",
+			backStepSlug: "/cpf",
 		},
 		{
 			id: "51iub4ixm",
@@ -117,7 +117,7 @@ export const sampleJourney = journeySchema.parse({
 					},
 				},
 			],
-			backStepSlug: "/contrate/financiamento-de-veiculos/cpf",
+			backStepSlug: "/cpf",
 		},
 		{
 			id: "f4b19zx4j",
@@ -185,7 +185,7 @@ export const sampleJourney = journeySchema.parse({
 					},
 				},
 			],
-			backStepSlug: "/contrate/financiamento-de-veiculos/placa",
+			backStepSlug: "/placa",
 		},
 		{
 			id: "akffsvtjk",
@@ -348,7 +348,7 @@ export const sampleJourney = journeySchema.parse({
 					},
 				},
 			],
-			backStepSlug: "/contrate/financiamento-de-veiculos/placa",
+			backStepSlug: "/placa",
 		},
 		{
 			id: "zmxolj9hu",

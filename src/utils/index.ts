@@ -1,7 +1,9 @@
 export { clsx } from "./clsx";
+export { dispatchNavigate } from "./dispatchNavigate";
 export { encryptGtmClientId } from "./encrypt";
 export { formatAemImageUrl } from "./formatAemImageUrl";
 export { formatGtmText } from "./formatGtm";
+export { getByPath } from "./getByPath";
 export { getStepData } from "./getStepData";
 export { injectProgressToSteps } from "./injectProgressToSteps";
 export { joinPaths } from "./joinPaths";
@@ -14,4 +16,3 @@ export { phoneMask } from "./mask/phone";
 export { maskLicensePlate } from "./mask/plate";
 export { redirectTo } from "./redirectTo";
 export { sanitize } from "./sanitize";
-

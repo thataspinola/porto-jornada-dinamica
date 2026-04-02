@@ -3,6 +3,7 @@ import { checkboxElementSchema } from "./checkboxElementSchema";
 import { cpfInputElementSchema } from "./cpfInputElementSchema";
 import { navigationElementSchema } from "./navigationElementSchema";
 import { paragraphElementSchema } from "./paragraphElementSchema";
+import { phoneInputElementSchema } from "./phoneInputElementSchema";
 import { radioElementSchema } from "./radioElementSchema";
 import { selectElementSchema } from "./selectElementSchema";
 import { serviceCallElementSchema } from "./serviceCallElementSchema";
@@ -17,6 +18,7 @@ export const journeyElementSchema = z.discriminatedUnion("type", [
 	radioElementSchema,
 	selectElementSchema,
 	checkboxElementSchema,
+	phoneInputElementSchema,
 	serviceCallElementSchema,
 	navigationElementSchema,
 ]);
