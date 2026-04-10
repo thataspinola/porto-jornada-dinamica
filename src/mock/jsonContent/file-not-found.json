@@ -1,0 +1,51 @@
+{
+  "id": "tsyigmays",
+  "name": "seguro",
+  "slug": "file-not-found",
+  "steps": [
+    {
+      "id": "cyh53wuwv",
+      "name": "lead",
+      "slug": "lead",
+      "order": 0,
+      "elements": [
+        {
+          "id": "msfbojugm",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Jornada não encontrada",
+            "size": "lg"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ibw403dv8",
+      "name": "sucesso",
+      "slug": "sucess",
+      "order": 1,
+      "elements": [
+        {
+          "id": "wr3c50e2o",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Proposta enviada",
+            "size": "lg"
+          }
+        },
+        {
+          "id": "8e9fap8kz",
+          "type": "PARAGRAPH",
+          "order": 1,
+          "config": {
+            "text": "O valor solicitado está pré-aprovado e sua proposta está em análise. Dando tudo certo, enviaremos uma resposta por e-mail em até 48 horas.\nCaso necessário, entraremos em contato por telefone ou e-mail para mais informações."
+          }
+        }
+      ]
+    }
+  ],
+  "createdAt": "2026-04-02T18:50:26.602Z",
+  "updatedAt": "2026-04-02T18:50:26.603Z"
+}

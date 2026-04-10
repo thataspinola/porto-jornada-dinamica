@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/a11y/noNoninteractiveTabindex: <> */
 "use client";
-import { useCallback, useEffect, useState } from "react";
 
+import { useEffect, useState } from "react";
 import s from "./styles.module.scss";
 
 import type { ProgressBarProps } from "./types";
@@ -35,54 +35,42 @@ import type { ProgressBarProps } from "./types";
  */
 
 export const ProgressBar = ({
-	initialValue = 0,
-	value,
-	color = "#0046c0",
-	className,
-	style,
-	...props
+  value,
+  length,
+  color = "#0046c0",
+  className,
+  style,
+  ...props
 }: ProgressBarProps) => {
-	const [barWidth, setBarWidth] = useState(initialValue);
+  const currentStepIndex = (100 * value) / length;
+  const nextStep = (100 * (value - 10) / length);
+  const initialValue = nextStep <= 10 ? 0 : nextStep;
+  const [barWidth, setBarWidth] = useState(initialValue);
 
-	const normalizeValue = useCallback(
-		(val: number) => Math.min(100, Math.max(0, val)) * 10,
-		[],
-	);
+  useEffect(() => {
+    setBarWidth(currentStepIndex);
+  }, [currentStepIndex]);
 
-	useEffect(() => {
-		const updateWidth = () => {
-			setBarWidth(normalizeValue(value));
-		};
-
-		if (process.env.NODE_ENV === "test") {
-			updateWidth();
-			return;
-		}
-
-		const animationFrame = requestAnimationFrame(updateWidth);
-		return () => cancelAnimationFrame(animationFrame);
-	}, [value, normalizeValue]);
-
-	return (
-		<div
-			className={`${s.progressBar} ${className || ""}`}
-			role="progressbar"
-			aria-valuenow={barWidth}
-			aria-valuemin={0}
-			aria-valuemax={100}
-			aria-valuetext={`${barWidth}%`}
-			aria-label="barra de progresso"
-			style={style}
-			tabIndex={0}
-			{...props}
-		>
-			<div
-				className={s.progressBarFill}
-				style={{
-					width: `${barWidth}%`,
-					backgroundColor: color,
-				}}
-			/>
-		</div>
-	);
+  return (
+    <div
+      className={`${s.progressBar} ${className || ""}`}
+      role="progressbar"
+      aria-valuenow={barWidth}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuetext={`${barWidth}%`}
+      aria-label="barra de progresso"
+      style={style}
+      tabIndex={0}
+      {...props}
+    >
+      <div
+        className={s.progressBarFill}
+        style={{
+          width: `${barWidth}%`,
+          backgroundColor: color,
+        }}
+      />
+    </div>
+  );
 };

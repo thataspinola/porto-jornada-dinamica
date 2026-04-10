@@ -1,30 +1,18 @@
-export function redirectTo(urlOrSlug: string, bussines: { base_url?: string }) {
-	const joinPaths = (base: string, path: string) => {
-		if (!base.endsWith("/")) base += "/";
-		if (path.startsWith("/")) path = path.substring(1);
-		return base + path;
-	};
+export function redirectTo(urlOrSlug: string) {
 
-	const baseUrl =
-		typeof bussines.base_url === "string" ? bussines.base_url.trim() : "";
-	const fullUrl = baseUrl ? joinPaths(baseUrl, urlOrSlug) : urlOrSlug;
+  const pathList = urlOrSlug.split('/');
 
-	if (!fullUrl) return;
+  const isSlug = pathList?.length <= 2;
 
-	if (/^https?:\/\//i.test(fullUrl)) {
-		try {
-			const target = new URL(fullUrl);
-			if (target.origin !== window.location.origin) {
-				window.location.href = fullUrl;
-				return;
-			}
-			window.history.pushState(null, "", target.pathname + target.search);
-			return;
-		} catch {
-			return;
-		}
-	}
+  if (isSlug) {
+    const urlStep = pathList[1];
+    window.open(urlStep, '_self');
+  }
 
-	const path = fullUrl.startsWith("/") ? fullUrl : `/${fullUrl}`;
-	window.history.pushState(null, "", path);
+  const isExternal = /^https?:\/\//i.test(urlOrSlug);
+
+  if (isExternal) {
+    window.location.assign(urlOrSlug);
+    return;
+  }
 }

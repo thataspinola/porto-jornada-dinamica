@@ -33,30 +33,30 @@ import type { FlexProps } from "./types";
  */
 
 export const Flex = ({
-	children,
-	className,
-	style,
-	as: Tag = "div",
-	direction = "row",
-	align = "stretch",
-	justify = "flex-start",
-	wrap = "nowrap",
-	gap,
-	inline = false,
+  children,
+  className,
+  style,
+  as: Tag = "div",
+  direction = "row",
+  align = "stretch",
+  justify = "flex-start",
+  wrap = "nowrap",
+  gap,
+  inline = false,
 }: FlexProps) => {
-	return (
-		<Tag
-			className={clsx(styles.flex, inline && styles.inline, className)}
-			style={{
-				flexDirection: direction,
-				alignItems: align,
-				justifyContent: justify,
-				flexWrap: wrap,
-				gap,
-				...style,
-			}}
-		>
-			{children}
-		</Tag>
-	);
+  return (
+    <Tag
+      className={clsx(styles.flex, inline && styles.inline, className)}
+      style={{
+        flexDirection: direction,
+        alignItems: align,
+        justifyContent: justify,
+        flexWrap: wrap,
+        gap: `${gap}rem`,
+        ...style,
+      }}
+    >
+      {children}
+    </Tag>
+  );
 };

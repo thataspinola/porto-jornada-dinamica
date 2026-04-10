@@ -56,9 +56,14 @@
     flex: 1;
   }
 
-  &__title,
+  &__title {
+    color: var(--neutral-85);
+    font-size: var(--size-6);
+    margin-bottom: 8px;
+  }
+
   &__subtitle {
-    color: var(--color-neutral-85);
+    color: var(--neutral-85);
     margin-bottom: 8px;
   }
 
@@ -69,7 +74,6 @@
 
   &__body {
     color: var(--color-neutral-75);
-    margin-bottom: 32px;
   }
 
   &__footer {

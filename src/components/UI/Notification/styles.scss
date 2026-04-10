@@ -1,9 +1,10 @@
 .notification {
   position: relative;
-  width: 304px;
+  width: 100%;
   padding: var(--space-4);
   border-radius: var(--space-2);
   display: flex;
+  gap: 8px;
 
   &.--default {
     background-color: var(--neutral-0);
@@ -131,6 +132,7 @@
 }
 
 .notification__icon {
+  margin-top: 2px;
   width: var(--size-5);
   display: flex;
   justify-content: center;
@@ -146,7 +148,7 @@
 
 .notification__description {
   font-family: var(--open-sans);
-  font-size: var(--size-4);
+  font-size: var(--size-3);
   line-height: 2.4rem;
   font-weight: var(--regular);
 }

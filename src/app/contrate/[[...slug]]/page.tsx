@@ -1,8 +1,12 @@
 import { JourneyBuilder } from "@/components/Core/JourneyBuilder";
-import { leadJourney } from "@/mock/lead";
-import { injectProgressToSteps } from "@/utils";
+import { injectProgressToSteps, readJourneyContent } from "@/utils";
 
-export default async function Page() {
-	const sampleJourneyWithProgress = injectProgressToSteps(leadJourney);
-	return <JourneyBuilder journey={sampleJourneyWithProgress} />;
+export default async function Page({ params }) {
+  const resolvedParam = await params;
+  const slug = resolvedParam.slug[0];
+  const journeyContent = await readJourneyContent(slug);
+  const parsedJourneyContent = JSON.parse(journeyContent);
+
+  const sampleJourneyWithProgress = injectProgressToSteps(parsedJourneyContent);
+  return <JourneyBuilder journey={sampleJourneyWithProgress} />;
 }

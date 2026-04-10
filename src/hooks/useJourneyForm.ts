@@ -3,113 +3,119 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { useJourneyStore } from "../store";
-import { journeyStore } from "../store/journeyStore";
-import { getByPath } from "../utils";
-import type { JourneyDefinition } from "../validation/schemaValidation/journey.schema";
-import { buildJourneyFormSchema } from "../validation/validations";
+
+import { useJourneyStore } from "@/store";
+import { computePrefillValues } from "@/utils";
+
+import { journeyStore } from "@/store/journeyStore";
+import type { JourneyDefinition } from "@/validation/schemaValidation/journey.schema";
+import { buildJourneyFormSchema } from "@/validation/validations";
 
 type JourneyStep = JourneyDefinition["steps"][number];
 type FormValues = Record<string, any>;
 
 export function useJourneyForm(
-	journey: JourneyDefinition,
-	currentStep: JourneyStep,
+  journey: JourneyDefinition,
+  currentStep: JourneyStep,
 ) {
-	const { mergeFields, services } = useJourneyStore();
-	const { schema, stepFields } = buildJourneyFormSchema(journey);
+  const { fields, mergeFields, services } = useJourneyStore();
+  const { schema, stepFields } = buildJourneyFormSchema(journey);
 
-	const {
-		control,
-		register,
-		handleSubmit,
-		trigger,
-		getValues,
-		getFieldState,
-		setValue,
-		formState,
-		watch,
-	} = useForm<FormValues>({
-		resolver: zodResolver(schema),
-		defaultValues: useRef(journeyStore.getState().fields).current,
-		mode: "onChange",
-		reValidateMode: "onChange",
-	});
+  const {
+    control,
+    register,
+    handleSubmit,
+    trigger,
+    getValues,
+    getFieldState,
+    setValue,
+    formState,
+    watch,
+    reset
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: useRef(fields).current,
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
 
-	const currentStepFields: string[] = stepFields[currentStep.id]; // Pega os campos do passo atual, ou um array vazio se currentStep for null
+  const currentStepFields: string[] = stepFields[currentStep.id]; // Pega os campos do passo atual, ou um array vazio se currentStep for null
 
-	function canProceedToNextStep() {
-		const result = schema.safeParse(watch()); // Pega os valores atuais do formulário e valida contra o esquema
+  function canProceedToNextStep() {
+    const result = schema.safeParse(watch()); // Pega os valores atuais do formulário e valida contra o esquema
 
-		if (result.success) true;
+    if (result.success) true;
 
-		const errors = new Set(
-			result.error?.issues
-				.map((issue) => issue.path[0] as string)
-				.filter((key) => typeof key === "string"),
-		); // Pega os campos que possuem erros de validação
+    const errors = new Set(
+      result.error?.issues
+        .map((issue) => issue.path[0] as string)
+        .filter((key) => typeof key === "string"),
+    ); // Pega os campos que possuem erros de validação
 
-		return !currentStepFields.some((field) => errors.has(field)); // Verifica se algum dos campos do passo atual tem erro, se tiver, não pode prosseguir.
-	}
+    return !currentStepFields.some((field) => errors.has(field)); // Verifica se algum dos campos do passo atual tem erro, se tiver, não pode prosseguir.
+  }
 
-	function applyPrefillValues() {
-		if (!currentStep) return;
+  function applyPrefill() {
+    if (!currentStep) return;
 
-		const prefill = currentStep.elements.reduce((acc, element) => {
-			if (
-				element.type !== "TEXT_INPUT" &&
-				element.type !== "SELECT" &&
-				element.type !== "CPF_INPUT"
-			)
-				return acc; // Ignora elementos que não são de texto ou select
+    const prefill = computePrefillValues(
+      currentStep.elements,
+      getValues(),
+      services,
+    );
 
-			if (element.config?.defaultValue) {
-				return {
-					...acc,
-					[element.config.name]: element.config.defaultValue,
-				}; // Se o elemento tiver um valor padrão, usa ele para pré-preencher
-			}
+    if (Object.keys(prefill).length === 0) return;
 
-			if (element.config?.defaultValueFrom) {
-				const valueFrom = element.config.defaultValueFrom;
-				return {
-					...acc,
-					[element.config.name]: getByPath(
-						services[valueFrom.service],
-						valueFrom.path,
-					), // Tenta pegar o valor do campo especificado em defaultValueFrom, se não existir, mantém o valor atual ou usa uma string vazia
-				};
-			}
+    // Atualiza cada campo no React Hook Form
+    for (const [key, value] of Object.entries(prefill)) {
+      setValue(key as never, value as never, {
+        shouldValidate: true,
+        shouldDirty: false,
+        shouldTouch: false,
+      });
+    }
 
-			return acc; // Se não houver valor para pré-preencher, retorna o acumulador sem alterações
-		}, {} as any); // Considera apenas campos de texto e select para pré-preenchimento
+    // Sincroniza os novos valores com a Store global do Zustand
+    mergeFields(prefill);
+  }
 
-		const hasPrefillValues = Object.keys(prefill).length === 0;
+  /**
+ * EFEITO DE HIDRATAÇÃO:
+ * Sincroniza o formulário quando os dados chegam do sessionStorage (Zustand Persist).
+ */
+  useEffect(() => {
+    const currentState = journeyStore.getState();
 
-		if (hasPrefillValues) return;
+    // Caso 1: O dado já está pronto no momento que o hook carrega
+    if (currentState._hasHydrated && Object.keys(currentState.fields).length > 0) {
+      reset(currentState.fields as FormValues, { keepDirty: false, keepTouched: false });
+    }
 
-		for (const [key, value] of Object.entries(prefill)) {
-			setValue(key, value, { shouldDirty: true }); // Atualiza os valores do formulário com os valores de pré-preenchimento
-		}
-		mergeFields(prefill); // Atualiza os campos no estado global para que possam ser usados em outros passos ou para persistência
-	}
+    // Caso 2: O dado chega depois (assíncrono). Subscrevemos à store para ouvir a mudança de _hasHydrated.
+    const unsub = journeyStore.subscribe((state, prev) => {
+      if (!prev._hasHydrated && state._hasHydrated) {
+        reset(state.fields as FormValues, { keepDirty: false, keepTouched: false });
+      }
+    });
+    return unsub; // Limpa a subscrição ao desmontar o componente
+  }, [reset]);
 
-	useEffect(() => {
-		applyPrefillValues();
-	}, [currentStep, getValues, setValue, services, mergeFields]);
+  useEffect(() => {
+    applyPrefill();
+  }, [currentStep, getValues, mergeFields, services, setValue]);
 
-	return {
-		schema,
-		stepFields,
-		control,
-		register,
-		handleSubmit,
-		trigger,
-		getValues,
-		getFieldState,
-		setValue,
-		formState,
-		currentStepFields,
-		canProceed: canProceedToNextStep(),
-	};
+  return {
+    schema,
+    stepFields,
+    control,
+    register,
+    handleSubmit,
+    trigger,
+    getValues,
+    getFieldState,
+    setValue,
+    formState,
+    currentStepFields,
+    canProceed: canProceedToNextStep(),
+  };
 }

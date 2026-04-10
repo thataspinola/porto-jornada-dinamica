@@ -55,71 +55,70 @@ import type { DialogProps } from "./types";
  */
 
 export const Dialog = ({
-	isOpen,
-	onClose,
-	variant = "small",
-	title,
-	subtitle,
-	description,
-	icon,
-	children,
-	footer,
-	footerVariant = "row",
-	...restProps
+  isOpen,
+  onClose,
+  variant = "small",
+  title,
+  subtitle,
+  description,
+  icon,
+  children,
+  footer,
+  footerVariant = "row",
+  ...restProps
 }: DialogProps) => {
-	const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-	useEffect(() => setMounted(true), []);
+  useEffect(() => setMounted(true), []);
 
-	const handleOverlayClick = () => {
-		if (onClose) {
-			onClose();
-		}
-	};
+  const handleOverlayClick = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
 
-	if (!mounted) {
-		return null;
-	}
+  if (!mounted) {
+    return null;
+  }
 
-	const overlayClasses = clsx("dialog", "dialog__overlay", {
-		"dialog__overlay--open": isOpen,
-	});
+  const overlayClasses = clsx("dialog", "dialog__overlay", {
+    "dialog__overlay--open": isOpen,
+  });
 
-	const boxClasses = clsx("dialog__box", `--${variant}`);
+  const boxClasses = clsx("dialog__box", `--${variant}`);
 
-	return createPortal(
-		<div className={overlayClasses} onClick={handleOverlayClick} {...restProps}>
-			<div
-				className={boxClasses}
-				onClick={(e) => e.stopPropagation()}
-				onKeyDown={(e) => e.stopPropagation()}
-			>
-				{(title || subtitle || icon) && (
-					<div className="dialog__header">
-						{icon && <X className="dialog__icon" />}
+  return createPortal(
+    <div className={overlayClasses} onClick={handleOverlayClick} {...restProps}>
+      <div
+        className={boxClasses}
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        {(title || subtitle || icon) && (
+          <div className="dialog__header">
+            {icon && <X className="dialog__icon" />}
+            {(title || subtitle) && (
+              <div className="dialog__title-container">
+                {title && <h2 className="dialog__title">{title}</h2>}
+                {subtitle && <h3 className="dialog__subtitle">{subtitle}</h3>}
+              </div>
+            )}
+          </div>
+        )}
 
-						{(title || subtitle) && (
-							<div className="dialog__title-container">
-								{title && <h2 className="dialog__title">{title}</h2>}
-								{subtitle && <h3 className="dialog__subtitle">{subtitle}</h3>}
-							</div>
-						)}
-					</div>
-				)}
+        {description && (
+          <div className="dialog__description">{description}</div>
+        )}
 
-				{description && (
-					<div className="dialog__description">{description}</div>
-				)}
+        {children && <div className="dialog__body">{children}</div>}
 
-				{children && <div className="dialog__body">{children}</div>}
-
-				{footer && (
-					<div className={clsx("dialog__footer", `--${footerVariant}`)}>
-						{footer}
-					</div>
-				)}
-			</div>
-		</div>,
-		document.body,
-	);
+        {footer && (
+          <div className={clsx("dialog__footer", `--${footerVariant}`)}>
+            {footer}
+          </div>
+        )}
+      </div>
+    </div>,
+    document.body,
+  );
 };
