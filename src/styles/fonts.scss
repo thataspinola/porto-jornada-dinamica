@@ -1,6 +1,6 @@
-@import "./tokens/font.scss";
-@import "./tokens/weight.scss";
-@import "./tokens/style.scss";
+@use "./tokens/sizes.scss" as *;
+@use "./tokens/weight.scss" as *;
+@use "./tokens/style.scss" as *;
 
 
 .--font-weight {

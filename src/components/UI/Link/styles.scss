@@ -1,3 +1,5 @@
+@use "sass:map";
+
 .link {
   font-family: var(--open-sans);
   font-weight: var(--bold);
@@ -154,21 +156,21 @@ $variants: (
   .link.--#{$variant} {
     @each $style, $props in $styles {
       &-#{$style} {
-        color: map-get($props, text);
-        background-color: map-get($props, bg);
-        border-color: map-get($props, border);
+        color: map.get($props, text);
+        background-color: map.get($props, bg);
+        border-color: map.get($props, border);
 
         .link__loader {
-          border: 3px solid map-get($props, text);
+          border: 3px solid map.get($props, text);
           border-bottom-color: transparent;
         }
 
         &:hover {
-          background-color: map-get($props, hover);
+          background-color: map.get($props, hover);
         }
 
         &:active {
-          background-color: map-get($props, active);
+          background-color: map.get($props, active);
         }
       }
     }
