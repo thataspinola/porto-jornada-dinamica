@@ -1,12 +1,11 @@
 "use server";
-
 import { env } from "next-runtime-env";
 
-import { api } from "@/lib";
+import { api } from "../../lib";
 
 import type { AuthorizationServiceResponse } from "./types";
 
-export async function AuthorizationService() {
+export async function authorizationService() {
 	const basePath = env("NEXT_PUBLIC_SENSEDIA_CLOUD_URL");
 	const authorization = env("NEXT_PUBLIC_SERVICE_AUTHORIZATION_PATH");
 	const credentials = process.env.CREDENTIALS;

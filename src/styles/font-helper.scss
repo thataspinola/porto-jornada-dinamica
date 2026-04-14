@@ -1,6 +1,6 @@
-@import "./tokens/family.scss";
-@import "./tokens/style.scss";
-@import "./tokens/weight.scss";
+@use "./tokens/family.scss" as *;
+@use "./tokens/style.scss" as *;
+@use "./tokens/weight.scss" as *;
 
 // Font families
 .--font-family {

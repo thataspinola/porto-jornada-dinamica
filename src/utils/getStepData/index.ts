@@ -25,7 +25,6 @@ export const getStepData = (steps: any[], currentSlug: string) => {
 		position: index,
 		isFirst: index === 0,
 		isLast: index === steps.length - 1,
-		// Cálculo do progresso baseado na posição atual em relação ao total
 		progress: ((index + 1) / steps.length) * 100,
 	};
 };

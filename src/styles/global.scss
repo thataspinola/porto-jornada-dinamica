@@ -1,38 +1,39 @@
 // ==============
 // DESIGN TOKENS
 // ==============
-@import "./tokens/breakpoints.scss";
-@import "./tokens/colors.scss";
-@import "./tokens/family.scss";
-@import "./tokens/font.scss";
-@import "./tokens/layers.scss";
-@import "./tokens/radius.scss";
-@import "./tokens/shadow.scss";
-@import "./tokens/sizes.scss";
-@import "./tokens/spacing.scss";
-@import "./tokens/style.scss";
-@import "./tokens/weight.scss";
+@use "./tokens/breakpoints.scss" as *;
+@use "./tokens/colors.scss" as *;
+@use "./tokens/family.scss" as *;
+@use "./tokens/font.scss" as *;
+@use "./tokens/layers.scss" as *;
+@use "./tokens/radius.scss" as *;
+@use "./tokens/shadow.scss" as *;
+@use "./tokens/sizes.scss" as *;
+@use "./tokens/spacing.scss" as *;
+@use "./tokens/style.scss" as *;
+@use "./tokens/weight.scss" as *;
 
 // ============
 // ANIMATIONS
 // ============
-@import "./animation.scss";
+@use "./animation.scss" as *;
+;
 
 // ==========
 // RESET CSS
 // ==========
-@import "./reset.scss";
+@use "./reset.scss" as *;
 
 // ==========
 // GENERATORS CLASS
 // ==========
-@import "./font-helper.scss";
-@import "./fonts.scss";
+@use "./font-helper.scss" as *;
+@use "./fonts.scss" as *;
 
 :root {
   @each $group, $shades in $colors {
     @each $key, $value in $shades {
-      --#{$group}-#{$key}: #{$value};
+      --#{"" + $group}-#{"" + $key}: #{$value};
     }
   }
 

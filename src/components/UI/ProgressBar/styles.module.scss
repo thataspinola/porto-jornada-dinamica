@@ -1,0 +1,13 @@
+.progressBar {
+  width: 100%;
+  height: 5px;
+  background-color: var(--alpha10);
+  overflow: hidden;
+}
+
+.progressBarFill {
+  width: 0;
+  height: 100%;
+  border-radius: 0 2px 2px 0;
+  transition: width 600ms ease-in-out,
+}

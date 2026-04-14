@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $colors: (
   insurance: (900: #0046c0,
     800: #2662c9,
@@ -66,5 +68,5 @@ $colors: (
     30: rgba(255, 255, 255, 0.3),
     50: rgba(255, 255, 255, 0.5),
     70: rgba(255, 255, 255, 0.7),
-    transparent: transparent)
+    transparent: #FFFFFF00)
 );

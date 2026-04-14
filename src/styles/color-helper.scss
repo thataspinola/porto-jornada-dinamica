@@ -1,4 +1,4 @@
-@import "./tokens/colors.scss";
+@use "./tokens/colors.scss" as *;
 
 // Background color utilities
 .--bg {
