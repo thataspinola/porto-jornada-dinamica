@@ -1,6 +1,6 @@
 export function redirectTo(urlOrSlug: string) {
 
-  const pathList = urlOrSlug.split('/');
+  const pathList = urlOrSlug?.split('/');
 
   const isSlug = pathList?.length <= 2;
 

@@ -39,10 +39,9 @@ export function useJourneyForm(
     reValidateMode: "onChange",
   });
 
-  const currentStepFields: string[] = stepFields[currentStep.id]; // Pega os campos do passo atual, ou um array vazio se currentStep for null
-
+  const currentStepFields: string[] = stepFields[currentStep.id];
   function canProceedToNextStep() {
-    const result = schema.safeParse(watch()); // Pega os valores atuais do formulário e valida contra o esquema
+    const result = schema.safeParse(watch());
 
     if (result.success) true;
 
@@ -50,9 +49,8 @@ export function useJourneyForm(
       result.error?.issues
         .map((issue) => issue.path[0] as string)
         .filter((key) => typeof key === "string"),
-    ); // Pega os campos que possuem erros de validação
-
-    return !currentStepFields.some((field) => errors.has(field)); // Verifica se algum dos campos do passo atual tem erro, se tiver, não pode prosseguir.
+    );
+    return !currentStepFields.some((field) => errors.has(field));
   }
 
   function applyPrefill() {
@@ -66,7 +64,6 @@ export function useJourneyForm(
 
     if (Object.keys(prefill).length === 0) return;
 
-    // Atualiza cada campo no React Hook Form
     for (const [key, value] of Object.entries(prefill)) {
       setValue(key as never, value as never, {
         shouldValidate: true,
@@ -75,29 +72,22 @@ export function useJourneyForm(
       });
     }
 
-    // Sincroniza os novos valores com a Store global do Zustand
     mergeFields(prefill);
   }
 
-  /**
- * EFEITO DE HIDRATAÇÃO:
- * Sincroniza o formulário quando os dados chegam do sessionStorage (Zustand Persist).
- */
   useEffect(() => {
     const currentState = journeyStore.getState();
 
-    // Caso 1: O dado já está pronto no momento que o hook carrega
     if (currentState._hasHydrated && Object.keys(currentState.fields).length > 0) {
       reset(currentState.fields as FormValues, { keepDirty: false, keepTouched: false });
     }
 
-    // Caso 2: O dado chega depois (assíncrono). Subscrevemos à store para ouvir a mudança de _hasHydrated.
     const unsub = journeyStore.subscribe((state, prev) => {
       if (!prev._hasHydrated && state._hasHydrated) {
         reset(state.fields as FormValues, { keepDirty: false, keepTouched: false });
       }
     });
-    return unsub; // Limpa a subscrição ao desmontar o componente
+    return unsub;
   }, [reset]);
 
   useEffect(() => {

@@ -55,16 +55,14 @@ export function useJourneyNavigation({
   const [submitted, setSubmitted] = useState<SubmittedPayload | null>(null);
 
   async function validateCurrentStep() {
-    // Verifica que não tem step atual ou que o step atual não tem campos, nesse caso retorna true (válido)
     if (!currentStep || currentStepFields.length === 0) return true;
 
-    const ok = await trigger(currentStepFields); // Dispara a validação dos campos do passo atual e espera o resultado. O trigger retorna true se todos os campos forem válidos e false se algum campo for inválido
+    const ok = await trigger(currentStepFields);
 
     if (!ok) {
-      const fieldErrors: FormValues = {}; // Para cada campo do passo atual, pega o estado do campo usando getFieldState e se tiver um erro, adiciona a mensagem de erro no objeto fieldErrors usando o nome do campo como chave. Depois seta os erros no estado global usando setError para que possam ser exibidos na interface
+      const fieldErrors: FormValues = {};
 
       for (const field of currentStepFields) {
-        // Itera sobre os campos do passo atual e para cada campo, pega o estado do campo usando getFieldState e se tiver um erro, adiciona a mensagem de erro no objeto fieldErrors usando o nome do campo como chave. Depois seta os erros no estado global usando setError para que possam ser exibidos na interface
         const message = getFieldState(field).error?.message;
         if (message) fieldErrors[field] = message;
       }
@@ -83,6 +81,8 @@ export function useJourneyNavigation({
     const valid = await validateCurrentStep();
     if (!valid) return;
 
+    console.log('goNext:', options);
+
     if (options.type === "service") {
       const input = getValues();
 
@@ -93,6 +93,7 @@ export function useJourneyNavigation({
       });
 
       mergeServices({ [options.serviceName]: result });
+
       if (!result.success) {
         setError({ service: result.error });
         return;
@@ -109,7 +110,7 @@ export function useJourneyNavigation({
 
     const nextStep = steps[currentStepIndex + 1];
     if (nextStep) {
-      redirectTo(nextStep.backStepSlug);
+      redirectTo(nextStep.slug);
       return;
     }
 
@@ -121,7 +122,6 @@ export function useJourneyNavigation({
   }
 
   function goPrev() {
-    // Navega para o passo anterior, se existir. Se o slug do passo anterior for "/", navega para a home
     if (!currentStep?.backStepSlug) return;
     const backStepSlug = currentStep.backStepSlug;
 

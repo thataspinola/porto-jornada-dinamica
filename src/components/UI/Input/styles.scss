@@ -10,9 +10,16 @@
     width: max-content;
   }
 
+  &.--focused {
+    .input__box {
+      border-color: var(--insurance-550) !important;
+    }
+  }
+
   &.--filled {
     .input__box {
       padding: 0.7rem 1.2rem;
+      border-color: var(--green-800) !important;
     }
 
     .input__label {
@@ -21,13 +28,6 @@
       font-weight: var(--medium);
       font-size: var(--size-1);
       top: 0.6rem;
-    }
-  }
-
-  &.--focused {
-    .input__box {
-      border-color: var(--insurance-550);
-      background-color: rgba(0, 0, 0, 0.02);
     }
   }
 
@@ -48,6 +48,8 @@
   }
 
   &.--error {
+    animation: inputErrorShake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+
     .input__box {
       border-color: var(--red-500) !important;
     }
@@ -134,4 +136,28 @@
   border: 3px solid var(--insurance-900);
   border-bottom-color: transparent;
   transform: rotate(360deg);
+}
+
+@keyframes inputErrorShake {
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }

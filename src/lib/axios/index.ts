@@ -1,2 +1,3 @@
-export { authorizedApi } from "./authorizedApi";
+export { AuthorizationService } from "./authorizationService";
 export { api } from "./axiosInstance";
+

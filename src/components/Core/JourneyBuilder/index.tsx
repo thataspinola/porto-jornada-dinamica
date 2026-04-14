@@ -8,6 +8,7 @@ import { Header } from "../Header";
 import { renderJourneyElement } from "../JourneyRenderElements";
 import { ProgressBar } from "../ProgressBar";
 
+import './styles.scss';
 
 export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
   const controller = useJourneyController(journey);
@@ -21,9 +22,16 @@ export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
         length={journey.steps.length}
         style={{ marginBottom: '40px' }}
       />
-      <main style={{ width: "600px", margin: "0 auto", marginBottom: '32px' }}>
-        {controller.sortedElements.map((element) => (
-          <div key={element.id}>
+      <main
+        key={controller.currentStep.id}
+        className="animate-step-container"
+        style={{ width: "600px", margin: "0 auto", marginBottom: '32px' }}
+      >
+        {controller.sortedElements.map((element, index) => (
+          <div
+            className={`animate-item animate-item--delay-${index + 2}`}
+            key={element.id}
+          >
             {renderJourneyElement(element, {
               register: controller.register,
               control: controller.control,
@@ -34,15 +42,15 @@ export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
             })}
           </div>
         ))}
-        <DebugFloatingButton
-          data={{
-            bussines: controller.business,
-            formValues: controller.getValues(),
-            services: controller.services,
-            errors: controller.storedError,
-          }}
-        />
       </main>
+      <DebugFloatingButton
+        data={{
+          business: controller.business,
+          formValues: controller.getValues(),
+          services: controller.services,
+          errors: controller.storedError,
+        }}
+      />
     </>
   );
 }

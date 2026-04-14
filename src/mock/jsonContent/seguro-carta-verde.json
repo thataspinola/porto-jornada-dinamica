@@ -2,6 +2,7 @@
   "id": "tsyigmays",
   "name": "seguro",
   "slug": "seguro-carta-verde",
+  "backStepSlug": "/",
   "steps": [
     {
       "id": "cyh53wuwv",
@@ -98,8 +99,8 @@
           "order": 8,
           "config": {
             "label": "Solicite uma cotação",
-            "service": "proposal",
-            "targetStepSlugOnSuccess": ""
+            "service": "eligibility",
+            "targetStepOnSuccess": "/sucesso"
           }
         }
       ]
@@ -107,8 +108,9 @@
     {
       "id": "ibw403dv8",
       "name": "sucesso",
-      "slug": "sucess",
+      "slug": "sucesso",
       "order": 1,
+      "backStepSlug": "/seguro-carta-verde",
       "elements": [
         {
           "id": "wr3c50e2o",
@@ -124,7 +126,16 @@
           "type": "PARAGRAPH",
           "order": 1,
           "config": {
-            "text": "O valor solicitado está pré-aprovado e sua proposta está em análise. Dando tudo certo, enviaremos uma resposta por e-mail em até 48 horas.\nCaso necessário, entraremos em contato por telefone ou e-mail para mais informações."
+            "text": "Obrigado por escolher a Porto. Analisaremos seus dados e responderemos em até 48h."
+          }
+        },
+        {
+          "id": "u4pww1hbz",
+          "type": "NAVIGATION",
+          "order": 8,
+          "config": {
+            "label": "Voltar para home",
+            "url": "/"
           }
         }
       ]

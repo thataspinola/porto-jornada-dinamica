@@ -20,13 +20,6 @@ export function DebugFloatingButton({ data }: DebugProps) {
 
     const jsonString = JSON.stringify(data, null, 2);
 
-    /** * Regex Corrigida:
-     * Adicionado (?:...) para evitar que o split capture grupos internos indesejados.
-     */
-    const regex =
-      /(" (?:\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])* "(?:\s*:)?|\b(?:true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g;
-
-    // Removemos os espaços extras da regex para garantir precisão
     const cleanRegex =
       /("(?:\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(?:\s*:)?|\b(?:true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g;
 
@@ -35,8 +28,6 @@ export function DebugFloatingButton({ data }: DebugProps) {
       .filter((part) => part !== undefined && part !== "");
 
     return parts.map((part, index) => {
-      // Importante: se a parte for apenas espaços/quebras de linha, retorna como texto puro
-      // para manter a formatação do JSON.stringify
       if (/^\s+$/.test(part)) return part;
 
       let className = "debug-text";

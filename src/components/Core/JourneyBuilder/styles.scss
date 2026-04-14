@@ -1,0 +1,38 @@
+.animate-step-container {
+  animation: fadeInUpContainer 0.6s ease-out forwards;
+}
+
+.animate-item {
+  opacity: 0;
+  animation: fadeInLeftItem 0.5s ease-out forwards;
+
+  @for $i from 1 through 20 {
+    &--delay-#{$i} {
+      animation-delay: #{$i * 0.04s};
+    }
+  }
+}
+
+@keyframes fadeInUpContainer {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeftItem {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

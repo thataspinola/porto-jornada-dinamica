@@ -1,1 +1,1 @@
-export { api, authorizedApi } from "./axios";
+export { api, AuthorizationService } from "./axios";

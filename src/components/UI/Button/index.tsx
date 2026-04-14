@@ -32,34 +32,54 @@ import type { ButtonProps } from "./types";
  */
 
 export const Button = ({
-	variant = "insurance",
-	styles = "primary",
-	size = "large",
-	width = "fluid",
-	isLoading = false,
-	disabled = false,
-	className = "",
-	handleClick,
-	children,
-	...props
+  variant = "insurance",
+  styles = "primary",
+  size = "large",
+  width = "fluid",
+  isLoading = false,
+  disabled = false,
+  className = "",
+  handleClick,
+  children,
+  ...props
 }: ButtonProps) => {
-	const variantClass = disabled
-		? `--disabled-${styles}`
-		: `--${variant}-${styles}`;
-	const sizeClass = `--${size}`;
-	const widthClass = `--${width}`;
+  // A lógica de classes permanece, mas o CSS agora vai observar a transição dessas classes
+  const variantClass = disabled && !isLoading
+    ? `--disabled-${styles}`
+    : `--${variant}-${styles}`;
 
-	const composedClassName =
-		`btn ${variantClass} ${sizeClass} ${widthClass} ${className}`.trim();
+  const sizeClass = `--${size}`;
+  const widthClass = `--${width}`;
 
-	return (
-		<button
-			className={composedClassName}
-			disabled={disabled}
-			onClick={handleClick}
-			{...props}
-		>
-			{isLoading ? <Loader /> : children}
-		</button>
-	);
+  const composedClassName = [
+    'btn',
+    variantClass,
+    sizeClass,
+    widthClass,
+    isLoading ? 'is-loading' : '',
+    disabled ? 'is-disabled' : '',
+    className
+  ].join(' ').trim();
+
+  return (
+    <button
+      className={composedClassName}
+      disabled={disabled || isLoading}
+      onClick={handleClick}
+      type={props.type || "button"}
+      {...props}
+    >
+      <span className="btn__content-wrapper">
+        {isLoading ? (
+          <span className="btn__loader-inner" key="loader">
+            <Loader />
+          </span>
+        ) : (
+          <span className="btn__text-inner" key="text">
+            {children}
+          </span>
+        )}
+      </span>
+    </button>
+  );
 };
