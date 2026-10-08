@@ -1,0 +1,97 @@
+{
+  "name": "@porto/react-ssr-corp-hubv-dinamic-journey",
+  "aplicacao": "react-ssr-corp-hubv-dinamic-journey",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "postbuild": "shx cp -r dist/react-ssr-corp-hubv-dinamic-journey/static dist/react-ssr-corp-hubv-dinamic-journey/standalone/dist/react-ssr-corp-hubv-dinamic-journey/static",
+    "start": "node dist/react-ssr-corp-hubv-dinamic-journey/standalone/server.js",
+    "lint": "npx @biomejs/biome check ./src",
+    "lint:style": "stylelint \"src/**/*.scss\"",
+    "format": "npx @biomejs/biome check --write ./src",
+    "format:style": "stylelint \"src/**/*.scss\" --fix",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest --passWithNoTests",
+    "test:ui": "vitest --ui --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.1045.0",
+    "@aws-sdk/lib-dynamodb": "3.1045.0",
+    "@hookform/resolvers": "5.2.2",
+    "@porto-stack/icons": "0.4.2",
+    "@porto-stack/ui": "3.9.0",
+    "@porto-stack/utils": "2.2.2",
+    "@radix-ui/react-slider": "1.4.7",
+    "@radix-ui/react-tabs": "1.1.12",
+    "@react-pdf/renderer": "4.5.1",
+    "@tanstack/react-query": "5.100.14",
+    "@vitejs/plugin-react": "6.0.3",
+    "aes-js": "3.1.2",
+    "axios": "1.13.2",
+    "crypto-js": "4.2.0",
+    "date-fns": "4.1.0",
+    "jose": "6.2.10",
+    "js-cookie": "3.0.8",
+    "lucide-react": "1.8.0",
+    "next": "16.3.0",
+    "next-runtime-env": "3.3.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "react-hook-form": "7.72.1",
+    "sanitize-html": "2.17.0",
+    "zod": "4.3.6",
+    "zustand": "5.0.12"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.12",
+    "@porto-stack/biome": "1.0.0",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/jest": "30.0.0",
+    "@types/js-cookie": "3.0.6",
+    "@types/node": "25.6.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitest/coverage-v8": "4.1.9",
+    "@vitest/ui": "4.1.9",
+    "baseline-browser-mapping": "2.10.38",
+    "happy-dom": "20.10.6",
+    "identity-obj-proxy": "3.0.0",
+    "lefthook": "2.1.6",
+    "sass": "1.99.0",
+    "shx": "0.4.0",
+    "stylelint": "17.14.1",
+    "stylelint-config-recess-order": "7.7.0",
+    "stylelint-config-standard-scss": "17.0.0",
+    "typescript": "6",
+    "vitest": "4.1.9"
+  },
+  "engines": {
+    "node": ">=20.12.2"
+  },
+  "overrides": {
+    "@porto-stack/ui": {
+      "@porto-stack/icons": "$@porto-stack/icons"
+    },
+    "glob": {
+      ".": "13.0.6",
+      "minimatch": "10.2.1"
+    },
+    "next-runtime-env": {
+      "next": "15.5.22"
+    },
+    "ws": "8.21.1",
+    "fast-xml": "3.1.5",
+    "form-data": "4.0.6",
+    "brace-expansion": "5.0.6",
+    "sharp": "0.35.0",
+    "js-yaml": "4.3.1",
+    "postcss": "8.5.23",
+    "nanoid": "3.3.17"
+  }
+}

@@ -1,0 +1,3 @@
+{
+  "extends": ["@porto-stack/biome/next"]
+}
