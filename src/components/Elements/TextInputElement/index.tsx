@@ -8,7 +8,7 @@ export type FormValues = Record<string, unknown>;
 
 type TextInputElementType = Extract<
   JourneyDefinition["steps"][number]["elements"][number],
-  { type: "TEXT_INPUT" }
+  { type: "TEXT_INPUT" | "PHONE_INPUT" }
 >;
 
 type TextInputElementProps = {

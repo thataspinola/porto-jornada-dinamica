@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useServiceErrorHandler, type SetFormError } from "./useServiceErrorHandler";
 import type {
   UseFormGetFieldState,
   UseFormGetValues,
@@ -30,6 +31,8 @@ type SubmittedPayload = {
 };
 
 export type UseJourneyNavigationParams = {
+  setFormError: SetFormError;
+  journeySlug: string;
   steps: JourneyDefinition["steps"];
   currentStep: JourneyStep | null;
   currentStepIndex: number;
@@ -41,6 +44,8 @@ export type UseJourneyNavigationParams = {
 };
 
 export function useJourneyNavigation({
+  setFormError,
+  journeySlug,
   steps,
   currentStep,
   currentStepIndex,
@@ -50,6 +55,7 @@ export function useJourneyNavigation({
   trigger,
   getFieldState,
 }: UseJourneyNavigationParams) {
+  const handleServiceError = useServiceErrorHandler(setFormError);
   const { mergeFields, setError, mergeServices, business, services } =
     useJourneyStore();
   const [submitted, setSubmitted] = useState<SubmittedPayload | null>(null);
@@ -95,6 +101,8 @@ export function useJourneyNavigation({
       mergeServices({ [options.serviceName]: result });
 
       if (!result.success) {
+        const cpf = currentStep.elements.find((element) => element.type === "CPF_INPUT");
+        handleServiceError(result, journeySlug, cpf?.config.name ?? "taxvat");
         setError({ service: result.error });
         return;
       }

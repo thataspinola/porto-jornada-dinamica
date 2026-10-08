@@ -1,4 +1,7 @@
 export { CheckboxElement } from './CheckboxElement';
+export { ComposableCardElement } from './ComposableCardElement';
+export { ConditionalWrapperElement } from './ConditionalWrapperElement';
+export { TextElement } from './TextElement';
 export { CpfInputElement } from './CpfElement';
 export { DropdownElement } from './DropdownElement';
 export { LicensePlateElement } from './LicensePlateElement';

@@ -5,7 +5,7 @@ export type FormValues = Record<string, unknown>;
 
 export type CheckboxElementType = Extract<
   JourneyDefinition["steps"][number]["elements"][number],
-  { type: "CHECKBOX" }
+  { type: "SOCIAL_NAME" }
 >;
 
 export type SocialNameElementProps = {

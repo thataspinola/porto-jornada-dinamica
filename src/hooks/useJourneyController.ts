@@ -21,6 +21,8 @@ export function useJourneyController(journey: JourneyDefinition) {
     handleSubmit: form.handleSubmit,
     trigger: form.trigger,
     getFieldState: form.getFieldState,
+    setFormError: form.setFormError,
+    journeySlug: journey.slug,
   });
 
   const { error: storedError, business, services, hasHydrated } = useJourneyStore();
@@ -39,6 +41,7 @@ export function useJourneyController(journey: JourneyDefinition) {
     control: form.control,
     formState: form.formState,
     getValues: form.getValues,
+    fields: form.fields,
     canProceed: hasHydrated && form.canProceed,
     business,
     services,

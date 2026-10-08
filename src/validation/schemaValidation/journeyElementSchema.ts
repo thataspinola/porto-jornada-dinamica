@@ -1,4 +1,9 @@
 import { z } from "zod";
+import {
+ composableCardElementSchema,
+ conditionalWrapperElementSchema,
+ textElementSchema,
+} from "@/validation/schemas";
 
 import { checkboxElementSchema } from "./checkboxElementSchema";
 import { cpfInputElementSchema } from "./cpfInputElementSchema";
@@ -13,6 +18,9 @@ import { textInputElementSchema } from "./textInputElementSchema";
 import { titleElementSchema } from "./titleElementSchema";
 
 export const journeyElementSchema = z.discriminatedUnion("type", [
+ textElementSchema,
+ composableCardElementSchema,
+ conditionalWrapperElementSchema,
   titleElementSchema,
   paragraphElementSchema,
   textInputElementSchema,

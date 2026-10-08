@@ -29,6 +29,7 @@ export function useJourneyForm(
     getValues,
     getFieldState,
     setValue,
+    setError,
     formState,
     watch,
     reset
@@ -104,6 +105,8 @@ export function useJourneyForm(
     getValues,
     getFieldState,
     setValue,
+    setFormError: setError,
+    fields: watch(),
     formState,
     currentStepFields,
     canProceed: canProceedToNextStep(),

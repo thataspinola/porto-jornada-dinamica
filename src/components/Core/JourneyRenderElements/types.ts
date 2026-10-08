@@ -17,6 +17,9 @@ export type ElementRenderContext = {
   errors: FieldErrors<FormValues>;
   goNext: (options: GoNextOptions) => Promise<void>;
   business: Record<string, unknown>;
+  fields?: Record<string, unknown>;
+  services?: Record<string, unknown>;
+  journeySlug: string;
   canProceed: boolean;
 };
 

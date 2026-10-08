@@ -1,6 +1,10 @@
 export { clsx } from "./clsx";
 export { computePrefillValues } from './computePrefillValues';
 export { dispatchNavigate } from "./dispatchNavigate";
+export { evaluateConditions } from "./evaluateConditions";
+export type { ConditionContext } from "./evaluateConditions";
+export { pushEvent } from "./pushEvent";
+export type { Item, PromotionEvent } from "./pushEvent";
 export { encryptGtmClientId } from "./encrypt";
 export { formatAemImageUrl } from "./formatAemImageUrl";
 export { formatGtmText } from "./formatGtm";

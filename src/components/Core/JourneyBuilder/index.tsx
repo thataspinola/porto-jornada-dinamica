@@ -38,6 +38,9 @@ export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
               errors: controller.formState.errors,
               goNext: controller.goNext,
               business: controller.business,
+              fields: controller.fields,
+              services: controller.services,
+              journeySlug: journey.slug,
               canProceed: controller.canProceed,
             })}
           </div>

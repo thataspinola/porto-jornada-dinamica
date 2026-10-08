@@ -2,6 +2,8 @@
 
 import {
   CheckboxElement,
+  ComposableCardElement,
+  ConditionalWrapperElement,
   CpfInputElement,
   DropdownElement,
   NavigationElement,
@@ -10,8 +12,10 @@ import {
   ServiceCallElement,
   SocialNamElement,
   TextInputElement,
+  TextElement,
   TitleElement
 } from '@/components/Elements';
+import { journeyElementSchema } from "@/validation/schemaValidation/journey.schema";
 
 import type {
   ElementRenderContext,
@@ -24,6 +28,21 @@ const renderers: {
     Extract<JourneyElement, { type: K }>
   >;
 } = {
+  TEXT: (element) => <TextElement element={element} />,
+  COMPOSABLE_CARD: (element, ctx) => (
+   <ComposableCardElement
+    element={element}
+    renderElement={(child) => renderJourneyElement(journeyElementSchema.parse(child), ctx)}
+   />
+  ),
+  CONDITIONAL_WRAPPER: (element, ctx) => (
+   <ConditionalWrapperElement
+    element={element}
+    journeySlug={ctx.journeySlug}
+    context={{ formErrors: ctx.errors, business: ctx.business, fields: ctx.fields, services: ctx.services }}
+    renderElement={(child) => renderJourneyElement(journeyElementSchema.parse(child), ctx)}
+   />
+  ),
   TITLE: (element) => <TitleElement element={element} />,
   PARAGRAPH: (element) => <ParagraphElement element={element} />,
   TEXT_INPUT: (element, ctx) => (
@@ -80,8 +99,7 @@ const renderers: {
       onNavigate={(targetSlug) =>
         ctx.goNext({ type: "navigation", targetSlug })
       }
-      business={ctx.business}
-      canProceed={ctx.canProceed}
+      bussines={ctx.business}
     />
   ),
 };
