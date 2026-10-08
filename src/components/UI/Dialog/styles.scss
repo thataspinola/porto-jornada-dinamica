@@ -1,0 +1,116 @@
+.dialog {
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); // Escurecido para foco
+    backdrop-filter: blur(4px); // Efeito moderno de desfoque
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+
+    // Estado inicial (Escondido)
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__box {
+    background: var(--neutral-0);
+    padding: 32px 24px;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    z-index: 110;
+    position: relative;
+
+    // Estado inicial do conteúdo (Levemente abaixo e menor)
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); // Efeito "Spring" (mola)
+
+    &.is-open {
+      transform: scale(1) translateY(0);
+    }
+
+    &.--small {
+      max-width: 400px;
+    }
+
+    &.--medium {
+      max-width: 600px;
+    }
+
+    &.--large {
+      max-width: 850px;
+    }
+  }
+
+  &__close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    color: var(--neutral-60);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--neutral-10);
+      color: var(--neutral-90);
+    }
+  }
+
+  &__header {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  &__title {
+    color: var(--neutral-90);
+    font-size: var(--size-6);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  &__subtitle {
+    color: var(--neutral-60);
+    font-size: var(--size-4);
+    font-weight: 400;
+  }
+
+  &__description,
+  &__body {
+    color: var(--neutral-70);
+    font-size: var(--size-4);
+    line-height: 1.6;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 8px;
+
+    &.--column {
+      flex-direction: column;
+
+      &>* {
+        width: 100%;
+      }
+    }
+  }
+}
