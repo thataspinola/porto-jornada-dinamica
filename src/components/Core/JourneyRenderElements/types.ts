@@ -1,29 +1,29 @@
 import type { Control, FieldErrors, UseFormRegister } from "react-hook-form";
 import type { GoNextOptions } from "../../../hooks/useJourneyNavigation";
-import type { JourneyDefinition } from "../../../validation/schemaValidation/journey.schema";
+import type { JourneyDefinition } from "../../../validation/schemaValidation";
 
-type FormValues = Record<string, unknown>
+type FormValues = Record<string, unknown>;
 
 export type JourneyElement =
-  JourneyDefinition["steps"][number]["elements"][number];
+	JourneyDefinition["steps"][number]["elements"][number];
 export type NavigationElementType = Extract<
-  JourneyElement,
-  { type: "NAVIGATION" }
+	JourneyElement,
+	{ type: "NAVIGATION" }
 >;
 
 export type ElementRenderContext = {
-  register: UseFormRegister<FormValues>;
-  control: Control<FormValues>;
-  errors: FieldErrors<FormValues>;
-  goNext: (options: GoNextOptions) => Promise<void>;
-  business: Record<string, unknown>;
-  fields?: Record<string, unknown>;
-  services?: Record<string, unknown>;
-  journeySlug: string;
-  canProceed: boolean;
+	register: UseFormRegister<FormValues>;
+	control: Control<FormValues>;
+	errors: FieldErrors<FormValues>;
+	goNext: (options: GoNextOptions) => Promise<void>;
+	business: Record<string, unknown>;
+	fields?: Record<string, unknown>;
+	services?: Record<string, unknown>;
+	journeySlug: string;
+	canProceed: boolean;
 };
 
 export type ElementRenderer<T extends JourneyElement = JourneyElement> = (
-  element: T,
-  ctx: ElementRenderContext,
+	element: T,
+	ctx: ElementRenderContext,
 ) => React.ReactNode;

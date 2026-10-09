@@ -11,20 +11,23 @@ Regras gerais do projeto. Cada pasta importante tem seu próprio `AGENTS.md` com
 - **Zustand** (com `persist`) para estado global
 - **Tanstack Query** para data fetching
 - **Biome** para lint + format (não use ESLint/Prettier)
-- **Vitest** + Testing Library
+- **Jest** + Testing Library
 - **SCSS Modules** (`*.module.scss`) para estilos por componente
 - **@porto-stack/ui** e **@porto-stack/icons** como design system
 
 ## Comandos
 
 ```sh
-npm run dev          # next dev --turbopack
+npm run dev          # next dev
 npm run build        # next build
-npm run lint         # biome check ./src
-npm run format       # biome check --write ./src (autofix)
+npm run lint         # biome lint ./src (sem alterar arquivos)
+npm run lint:fix     # biome lint --write ./src
+npm run format       # biome format --write ./src
+npm run format:check # biome format ./src
+npm run check:names  # valida nomes e extensões em src/
 npm run type-check   # tsc --noEmit
-npm run test         # vitest
-npm run test:watch   # vitest --watch
+npm run test         # jest
+npm run test:watch   # jest --watch
 ```
 
 **Antes de finalizar qualquer alteração:** rode `npm run type-check` e `npm run lint`.
@@ -55,15 +58,21 @@ src/
 - **Sempre** use o alias `@/` para imports cross-folder. Nunca `../../../../`.
 - Imports relativos `./xxx` só dentro da mesma pasta.
 - Importe pelo **barrel** da pasta (`@/utils`, `@/components/UI`) em vez de caminho profundo.
-- Ordem (Biome organiza automaticamente): externos → `@/...` → relativos.
+- Ordem: externos → `@/...` → relativos. A organização automática do Biome está desabilitada.
 
 ### Nomes
 
-- Arquivos de componente React: `PascalCase` (ou `index.tsx` dentro de pasta `PascalCase/`).
+- Componentes: pasta e implementação em `PascalCase`, como `Button/Button.tsx`.
+- `index.ts` é o barrel de exportações; não coloque JSX nem implementação nele.
+- Tipos locais do componente: `types.ts`. Declarações globais: `*.d.ts`.
+- Testes do componente: `<Componente>.spec.tsx`. Testes de lógica: `<nome>.spec.ts`.
+- Arquivos com JSX usam `.tsx`; lógica, hooks sem JSX, tipos e schemas usam `.ts`.
+- Estilos com escopo: `<Componente>.module.scss`. Estilos globais existentes usam `<Componente>.scss`; não converter um no outro durante renomeações.
+- Preserve os nomes reservados do Next.js em `src/app/`: `page.tsx`, `layout.tsx`, `error.tsx`, entre outros.
 - Hooks: `useNomeDoHook.ts` em camelCase.
 - Funções e variáveis: camelCase.
 - Tipos e componentes: PascalCase.
-- Schemas Zod: `<nome>.schema.ts` (apenas em `src/validation/schemas/`).
+- Schemas Zod: `<nome>.schema.ts`; agrupamentos: `<nome>.schemas.ts`. Novos schemas ficam em `src/validation/schemas/`. A pasta legada `schemaValidation/` mantém esse padrão até sua migração.
 - Constantes globais: `SCREAMING_SNAKE_CASE`.
 - Mensagens de UI e erro em **português** (padrão do projeto).
 
@@ -71,7 +80,7 @@ src/
 
 - Server Component por padrão. Use `"use client"` **apenas** quando precisar de hook React, evento DOM, ou store cliente.
 - Server actions e código `next-runtime-env` ficam em arquivos com `"use server"` no topo.
-- Estilo via `*.module.scss` ao lado do componente. Importe como `import styles from './X.module.scss'`.
+- Estilo via `<Componente>.module.scss` ao lado do componente. Importe como `import styles from './Button.module.scss'`.
 
 ### TypeScript
 

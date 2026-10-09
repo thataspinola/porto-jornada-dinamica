@@ -1,5 +1,5 @@
 import { Loader } from "../Loader";
-import "./styles.scss";
+import "./Button.scss";
 import type { ButtonProps } from "./types";
 /**
  * Componente Button que permite aos usuários interagir com a interface.
@@ -29,29 +29,53 @@ import type { ButtonProps } from "./types";
  *
  * @returns {JSX.Element} Componente Button renderizado
  */
-export const Button = ({ variant = "insurance", styles = "primary", size = "large", width = "fluid", isLoading = false, disabled = false, className = "", handleClick, children, ...props }: ButtonProps) => {
+export const Button = ({
+	variant = "insurance",
+	styles = "primary",
+	size = "large",
+	width = "fluid",
+	isLoading = false,
+	disabled = false,
+	className = "",
+	handleClick,
+	children,
+	...props
+}: ButtonProps) => {
 	// A lógica de classes permanece, mas o CSS agora vai observar a transição dessas classes
-	const variantClass = disabled && !isLoading
-		? `--disabled-${styles}`
-		: `--${variant}-${styles}`;
+	const variantClass =
+		disabled && !isLoading ? `--disabled-${styles}` : `--${variant}-${styles}`;
 	const sizeClass = `--${size}`;
 	const widthClass = `--${width}`;
 	const composedClassName = [
-		'btn',
+		"btn",
 		variantClass,
 		sizeClass,
 		widthClass,
-		isLoading ? 'is-loading' : '',
-		disabled ? 'is-disabled' : '',
-		className
-	].join(' ').trim();
-	return (<button className={composedClassName} disabled={disabled || isLoading} onClick={handleClick} type={props.type || "button"} {...props}>
-	  <span className="btn__content-wrapper">
-		{isLoading ? (<span className="btn__loader-inner" key="loader">
-			<Loader />
-		  </span>) : (<span className="btn__text-inner" key="text">
-			{children}
-		  </span>)}
-	  </span>
-	</button>);
+		isLoading ? "is-loading" : "",
+		disabled ? "is-disabled" : "",
+		className,
+	]
+		.join(" ")
+		.trim();
+	return (
+		<button
+			className={composedClassName}
+			disabled={disabled || isLoading}
+			onClick={handleClick}
+			type={props.type || "button"}
+			{...props}
+		>
+			<span className="btn__content-wrapper">
+				{isLoading ? (
+					<span className="btn__loader-inner" key="loader">
+						<Loader />
+					</span>
+				) : (
+					<span className="btn__text-inner" key="text">
+						{children}
+					</span>
+				)}
+			</span>
+		</button>
+	);
 };

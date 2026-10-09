@@ -1,5 +1,5 @@
 export { clsx } from "./clsx";
-export { computePrefillValues } from './computePrefillValues';
+export { computePrefillValues } from "./computePrefillValues";
 export { dispatchNavigate } from "./dispatchNavigate";
 export { evaluateConditions } from "./evaluateConditions";
 export type { ConditionContext } from "./evaluateConditions";
@@ -21,6 +21,5 @@ export { phoneMask } from "./mask/phone";
 export { maskLicensePlate } from "./mask/plate";
 export { readJourneyContent } from "./readJourneyContent";
 export { redirectTo } from "./redirectTo";
-export { resolveDefaultValue } from './resolvedDefaultValue';
+export { resolveDefaultValue } from "./resolvedDefaultValue";
 export { sanitize } from "./sanitize";
-
