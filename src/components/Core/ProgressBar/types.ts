@@ -1,22 +1,22 @@
 import type { HTMLAttributes } from "react";
 
 export interface ProgressBarProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
-  /** Valor inicial da barra de progresso (0-100) */
-  initialValue?: number;
+	extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
+	/** Valor inicial da barra de progresso (0-100) */
+	initialValue?: number;
 
-  /** Valor atual da barra de progresso (0-100) */
-  value: number;
+	/** Valor atual da barra de progresso (0-100) */
+	value: number;
 
-  /** Cor personalizada para a barra de progresso */
-  color?: string;
+	/** Cor personalizada para a barra de progresso */
+	color?: string;
 
-  /** Quantidade de teps */
-  length: number;
+	/** Quantidade de teps */
+	length: number;
 
-  /** Rótulo para acessibilidade */
-  "aria-label"?: string;
+	/** Rótulo para acessibilidade */
+	"aria-label"?: string;
 
-  /** ID para testes */
-  "data-testid"?: string;
+	/** ID para testes */
+	"data-testid"?: string;
 }

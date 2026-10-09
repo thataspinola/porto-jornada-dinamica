@@ -1,2 +1,2 @@
-export * from "./block";
-export * from "./root";
+export * from "./Block";
+export * from "./Root";
