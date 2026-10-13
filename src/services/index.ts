@@ -1,2 +1,2 @@
-export { callService } from "./serviceRegistry";
-export type { ServiceResult } from "./types";
+export { fetchSelectOptions } from './optionsService'
+export { callService } from './serviceRegistry'

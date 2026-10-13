@@ -1,0 +1,905 @@
+{
+  "id": "seguro-bike",
+  "name": "Seguro Bike",
+  "slug": "seguro-bike",
+  "product": "bike",
+  "analytics": {
+    "category": "aquisicao",
+    "vertical": "seguro",
+    "product": "seguro-bike",
+    "funnel": "short-form"
+  },
+  "steps": [
+    {
+      "id": "bike-tipo",
+      "name": "Tipo da bike",
+      "slug": "tipo-bike",
+      "order": 0,
+      "backStepSlug": "https://www.portoseguro.com.br/",
+      "elements": [
+        {
+          "id": "bike-tipo-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Qual é o tipo da sua bike?",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-tipo-chips",
+          "type": "CHIPS_IMAGE",
+          "order": 1,
+          "config": {
+            "name": "bikeType",
+            "required": true,
+            "variant": "vertical",
+            "analytics": {
+              "gtmName": "Tipo da bike",
+              "gtmSubnamePrefix": "Qual e o tipo da sua bike"
+            },
+            "options": [
+              {
+                "label": "Autopropelido",
+                "value": "autopropelido",
+                "image": "https://images.prismic.io/portoseguro-stage/2mXrzaWyiOyjeszP_511a24059366dd461332e5bec0f0c6aa6164fa8e.png?auto=format,compress"
+              },
+              {
+                "label": "Bike elétrica",
+                "value": "eletrica",
+                "image": "https://images.prismic.io/portoseguro-stage/lLwPvtaCR4ngKNE1_e0e56ac8fd62a710ff10f84e4e966eb67f203972.png?auto=format,compress"
+              },
+              {
+                "label": "Mountain bike",
+                "value": "mountain-bike",
+                "image": "https://images.prismic.io/portoseguro-stage/3SVM_RQCm-z7B2Sj_3405c7856470d95e6866cf767f2acae524f745de.png?auto=format,compress"
+              },
+              {
+                "label": "Speed",
+                "value": "speed",
+                "image": "https://images.prismic.io/portoseguro-stage/r7gI8HOACDGLOKA1_f3f3928ed3096ada4601b1f23a2f1f89f07e3ca9.png?auto=format,compress"
+              },
+              {
+                "label": "Urbana",
+                "value": "urbana",
+                "image": "https://images.prismic.io/portoseguro-stage/j3K4rNe9gn_IbNHh_c72a48a1f8c25063dcbd389cde5262f12385f667.png?auto=format,compress"
+              },
+              {
+                "label": "Triathlon",
+                "value": "triathlon",
+                "image": "https://images.prismic.io/portoseguro-stage/MCI5Rb79me79jczh_56aa2441adfef770a4ab33c72e85457c23069074.png?auto=format,compress"
+              },
+              {
+                "label": "E-mountain bike",
+                "value": "e-mountain-bike",
+                "image": "https://images.prismic.io/portoseguro-stage/IwjIBb4fM2U75-Vi_e-mountain-bike.png?auto=format,compress"
+              },
+              {
+                "label": "Outros",
+                "value": "outros",
+                "image": "https://images.prismic.io/portoseguro-stage/y3ju49N_2w0SCnjn_8f9a8b71f6793bcb47e48d264f7b1d6879f8dcf6.png?auto=format,compress",
+                "tooltip": "Dobrável, BMX, infantil, tandem e outros modelos."
+              }
+            ],
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-tipo-continuar",
+          "type": "SERVICE_CALL",
+          "order": 2,
+          "config": {
+            "label": "Continuar",
+            "service": {
+              "action": "quotation",
+              "module": "quotation"
+            },
+            "payload": {
+              "bikeType": "{{fields.bikeType}}"
+            },
+            "mockResponse": {
+              "data": {
+                "status": "ok"
+              },
+              "delayMs": 500
+            },
+            "targetStepOnSuccess": "/seguro-bike/acelerador",
+            "requiresStepCompletion": true,
+            "analytics": {
+              "gtmName": "Tipo da bike"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bike-acelerador",
+      "name": "Acelerador da bike",
+      "slug": "acelerador",
+      "order": 1,
+      "backStepSlug": "tipo-bike",
+      "elements": [
+        {
+          "id": "bike-acelerador-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Onde fica o acelerador da bike?",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-acelerador-chips",
+          "type": "CHIPS_IMAGE",
+          "order": 1,
+          "config": {
+            "name": "bikeAccelerator",
+            "required": true,
+            "variant": "horizontal",
+            "analytics": {
+              "gtmName": "Acelerador da bike",
+              "gtmSubnamePrefix": "Onde fica o acelerador"
+            },
+            "options": [
+              {
+                "label": "No pedal ao pedalar",
+                "value": "pedal",
+                "description": "O motor só ajuda quando você pedala",
+                "image": "https://images.prismic.io/portoseguro-stage/YocNOpw5_QPTDsC5_876c3785eb5d2f27000440f19f70e94bb04a6aeb.png?auto=format,compress"
+              },
+              {
+                "label": "No guidão",
+                "value": "guidao",
+                "description": "Você pode acelerar sem pedalar",
+                "image": "https://images.prismic.io/portoseguro-stage/YIqQu3TReJ6x_Zu8_3667cc5fe363deb9f9f57c527f870fdffe9df116.png?auto=format,compress"
+              }
+            ],
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-acelerador-continuar",
+          "type": "SERVICE_CALL",
+          "order": 2,
+          "config": {
+            "label": "Continuar",
+            "service": {
+              "action": "quotation",
+              "module": "quotation"
+            },
+            "payload": {
+              "bikeType": "{{fields.bikeType}}",
+              "bikeAccelerator": "{{fields.bikeAccelerator}}"
+            },
+            "mockResponse": {
+              "data": {
+                "status": "ok"
+              },
+              "delayMs": 500
+            },
+            "conditions": [
+              {
+                "id": "eletrica-guidao-recusada",
+                "checks": [
+                  {
+                    "left": { "from": "fields", "path": "bikeType" },
+                    "op": "EQUAL",
+                    "right": { "value": "eletrica" }
+                  },
+                  {
+                    "left": { "from": "fields", "path": "bikeAccelerator" },
+                    "op": "EQUAL",
+                    "right": { "value": "guidao" }
+                  }
+                ],
+                "action": {
+                  "kind": "redirect",
+                  "url": "/seguro-bike/bike-recusada"
+                }
+              },
+              {
+                "id": "autopropelido-pedal-incompativel",
+                "checks": [
+                  {
+                    "left": { "from": "fields", "path": "bikeType" },
+                    "op": "EQUAL",
+                    "right": { "value": "autopropelido" }
+                  },
+                  {
+                    "left": { "from": "fields", "path": "bikeAccelerator" },
+                    "op": "EQUAL",
+                    "right": { "value": "pedal" }
+                  }
+                ],
+                "action": {
+                  "kind": "redirect",
+                  "url": "/seguro-bike/tipo-incompativel"
+                }
+              }
+            ],
+            "targetStepOnSuccess": "/seguro-bike/marca",
+            "requiresStepCompletion": true,
+            "analytics": {
+              "gtmName": "Acelerador da bike"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bike-recusada",
+      "name": "Bike recusada",
+      "slug": "bike-recusada",
+      "order": 2,
+      "showProgressBar": false,
+      "backStepSlug": "acelerador",
+      "elements": [
+        {
+          "id": "bike-recusada-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Não aceitamos bike elétrica com acelerador no guidão",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "bike-recusada-subtitulo",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Modelos que aceitamos:",
+            "variant": "body2",
+            "color": "neutral-800",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "bike-recusada-card-eletrica",
+          "type": "COMPOSABLE_CARD",
+          "order": 2,
+          "config": {
+            "children": [
+              {
+                "id": "bike-recusada-card-eletrica-titulo",
+                "element": {
+                  "id": "bike-recusada-card-eletrica-titulo",
+                  "type": "TEXT",
+                  "config": {
+                    "text": "Bike elétrica",
+                    "variant": "body2",
+                    "weight": "bold",
+                    "color": "neutral-black"
+                  }
+                }
+              },
+              {
+                "id": "bike-recusada-card-eletrica-texto",
+                "element": {
+                  "id": "bike-recusada-card-eletrica-texto",
+                  "type": "TEXT",
+                  "config": {
+                    "text": "Veículo com pedais operacionais onde o motor funciona apenas como auxílio ao pedalar (pedal assistido). Não possui acelerador no guidão.",
+                    "variant": "body2",
+                    "color": "neutral-800"
+                  }
+                }
+              }
+            ],
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "bike-recusada-card-autopropelido",
+          "type": "COMPOSABLE_CARD",
+          "order": 3,
+          "config": {
+            "children": [
+              {
+                "id": "bike-recusada-card-autopropelido-titulo",
+                "element": {
+                  "id": "bike-recusada-card-autopropelido-titulo",
+                  "type": "TEXT",
+                  "config": {
+                    "text": "Autopropelido",
+                    "variant": "body2",
+                    "weight": "bold",
+                    "color": "neutral-black"
+                  }
+                }
+              },
+              {
+                "id": "bike-recusada-card-autopropelido-texto",
+                "element": {
+                  "id": "bike-recusada-card-autopropelido-texto",
+                  "type": "TEXT",
+                  "config": {
+                    "text": "Veículo elétrico dotado de acelerador manual (manopla, botão ou gatilho) para se locomover sem a necessidade de pedalar.",
+                    "variant": "body2",
+                    "color": "neutral-800"
+                  }
+                }
+              }
+            ],
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-recusada-voltar",
+          "type": "NAVIGATION",
+          "order": 4,
+          "config": {
+            "label": "Voltar",
+            "url": "/seguro-bike/acelerador",
+            "analytics": {
+              "gtmName": "Bike recusada"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bike-tipo-incompativel",
+      "name": "Tipo de bike incompatível",
+      "slug": "tipo-incompativel",
+      "order": 3,
+      "showProgressBar": false,
+      "empty": true,
+      "backStepSlug": "acelerador",
+      "elements": [
+        {
+          "id": "bike-tipo-incompativel-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Tipo de bike incompatível",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "bike-tipo-incompativel-texto",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Autopropelido com acelerador no pedal entram na categoria de Bike elétrica. Deseja alterar o tipo da sua bike?",
+            "variant": "body2",
+            "color": "neutral-800",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-tipo-incompativel-tipo",
+          "type": "INPUT_HIDDEN",
+          "order": 2,
+          "config": {
+            "name": "bikeType",
+            "value": "eletrica"
+          }
+        },
+        {
+          "id": "bike-tipo-incompativel-continuar",
+          "type": "SERVICE_CALL",
+          "order": 3,
+          "config": {
+            "label": "Continuar como Bike elétrica",
+            "service": {
+              "action": "quotation",
+              "module": "quotation"
+            },
+            "payload": {
+              "bikeType": "{{fields.bikeType}}"
+            },
+            "mockResponse": {
+              "data": {
+                "status": "ok"
+              },
+              "delayMs": 500
+            },
+            "targetStepOnSuccess": "/seguro-bike/marca",
+            "analytics": {
+              "gtmName": "Tipo de bike incompatível"
+            },
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "bike-tipo-incompativel-voltar",
+          "type": "NAVIGATION",
+          "order": 4,
+          "config": {
+            "label": "Voltar",
+            "url": "/seguro-bike/tipo-bike",
+            "styles": "stroke",
+            "analytics": {
+              "gtmName": "Tipo de bike incompatível"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bike-marca",
+      "name": "Marca da bike",
+      "slug": "marca",
+      "order": 4,
+      "backStepSlug": "acelerador",
+      "elements": [
+        {
+          "id": "bike-marca-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Qual é a marca da sua bike?",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-marca-chips",
+          "type": "CHIPS",
+          "order": 1,
+          "config": {
+            "name": "brand",
+            "analytics": {
+              "gtmName": "Marca da bike",
+              "gtmSubnamePrefix": "Qual e a marca da sua bike"
+            },
+            "options": [
+              { "label": "Oggi", "value": "oggi" },
+              { "label": "Lev bike", "value": "lev-bike" },
+              { "label": "Specialized", "value": "specialized" },
+              { "label": "Caloi", "value": "caloi" },
+              { "label": "Trek", "value": "trek" },
+              { "label": "Sense", "value": "sense" },
+              { "label": "Cannondale", "value": "cannondale" },
+              { "label": "Scott", "value": "scott" }
+            ],
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "bike-marca-outras",
+          "type": "SELECT",
+          "order": 2,
+          "config": {
+            "label": "Outras marcas",
+            "name": "otherBrand",
+            "options": [
+              { "label": "Giant", "value": "giant" },
+              { "label": "Monark", "value": "monark" },
+              { "label": "Canyon", "value": "canyon" },
+              { "label": "Outras marcas", "value": "outras" }
+            ]
+          }
+        },
+        {
+          "id": "bike-marca-continuar",
+          "type": "SERVICE_CALL",
+          "order": 3,
+          "config": {
+            "label": "Continuar",
+            "service": {
+              "action": "quotation",
+              "module": "quotation"
+            },
+            "payload": {
+              "brand": "{{fields.brand}}",
+              "otherBrand": "{{fields.otherBrand}}"
+            },
+            "mockResponse": {
+              "data": {
+                "status": "ok"
+              },
+              "delayMs": 500
+            },
+            "conditions": [
+              {
+                "id": "marca-obrigatoria",
+                "checks": [
+                  {
+                    "left": { "from": "fields", "path": "brand" },
+                    "op": "NOT_EXISTS"
+                  },
+                  {
+                    "left": { "from": "fields", "path": "otherBrand" },
+                    "op": "NOT_EXISTS"
+                  }
+                ],
+                "action": {
+                  "kind": "notify",
+                  "title": "Selecione a marca da bike",
+                  "description": "Escolha uma das marcas ou selecione em \"Outras marcas\"."
+                }
+              }
+            ],
+            "targetStepOnSuccess": "/seguro-bike/uso",
+            "analytics": {
+              "gtmName": "Marca da bike"
+            },
+            "cssProperties": {
+              "marginTop": 32
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bike-uso",
+      "name": "Uso da bike",
+      "slug": "uso",
+      "order": 5,
+      "backStepSlug": "marca",
+      "elements": [
+        {
+          "id": "bike-uso-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Como você utiliza sua bike?",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-uso-radio",
+          "type": "RADIO",
+          "order": 1,
+          "config": {
+            "name": "bikeUsage",
+            "required": true,
+            "variant": "bordered",
+            "options": [
+              { "label": "Lazer / Passeio", "value": "lazer" },
+              { "label": "Treinos e Competições", "value": "treinos" },
+              { "label": "Meio de transporte", "value": "transporte" }
+            ]
+          }
+        },
+        {
+          "id": "bike-uso-aviso",
+          "type": "NOTIFICATION",
+          "order": 2,
+          "config": {
+            "text": "Não cobrimos bikes utilizadas para fins de exercício do trabalho.",
+            "icon": "circle-info",
+            "variant": "information",
+            "styles": "flat",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-uso-continuar",
+          "type": "SERVICE_CALL",
+          "order": 3,
+          "config": {
+            "label": "Continuar",
+            "service": {
+              "action": "quotation",
+              "module": "quotation"
+            },
+            "payload": {
+              "bikeUsage": "{{fields.bikeUsage}}"
+            },
+            "mockResponse": {
+              "data": {
+                "status": "ok"
+              },
+              "delayMs": 500
+            },
+            "targetStepOnSuccess": "/seguro-bike/endereco",
+            "requiresStepCompletion": true,
+            "analytics": {
+              "gtmName": "Uso da bike"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bike-endereco",
+      "name": "Endereço da bike",
+      "slug": "endereco",
+      "order": 6,
+      "backStepSlug": "uso",
+      "elements": [
+        {
+          "id": "bike-endereco-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Endereço onde a bike fica guardada",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-endereco-cep",
+          "type": "CEP",
+          "order": 1,
+          "config": {}
+        },
+        {
+          "id": "bike-endereco-continuar",
+          "type": "SERVICE_CALL",
+          "order": 2,
+          "config": {
+            "label": "Continuar",
+            "service": {
+              "action": "quotation",
+              "module": "quotation"
+            },
+            "payload": {
+              "addressZipCode": "{{fields.addressZipCode}}"
+            },
+            "mockResponse": {
+              "data": {
+                "status": "ok"
+              },
+              "delayMs": 500
+            },
+            "targetStepOnSuccess": "/seguro-bike/contato",
+            "requiresStepCompletion": true,
+            "analytics": {
+              "gtmName": "Endereço da bike"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bike-contato",
+      "name": "Dados de contato",
+      "slug": "contato",
+      "order": 7,
+      "backStepSlug": "endereco",
+      "elements": [
+        {
+          "id": "bike-contato-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Seus dados de contato",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-contato-cpf",
+          "type": "TAXVAT_INPUT",
+          "order": 1,
+          "config": {
+            "label": "CPF",
+            "placeholder": "000.000.000-00",
+            "required": true,
+            "name": "taxvat"
+          }
+        },
+        {
+          "id": "bike-contato-telefone",
+          "type": "PHONE_INPUT",
+          "order": 2,
+          "config": {
+            "label": "Telefone",
+            "placeholder": "(00) 00000-0000",
+            "required": true,
+            "name": "phone",
+            "allowInternational": false
+          }
+        },
+        {
+          "id": "bike-contato-email",
+          "type": "EMAIL_INPUT",
+          "order": 3,
+          "config": {
+            "label": "E-mail",
+            "placeholder": "seuemail@exemplo.com",
+            "required": true,
+            "name": "email"
+          }
+        },
+        {
+          "id": "bike-contato-privacidade",
+          "type": "PRIVACY_POLICY",
+          "order": 4,
+          "config": {
+            "text": "<p>Ao clicar em \"Ver planos\", você está ciente de que a Porto irá coletar seus dados pessoais de acordo com a nossa <a target=\"_blank\" href=\"https://www.portoseguro.com.br/privacidade\" rel=\"noreferrer\">Política de Privacidade</a> e <a target=\"_blank\" href=\"https://www.portoseguro.com.br/termos-de-uso\" rel=\"noreferrer\">Termos de Uso</a>.</p>"
+          }
+        },
+        {
+          "id": "bike-contato-continuar",
+          "type": "SERVICE_CALL",
+          "order": 5,
+          "config": {
+            "label": "Ver planos",
+            "service": {
+              "action": "lead",
+              "module": "support"
+            },
+            "payload": {
+              "taxvat": "{{fields.taxvat}}",
+              "phone": "{{fields.phone}}",
+              "email": "{{fields.email}}"
+            },
+            "mockResponse": {
+              "data": {
+                "status": "ok"
+              },
+              "delayMs": 500
+            },
+            "targetStepOnSuccess": "/seguro-bike/dados-complementares",
+            "requiresStepCompletion": true,
+            "analytics": {
+              "gtmName": "Dados de contato"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bike-dados-complementares",
+      "name": "Dados complementares",
+      "slug": "dados-complementares",
+      "order": 8,
+      "backStepSlug": "contato",
+      "elements": [
+        {
+          "id": "bike-dados-complementares-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Dados complementares",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-dados-complementares-serie",
+          "type": "TEXT_INPUT",
+          "order": 1,
+          "config": {
+            "label": "Preencha o número de série da bike",
+            "required": true,
+            "name": "serialNumber"
+          }
+        },
+        {
+          "id": "bike-dados-complementares-modelo",
+          "type": "TEXT_INPUT",
+          "order": 2,
+          "config": {
+            "label": "Qual o modelo da bike?",
+            "placeholder": "Ex: Dahon 7",
+            "required": true,
+            "name": "bikeModel"
+          }
+        },
+        {
+          "id": "bike-dados-complementares-nascimento",
+          "type": "BIRTH_DATE_INPUT",
+          "order": 3,
+          "config": {
+            "label": "Data de nascimento",
+            "placeholder": "dd/mm/aaaa",
+            "required": true,
+            "name": "birthDate"
+          }
+        },
+        {
+          "id": "bike-dados-complementares-continuar",
+          "type": "SERVICE_CALL",
+          "order": 4,
+          "config": {
+            "label": "Ver planos",
+            "service": {
+              "action": "quotation",
+              "module": "quotation"
+            },
+            "payload": {
+              "serialNumber": "{{fields.serialNumber}}",
+              "bikeModel": "{{fields.bikeModel}}",
+              "birthDate": "{{fields.birthDate}}"
+            },
+            "mockResponse": {
+              "data": {
+                "status": "ok"
+              },
+              "delayMs": 500
+            },
+            "targetStepOnSuccess": "/seguro-bike/planos",
+            "requiresStepCompletion": true,
+            "analytics": {
+              "gtmName": "Dados complementares"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bike-planos",
+      "name": "Planos",
+      "slug": "planos",
+      "order": 9,
+      "backStepSlug": "dados-complementares",
+      "elements": [
+        {
+          "id": "bike-planos-titulo",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Monte o plano ideal para sua bike",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "bike-planos-texto",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Tela em construção. O fluxo mockado termina aqui.",
+            "variant": "body2",
+            "color": "neutral-800",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "bike-planos-voltar",
+          "type": "NAVIGATION",
+          "order": 2,
+          "config": {
+            "label": "Voltar ao início",
+            "url": "/seguro-bike/tipo-bike",
+            "styles": "stroke",
+            "analytics": {
+              "gtmName": "Planos"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

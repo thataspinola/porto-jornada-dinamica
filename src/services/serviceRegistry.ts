@@ -1,20 +1,12 @@
-"use server";
+'use server'
 
-import { eligibility } from "./EligibilityService";
-
-import type { ServiceHandler, ServiceResult } from "./types";
-
-const handlers: Record<string, ServiceHandler> = {
-	eligibility,
-};
+import { callApi } from './apiService'
+import type { ApiServiceInput } from './apiService/types'
+import type { ServiceResult } from './types'
 
 export async function callService(
-	serviceName: string,
-	input: unknown,
+  input: ApiServiceInput,
+  recaptchaToken: string
 ): Promise<ServiceResult> {
-	const handler = handlers[serviceName];
-	if (!handler) {
-		return { success: false, error: `Serviço não registrado: ${serviceName}` };
-	}
-	return handler(input);
+  return callApi(input, recaptchaToken)
 }
