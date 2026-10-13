@@ -52,7 +52,7 @@ export const Flex = ({
 				alignItems: align,
 				justifyContent: justify,
 				flexWrap: wrap,
-				gap: `${gap}rem`,
+				gap: typeof gap === "number" ? `${gap}rem` : gap,
 				...style,
 			}}
 		>

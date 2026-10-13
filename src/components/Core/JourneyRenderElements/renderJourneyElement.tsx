@@ -22,9 +22,10 @@ import type {
 	ElementRenderer,
 	JourneyElement,
 } from "./types";
+import { ConfiguredElement } from "@/components/Elements/ConfiguredElement";
 
 const renderers: {
-	[K in JourneyElement["type"]]: ElementRenderer<
+	[K in JourneyElement["type"]]?: ElementRenderer<
 		Extract<JourneyElement, { type: K }>
 	>;
 } = {
@@ -118,5 +119,21 @@ export function renderJourneyElement(
 	ctx: ElementRenderContext,
 ) {
 	const renderer = renderers[element.type] as ElementRenderer;
-	return renderer(element, ctx) ?? null;
+	return renderer ? (
+		(renderer(element, ctx) ?? null)
+	) : (
+		<ConfiguredElement
+			element={element}
+			control={ctx.control}
+			register={ctx.register}
+			errors={ctx.errors}
+			values={ctx.fields}
+			onNavigate={(targetSlug) => {
+				void ctx.goNext({ type: "navigation", targetSlug });
+			}}
+			renderElement={(child) =>
+				renderJourneyElement(journeyElementSchema.parse(child), ctx)
+			}
+		/>
+	);
 }

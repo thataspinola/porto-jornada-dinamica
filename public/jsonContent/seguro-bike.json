@@ -1,0 +1,36 @@
+{
+  "id": "seguro-bike",
+  "name": "Seguro bike",
+  "slug": "seguro-bike",
+  "steps": [
+    {
+      "id": "seguro-bike-inicio",
+      "name": "Início",
+      "slug": "inicio",
+      "elements": [
+        {
+          "id": "seguro-bike-title",
+          "type": "TITLE",
+          "config": {
+            "text": "Seguro bike"
+          }
+        },
+        {
+          "id": "seguro-bike-description",
+          "type": "PARAGRAPH",
+          "config": {
+            "text": "Conheça as opções disponíveis para você."
+          }
+        },
+        {
+          "id": "seguro-bike-navigation",
+          "type": "NAVIGATION",
+          "config": {
+            "label": "Conhecer produto",
+            "url": "https://www.portoseguro.com.br/seguro-bike"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "consorcio",
+  "name": "Consórcio",
+  "slug": "consorcio",
+  "steps": [
+    {
+      "id": "consorcio-inicio",
+      "name": "Início",
+      "slug": "inicio",
+      "elements": [
+        {
+          "id": "consorcio-title",
+          "type": "TITLE",
+          "config": {
+            "text": "Consórcio"
+          }
+        },
+        {
+          "id": "consorcio-description",
+          "type": "PARAGRAPH",
+          "config": {
+            "text": "Conheça as opções disponíveis para você."
+          }
+        },
+        {
+          "id": "consorcio-navigation",
+          "type": "NAVIGATION",
+          "config": {
+            "label": "Conhecer produto",
+            "url": "https://www.portoseguro.com.br/consorcio"
+          }
+        }
+      ]
+    }
+  ]
+}

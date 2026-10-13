@@ -18,7 +18,8 @@
     "type-check": "tsc --noEmit",
     "test": "jest",
     "test:ci": "jest --findRelatedTests",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "check:empty": "node scripts/check-empty-files.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1030.0",

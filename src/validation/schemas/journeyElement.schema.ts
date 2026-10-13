@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { cpfInputElementSchema } from "@/validation/schemaValidation/cpfInput.schema";
 
 import { fcdcPlateInputElementSchema } from "@/features/fcdc/validation/schemas/elements/fcdcPlateInput.schema";
 import { fcdcPriceSimulationElementSchema } from "@/features/fcdc/validation/schemas/elements/fcdcPriceSimulation.schema";
@@ -66,6 +67,7 @@ import { welcomeElementSchema } from "./elements/welcome.schema";
 
 export const journeyElementSchema = z.discriminatedUnion("type", [
 	addressRadioElementSchema,
+	cpfInputElementSchema,
 	boxElementSchema,
 	fullNameInputElementSchema,
 	titleElementSchema,

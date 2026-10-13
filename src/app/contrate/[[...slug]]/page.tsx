@@ -1,12 +1,46 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { readdir } from "node:fs/promises";
+import { join } from "node:path";
 import { JourneyBuilder } from "@/components/Core/JourneyBuilder";
-import { injectProgressToSteps, readJourneyContent } from "@/utils";
-
-export default async function Page({ params }) {
-	const resolvedParam = await params;
-	const slug = resolvedParam.slug[0];
-	const journeyContent = await readJourneyContent(slug);
-	const parsedJourneyContent = JSON.parse(journeyContent);
-
-	const sampleJourneyWithProgress = injectProgressToSteps(parsedJourneyContent);
-	return <JourneyBuilder journey={sampleJourneyWithProgress} />;
+import { readJourneyContent } from "@/utils/readJourneyContent";
+import { journeySchema } from "@/validation/schemas";
+export default async function Page({
+	params,
+}: {
+	params: Promise<{ slug?: string[] }>;
+}) {
+	const { slug } = await params;
+	if (!slug?.length) {
+		const files = await readdir(join(process.cwd(), "public", "jsonContent"));
+		return (
+			<section>
+				<h1>Produtos Porto</h1>
+				<ul>
+					{files
+						.filter((f) => f.endsWith(".json"))
+						.map((file) => {
+							const name = file.slice(0, -5);
+							return (
+								<li key={name}>
+									<Link href={`/contrate/${name}`}>
+										{name.replace(/-/g, " ")}
+									</Link>
+								</li>
+							);
+						})}
+				</ul>
+			</section>
+		);
+	}
+	let content: string;
+	try {
+		content = await readJourneyContent(slug[0]);
+	} catch {
+		notFound();
+	}
+	const result = journeySchema.safeParse(JSON.parse(content));
+	if (!result.success)
+		return <p role="alert">Não foi possível carregar a jornada.</p>;
+	return <JourneyBuilder journey={result.data} />;
 }

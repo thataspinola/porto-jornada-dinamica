@@ -10,11 +10,13 @@ import s from "./Header.module.scss";
 
 export type HeaderProps = {
 	handleGoBack?: () => void;
+	goBackLink?: string;
 	hasShoppingCart?: boolean;
 };
 
 export const Header = ({
 	handleGoBack,
+	goBackLink,
 	hasShoppingCart = false,
 }: HeaderProps) => {
 	const router = useRouter();
@@ -26,7 +28,10 @@ export const Header = ({
 				width={24}
 				className={clsx(s["button"], s["item-left"])}
 				alt="icone-voltar-para-pagina-anterior"
-				onClick={handleGoBack}
+				onClick={
+					handleGoBack ??
+					(() => (goBackLink ? router.push(goBackLink) : router.back()))
+				}
 			/>
 
 			<Image

@@ -1,0 +1,139 @@
+{
+  "id": "emprestimo-com-garantia-de-veiculo",
+  "name": "Empréstimo com garantia de veículo",
+  "slug": "emprestimo-com-garantia-de-veiculo",
+  "steps": [
+    {
+      "id": "emprestimo-com-garantia-de-veiculo-cpf",
+      "name": "CPF",
+      "slug": "cpf",
+      "elements": [
+        {
+          "id": "cpf-title",
+          "type": "TITLE",
+          "config": {
+            "text": "Qual é o seu CPF?"
+          }
+        },
+        {
+          "id": "cpf-input",
+          "type": "CPF_INPUT",
+          "config": {
+            "name": "taxvat",
+            "label": "CPF",
+            "required": true
+          }
+        },
+        {
+          "id": "cpf-service",
+          "type": "SERVICE_CALL",
+          "config": {
+            "label": "Continuar",
+            "service": "eligibility",
+            "targetStepOnSuccess": "/dados-pessoais"
+          }
+        },
+        {
+          "id": "cpf-recommended-products-wrapper",
+          "type": "CONDITIONAL_WRAPPER",
+          "config": {
+            "conditions": [
+              {
+                "source": "formErrors",
+                "path": "taxvat.type",
+                "operator": "equals",
+                "value": "server"
+              }
+            ],
+            "elements": [
+              {
+                "id": "consignado",
+                "type": "COMPOSABLE_CARD",
+                "config": {
+                  "elements": [
+                    {
+                      "id": "consignado-title",
+                      "type": "TEXT",
+                      "config": {
+                        "text": "Empréstimo Consignado"
+                      }
+                    },
+                    {
+                      "id": "consignado-description",
+                      "type": "TEXT",
+                      "config": {
+                        "text": "Crédito com parcelas descontadas diretamente na folha."
+                      }
+                    },
+                    {
+                      "id": "consignado-link",
+                      "type": "NAVIGATION",
+                      "config": {
+                        "label": "Saiba mais",
+                        "url": "https://www.portoseguro.com.br/emprestimo-consignado"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "pessoal",
+                "type": "COMPOSABLE_CARD",
+                "config": {
+                  "elements": [
+                    {
+                      "id": "pessoal-title",
+                      "type": "TEXT",
+                      "config": {
+                        "text": "Empréstimo Pessoal"
+                      }
+                    },
+                    {
+                      "id": "pessoal-description",
+                      "type": "TEXT",
+                      "config": {
+                        "text": "Conheça as opções de crédito pessoal da Porto."
+                      }
+                    },
+                    {
+                      "id": "pessoal-link",
+                      "type": "NAVIGATION",
+                      "config": {
+                        "label": "Saiba mais",
+                        "url": "https://www.portoseguro.com.br/emprestimo-pessoal"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "name": "Dados pessoais",
+      "slug": "dados-pessoais",
+      "elements": [
+        {
+          "id": "name",
+          "type": "FULL_NAME_INPUT",
+          "config": {
+            "name": "fullName",
+            "label": "Nome completo",
+            "required": true
+          }
+        },
+        {
+          "id": "contact-link",
+          "type": "NAVIGATION",
+          "config": {
+            "label": "Conhecer condições do produto",
+            "url": "https://www.portoseguro.com.br/emprestimo-com-garantia-de-veiculo"
+          }
+        }
+      ]
+    }
+  ]
+}

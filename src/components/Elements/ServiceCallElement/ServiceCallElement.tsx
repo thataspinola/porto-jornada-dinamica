@@ -36,7 +36,6 @@ export function ServiceCallElement({
 			aria-disabled={disabled}
 			onClick={() => {
 				if (disabled) return;
-				console.log(element.config.service, element.config.targetStepOnSuccess);
 				onCall(element.config.service, element.config.targetStepOnSuccess);
 			}}
 		>

@@ -1,3 +1,1 @@
-export default function Home() {
-	return <h1>🚀 Este é um template Next.js (SSR)</h1>;
-}
+export { default } from "@/app/contrate/[[...slug]]/page";

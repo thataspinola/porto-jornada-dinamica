@@ -1,3 +1,5 @@
+import { QueryClientProvider } from "@/contexts/QueryClientProvider";
+import "./globals.css";
 import "../styles/global.scss";
 
 export default function RootLayout({
@@ -16,7 +18,9 @@ export default function RootLayout({
 				/>
 			</head>
 			<body>
-				<main>{children}</main>
+				<QueryClientProvider>
+					<main>{children}</main>
+				</QueryClientProvider>
 			</body>
 		</html>
 	);

@@ -1,0 +1,1 @@
+export { IconContentList } from "./IconContentList";

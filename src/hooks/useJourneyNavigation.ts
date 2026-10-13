@@ -90,8 +90,6 @@ export function useJourneyNavigation({
 		const valid = await validateCurrentStep();
 		if (!valid) return;
 
-		console.log("goNext:", options);
-
 		if (options.type === "service") {
 			const input = getValues();
 
@@ -108,7 +106,10 @@ export function useJourneyNavigation({
 					(element) => element.type === "CPF_INPUT",
 				);
 				handleServiceError(result, journeySlug, cpf?.config.name ?? "taxvat");
-				setError({ service: result.error });
+				setError({
+					service:
+						result.message ?? result.error ?? "Não foi possível continuar.",
+				});
 				return;
 			}
 

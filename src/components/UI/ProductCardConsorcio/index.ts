@@ -1,0 +1,1 @@
+export { ProductCardConsorcio } from "./ProductCardConsorcio";

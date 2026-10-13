@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { baseElementSchema } from "./baseElement.schema";
+import { linkUiSchema } from "./elementUi.schema";
 export const navigationElementSchema = baseElementSchema.extend({
 	type: z.literal("NAVIGATION"),
-	config: z.object({ label: z.string(), url: z.string() }),
+	config: z.object({ label: z.string(), url: z.string(), ui: linkUiSchema }),
 });

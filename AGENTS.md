@@ -9,11 +9,11 @@ Regras gerais do projeto. Cada pasta importante tem seu próprio `AGENTS.md` com
 - **Zod** para schemas/validações
 - **react-hook-form** + `@hookform/resolvers/zod`
 - **Zustand** (com `persist`) para estado global
-- **Tanstack Query** para data fetching
+- **QueryClient** local e hooks de consulta para data fetching
 - **Biome** para lint + format (não use ESLint/Prettier)
 - **Jest** + Testing Library
 - **SCSS Modules** (`*.module.scss`) para estilos por componente
-- **@porto-stack/ui** e **@porto-stack/icons** como design system
+- Componentes locais em `src/components/UI` como base visual
 
 ## Comandos
 
@@ -24,6 +24,7 @@ npm run lint         # biome lint ./src (sem alterar arquivos)
 npm run lint:fix     # biome lint --write ./src
 npm run format       # biome format --write ./src
 npm run format:check # biome format ./src
+npm run check:empty  # valida ausência de arquivos vazios
 npm run check:names  # valida nomes e extensões em src/
 npm run type-check   # tsc --noEmit
 npm run test         # jest

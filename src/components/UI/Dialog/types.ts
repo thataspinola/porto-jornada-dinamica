@@ -12,7 +12,7 @@ export interface DialogProps
 	title?: ReactNode;
 	subtitle?: ReactNode;
 	description?: ReactNode;
-	icon?: IconProps;
+	icon?: ReactNode | IconProps;
 	children?: ReactNode;
 	footer?: ReactNode;
 	footerVariant?: "column" | "row";
