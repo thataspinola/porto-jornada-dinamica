@@ -1,6 +1,8 @@
 /** biome-ignore-all lint/a11y/useKeyWithClickEvents: <> */
 /** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
 
+"use client";
+import type { ReactNode } from "react";
 import { clsx } from "@/utils";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -41,7 +43,7 @@ export const Dialog = ({
 		};
 	}, [isOpen]);
 
-	if (!mounted || (!isOpen && !mounted)) return null;
+	if (!mounted || !isOpen) return null;
 
 	const handleOverlayClick = () => onClose?.();
 
@@ -55,10 +57,27 @@ export const Dialog = ({
 
 	return createPortal(
 		<div className={overlayClasses} onClick={handleOverlayClick} {...restProps}>
-			<div className={boxClasses} onClick={(e) => e.stopPropagation()}>
+			<div
+				role="dialog"
+				aria-modal="true"
+				className={boxClasses}
+				onClick={(e) => e.stopPropagation()}
+			>
 				{(title || subtitle || icon) && (
 					<div className="dialog__header">
-						{icon && <div className="dialog__icon">{icon}</div>}
+						{icon && (
+							<div className="dialog__icon">
+								{typeof icon === "object" &&
+								icon !== null &&
+								"iconName" in icon ? (
+									<span role="img" aria-label={String(icon.iconName)}>
+										{icon.iconName === "info" ? "i" : "•"}
+									</span>
+								) : (
+									(icon as ReactNode)
+								)}
+							</div>
+						)}
 						{(title || subtitle) && (
 							<div className="dialog__title-container">
 								{title && <h2 className="dialog__title">{title}</h2>}

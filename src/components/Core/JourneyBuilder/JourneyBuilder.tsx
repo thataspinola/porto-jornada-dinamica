@@ -3,16 +3,17 @@
 import { useJourneyController } from "@/hooks/useJourneyController";
 import { redirectTo } from "@/utils";
 import type { JourneyDefinition } from "@/validation/schemaValidation";
-import { DebugFloatingButton } from "../DebugFloatingButton";
-import { Header } from "../Header";
-import { renderJourneyElement } from "../JourneyRenderElements";
-import { ProgressBar } from "../ProgressBar";
+import { DebugFloatingButton } from "@/components/Core/DebugFloatingButton";
+import { Header } from "@/components/Core/Header";
+import { renderJourneyElement } from "@/components/Core/JourneyRenderElements";
+import { ProgressBar } from "@/components/Core/ProgressBar";
 
 import "./JourneyBuilder.scss";
 
 export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
 	const controller = useJourneyController(journey);
 
+	if (!controller.currentStep) return <p role="alert">Etapa não encontrada.</p>;
 	return (
 		<>
 			<Header
@@ -24,6 +25,13 @@ export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
 				length={journey.steps.length}
 				style={{ marginBottom: "40px" }}
 			/>
+			{controller.storedErrorEntries.length > 0 && (
+				<div role="alert">
+					{controller.storedErrorEntries.map(([key, message]) => (
+						<p key={key}>{String(message)}</p>
+					))}
+				</div>
+			)}
 			<main
 				key={controller.currentStep.id}
 				className="animate-step-container"
@@ -48,14 +56,16 @@ export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
 					</div>
 				))}
 			</main>
-			<DebugFloatingButton
-				data={{
-					business: controller.business,
-					formValues: controller.getValues(),
-					services: controller.services,
-					errors: controller.storedError,
-				}}
-			/>
+			{process.env.NODE_ENV === "development" && (
+				<DebugFloatingButton
+					data={{
+						business: controller.business,
+						formValues: controller.getValues(),
+						services: controller.services,
+						errors: controller.storedError,
+					}}
+				/>
+			)}
 		</>
 	);
 }

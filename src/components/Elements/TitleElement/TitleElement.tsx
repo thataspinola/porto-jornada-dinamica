@@ -1,4 +1,4 @@
-import { Typography } from "../../UI/Typography";
+import { Typography } from "@/components/UI/Typography";
 
 import type { JourneyDefinition } from "@/validation/schemaValidation";
 

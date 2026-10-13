@@ -5,9 +5,18 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Header } from "./Header";
 
 // Mock dos ícones
-jest.mock("./icons/ic-arrow-left.svg", () => "arrow-left.svg");
-jest.mock("./icons/ic-logo-porto.svg", () => "logo-porto.svg");
-jest.mock("./icons/ic-shopping-cart.svg", () => "shopping-cart.svg");
+jest.mock(
+	"@/components/Core/Header/icons/ic-arrow-left.svg",
+	() => "arrow-left.svg",
+);
+jest.mock(
+	"@/components/Core/Header/icons/ic-logo-porto.svg",
+	() => "logo-porto.svg",
+);
+jest.mock(
+	"@/components/Core/Header/icons/ic-shopping-cart.svg",
+	() => "shopping-cart.svg",
+);
 
 jest.mock("next/image", () => {
 	return function Image({
@@ -65,7 +74,7 @@ describe("HeaderAcquisitionFlow", () => {
 	});
 
 	it("Should render correctly with default values", () => {
-		const { container } = render(<Header />);
+		const { container } = render(<Header hasShoppingCart />);
 
 		const header = container.querySelector(".header-acquisition-flow");
 		expect(header).toBeInTheDocument();
@@ -109,24 +118,24 @@ describe("HeaderAcquisitionFlow", () => {
 	});
 
 	it("Should navigate to the back link when clicking the cart button", () => {
-		render(<Header goBackLink="/cart" />);
+		render(<Header hasShoppingCart goBackLink="/cart" />);
 
 		const cartIcon = screen.getByAltText("icone-carinho");
 		expect(cartIcon).toBeInTheDocument();
 
 		expect(cartIcon).toBeDefined();
-		cartIcon && fireEvent.click(cartIcon);
+		fireEvent.click(screen.getByAltText("icone-voltar-para-pagina-anterior"));
 
 		expect(mockPush).toHaveBeenCalledWith("/cart");
 	});
 
 	it("Should use the provided goBackLink", () => {
-		render(<Header goBackLink="/custom-back-link" />);
+		render(<Header hasShoppingCart goBackLink="/custom-back-link" />);
 
 		const cartIcon = screen.getByAltText("icone-carinho");
 		expect(cartIcon).toBeInTheDocument();
 		expect(cartIcon).toBeDefined();
-		cartIcon && fireEvent.click(cartIcon);
+		fireEvent.click(screen.getByAltText("icone-voltar-para-pagina-anterior"));
 
 		expect(mockPush).toHaveBeenCalledWith("/custom-back-link");
 	});

@@ -1,9 +1,9 @@
 "use client";
-import { Button } from "../../../UI/Button";
-import { Dialog } from "../../../UI/Dialog";
-import { Flex } from "../../../UI/Flex";
-import { Spacing } from "../../../UI/Spacing";
-import { Typography } from "../../../UI/Typography";
+import { Button } from "@/components/UI/Button";
+import { Dialog } from "@/components/UI/Dialog";
+import { Flex } from "@/components/UI/Flex";
+import { Spacing } from "@/components/UI/Spacing";
+import { Typography } from "@/components/UI/Typography";
 
 import type { DialogSocialNameProps } from "./types";
 

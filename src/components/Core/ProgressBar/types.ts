@@ -12,7 +12,7 @@ export interface ProgressBarProps
 	color?: string;
 
 	/** Quantidade de teps */
-	length: number;
+	length?: number;
 
 	/** Rótulo para acessibilidade */
 	"aria-label"?: string;

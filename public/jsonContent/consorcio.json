@@ -1,77 +1,33 @@
 {
-  "id": "consorcio01",
+  "id": "consorcio",
   "name": "Consórcio",
   "slug": "consorcio",
-  "backStepSlug": "/",
-  "completion": {
-    "type": "FINAL_SUCCESS"
-  },
   "steps": [
     {
-      "id": "cnsproduto",
-      "name": "Produto",
-      "slug": "produto",
-      "order": 0,
-      "showProgressBar": false,
-      "backStepSlug": "/",
+      "id": "consorcio-inicio",
+      "name": "Início",
+      "slug": "inicio",
       "elements": [
         {
-          "id": "cnsprodutotitle",
-          "type": "TEXT",
-          "order": 0,
+          "id": "consorcio-title",
+          "type": "TITLE",
           "config": {
-            "text": "Qual é a sua próxima conquista?",
-            "variant": "title4",
-            "weight": "semibold",
-            "color": "seguro-900",
-            "cssProperties": {
-              "marginBottom": 16
-            }
+            "text": "Consórcio"
           }
         },
         {
-          "id": "cnsprodutodescription",
-          "type": "TEXT",
-          "order": 0,
+          "id": "consorcio-description",
+          "type": "PARAGRAPH",
           "config": {
-            "text": "Escolha seu objetivo e comece a planejar como chegar lá.",
-            "variant": "title6",
-            "cssProperties": {
-              "marginBottom": {
-                "mobile": 32,
-                "desktop": 48
-              }
-            }
+            "text": "Conheça as opções disponíveis para você."
           }
         },
         {
-          "id": "cnsprodutoopcoes",
-          "type": "OPTION_CARD_LIST",
-          "order": 1,
+          "id": "consorcio-navigation",
+          "type": "NAVIGATION",
           "config": {
-            "name": "tipoBem",
-            "options": [
-              {
-                "icon": {
-                  "icon": "home",
-                  "color": "seguro-900"
-                },
-                "title": "Imóvel",
-                "description": "Casas, apartamentos, terrenos e imóveis comerciais",
-                "value": "IMV",
-                "url": "/consorcio-imovel/valor"
-              },
-              {
-                "icon": {
-                  "icon": "car",
-                  "color": "seguro-900"
-                },
-                "title": "Carro",
-                "description": "Carros novos ou semi novos",
-                "value": "AUT",
-                "url": "/consorcio-veiculo/valor"
-              }
-            ]
+            "label": "Conhecer produto",
+            "url": "https://www.portoseguro.com.br/consorcio"
           }
         }
       ]

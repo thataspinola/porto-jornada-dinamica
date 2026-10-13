@@ -1,18 +1,14 @@
 {
   "id": "tsyigmays",
-  "name": "Seguro Carta Verde",
+  "name": "seguro",
   "slug": "seguro-carta-verde",
-  "completion": {
-    "type": "FINAL_SUCCESS"
-  },
-  "product": "lead-form",
+  "backStepSlug": "/",
   "steps": [
     {
       "id": "cyh53wuwv",
       "name": "lead",
       "slug": "lead",
       "order": 0,
-      "backStepSlug": "https://www.portoseguro.com.br/",
       "elements": [
         {
           "id": "msfbojugm",
@@ -20,18 +16,18 @@
           "order": 0,
           "config": {
             "text": "Solicite uma cotação",
-            "color": "seguro-900"
+            "size": "lg"
           }
         },
         {
           "id": "fxd39jg12",
-          "type": "FULL_NAME_INPUT",
+          "type": "TEXT_INPUT",
           "order": 1,
           "config": {
             "label": "Nome",
             "placeholder": "Nome completo",
             "required": true,
-            "name": "name"
+            "name": "field_text-input_fxd39j"
           }
         },
         {
@@ -39,20 +35,20 @@
           "type": "SOCIAL_NAME",
           "order": 2,
           "config": {
-            "label": "Tenho nome social",
+            "label": "Possui nome social?",
             "required": true,
-            "name": "socialName"
+            "name": "field_checkbox_sae0nx"
           }
         },
         {
           "id": "5je937dx1",
-          "type": "EMAIL_INPUT",
+          "type": "TEXT_INPUT",
           "order": 3,
           "config": {
             "label": "Email",
             "placeholder": "Enter text...",
             "required": true,
-            "name": "email"
+            "name": "field_text-input_5je937"
           }
         },
         {
@@ -60,41 +56,41 @@
           "type": "PHONE_INPUT",
           "order": 4,
           "config": {
-            "label": "Telefone para contato",
+            "label": "Phone",
             "placeholder": "(00) 00000-0000",
             "required": true,
-            "name": "phone",
+            "name": "field_phone-input_zhgt8e",
             "allowInternational": false
           }
         },
         {
           "id": "j95nns43o",
-          "type": "TAXVAT_INPUT",
+          "type": "CPF_INPUT",
           "order": 5,
           "config": {
             "label": "CPF",
             "placeholder": "000.000.000-00",
             "required": true,
-            "name": "taxvat"
+            "name": "field_cpf-input_j95nns"
           }
         },
         {
           "id": "ry4p0sy1l",
-          "type": "CEP_INPUT",
+          "type": "TEXT_INPUT",
           "order": 6,
           "config": {
             "label": "CEP",
             "placeholder": "Enter text...",
             "required": true,
-            "name": "addressZipCode"
+            "name": "field_text-input_ry4p0s"
           }
         },
         {
           "id": "gxux3cu5l",
-          "type": "PRIVACY_POLICY",
+          "type": "PARAGRAPH",
           "order": 7,
           "config": {
-            "text": "<p>Ao clicar em \"Solicite uma cotação\", você está ciente de que a Porto irá coletar e tratar seus dados pessoais de acordo com a nossa <a target=\"_blank\" href=\"https://www.portoseguro.com.br/privacidade\" rel=\"noreferrer\">Política de Privacidade</a></p>"
+            "text": "Ao clicar em \"Continuar\" você está ciente de que a Porto irá coletar e tratar seus dados pessoais de acordo com a nossa Política de Privacidade."
           }
         },
         {
@@ -103,15 +99,8 @@
           "order": 8,
           "config": {
             "label": "Solicite uma cotação",
-            "service": {
-              "action": "lead",
-              "module": "support"
-            },
-            "additionalPayload": {
-              "product": "1",
-              "branch": "27"
-            },
-            "targetStepOnSuccess": "/seguro-carta-verde/sucesso"
+            "service": "eligibility",
+            "targetStepOnSuccess": "/sucesso"
           }
         }
       ]
@@ -129,7 +118,7 @@
           "order": 0,
           "config": {
             "text": "Proposta enviada",
-            "color": "seguro-900"
+            "size": "lg"
           }
         },
         {
@@ -146,7 +135,7 @@
           "order": 8,
           "config": {
             "label": "Voltar para home",
-            "url": "https://www.portoseguro.com.br/"
+            "url": "/"
           }
         }
       ]

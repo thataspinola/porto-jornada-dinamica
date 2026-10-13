@@ -1,0 +1,1 @@
+export { LexisScript } from "./LexisScript";

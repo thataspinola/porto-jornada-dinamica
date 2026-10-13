@@ -2,6 +2,7 @@
 
 import {
 	CheckboxElement,
+	EmailInputElement,
 	ComposableCardElement,
 	ConditionalWrapperElement,
 	CpfInputElement,
@@ -10,7 +11,7 @@ import {
 	ParagraphElement,
 	RadioElement,
 	ServiceCallElement,
-	SocialNamElement,
+	SocialNameElement,
 	TextInputElement,
 	TextElement,
 	TitleElement,
@@ -22,12 +23,16 @@ import type {
 	ElementRenderer,
 	JourneyElement,
 } from "./types";
+import { ConfiguredElement } from "@/components/Elements/ConfiguredElement";
 
 const renderers: {
-	[K in JourneyElement["type"]]: ElementRenderer<
+	[K in JourneyElement["type"]]?: ElementRenderer<
 		Extract<JourneyElement, { type: K }>
 	>;
 } = {
+	EMAIL_INPUT: (element, ctx) => (
+		<EmailInputElement element={element} control={ctx.control} />
+	),
 	TEXT: (element) => <TextElement element={element} />,
 	COMPOSABLE_CARD: (element, ctx) => (
 		<ComposableCardElement
@@ -86,7 +91,7 @@ const renderers: {
 		/>
 	),
 	SOCIAL_NAME: (element, ctx) => (
-		<SocialNamElement
+		<SocialNameElement
 			element={element}
 			register={ctx.register}
 			control={ctx.control}
@@ -118,5 +123,21 @@ export function renderJourneyElement(
 	ctx: ElementRenderContext,
 ) {
 	const renderer = renderers[element.type] as ElementRenderer;
-	return renderer(element, ctx) ?? null;
+	return renderer ? (
+		(renderer(element, ctx) ?? null)
+	) : (
+		<ConfiguredElement
+			element={element}
+			control={ctx.control}
+			register={ctx.register}
+			errors={ctx.errors}
+			values={ctx.fields}
+			onNavigate={(targetSlug) => {
+				void ctx.goNext({ type: "navigation", targetSlug });
+			}}
+			renderElement={(child) =>
+				renderJourneyElement(journeyElementSchema.parse(child), ctx)
+			}
+		/>
+	);
 }

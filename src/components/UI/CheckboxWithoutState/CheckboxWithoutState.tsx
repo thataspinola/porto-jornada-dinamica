@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/a11y/useKeyWithClickEvents: <> */
 /** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <> */
 /** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
+/** biome-ignore-all lint/a11y/useSemanticElements: preserva o controle visual existente com teclado e ARIA */
 "use client";
 import "./CheckboxWithoutState.scss";
 
@@ -45,15 +46,28 @@ export const CheckboxWithoutState = ({
 	title = "",
 	disabled = false,
 	handleClick,
+	...rest
 }: CheckboxProps) => {
 	const disabledClass = disabled ? "--disabled" : "";
 
 	const handleClickChange = () => {
-		handleClick(!value);
+		if (disabled) return;
+		handleClick?.(!value);
 	};
 
 	return (
 		<div
+			{...rest}
+			role="checkbox"
+			aria-checked={value}
+			aria-disabled={disabled}
+			tabIndex={disabled ? -1 : 0}
+			onKeyDown={(e) => {
+				if (e.key === " " || e.key === "Enter") {
+					e.preventDefault();
+					handleClickChange();
+				}
+			}}
 			onClick={handleClickChange}
 			className={`checkbox__root --${value ? "checked" : "default"} ${disabledClass} ${className}`}
 			style={{ marginBottom: "32px" }}

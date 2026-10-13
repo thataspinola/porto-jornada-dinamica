@@ -1,4 +1,4 @@
-export { GTM } from './gtm'
-export { TolkitLexis } from './lexis'
-export { RecaptchaClient } from './recaptchatClient'
-export { VWO } from './vwo'
+export { GoogleTagManager } from "./gtm";
+export { LexisScript } from "./lexis";
+export { VwoScript } from "./vwo";
+export { RecaptchaClient } from "./recaptchaClient";

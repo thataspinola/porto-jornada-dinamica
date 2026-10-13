@@ -5,7 +5,7 @@ import { useState } from "react";
 import "./Dropdown.scss";
 
 import { clsx } from "@/utils";
-import { Loader } from "../Loader";
+import { Loader } from "@/components/UI/Loader";
 import { ArrowSvg } from "./Arrow";
 
 import type { DropdownOption, DropdownProps } from "./types";

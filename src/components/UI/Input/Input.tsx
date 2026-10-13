@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import "./Input.scss";
 
-import { Loader } from "../Loader";
+import { Loader } from "@/components/UI/Loader";
 import type { InputProps } from "./types";
 
 /**
@@ -61,6 +61,7 @@ import type { InputProps } from "./types";
 export const Input = ({
 	className = "",
 	name = "",
+	type = "text",
 	variant = "default",
 	width = "fluid",
 	disabled = false,
@@ -108,11 +109,11 @@ export const Input = ({
 				<input
 					id={name}
 					name={name}
-					type="text"
+					type={type}
 					className="input__field"
 					value={value}
 					disabled={disabled}
-					onChange={(e) => onChange(e.target.value)}
+					onChange={(e) => onChange?.(e.target.value)}
 				/>
 			</div>
 

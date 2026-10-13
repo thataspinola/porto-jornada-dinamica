@@ -1,7 +1,8 @@
-import type { HTMLAttributes } from "react";
+import type { HTMLInputTypeAttribute, HTMLAttributes } from "react";
 
 export type InputProps = Omit<HTMLAttributes<HTMLDivElement>, "onChange"> & {
 	label?: string;
+	type?: HTMLInputTypeAttribute;
 	placeholder?: string;
 	name?: string;
 	value?: string;

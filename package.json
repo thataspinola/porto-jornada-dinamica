@@ -14,9 +14,11 @@
     "format": "npx @biomejs/biome check --write ./src",
     "format:style": "stylelint \"src/**/*.scss\" --fix",
     "type-check": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests",
-    "test:watch": "vitest --passWithNoTests",
-    "test:ui": "vitest --ui --coverage --passWithNoTests"
+    "test": "jest",
+    "test:ci": "jest --findRelatedTests",
+    "test:watch": "jest --watch",
+    "check:empty": "node scripts/check-empty-files.mjs",
+    "check:imports": "node scripts/check-imports.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.1045.0",

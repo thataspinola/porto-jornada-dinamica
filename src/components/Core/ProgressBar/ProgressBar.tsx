@@ -36,16 +36,20 @@ import type { ProgressBarProps } from "./types";
 
 export const ProgressBar = ({
 	value,
-	length,
+	initialValue = 0,
+	length = 100,
 	color = "#0046c0",
 	className,
 	style,
 	...props
 }: ProgressBarProps) => {
-	const currentStepIndex = (100 * value) / length;
-	const nextStep = (100 * (value - 10)) / length;
-	const initialValue = nextStep <= 10 ? 0 : nextStep;
-	const [barWidth, setBarWidth] = useState(initialValue);
+	const currentStepIndex = Math.max(
+		0,
+		Math.min(100, (100 * value) / Math.max(1, length)),
+	);
+	const [barWidth, setBarWidth] = useState(
+		Math.max(0, Math.min(100, (100 * initialValue) / Math.max(1, length))),
+	);
 
 	useEffect(() => {
 		setBarWidth(currentStepIndex);

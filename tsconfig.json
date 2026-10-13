@@ -30,12 +30,16 @@
     }
   },
   "include": [
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "/dist/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
     "next-env.d.ts",
-    "/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
-    "/dist/react-ssr-corp-hubv-dinamic-journey/dev/types/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "config/**/*.ts",
+    "jest.config.ts",
+    "next.config.ts",
+    "dist/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
+    "dist/react-ssr-corp-hubv-dinamic-journey/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,0 +1,1 @@
+export { ChipsImage } from "./ChipsImage";

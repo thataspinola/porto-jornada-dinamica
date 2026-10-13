@@ -1,33 +1,10 @@
-import { Tag } from '../Tag/Tag'
-import { resolveConditionalTag } from './resolveConditionalTag'
-import type { ConditionalTagProps } from './types'
-
+import type { ReactNode } from "react";
 export function ConditionalTag({
-  fields,
-  variant,
-  negative,
-  children,
-  resolveLabel,
-  conditionalRules,
-  ...props
-}: ConditionalTagProps) {
-  const resolvedTag = resolveConditionalTag({
-    fields,
-    resolveLabel,
-    conditionalRules,
-  })
-
-  const content = resolvedTag?.label ?? children
-
-  if (!content) return null
-
-  return (
-    <Tag
-      {...props}
-      variant={resolvedTag?.variant ?? variant}
-      negative={resolvedTag?.negative ?? negative}
-    >
-      {content}
-    </Tag>
-  )
+	visible,
+	children,
+}: {
+	visible: boolean;
+	children: ReactNode;
+}) {
+	return visible ? <>{children}</> : null;
 }

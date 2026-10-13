@@ -7,8 +7,8 @@ import {
 	type FieldErrors,
 	type UseFormRegister,
 } from "react-hook-form";
-import { Checkbox } from "../../UI/Checkbox";
-import type { FormValues } from "../TextInputElement";
+import { Checkbox } from "@/components/UI/Checkbox";
+import type { FormValues } from "@/components/Elements/TextInputElement";
 
 type CheckboxElementType = Extract<
 	JourneyDefinition["steps"][number]["elements"][number],

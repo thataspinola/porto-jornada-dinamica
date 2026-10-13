@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Flex } from "../../UI/Flex";
-import { Radio } from "../../UI/Radio";
-import { Spacing } from "../../UI/Spacing";
-import { Typography } from "../../UI/Typography";
+import { Flex } from "@/components/UI/Flex";
+import { Radio } from "@/components/UI/Radio";
+import { Spacing } from "@/components/UI/Spacing";
+import { Typography } from "@/components/UI/Typography";
 import "./style.scss";
 
 export type RadioGroupProps = {

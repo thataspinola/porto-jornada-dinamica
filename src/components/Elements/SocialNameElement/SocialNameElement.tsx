@@ -11,11 +11,11 @@ import {
 } from "@/components/UI";
 import { sanitize } from "@/utils";
 import { DialogSocialName } from "./DialogSocialName";
-import SGVIcCircleQuestion from "./icons/ic-circle-alert.svg";
+import SGVIcCircleQuestion from "@/components/Elements/SocialNameElement/icons/ic-circle-alert.svg";
 
 import type { SocialNameElementProps } from "./types";
 
-export const SocialNamElement = ({
+export const SocialNameElement = ({
 	element,
 	control,
 }: SocialNameElementProps) => {

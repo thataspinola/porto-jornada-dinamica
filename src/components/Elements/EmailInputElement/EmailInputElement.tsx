@@ -11,12 +11,15 @@ type EmailInputElementType = Extract<
 	{ type: "EMAIL_INPUT" }
 >;
 
-type TextInputElementProps = {
+type EmailInputElementProps = {
 	element: EmailInputElementType;
 	control: Control<FormValues>;
 };
 
-export function TextInputElement({ element, control }: TextInputElementProps) {
+export function EmailInputElement({
+	element,
+	control,
+}: EmailInputElementProps) {
 	const config = element.config;
 
 	return (
@@ -27,8 +30,9 @@ export function TextInputElement({ element, control }: TextInputElementProps) {
 			render={({ field, fieldState }) => (
 				<Input
 					name={field.name}
+					type="email"
 					label={config.label}
-					value={String(field.value)}
+					value={String(field.value ?? "")}
 					onChange={(value) => field.onChange(value)}
 					variant="default"
 					width="fluid"

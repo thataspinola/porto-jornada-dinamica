@@ -5,7 +5,7 @@ import { Input } from "./Input";
 
 jest.mock("./Input.scss", () => ({}));
 
-jest.mock("../Loader", () => ({
+jest.mock("@/components/UI/Loader", () => ({
 	Loader: ({ className, color }: { className?: string; color?: string }) => (
 		<div data-testid="mock-loader" className={className} data-color={color} />
 	),
