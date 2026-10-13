@@ -1,0 +1,26 @@
+:root {
+  --header-height: 6rem;
+  --progress-bar-height: 0.4rem;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-family: inherit;
+  color: inherit;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: inherit;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+}

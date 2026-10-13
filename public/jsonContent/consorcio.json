@@ -1,0 +1,80 @@
+{
+  "id": "consorcio01",
+  "name": "Consórcio",
+  "slug": "consorcio",
+  "backStepSlug": "/",
+  "completion": {
+    "type": "FINAL_SUCCESS"
+  },
+  "steps": [
+    {
+      "id": "cnsproduto",
+      "name": "Produto",
+      "slug": "produto",
+      "order": 0,
+      "showProgressBar": false,
+      "backStepSlug": "/",
+      "elements": [
+        {
+          "id": "cnsprodutotitle",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Qual é a sua próxima conquista?",
+            "variant": "title4",
+            "weight": "semibold",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "cnsprodutodescription",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Escolha seu objetivo e comece a planejar como chegar lá.",
+            "variant": "title6",
+            "cssProperties": {
+              "marginBottom": {
+                "mobile": 32,
+                "desktop": 48
+              }
+            }
+          }
+        },
+        {
+          "id": "cnsprodutoopcoes",
+          "type": "OPTION_CARD_LIST",
+          "order": 1,
+          "config": {
+            "name": "tipoBem",
+            "options": [
+              {
+                "icon": {
+                  "icon": "home",
+                  "color": "seguro-900"
+                },
+                "title": "Imóvel",
+                "description": "Casas, apartamentos, terrenos e imóveis comerciais",
+                "value": "IMV",
+                "url": "/consorcio-imovel/valor"
+              },
+              {
+                "icon": {
+                  "icon": "car",
+                  "color": "seguro-900"
+                },
+                "title": "Carro",
+                "description": "Carros novos ou semi novos",
+                "value": "AUT",
+                "url": "/consorcio-veiculo/valor"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,804 @@
+{
+  "id": "resid",
+  "name": "Resid",
+  "slug": "seguro-residencial",
+  "variant": "app",
+  "completion": {
+    "type": "FINAL_SUCCESS"
+  },
+  "analytics": {
+    "category": "aquisicao",
+    "vertical": "seguro",
+    "product": "seguro-residencial",
+    "funnel": "short-form"
+  },
+  "product": "residential",
+  "prefetch": [
+    {
+      "action": "hydrate-user-data",
+      "module": "support"
+    },
+    {
+      "action": "get-session-encrypted",
+      "module": "session",
+      "alertEvent": "select_content",
+      "alertAction": "carregar:reaproveitamento-dados:alert"
+    }
+  ],
+  "errors": [
+    {
+      "code": "CONNECTION_ERROR",
+      "action": {
+        "kind": "fullscreen",
+        "icon": "wifi-alert",
+        "attempts": [
+          {
+            "title": "Ocorreu um erro de conexão",
+            "description": "Desse modo, não foi possível carregar as informações. Verifique sua internet e atualize a página.",
+            "actionButton": {
+              "children": "Atualizar"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "code": "INTERNAL_SERVER_ERROR",
+      "action": {
+        "kind": "fullscreen",
+        "icon": "alert",
+        "attempts": [
+          {
+            "title": "Não foi possível carregar as informações",
+            "description": "Por favor, atualize a página.",
+            "actionButton": {
+              "children": "Atualizar"
+            }
+          },
+          {
+            "title": "Parece que estamos passando por uma instabilidade no nosso sistema",
+            "actionButton": {
+              "children": "Atualizar"
+            }
+          },
+          {
+            "title": "Não foi possível carregar as informações",
+            "description": "Tente novamente mais tarde.",
+            "actionButton": {
+              "children": "Voltar",
+              "onClickAction": {
+                "kind": "redirect",
+                "url": "/"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "resid-endereco-cadastrado",
+      "name": "Endereço cadastrado",
+      "slug": "endereco-cadastrado",
+      "order": 0,
+      "showProgressBar": true,
+      "backStepSlug": "/",
+      "elements": [
+        {
+          "id": "resid-endereco-cadastrado-titulo",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Endereço para cotação",
+            "variant": "title3",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 8
+            }
+          }
+        },
+        {
+          "id": "resid-endereco-cadastrado-texto",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Este seguro não cobre casas de veraneio",
+            "variant": "body1",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "resid-endereco-cadastrado-endereco",
+          "type": "ADDRESS_RADIO",
+          "order": 2,
+          "config": {
+            "name": "enderecoSelecionado",
+            "required": true,
+            "variant": "contained",
+            "sourcePath": ["location", "products.residential.location"],
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "resid-endereco-cadastrado-alterar",
+          "type": "NAVIGATION",
+          "order": 3,
+          "config": {
+            "presentation": "link",
+            "label": "Alterar endereço",
+            "url": "/seguro-residencial/alterar-endereco",
+            "analytics": {
+              "gtmName": "Endereço para cotação"
+            },
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "resid-endereco-cadastrado-tipo-titulo",
+          "type": "TEXT",
+          "order": 4,
+          "config": {
+            "text": "Qual o tipo da moradia selecionada?",
+            "variant": "title5",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "resid-endereco-cadastrado-tipo",
+          "type": "CHIPS",
+          "order": 5,
+          "config": {
+            "name": "planPropertyType",
+            "required": true,
+            "defaultValueFrom": {
+              "service": "parameters",
+              "path": "products.residential.planPropertyType"
+            },
+            "analytics": {
+              "gtmName": "Endereço para cotação",
+              "gtmSubnamePrefix": "Qual tipo de moradia"
+            },
+            "options": [
+              {
+                "label": "Apartamento",
+                "value": "Apartamento"
+              },
+              {
+                "label": "Casa",
+                "value": "Casa"
+              }
+            ],
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "resid-endereco-cadastrado-continuar",
+          "type": "SERVICE_CALL",
+          "order": 6,
+          "config": {
+            "label": "Continuar",
+            "service": {
+              "action": "quotation",
+              "module": "quotation"
+            },
+            "payload": {
+              "planPropertyType": "{{fields.planPropertyType}}",
+              "channelCode": "82"
+            },
+            "targetStepOnSuccess": "/seguro-residencial/cotacao-simulada",
+            "fixed": true,
+            "requiresStepCompletion": true,
+            "analytics": {
+              "gtmName": "Endereço para cotação"
+            },
+            "loadingScreen": {
+              "from": 0,
+              "to": 50,
+              "messages": ["Validando seu endereço"]
+            },
+            "alertEvent": "lead"
+          }
+        }
+      ]
+    },
+    {
+      "id": "resid-alterar-endereco",
+      "name": "Alterar endereço",
+      "slug": "alterar-endereco",
+      "order": 1,
+      "showProgressBar": false,
+      "empty": true,
+      "backStepSlug": "/seguro-residencial/endereco-cadastrado",
+      "elements": [
+        {
+          "id": "resid-alterar-endereco-titulo",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Qual o CEP?",
+            "variant": "title3",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 8
+            }
+          }
+        },
+        {
+          "id": "resid-alterar-endereco-texto",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Usamos o CEP para consultar as condições para o seu plano.",
+            "variant": "body1",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "resid-alterar-endereco-cep",
+          "type": "CEP",
+          "order": 2,
+          "config": {}
+        },
+        {
+          "id": "resid-alterar-endereco-continuar",
+          "type": "SERVICE_CALL",
+          "order": 3,
+          "config": {
+            "label": "Continuar",
+            "targetStepOnSuccess": "/seguro-residencial/endereco-cadastrado",
+            "fixed": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "resid-cotacao-simulada",
+      "name": "Cotação simulada",
+      "slug": "cotacao-simulada",
+      "order": 2,
+      "showProgressBar": true,
+      "contentWidth": "fit",
+      "gridColumn": "1/13",
+      "backStepSlug": "/seguro-residencial/endereco-cadastrado",
+      "prefetch": {
+        "action": "list-plans",
+        "module": "quotation",
+        "payload": {
+          "quotation": {
+            "result": {
+              "token": "{{services.quotation.quotation.quotation.quotationResult.quotation.0.token}}"
+            }
+          }
+        },
+        "loadingScreen": {
+          "from": 50,
+          "to": 100,
+          "messages": ["Selecionando o melhor plano", "Pronto!"],
+          "completionHold": 1000
+        },
+        "alertEvent": "view_item"
+      },
+      "elements": [
+        {
+          "id": "resid-resumo-titulo",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Resumo da contratação",
+            "variant": "title3",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "resid-resumo-grid",
+          "type": "GRID",
+          "order": 1,
+          "config": {
+            "columns": 12,
+            "gap": 32,
+            "stretchItems": true,
+            "children": [
+              {
+                "id": "resid-resumo-col-esquerda",
+                "type": "GRID_ITEM",
+                "config": {
+                  "colSpan": {
+                    "desktop": 7,
+                    "mobile": 12
+                  },
+                  "children": [
+                    {
+                      "id": "resid-resumo-plano-label",
+                      "type": "TEXT",
+                      "order": 0,
+                      "config": {
+                        "text": "Plano sugerido",
+                        "variant": "body2",
+                        "color": "neutral-800",
+                        "cssProperties": {
+                          "marginBottom": 8
+                        }
+                      }
+                    },
+                    {
+                      "id": "resid-resumo-plano-card",
+                      "type": "SUMMARY_PRODUCT_CARD",
+                      "order": 1,
+                      "config": {
+                        "name": "productSku",
+                        "sourcePath": "quotation.list-plans.listPlansResult.products",
+                        "defaultPerField": {
+                          "planPropertyType": {
+                            "Casa": "Plano 500",
+                            "Apartamento": "Plano 300"
+                          }
+                        },
+                        "productTitle": "Seguro Residencial",
+                        "productSuffix": "{{fields.planPropertyType}}",
+                        "changePlanUrl": "/seguro-residencial/alterar-plano",
+                        "coverageLabel": "Ver coberturas",
+                        "drawerSlug": "cobertura",
+                        "itemListName": "seguro-residencial",
+                        "itemListId": "lista-planos-residencial",
+                        "discount": 0,
+                        "cssProperties": {
+                          "marginBottom": 32,
+                          "height": "fit-content"
+                        }
+                      }
+                    },
+                    {
+                      "id": "resid-resumo-dados-label",
+                      "type": "TEXT",
+                      "order": 2,
+                      "config": {
+                        "text": "Dados pessoais",
+                        "variant": "body2",
+                        "color": "neutral-800",
+                        "cssProperties": {
+                          "marginBottom": 8
+                        }
+                      }
+                    },
+                    {
+                      "id": "resid-resumo-dados-card",
+                      "type": "COMPOSABLE_CARD",
+                      "order": 3,
+                      "config": {
+                        "url": "/seguro-residencial/dados-pessoais",
+                        "analytics": {
+                          "gtmName": "Cotação simulada",
+                          "gtmSubname": "Alterar dados pessoais"
+                        },
+                        "cssProperties": {
+                          "height": "fit-content"
+                        },
+                        "children": [
+                          {
+                            "id": "resid-resumo-dados-card-nome",
+                            "element": {
+                              "id": "resid-resumo-dados-card-nome-text",
+                              "type": "TEXT",
+                              "config": {
+                                "text": "{{fields.fullName}}",
+                                "variant": "title6",
+                                "color": "neutral-black",
+                                "cssProperties": {
+                                  "marginBottom": 8
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "id": "resid-resumo-dados-card-endereco",
+                            "element": {
+                              "id": "resid-resumo-dados-card-endereco-text",
+                              "type": "TEXT",
+                              "config": {
+                                "text": "{{fields.addressStreetName}}, {{fields.addressNumber}} - {{fields.addressNeighborhood}} - {{fields.addressCity}} - {{fields.addressState}}",
+                                "variant": "body2",
+                                "color": "neutral-800",
+                                "cssProperties": {
+                                  "marginBottom": 8
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "id": "resid-resumo-dados-card-email",
+                            "element": {
+                              "id": "resid-resumo-dados-card-email-text",
+                              "type": "TEXT",
+                              "config": {
+                                "text": "{{fields.email}}",
+                                "variant": "body2",
+                                "color": "neutral-800",
+                                "cssProperties": {
+                                  "marginBottom": 8
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "id": "resid-resumo-dados-card-telefone",
+                            "element": {
+                              "id": "resid-resumo-dados-card-telefone-text",
+                              "type": "TEXT",
+                              "config": {
+                                "text": "{{fields.cellphone}}",
+                                "variant": "body2",
+                                "color": "neutral-800"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "resid-resumo-col-direita",
+                "type": "GRID_ITEM",
+                "config": {
+                  "colSpan": {
+                    "desktop": 5,
+                    "mobile": 12
+                  },
+                  "children": [
+                    {
+                      "id": "resid-resumo-painel-wrapper",
+                      "type": "FIXED_WRAPPER",
+                      "config": {
+                        "fixedMode": "none",
+                        "fillHeight": true,
+                        "children": [
+                          {
+                            "id": "resid-resumo-painel",
+                            "type": "SUMMARY_PANEL",
+                            "config": {
+                              "children": [
+                                {
+                                  "id": "resid-resumo-painel-top",
+                                  "type": "BOX",
+                                  "config": {
+                                    "cssProperties": {
+                                      "flex": 1
+                                    },
+                                    "children": [
+                                      {
+                                        "id": "resid-resumo-painel-produto",
+                                        "type": "PRODUCTS_LIST",
+                                        "config": {
+                                          "label": {
+                                            "variant": "body2",
+                                            "weight": "regular"
+                                          },
+                                          "value": {
+                                            "variant": "body2",
+                                            "weight": "bold"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "id": "resid-resumo-painel-separator",
+                                  "type": "BOX",
+                                  "config": {
+                                    "children": [],
+                                    "cssProperties": {
+                                      "display": {
+                                        "mobile": "none",
+                                        "desktop": "block"
+                                      },
+                                      "height": "1px",
+                                      "background": "neutral-400",
+                                      "marginTop": 16,
+                                      "marginBottom": 16
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "resid-resumo-painel-bottom",
+                                  "type": "BOX",
+                                  "config": {
+                                    "cssProperties": {
+                                      "marginTop": 16
+                                    },
+                                    "children": [
+                                      {
+                                        "id": "resid-resumo-painel-total",
+                                        "type": "LABEL_VALUE",
+                                        "config": {
+                                          "label": {
+                                            "text": "Total a pagar",
+                                            "variant": "title5",
+                                            "color": "neutral-black",
+                                            "weight": "regular"
+                                          },
+                                          "value": {
+                                            "text": "R$ {{fields.totalAmount}}",
+                                            "variant": "title5",
+                                            "color": "neutral-black",
+                                            "weight": "regular"
+                                          },
+                                          "cssProperties": {
+                                            "marginBottom": {
+                                              "mobile": 24,
+                                              "desktop": 32
+                                            }
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "id": "resid-resumo-painel-cta",
+                                        "type": "SERVICE_CALL",
+                                        "config": {
+                                          "label": "Continuar para pagamento",
+                                          "service": [
+                                            {
+                                              "action": "session",
+                                              "module": "session"
+                                            },
+                                            {
+                                              "action": "proposal",
+                                              "module": "proposal",
+                                              "successEvent": "add_to_cart"
+                                            }
+                                          ],
+                                          "payload": [
+                                            {
+                                              "selectedProduct": {
+                                                "sku": "{{fields.productSku}}",
+                                                "boost": "{{fields.boost}}"
+                                              }
+                                            },
+                                            {
+                                              "CommerceCustomerToken": "{{cookies.CommerceCustomerToken}}",
+                                              "occupation": "601",
+                                              "fraudPreventionSessionId": "{{business.metadata.sessionId}}"
+                                            }
+                                          ],
+                                          "cookiesOnSuccess": {
+                                            "shopping_token": "{{services.proposal.proposal.proposal.proposalResult.cartData.shopping_token}}",
+                                            "tax_enc_sms": "{{services.proposal.proposal.proposal.proposalResult.cartData.cookies.tax_enc_sms}}",
+                                            "nom_enc_sms": "{{services.proposal.proposal.proposal.proposalResult.cartData.cookies.nom_enc_sms}}",
+                                            "em_enc_sms": "{{services.proposal.proposal.proposal.proposalResult.cartData.cookies.em_enc_sms}}",
+                                            "mob_enc_sms": "{{services.proposal.proposal.proposal.proposalResult.cartData.cookies.mob_enc_sms}}",
+                                            "sid_enc_sms": "{{services.proposal.proposal.proposal.proposalResult.cartData.cookies.sid_enc_sms}}",
+                                            "enc_cad_pf": "{{services.proposal.proposal.proposal.proposalResult.cartData.cookies.enc_cad_pf}}"
+                                          },
+                                          "targetStepOnSuccess": "/loja/carrinho/checkout",
+                                          "fullPageRedirect": true,
+                                          "requiresStepCompletion": false,
+                                          "alertEvent": "add_to_cart",
+                                          "styles": "filled",
+                                          "variant": "primary",
+                                          "size": "md",
+                                          "cssProperties": {
+                                            "marginBottom": 0
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "resid-alterar-plano",
+      "name": "Alterar plano",
+      "slug": "alterar-plano",
+      "order": 3,
+      "contentWidth": "fit",
+      "gridColumn": "1/13",
+      "showProgressBar": false,
+      "backStepSlug": "/seguro-residencial/cotacao-simulada",
+      "elements": [
+        {
+          "id": "title-escolha-plano",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Qual plano proteje melhor sua casa?",
+            "variant": "title3",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "paragraph-escolha-plano",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "O pagamento do plano é feito somente pelo cartão de crédito em 12 parcelas fixas.",
+            "variant": "body1",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "address-escolha-plano",
+          "type": "LOCATION_BOX",
+          "order": 2,
+          "config": {
+            "firstLine": "{{fields.planPropertyType}}",
+            "secondLine": "{{fields.addressStreetName}}, {{fields.addressNumber}}",
+            "redirectTo": "/seguro-residencial/alterar-endereco",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "planos-escolha-plano",
+          "type": "PLAN_CARD",
+          "order": 3,
+          "config": {
+            "name": "productSku",
+            "sourcePath": "quotation.list-plans.listPlansResult.products",
+            "drawerSlugPrefix": "cobertura",
+            "returnUrl": "/seguro-residencial/cotacao-simulada",
+            "productTitle": "seguro-residencial",
+            "productSuffix": "{{fields.planPropertyType}}",
+            "itemListName": "seguro-residencial",
+            "itemListId": "lista-planos-residencial",
+            "discount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "resid-dados-pessoais",
+      "name": "Dados pessoais",
+      "slug": "dados-pessoais",
+      "order": 4,
+      "showProgressBar": false,
+      "backStepSlug": "/seguro-residencial/cotacao-simulada",
+      "elements": [
+        {
+          "id": "resid-dados-pessoais-titulo",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Edite seus dados abaixo:",
+            "variant": "title3",
+            "color": "neutral-black",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "resid-dados-pessoais-nome",
+          "type": "TEXT_INPUT",
+          "order": 1,
+          "config": {
+            "label": "Nome completo",
+            "placeholder": "Nome completo",
+            "required": true,
+            "name": "name",
+            "disabled": true,
+            "defaultValueFrom": {
+              "service": "parameters",
+              "path": "fullName"
+            },
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "resid-dados-pessoais-cpf",
+          "type": "TAXVAT_INPUT",
+          "order": 3,
+          "config": {
+            "label": "CPF",
+            "placeholder": "000.000.000-00",
+            "required": true,
+            "name": "taxvat",
+            "defaultValueFrom": {
+              "service": "parameters",
+              "path": "taxvat"
+            },
+            "disabled": true,
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "resid-dados-pessoais-email",
+          "type": "EMAIL_INPUT",
+          "order": 4,
+          "config": {
+            "label": "E-mail",
+            "placeholder": "",
+            "required": true,
+            "name": "email",
+            "clearOnInput": true,
+            "trailingIcon": "edit",
+            "defaultValueFrom": {
+              "service": "parameters",
+              "path": "email"
+            },
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "resid-dados-pessoais-celular",
+          "type": "PHONE_INPUT",
+          "order": 5,
+          "config": {
+            "label": "Celular",
+            "placeholder": "(00) 00000-0000",
+            "required": true,
+            "name": "phone",
+            "clearOnInput": true,
+            "trailingIcon": "edit",
+            "defaultValueFrom": {
+              "service": "parameters",
+              "path": "cellphone"
+            },
+            "cssProperties": {
+              "marginBottom": 96
+            }
+          }
+        },
+        {
+          "id": "resid-dados-pessoais-confirmar",
+          "type": "SERVICE_CALL",
+          "order": 6,
+          "config": {
+            "label": "Confirmar",
+            "onlyDirtyFields": true,
+            "revalidatePrefetch": true,
+            "targetStepOnSuccess": "/seguro-residencial/cotacao-simulada",
+            "fixed": true,
+            "styles": "filled",
+            "size": "md"
+          }
+        }
+      ]
+    }
+  ]
+}

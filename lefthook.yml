@@ -1,6 +1,31 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: biome
+      tags:
+        - frontend
+        - quality
+      glob: '*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css}'
+      run: npx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      stage_fixed: true
+
+    - name: stylelint
+      tags:
+        - frontend
+        - quality
+      glob: '*.scss'
+      run: npm run lint:style {staged_files}
+      stage_fixed: true
+
 pre-push:
   parallel: false
   jobs:
+    - name: type-check
+      tags:
+        - frontend
+        - quality
+      run: npm run type-check
+
     - name: test
       tags:
         - frontend
@@ -13,24 +38,3 @@ pre-push:
         - frontend
         - build project
       run: npm run build
-
-pre-commit:
-  parallel: true
-  jobs:
-    - name: Code format
-      tags:
-        - frontend
-        - quality
-      run: npm run format
-
-    - name: Code linter
-      tags:
-        - frontend
-        - quality
-      run: npm run lint
-
-    - name: Typecheck
-      tags:
-        - frontend
-        - quality
-      run: npm run type-check

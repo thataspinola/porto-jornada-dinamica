@@ -1,0 +1,708 @@
+{
+  "id": "consorcioimovel01",
+  "name": "Consórcio Imóvel",
+  "slug": "consorcio-imovel",
+  "backStepSlug": "/consorcio/produto",
+  "defaultFields": {
+    "tipoBem": "IMV",
+    "limiteCartaImovel": "1000000"
+  },
+  "completion": {
+    "type": "FINAL_SUCCESS"
+  },
+  "steps": [
+    {
+      "id": "cnsimovelvalor",
+      "name": "Valor",
+      "slug": "valor",
+      "order": 0,
+      "backStepSlug": "/consorcio/produto",
+      "elements": [
+        {
+          "id": "cnsvalortitle",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "De quanto você precisa para o seu imovél?",
+            "variant": "title4",
+            "weight": "semibold",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "cnsvalordescription",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Simule pelo crédito total desejado ou pelo limite mensal das parcelas.",
+            "variant": "title6",
+            "cssProperties": {
+              "marginBottom": {
+                "mobile": 32,
+                "desktop": 48
+              }
+            }
+          }
+        },
+        {
+          "id": "cnsimovelvalortabs",
+          "type": "TABS",
+          "order": 1,
+          "config": {
+            "name": "tipoValor",
+            "items": [
+              {
+                "label": "Crédito total",
+                "value": "valorCarta",
+                "children": [
+                  {
+                    "id": "cnsimovelvalorcreditoselector",
+                    "type": "PRICE_SELECTOR",
+                    "order": 0,
+                    "config": {
+                      "name": "valorCartaImovel",
+                      "min": 70000,
+                      "max": 1500000,
+                      "step": 5000,
+                      "defaultValue": 70000
+                    }
+                  }
+                ]
+              },
+              {
+                "label": "Valor da parcela",
+                "value": "parcelas",
+                "children": [
+                  {
+                    "id": "cnsimovelvalorparcelaselector",
+                    "type": "PRICE_SELECTOR",
+                    "order": 0,
+                    "config": {
+                      "name": "valorParcelaImovel",
+                      "min": 280,
+                      "max": 3100,
+                      "step": 10,
+                      "defaultValue": 280
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "cnsimovelvalorcta",
+          "type": "SERVICE_CALL",
+          "order": 2,
+          "config": {
+            "label": "Continuar",
+            "targetStepOnSuccess": "/consorcio-imovel/dados",
+            "mockResponse": {
+              "delayMs": 0,
+              "data": {}
+            },
+            "fixed": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsimoveldados",
+      "name": "dados",
+      "slug": "dados",
+      "order": 1,
+      "backStepSlug": "/consorcio-imovel/valor",
+      "elements": [
+        {
+          "id": "cnsimoveldadostitle",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Falta pouco para conferir o resultado da sua simulação",
+            "variant": "title4",
+            "color": "seguro-900",
+            "weight": "semibold",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "cnsimoveldadossubtitle",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Preencha as informações a seguir para confirmar o seu interesse no Consórcio Porto Bank",
+            "variant": "title6",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "cnsimoveldadosnome",
+          "type": "FULL_NAME_INPUT",
+          "order": 2,
+          "config": {
+            "label": "Nome completo",
+            "placeholder": "Nome completo",
+            "required": true,
+            "name": "nomeCompleto"
+          }
+        },
+        {
+          "id": "cnsimoveldadosemail",
+          "type": "EMAIL_INPUT",
+          "order": 3,
+          "config": {
+            "label": "E-mail",
+            "placeholder": "seu.email@exemplo.com",
+            "required": true,
+            "name": "email"
+          }
+        },
+        {
+          "id": "cnsimoveldadoscpf",
+          "type": "TAXVAT_INPUT",
+          "order": 4,
+          "config": {
+            "label": "CPF",
+            "placeholder": "000.000.000-00",
+            "required": true,
+            "name": "cpf"
+          }
+        },
+        {
+          "id": "cnsimoveldadoswhatsapp",
+          "type": "PHONE_INPUT",
+          "order": 5,
+          "config": {
+            "label": "Número do WhatsApp",
+            "placeholder": "(00) 9 0000-0000",
+            "required": true,
+            "name": "whatsapp",
+            "allowInternational": false
+          }
+        },
+        {
+          "id": "cnsimoveldadoscep",
+          "type": "CEP_INPUT",
+          "order": 6,
+          "config": {
+            "label": "CEP",
+            "placeholder": "00000-000",
+            "required": true,
+            "name": "cep",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsimoveldadosaviso",
+          "type": "PRIVACY_POLICY",
+          "order": 7,
+          "config": {
+            "text": "<p>Ao clicar em \"Ver resultado da simulação\", você concorda que um consultor poderá entrar em contato e que a Porto coletará e tratará seus dados pessoais conforme nossa <a target=\"_blank\" href=\"https://www.portoseguro.com.br/privacidade\" rel=\"noreferrer\">Política de Privacidade</a></p>",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsimoveldadoscta",
+          "type": "SERVICE_CALL",
+          "order": 8,
+          "config": {
+            "label": "Ver resultado da simulação",
+            "service": {
+              "action": "calculate_result",
+              "module": "consorcio"
+            },
+            "targetStepOnSuccess": "/consorcio-imovel/resultado",
+            "errors": [
+              {
+                "code": "INTERNAL_SERVER_ERROR",
+                "action": {
+                  "kind": "redirect",
+                  "url": "/consorcio-imovel/simulacao-erro"
+                }
+              },
+              {
+                "code": "CONNECTION_ERROR",
+                "action": {
+                  "kind": "redirect",
+                  "url": "/consorcio-imovel/simulacao-erro"
+                }
+              }
+            ],
+            "conditions": [
+              {
+                "id": "credito-imovel-acima-do-limite",
+                "checks": [
+                  {
+                    "left": {
+                      "from": "fields",
+                      "path": "tipoValor"
+                    },
+                    "op": "EQUAL",
+                    "right": {
+                      "value": "valorCarta"
+                    }
+                  },
+                  {
+                    "left": {
+                      "from": "fields",
+                      "path": "valorCartaImovel"
+                    },
+                    "op": "GREATER_THAN",
+                    "right": {
+                      "from": "fields",
+                      "path": "limiteCartaImovel"
+                    }
+                  }
+                ],
+                "action": {
+                  "kind": "redirect",
+                  "url": "/consorcio-imovel/estrategia-exclusiva"
+                }
+              }
+            ],
+            "mockResponse": {
+              "delayMs": 500,
+              "data": {
+                "discount": "50%",
+                "monthlyInstallment": 2500,
+                "term": 90,
+                "creditValue": 75000,
+                "protected": true,
+                "administrationFee": "0.13%",
+                "reserveFund": "2.00%",
+                "bestOption": true,
+                "fullName": "João da Silva",
+                "cpf": "123.456.789-00",
+                "email": "joao@example.com",
+                "whatsapp": "(11) 98765-4321",
+                "cep": "01311-100"
+              }
+            },
+            "fixed": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsimovelsultado",
+      "name": "resultado",
+      "slug": "resultado",
+      "order": 2,
+      "backStepSlug": "/consorcio-imovel/dados",
+      "elements": [
+        {
+          "id": "cnsimovelsultado-titulo",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Seu plano ideal está aqui",
+            "variant": "title4",
+            "color": "seguro-900",
+            "weight": "semibold",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "cnsimovelresultado-descricao",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Uma opção pensada para facilitar a sua conquista.",
+            "variant": "body2",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsimovelresultado-tag",
+          "type": "MINI_BANNER_HIGHLIGHT",
+          "order": 2,
+          "config": {
+            "tagVariant": "green",
+            "icon": "tag",
+            "tagText": "{{services.consorcio.calculate_result.discount}} de redução",
+            "description": "Parcela menor até a contemplação",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsimovelresultado-card",
+          "type": "PRODUCT_CARD_CONSORCIO",
+          "order": 3,
+          "config": {
+            "badge": "Recomendado para você",
+            "label": "Parcela a partir de",
+            "value": "R$ {{services.consorcio.calculate_result.monthlyInstallment|currency}}",
+            "tag": {
+              "text": "Com seguro",
+              "variant": "seguro"
+            },
+            "info": {
+              "icon": "calendar",
+              "text": "Prazo de {{services.consorcio.calculate_result.term}} meses"
+            },
+            "highlight": {
+              "label": "Valor do crédito",
+              "value": "R$ {{services.consorcio.calculate_result.creditValue|currency}}"
+            },
+            "details": [
+              {
+                "label": "Taxa de administração mensal",
+                "value": "{{services.consorcio.calculate_result.administrationFee}}"
+              },
+              {
+                "label": "Fundo de reserva",
+                "value": "{{services.consorcio.calculate_result.reserveFund}}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "cnsimovelresultado-aviso",
+          "type": "TEXT",
+          "order": 4,
+          "config": {
+            "text": "*Sujeito a disponibilidade de cotas e análise de crédito.",
+            "variant": "caption",
+            "color": "neutral-800",
+            "cssProperties": {
+              "marginTop": 16,
+              "marginBottom": 32,
+              "textAlign": "center"
+            }
+          }
+        },
+        {
+          "id": "cnsimovelresultado-acoes",
+          "type": "FIXED_WRAPPER",
+          "order": 5,
+          "config": {
+            "fixedMode": "mobile",
+            "cssProperties": {
+              "padding": {
+                "desktop": 0,
+                "mobile": 20
+              },
+              "background": "neutral-white"
+            },
+            "children": [
+              {
+                "id": "cnsimovelresultado-cta",
+                "type": "SERVICE_CALL",
+                "config": {
+                  "label": "Receber proposta personalizada",
+                  "service": {
+                    "action": "send_proposal",
+                    "module": "consorcio"
+                  },
+                  "targetStepOnSuccess": "/consorcio-imovel/proposta-sucesso",
+                  "errors": [
+                    {
+                      "code": "INTERNAL_SERVER_ERROR",
+                      "action": {
+                        "kind": "redirect",
+                        "url": "/consorcio-imovel/proposta-erro"
+                      }
+                    },
+                    {
+                      "code": "CONNECTION_ERROR",
+                      "action": {
+                        "kind": "redirect",
+                        "url": "/consorcio-imovel/proposta-erro"
+                      }
+                    }
+                  ],
+                  "mockResponse": {
+                    "delayMs": 500,
+                    "data": {}
+                  },
+                  "cssProperties": {
+                    "marginBottom": 12
+                  }
+                }
+              },
+              {
+                "id": "cnsimovelresultado-refazer",
+                "type": "NAVIGATION",
+                "config": {
+                  "label": "Refazer simulação",
+                  "url": "/consorcio-imovel/valor",
+                  "variant": "primary",
+                  "styles": "ghost",
+                  "icon": {
+                    "name": "reload",
+                    "position": "left",
+                    "size": 20
+                  },
+                  "cssProperties": {
+                    "marginBottom": 0
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsimovelestrategiaexclusiva",
+      "name": "Estratégia exclusiva",
+      "slug": "estrategia-exclusiva",
+      "order": 3,
+      "backStepSlug": "/consorcio-imovel/dados",
+      "elements": [
+        {
+          "id": "cnsimovelestrategiatitulo",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Uau que projeto incrível!",
+            "variant": "title4",
+            "color": "seguro-900",
+            "weight": "semibold",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "cnsimovelestrategiadescricao",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Para esse valor, um especialista vai pensar em uma estratégia especial combinando duas ou mais cotas.",
+            "variant": "title6",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsimovelestrategiacard",
+          "type": "PRODUCT_CARD_CONSORCIO",
+          "order": 2,
+          "config": {
+            "label": "Valor do crédito",
+            "value": "R$ {{fields.valorCartaImovel|currency}}"
+          }
+        },
+        {
+          "id": "cnsimovelestrategiaaviso",
+          "type": "TEXT",
+          "order": 3,
+          "config": {
+            "text": "*Sujeito a disponibilidade de cotas e análise de crédito.",
+            "variant": "caption",
+            "color": "neutral-800",
+            "cssProperties": {
+              "marginTop": 16,
+              "marginBottom": 32,
+              "textAlign": "center"
+            }
+          }
+        },
+        {
+          "id": "cnsimovelestrategiaacoes",
+          "type": "FIXED_WRAPPER",
+          "order": 4,
+          "config": {
+            "fixedMode": "mobile",
+            "cssProperties": {
+              "padding": {
+                "desktop": 0,
+                "mobile": 20
+              },
+              "background": "neutral-white"
+            },
+            "children": [
+              {
+                "id": "cnsimovelestrategiaproposta",
+                "type": "NAVIGATION",
+                "config": {
+                  "label": "Receber proposta personalizada",
+                  "url": "/consorcio-imovel/proposta-sucesso",
+                  "presentation": "button",
+                  "variant": "primary",
+                  "styles": "filled",
+                  "cssProperties": {
+                    "marginBottom": 12
+                  }
+                }
+              },
+              {
+                "id": "cnsimovelestrategiarefazer",
+                "type": "NAVIGATION",
+                "config": {
+                  "label": "Refazer simulação",
+                  "url": "/consorcio-imovel/valor",
+                  "variant": "primary",
+                  "styles": "ghost",
+                  "icon": {
+                    "name": "reload",
+                    "position": "left",
+                    "size": 20
+                  },
+                  "cssProperties": {
+                    "marginBottom": 0
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsimovelsucesso",
+      "name": "Proposta sucesso",
+      "slug": "proposta-sucesso",
+      "order": 4,
+      "backStepSlug": "/consorcio-imovel/resultado",
+      "showProgressBar": false,
+      "showBackButton": false,
+      "mobileBg": "seguro-900",
+      "elements": [
+        {
+          "id": "cnsimovelsucessofeedback",
+          "type": "FEEDBACK_VIEW",
+          "order": 0,
+          "config": {
+            "styles": "porto-holding",
+            "tone": "super-positive",
+            "icon": "circle-check",
+            "iconSize": 48,
+            "title": "Sua proposta está a caminho",
+            "description": "Um especialista Porto entrará em contato pelo WhatsApp para dar continuidade à contratação do seu consórcio.",
+            "children": [
+              {
+                "id": "cnsimovelsucessonovasimulacao",
+                "type": "NAVIGATION",
+                "config": {
+                  "label": "Iniciar nova simulação",
+                  "url": "/consorcio-imovel/valor",
+                  "variant": "primary",
+                  "styles": "filled",
+                  "icon": {
+                    "name": "reload",
+                    "position": "left",
+                    "size": 20
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsimovelerro",
+      "name": "Proposta erro",
+      "slug": "proposta-erro",
+      "order": 5,
+      "backStepSlug": "/consorcio-imovel/resultado",
+      "showProgressBar": false,
+      "elements": [
+        {
+          "id": "cnsimovelerrofeedback",
+          "type": "FEEDBACK_VIEW",
+          "order": 0,
+          "config": {
+            "styles": "porto-holding",
+            "tone": "negative",
+            "icon": "alert",
+            "title": "Não foi possível enviar sua proposta",
+            "description": "Aguarde alguns instantes e tente reenviar.",
+            "children": [
+              {
+                "id": "cnsimovelerroreenviar",
+                "type": "SERVICE_CALL",
+                "config": {
+                  "label": "Reenviar proposta",
+                  "service": {
+                    "action": "send_proposal",
+                    "module": "consorcio"
+                  },
+                  "targetStepOnSuccess": "/consorcio-imovel/proposta-sucesso",
+                  "mockResponse": {
+                    "delayMs": 500,
+                    "data": {}
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsimovelsimulacaoerro",
+      "name": "Simulação erro",
+      "slug": "simulacao-erro",
+      "order": 6,
+      "backStepSlug": "/consorcio-imovel/dados",
+      "showProgressBar": false,
+      "elements": [
+        {
+          "id": "cnsimovelsimulacaoerrofeedback",
+          "type": "FEEDBACK_VIEW",
+          "order": 0,
+          "config": {
+            "styles": "porto-holding",
+            "tone": "negative",
+            "icon": "alert",
+            "title": "Não foi possível carregar sua simulação",
+            "description": "Aguarde alguns instantes e tente novamente.",
+            "children": [
+              {
+                "id": "cnsimovelsimulacaoerrotentar",
+                "type": "SERVICE_CALL",
+                "config": {
+                  "label": "Tentar novamente",
+                  "service": {
+                    "action": "calculate_result",
+                    "module": "consorcio"
+                  },
+                  "targetStepOnSuccess": "/consorcio-imovel/resultado",
+                  "mockResponse": {
+                    "delayMs": 500,
+                    "data": {
+                      "discount": "50%",
+                      "monthlyInstallment": 2500,
+                      "term": 90,
+                      "creditValue": 75000,
+                      "protected": true,
+                      "administrationFee": "0.13%",
+                      "reserveFund": "2.00%",
+                      "bestOption": true,
+                      "fullName": "João da Silva",
+                      "cpf": "123.456.789-00",
+                      "email": "joao@example.com",
+                      "whatsapp": "(11) 98765-4321",
+                      "cep": "01311-100"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

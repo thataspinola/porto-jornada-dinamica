@@ -1,0 +1,708 @@
+{
+  "id": "consorcioveiculo01",
+  "name": "Consórcio Veículo",
+  "slug": "consorcio-veiculo",
+  "backStepSlug": "/consorcio/produto",
+  "defaultFields": {
+    "tipoBem": "AUT",
+    "limiteCartaAuto": "200000"
+  },
+  "completion": {
+    "type": "FINAL_SUCCESS"
+  },
+  "steps": [
+    {
+      "id": "cnsveiculovalor",
+      "name": "Valor",
+      "slug": "valor",
+      "order": 0,
+      "backStepSlug": "/consorcio/produto",
+      "elements": [
+        {
+          "id": "cnsvalortitle",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "De quanto você precisa para o seu carro?",
+            "variant": "title4",
+            "weight": "semibold",
+            "color": "seguro-900",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "cnsvalordescription",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Simule pelo crédito total desejado ou pelo limite mensal das parcelas.",
+            "variant": "title6",
+            "cssProperties": {
+              "marginBottom": {
+                "mobile": 32,
+                "desktop": 48
+              }
+            }
+          }
+        },
+        {
+          "id": "cnsveiculovalortabs",
+          "type": "TABS",
+          "order": 1,
+          "config": {
+            "name": "tipoValor",
+            "items": [
+              {
+                "label": "Crédito total",
+                "value": "valorCarta",
+                "children": [
+                  {
+                    "id": "cnsveiculovalorcreditoselector",
+                    "type": "PRICE_SELECTOR",
+                    "order": 0,
+                    "config": {
+                      "name": "valorCartaAuto",
+                      "min": 25000,
+                      "max": 300000,
+                      "step": 2500,
+                      "defaultValue": 25000
+                    }
+                  }
+                ]
+              },
+              {
+                "label": "Valor da parcela",
+                "value": "parcelas",
+                "children": [
+                  {
+                    "id": "cnsveiculovalorparcelaselector",
+                    "type": "PRICE_SELECTOR",
+                    "order": 0,
+                    "config": {
+                      "name": "valorParcelaAuto",
+                      "min": 320,
+                      "max": 1550,
+                      "step": 10,
+                      "defaultValue": 320
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "cnsveiculovalorcta",
+          "type": "SERVICE_CALL",
+          "order": 2,
+          "config": {
+            "label": "Continuar",
+            "targetStepOnSuccess": "/consorcio-veiculo/dados",
+            "mockResponse": {
+              "delayMs": 0,
+              "data": {}
+            },
+            "fixed": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsveiculodados",
+      "name": "dados",
+      "slug": "dados",
+      "order": 1,
+      "backStepSlug": "/consorcio-veiculo/valor",
+      "elements": [
+        {
+          "id": "cnsveiculodadostitle",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Falta pouco para conferir o resultado da sua simulação",
+            "variant": "title4",
+            "color": "seguro-900",
+            "weight": "semibold",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "cnsveiculodadossubtitle",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Preencha as informações a seguir para confirmar o seu interesse no Consórcio Porto Bank",
+            "variant": "title6",
+            "cssProperties": {
+              "marginBottom": 32
+            }
+          }
+        },
+        {
+          "id": "cnsveiculodadosnome",
+          "type": "FULL_NAME_INPUT",
+          "order": 2,
+          "config": {
+            "label": "Nome completo",
+            "placeholder": "Nome completo",
+            "required": true,
+            "name": "nomeCompleto"
+          }
+        },
+        {
+          "id": "cnsveiculodadosemail",
+          "type": "EMAIL_INPUT",
+          "order": 3,
+          "config": {
+            "label": "E-mail",
+            "placeholder": "seu.email@exemplo.com",
+            "required": true,
+            "name": "email"
+          }
+        },
+        {
+          "id": "cnsveiculodadoscpf",
+          "type": "TAXVAT_INPUT",
+          "order": 4,
+          "config": {
+            "label": "CPF",
+            "placeholder": "000.000.000-00",
+            "required": true,
+            "name": "cpf"
+          }
+        },
+        {
+          "id": "cnsveiculodadoswhatsapp",
+          "type": "PHONE_INPUT",
+          "order": 5,
+          "config": {
+            "label": "Número do WhatsApp",
+            "placeholder": "(00) 9 0000-0000",
+            "required": true,
+            "name": "whatsapp",
+            "allowInternational": false
+          }
+        },
+        {
+          "id": "cnsveiculodadoscep",
+          "type": "CEP_INPUT",
+          "order": 6,
+          "config": {
+            "label": "CEP",
+            "placeholder": "00000-000",
+            "required": true,
+            "name": "cep",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsveiculodadosaviso",
+          "type": "PRIVACY_POLICY",
+          "order": 7,
+          "config": {
+            "text": "<p>Ao clicar em \"Ver resultado da simulação\", você concorda que um consultor poderá entrar em contato e que a Porto coletará e tratará seus dados pessoais conforme nossa <a target=\"_blank\" href=\"https://www.portoseguro.com.br/privacidade\" rel=\"noreferrer\">Política de Privacidade</a></p>",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsveiculodadoscta",
+          "type": "SERVICE_CALL",
+          "order": 8,
+          "config": {
+            "label": "Ver resultado da simulação",
+            "service": {
+              "action": "calculate_result",
+              "module": "consorcio"
+            },
+            "targetStepOnSuccess": "/consorcio-veiculo/resultado",
+            "errors": [
+              {
+                "code": "INTERNAL_SERVER_ERROR",
+                "action": {
+                  "kind": "redirect",
+                  "url": "/consorcio-veiculo/simulacao-erro"
+                }
+              },
+              {
+                "code": "CONNECTION_ERROR",
+                "action": {
+                  "kind": "redirect",
+                  "url": "/consorcio-veiculo/simulacao-erro"
+                }
+              }
+            ],
+            "conditions": [
+              {
+                "id": "credito-auto-acima-do-limite",
+                "checks": [
+                  {
+                    "left": {
+                      "from": "fields",
+                      "path": "tipoValor"
+                    },
+                    "op": "EQUAL",
+                    "right": {
+                      "value": "valorCarta"
+                    }
+                  },
+                  {
+                    "left": {
+                      "from": "fields",
+                      "path": "valorCartaAuto"
+                    },
+                    "op": "GREATER_THAN",
+                    "right": {
+                      "from": "fields",
+                      "path": "limiteCartaAuto"
+                    }
+                  }
+                ],
+                "action": {
+                  "kind": "redirect",
+                  "url": "/consorcio-veiculo/estrategia-exclusiva"
+                }
+              }
+            ],
+            "mockResponse": {
+              "delayMs": 500,
+              "data": {
+                "discount": "50%",
+                "monthlyInstallment": 2500,
+                "term": 90,
+                "creditValue": 75000,
+                "protected": true,
+                "administrationFee": "0.13%",
+                "reserveFund": "2.00%",
+                "bestOption": true,
+                "fullName": "João da Silva",
+                "cpf": "123.456.789-00",
+                "email": "joao@example.com",
+                "whatsapp": "(11) 98765-4321",
+                "cep": "01311-100"
+              }
+            },
+            "fixed": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsveiculorsultado",
+      "name": "resultado",
+      "slug": "resultado",
+      "order": 2,
+      "backStepSlug": "/consorcio-veiculo/dados",
+      "elements": [
+        {
+          "id": "cnsveiculorsultado-titulo",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Seu plano ideal está aqui",
+            "variant": "title4",
+            "color": "seguro-900",
+            "weight": "semibold",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "cnsveiculoresultado-descricao",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Uma opção pensada para facilitar a sua conquista.",
+            "variant": "title6",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsveiculoresultado-tag",
+          "type": "MINI_BANNER_HIGHLIGHT",
+          "order": 2,
+          "config": {
+            "tagVariant": "green",
+            "icon": "tag",
+            "tagText": "{{services.consorcio.calculate_result.discount}} de redução",
+            "description": "Parcela menor até a contemplação",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsveiculoresultado-card",
+          "type": "PRODUCT_CARD_CONSORCIO",
+          "order": 3,
+          "config": {
+            "badge": "Recomendado para você",
+            "label": "Parcela a partir de",
+            "value": "R$ {{services.consorcio.calculate_result.monthlyInstallment|currency}}",
+            "tag": {
+              "text": "Com seguro",
+              "variant": "seguro"
+            },
+            "info": {
+              "icon": "calendar",
+              "text": "Prazo de {{services.consorcio.calculate_result.term}} meses"
+            },
+            "highlight": {
+              "label": "Valor do crédito",
+              "value": "R$ {{services.consorcio.calculate_result.creditValue|currency}}"
+            },
+            "details": [
+              {
+                "label": "Taxa de administração mensal",
+                "value": "{{services.consorcio.calculate_result.administrationFee}}"
+              },
+              {
+                "label": "Fundo de reserva",
+                "value": "{{services.consorcio.calculate_result.reserveFund}}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "cnsveiculoresultado-aviso",
+          "type": "TEXT",
+          "order": 4,
+          "config": {
+            "text": "*Sujeito a disponibilidade de cotas e análise de crédito.",
+            "variant": "caption",
+            "color": "neutral-800",
+            "cssProperties": {
+              "marginTop": 16,
+              "marginBottom": 32,
+              "textAlign": "center"
+            }
+          }
+        },
+        {
+          "id": "cnsveiculoresultado-acoes",
+          "type": "FIXED_WRAPPER",
+          "order": 5,
+          "config": {
+            "fixedMode": "mobile",
+            "cssProperties": {
+              "padding": {
+                "desktop": 0,
+                "mobile": 20
+              },
+              "background": "neutral-white"
+            },
+            "children": [
+              {
+                "id": "cnsveiculoresultado-cta",
+                "type": "SERVICE_CALL",
+                "config": {
+                  "label": "Receber proposta personalizada",
+                  "service": {
+                    "action": "send_proposal",
+                    "module": "consorcio"
+                  },
+                  "targetStepOnSuccess": "/consorcio-veiculo/proposta-sucesso",
+                  "errors": [
+                    {
+                      "code": "INTERNAL_SERVER_ERROR",
+                      "action": {
+                        "kind": "redirect",
+                        "url": "/consorcio-veiculo/proposta-erro"
+                      }
+                    },
+                    {
+                      "code": "CONNECTION_ERROR",
+                      "action": {
+                        "kind": "redirect",
+                        "url": "/consorcio-veiculo/proposta-erro"
+                      }
+                    }
+                  ],
+                  "mockResponse": {
+                    "delayMs": 500,
+                    "data": {}
+                  },
+                  "cssProperties": {
+                    "marginBottom": 12
+                  }
+                }
+              },
+              {
+                "id": "cnsveiculoresultado-refazer",
+                "type": "NAVIGATION",
+                "config": {
+                  "label": "Refazer simulação",
+                  "url": "/consorcio-veiculo/valor",
+                  "variant": "primary",
+                  "styles": "ghost",
+                  "icon": {
+                    "name": "reload",
+                    "position": "left",
+                    "size": 20
+                  },
+                  "cssProperties": {
+                    "marginBottom": 0
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsveiculoestrategiaexclusiva",
+      "name": "Estratégia exclusiva",
+      "slug": "estrategia-exclusiva",
+      "order": 3,
+      "backStepSlug": "/consorcio-veiculo/dados",
+      "elements": [
+        {
+          "id": "cnsveiculoestrategiatitulo",
+          "type": "TEXT",
+          "order": 0,
+          "config": {
+            "text": "Uau que projeto incrível!",
+            "variant": "title4",
+            "color": "seguro-900",
+            "weight": "semibold",
+            "cssProperties": {
+              "marginBottom": 16
+            }
+          }
+        },
+        {
+          "id": "cnsveiculoestrategiadescricao",
+          "type": "TEXT",
+          "order": 1,
+          "config": {
+            "text": "Para esse valor, um especialista vai pensar em uma estratégia especial combinando duas ou mais cotas.",
+            "variant": "title6",
+            "cssProperties": {
+              "marginBottom": 24
+            }
+          }
+        },
+        {
+          "id": "cnsveiculoestrategiacard",
+          "type": "PRODUCT_CARD_CONSORCIO",
+          "order": 2,
+          "config": {
+            "label": "Valor do crédito",
+            "value": "R$ {{fields.valorCartaAuto|currency}}"
+          }
+        },
+        {
+          "id": "cnsveiculoestrategiaaviso",
+          "type": "TEXT",
+          "order": 3,
+          "config": {
+            "text": "*Sujeito a disponibilidade de cotas e análise de crédito.",
+            "variant": "caption",
+            "color": "neutral-800",
+            "cssProperties": {
+              "marginTop": 16,
+              "marginBottom": 32,
+              "textAlign": "center"
+            }
+          }
+        },
+        {
+          "id": "cnsveiculoestrategiaacoes",
+          "type": "FIXED_WRAPPER",
+          "order": 4,
+          "config": {
+            "fixedMode": "mobile",
+            "cssProperties": {
+              "padding": {
+                "desktop": 0,
+                "mobile": 20
+              },
+              "background": "neutral-white"
+            },
+            "children": [
+              {
+                "id": "cnsveiculoestrategiaproposta",
+                "type": "NAVIGATION",
+                "config": {
+                  "label": "Receber proposta personalizada",
+                  "url": "/consorcio-veiculo/proposta-sucesso",
+                  "presentation": "button",
+                  "variant": "primary",
+                  "styles": "filled",
+                  "cssProperties": {
+                    "marginBottom": 12
+                  }
+                }
+              },
+              {
+                "id": "cnsveiculoestrategiarefazer",
+                "type": "NAVIGATION",
+                "config": {
+                  "label": "Refazer simulação",
+                  "url": "/consorcio-veiculo/valor",
+                  "variant": "primary",
+                  "styles": "ghost",
+                  "icon": {
+                    "name": "reload",
+                    "position": "left",
+                    "size": 20
+                  },
+                  "cssProperties": {
+                    "marginBottom": 0
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsveiculosucesso",
+      "name": "Proposta sucesso",
+      "slug": "proposta-sucesso",
+      "order": 4,
+      "backStepSlug": "/consorcio-veiculo/resultado",
+      "showProgressBar": false,
+      "showBackButton": false,
+      "mobileBg": "seguro-900",
+      "elements": [
+        {
+          "id": "cnsveiculosucessofeedback",
+          "type": "FEEDBACK_VIEW",
+          "order": 0,
+          "config": {
+            "styles": "porto-holding",
+            "tone": "super-positive",
+            "icon": "circle-check",
+            "iconSize": 48,
+            "title": "Sua proposta está a caminho",
+            "description": "Um especialista Porto entrará em contato pelo WhatsApp para dar continuidade à contratação do seu consórcio.",
+            "children": [
+              {
+                "id": "cnsveiculosucessonovasimulacao",
+                "type": "NAVIGATION",
+                "config": {
+                  "label": "Iniciar nova simulação",
+                  "url": "/consorcio-veiculo/valor",
+                  "variant": "primary",
+                  "styles": "filled",
+                  "icon": {
+                    "name": "reload",
+                    "position": "left",
+                    "size": 20
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsveiculoerro",
+      "name": "Proposta erro",
+      "slug": "proposta-erro",
+      "order": 5,
+      "backStepSlug": "/consorcio-veiculo/resultado",
+      "showProgressBar": false,
+      "elements": [
+        {
+          "id": "cnsveiculoerrofeedback",
+          "type": "FEEDBACK_VIEW",
+          "order": 0,
+          "config": {
+            "styles": "porto-holding",
+            "tone": "negative",
+            "icon": "alert",
+            "title": "Não foi possível enviar sua proposta",
+            "description": "Aguarde alguns instantes e tente reenviar.",
+            "children": [
+              {
+                "id": "cnsveiculoerroreenviar",
+                "type": "SERVICE_CALL",
+                "config": {
+                  "label": "Reenviar proposta",
+                  "service": {
+                    "action": "send_proposal",
+                    "module": "consorcio"
+                  },
+                  "targetStepOnSuccess": "/consorcio-veiculo/proposta-sucesso",
+                  "mockResponse": {
+                    "delayMs": 500,
+                    "data": {}
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsveiculosimulacaoerro",
+      "name": "Simulação erro",
+      "slug": "simulacao-erro",
+      "order": 6,
+      "backStepSlug": "/consorcio-veiculo/dados",
+      "showProgressBar": false,
+      "elements": [
+        {
+          "id": "cnsveiculosimulacaoerrofeedback",
+          "type": "FEEDBACK_VIEW",
+          "order": 0,
+          "config": {
+            "styles": "porto-holding",
+            "tone": "negative",
+            "icon": "alert",
+            "title": "Não foi possível carregar sua simulação",
+            "description": "Aguarde alguns instantes e tente novamente.",
+            "children": [
+              {
+                "id": "cnsveiculosimulacaoerrotentar",
+                "type": "SERVICE_CALL",
+                "config": {
+                  "label": "Tentar novamente",
+                  "service": {
+                    "action": "calculate_result",
+                    "module": "consorcio"
+                  },
+                  "targetStepOnSuccess": "/consorcio-veiculo/resultado",
+                  "mockResponse": {
+                    "delayMs": 500,
+                    "data": {
+                      "discount": "50%",
+                      "monthlyInstallment": 2500,
+                      "term": 90,
+                      "creditValue": 75000,
+                      "protected": true,
+                      "administrationFee": "0.13%",
+                      "reserveFund": "2.00%",
+                      "bestOption": true,
+                      "fullName": "João da Silva",
+                      "cpf": "123.456.789-00",
+                      "email": "joao@example.com",
+                      "whatsapp": "(11) 98765-4321",
+                      "cep": "01311-100"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
