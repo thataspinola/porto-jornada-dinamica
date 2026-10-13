@@ -1,7 +1,8 @@
+import { vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { NavigationElement } from "./NavigationElement";
 test("navega para o destino declarado", () => {
-	const onNavigate = jest.fn();
+	const onNavigate = vi.fn();
 	render(
 		<NavigationElement
 			element={{

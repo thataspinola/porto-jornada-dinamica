@@ -1,3 +1,4 @@
+import { vi, type Mock } from "vitest";
 import {
 	act,
 	fireEvent,
@@ -12,11 +13,11 @@ import { journeyStore } from "@/store/journeyStore";
 import { callService } from "@/services";
 import { JourneyBuilder } from "./JourneyBuilder";
 
-jest.mock("@/components/Core/Header", () => ({ Header: () => null }));
-jest.mock("@/hooks/useCurrentPathname", () => ({
+vi.mock("@/components/Core/Header", () => ({ Header: () => null }));
+vi.mock("@/hooks/useCurrentPathname", () => ({
 	useCurrentPathname: () => "/contrate/financiamento-de-veiculos/cpf",
 }));
-jest.mock("@/services", () => ({ callService: jest.fn() }));
+vi.mock("@/services", () => ({ callService: vi.fn() }));
 
 test("CPF válido, negativa real do controller e impressão única dos dois cards", async () => {
 	act(() =>
@@ -29,7 +30,7 @@ test("CPF válido, negativa real do controller e impressão única dos dois card
 		}),
 	);
 	window.dataLayer = [];
-	(callService as jest.Mock).mockResolvedValue({
+	(callService as Mock).mockResolvedValue({
 		success: false,
 		code: "NOT_ELIGIBLE",
 		message: "Produto indisponível",

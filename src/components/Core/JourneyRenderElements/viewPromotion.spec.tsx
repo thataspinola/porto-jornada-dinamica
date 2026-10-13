@@ -1,52 +1,25 @@
+import { vi } from "vitest";
 import { useState } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { renderJourneyElement } from "./renderJourneyElement";
 import { useJourneyNavigation } from "@/hooks/useJourneyNavigation";
 import { journeyElementSchema } from "@/validation/schemaValidation";
 import { callService } from "@/services";
-jest.mock("@/utils", () => ({
-	evaluateConditions: jest.requireActual("@/utils/evaluateConditions")
-		.evaluateConditions,
-	pushEvent: jest.requireActual("@/utils/pushEvent").pushEvent,
-	redirectTo: jest.fn(),
+vi.mock("@/utils", async () => ({
+	...(await vi.importActual<typeof import("@/utils")>("@/utils")),
+	redirectTo: vi.fn(),
 }));
-jest.mock("@/store", () => ({
+vi.mock("@/store", () => ({
 	useJourneyStore: () => ({
-		mergeFields: jest.fn(),
-		setError: jest.fn(),
-		mergeServices: jest.fn(),
+		mergeFields: vi.fn(),
+		setError: vi.fn(),
+		mergeServices: vi.fn(),
 		business: {},
 		services: {},
 	}),
 }));
-jest.mock("@/services", () => ({ callService: jest.fn() }));
-jest.mock("@/components/UI", () => ({
-	Typography: ({ children }: { children: React.ReactNode }) =>
-		jest.requireActual("react").createElement("p", null, children),
-}));
-jest.mock("@/components/Elements", () => ({
-	ConditionalWrapperElement: jest.requireActual(
-		"@/components/Elements/ConditionalWrapperElement",
-	).ConditionalWrapperElement,
-	ComposableCardElement: jest.requireActual(
-		"@/components/Elements/ComposableCardElement",
-	).ComposableCardElement,
-	TextElement: jest.requireActual("@/components/Elements/TextElement")
-		.TextElement,
-	NavigationElement: ({
-		element,
-	}: {
-		element: {
-			config: {
-				url: string;
-				label: string;
-			};
-		};
-	}) =>
-		jest
-			.requireActual("react")
-			.createElement("a", { href: element.config.url }, element.config.label),
-}));
+vi.mock("@/services", () => ({ callService: vi.fn() }));
+
 const wrapper = journeyElementSchema.parse({
 	id: "cpf-recommended-products-wrapper",
 	type: "CONDITIONAL_WRAPPER",
@@ -112,10 +85,10 @@ function Harness({ journeySlug }: { journeySlug: string }) {
 		},
 		currentStepIndex: 0,
 		currentStepFields: [],
-		getValues: jest.fn(),
-		handleSubmit: jest.fn(),
-		trigger: jest.fn(),
-		getFieldState: jest.fn(),
+		getValues: vi.fn(),
+		handleSubmit: vi.fn(),
+		trigger: vi.fn(),
+		getFieldState: vi.fn(),
 	});
 	return (
 		<>
@@ -132,7 +105,7 @@ function Harness({ journeySlug }: { journeySlug: string }) {
 				Consultar
 			</button>
 			{renderJourneyElement(wrapper, {
-				register: jest.fn(),
+				register: vi.fn(),
 				control: {} as never,
 				errors,
 				goNext: navigation.goNext,
@@ -150,9 +123,10 @@ describe("integração negativa CPF → renderização → view_promotion", () =
 				dataLayer?: unknown[];
 			}
 		).dataLayer = [];
-		jest
-			.mocked(callService)
-			.mockResolvedValue({ success: false, code: "NOT_ELIGIBLE" });
+		vi.mocked(callService).mockResolvedValue({
+			success: false,
+			code: "NOT_ELIGIBLE",
+		});
 	});
 	it.each([
 		"emprestimo-com-garantia-de-veiculo",
@@ -186,9 +160,10 @@ describe("integração negativa CPF → renderização → view_promotion", () =
 		).toHaveLength(1);
 	});
 	it("não mostra os cards em falhas diferentes de NOT_ELIGIBLE", async () => {
-		jest
-			.mocked(callService)
-			.mockResolvedValue({ success: false, code: "TIMEOUT" });
+		vi.mocked(callService).mockResolvedValue({
+			success: false,
+			code: "TIMEOUT",
+		});
 		render(<Harness journeySlug="financiamento-de-veiculos" />);
 		fireEvent.click(screen.getByRole("button", { name: "Consultar" }));
 		await waitFor(() => expect(callService).toHaveBeenCalled());

@@ -1,4 +1,5 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { Notification } from "./Notification";
@@ -205,7 +206,7 @@ describe("<Notification />", () => {
 	});
 
 	it("deve lidar com cliques no link", () => {
-		const mockOnClick = jest.fn();
+		const mockOnClick = vi.fn();
 		const link = {
 			label: "Clique aqui",
 			href: "https://exemplo.com",

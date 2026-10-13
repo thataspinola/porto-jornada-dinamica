@@ -1,4 +1,5 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { Radio } from "./Radio";
@@ -9,7 +10,7 @@ const makeSut = (props: any) => {
 
 describe("Radio", () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	it("Should render correctly with default values", () => {
@@ -120,7 +121,7 @@ describe("Radio", () => {
 	});
 
 	it("Should be clickable when not disabled", () => {
-		const handleClick = jest.fn();
+		const handleClick = vi.fn();
 		render(<Radio data-testid="radio" onClick={handleClick} />);
 
 		const radio = screen.getByTestId("radio");
@@ -130,7 +131,7 @@ describe("Radio", () => {
 	});
 
 	it("should not call click event when disabled", () => {
-		const handleClick = jest.fn();
+		const handleClick = vi.fn();
 		render(
 			<Radio data-testid="radio" variant="disabled" onClick={handleClick} />,
 		);

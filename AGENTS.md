@@ -11,7 +11,7 @@ Regras gerais do projeto. Cada pasta importante tem seu próprio `AGENTS.md` com
 - **Zustand** (com `persist`) para estado global
 - **QueryClient** local e hooks de consulta para data fetching
 - **Biome** para lint + format (não use ESLint/Prettier)
-- **Jest** + Testing Library
+- **Vitest** + Testing Library
 - **SCSS Modules** (`*.module.scss`) para estilos por componente
 - Componentes locais em `src/components/UI` como base visual
 
@@ -28,8 +28,8 @@ npm run check:imports # valida resolução dos imports locais
 npm run check:empty  # valida ausência de arquivos vazios
 npm run check:names  # valida nomes e extensões em src/
 npm run type-check   # tsc --noEmit
-npm run test         # jest
-npm run test:watch   # jest --watch
+npm run test         # vitest run
+npm run test:watch   # vitest
 ```
 
 **Antes de finalizar qualquer alteração:** rode `npm run type-check` e `npm run lint`.

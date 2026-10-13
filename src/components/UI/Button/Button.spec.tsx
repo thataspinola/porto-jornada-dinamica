@@ -1,4 +1,5 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Button } from "./index";
 
@@ -94,7 +95,7 @@ describe("Button", () => {
 	});
 
 	it("Should call onClick event when clicked", () => {
-		const handleClick = jest.fn();
+		const handleClick = vi.fn();
 		const { button } = makeSut({ onClick: handleClick });
 
 		fireEvent.click(button);
@@ -102,7 +103,7 @@ describe("Button", () => {
 	});
 
 	it("Should not call onClick event when disabled", () => {
-		const handleClick = jest.fn();
+		const handleClick = vi.fn();
 		const { button } = makeSut({ onClick: handleClick, disabled: true });
 
 		fireEvent.click(button);

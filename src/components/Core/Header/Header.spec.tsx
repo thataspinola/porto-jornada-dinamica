@@ -1,75 +1,75 @@
+import { vi } from "vitest";
 /** biome-ignore-all lint/performance/noImgElement: <> */
-import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { Header } from "./Header";
 
 // Mock dos ícones
-jest.mock(
-	"@/components/Core/Header/icons/ic-arrow-left.svg",
-	() => "arrow-left.svg",
-);
-jest.mock(
-	"@/components/Core/Header/icons/ic-logo-porto.svg",
-	() => "logo-porto.svg",
-);
-jest.mock(
-	"@/components/Core/Header/icons/ic-shopping-cart.svg",
-	() => "shopping-cart.svg",
-);
+vi.mock("@/components/Core/Header/icons/ic-arrow-left.svg", () => ({
+	default: "arrow-left.svg",
+}));
+vi.mock("@/components/Core/Header/icons/ic-logo-porto.svg", () => ({
+	default: "logo-porto.svg",
+}));
+vi.mock("@/components/Core/Header/icons/ic-shopping-cart.svg", () => ({
+	default: "shopping-cart.svg",
+}));
 
-jest.mock("next/image", () => {
-	return function Image({
-		src,
-		alt,
-		className,
-		onClick,
-		width,
-		height,
-	}: {
-		src: string;
-		alt: string;
-		className?: string;
-		onClick?: () => void;
-		width: number;
-		height: number;
-	}) {
-		return (
-			<img
-				src={src}
-				alt={alt}
-				className={className}
-				onClick={onClick}
-				onKeyDown={
-					onClick
-						? (e) => {
-								if (e.key === "Enter") {
-									onClick();
+vi.mock("next/image", () => {
+	return {
+		default: function Image({
+			src,
+			alt,
+			className,
+			onClick,
+			width,
+			height,
+		}: {
+			src: string;
+			alt: string;
+			className?: string;
+			onClick?: () => void;
+			width: number;
+			height: number;
+		}) {
+			return (
+				<img
+					src={src}
+					alt={alt}
+					className={className}
+					onClick={onClick}
+					onKeyDown={
+						onClick
+							? (e) => {
+									if (e.key === "Enter") {
+										onClick();
+									}
 								}
-							}
-						: undefined
-				}
-				width={width}
-				height={height}
-				data-testid="mock-image"
-				role={onClick ? "button" : undefined}
-				tabIndex={onClick ? 0 : undefined}
-			/>
-		);
+							: undefined
+					}
+					width={width}
+					height={height}
+					data-testid="mock-image"
+					role={onClick ? "button" : undefined}
+					tabIndex={onClick ? 0 : undefined}
+				/>
+			);
+		},
 	};
 });
 
-const mockPush = jest.fn();
-jest.mock("next/navigation", () => ({
+const mockPush = vi.fn();
+vi.mock("next/navigation", () => ({
 	useRouter: () => ({
 		push: mockPush,
-		prefetch: jest.fn(),
+		prefetch: vi.fn(),
 	}),
 }));
 
 describe("HeaderAcquisitionFlow", () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 		mockPush.mockClear();
 	});
 

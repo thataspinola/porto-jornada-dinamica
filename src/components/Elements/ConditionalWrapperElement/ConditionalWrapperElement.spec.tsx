@@ -1,11 +1,10 @@
+import { vi } from "vitest";
 import { StrictMode } from "react";
 import { render, screen } from "@testing-library/react";
 import { ConditionalWrapperElement } from "./ConditionalWrapperElement";
 import { conditionalWrapperElementSchema } from "@/validation/schemas";
-jest.mock("@/utils", () => ({
-	evaluateConditions: jest.requireActual("@/utils/evaluateConditions")
-		.evaluateConditions,
-	pushEvent: jest.requireActual("@/utils/pushEvent").pushEvent,
+vi.mock("@/utils", async () => ({
+	...(await vi.importActual<typeof import("@/utils")>("@/utils")),
 }));
 const cards = ["Empréstimo Consignado", "Empréstimo Pessoal"].map(
 	(title, index) => ({

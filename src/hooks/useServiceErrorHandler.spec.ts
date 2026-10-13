@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { useServiceErrorHandler } from "./useServiceErrorHandler";
 describe("useServiceErrorHandler", () => {
@@ -5,7 +6,7 @@ describe("useServiceErrorHandler", () => {
 		"emprestimo-com-garantia-de-veiculo",
 		"financiamento-de-veiculos",
 	])("marca taxvat como server em %s", (slug) => {
-		const setError = jest.fn();
+		const setError = vi.fn();
 		const { result } = renderHook(() => useServiceErrorHandler(setError));
 		expect(result.current({ success: false, code: "NOT_ELIGIBLE" }, slug)).toBe(
 			true,
@@ -16,7 +17,7 @@ describe("useServiceErrorHandler", () => {
 		});
 	});
 	it("usa o nome do CPF configurado e preserva a mensagem do serviço", () => {
-		const setError = jest.fn();
+		const setError = vi.fn();
 		const { result } = renderHook(() => useServiceErrorHandler(setError));
 		result.current(
 			{ success: false, error: "NOT_ELIGIBLE", message: "Não elegível" },
@@ -32,7 +33,7 @@ describe("useServiceErrorHandler", () => {
 		{ success: true, code: "NOT_ELIGIBLE" },
 		{ success: false, code: "TIMEOUT" },
 	])("não marca outros resultados: %j", (serviceResult) => {
-		const setError = jest.fn();
+		const setError = vi.fn();
 		const { result } = renderHook(() => useServiceErrorHandler(setError));
 		expect(result.current(serviceResult, "financiamento-de-veiculos")).toBe(
 			false,
@@ -40,7 +41,7 @@ describe("useServiceErrorHandler", () => {
 		expect(setError).not.toHaveBeenCalled();
 	});
 	it("não altera outras jornadas", () => {
-		const setError = jest.fn();
+		const setError = vi.fn();
 		const { result } = renderHook(() => useServiceErrorHandler(setError));
 		expect(
 			result.current({ success: false, code: "NOT_ELIGIBLE" }, "seguro-bike"),

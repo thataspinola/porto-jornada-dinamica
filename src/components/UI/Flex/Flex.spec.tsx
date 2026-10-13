@@ -1,10 +1,13 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
 import { Flex } from "./Flex";
 
-jest.mock("./Flex.module.scss", () => ({
-	flex: "flex-class",
-	inline: "inline-class",
+vi.mock("./Flex.module.scss", () => ({
+	default: {
+		flex: "flex-class",
+		inline: "inline-class",
+	},
 }));
 
 describe("Flex", () => {
@@ -170,7 +173,7 @@ describe("Flex", () => {
 		const element = screen.getByText("Item 1");
 		const container = element.parentElement;
 		expect(container).not.toBeNull();
-		expect(container).toHaveStyle({ color: "red" });
+		expect(container).toHaveStyle({ color: "rgb(255, 0, 0)" });
 	});
 
 	it("deve combinar múltiplas propriedades flex", () => {

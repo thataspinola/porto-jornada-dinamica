@@ -1,7 +1,8 @@
+import { vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { PriceSelector } from "./PriceSelector";
 test("PriceSelector: comportamento acessível", () => {
-	const onChange = jest.fn();
+	const onChange = vi.fn();
 	render(
 		<PriceSelector
 			label="Valor"

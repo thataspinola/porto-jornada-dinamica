@@ -1,14 +1,13 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import type { ComponentProps } from "react";
 import { Textarea } from "./Textarea";
 
-jest.mock("./Textarea.scss", () => ({}));
+vi.mock("./Textarea.scss", () => ({}));
 
-const mockClsx = jest.fn((...args: unknown[]) =>
-	args.filter(Boolean).join(" "),
-);
-jest.mock("@/utils", () => ({
+const mockClsx = vi.fn((...args: unknown[]) => args.filter(Boolean).join(" "));
+vi.mock("@/utils", () => ({
 	clsx: (...args: unknown[]) => mockClsx(...args),
 }));
 
@@ -200,7 +199,7 @@ describe("Textarea", () => {
 	});
 
 	it("should call onChange when value changes", () => {
-		const handleChange = jest.fn();
+		const handleChange = vi.fn();
 		const { textareaField } = makeSut({ onChange: handleChange });
 
 		fireEvent.change(textareaField, { target: { value: "New text" } });

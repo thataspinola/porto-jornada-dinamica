@@ -1,4 +1,5 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Dropdown } from "./Dropdown";
 
@@ -87,7 +88,7 @@ describe("Dropdown", () => {
 	});
 
 	it("Should close the list when selecting an option", () => {
-		const handleChange = jest.fn();
+		const handleChange = vi.fn();
 		render(<Dropdown options={mockOptions} onChange={handleChange} />);
 
 		const trigger = screen
@@ -161,7 +162,7 @@ describe("Dropdown", () => {
 	});
 
 	it("Should allow selecting option using keyboard", () => {
-		const handleChange = jest.fn();
+		const handleChange = vi.fn();
 		render(<Dropdown options={mockOptions} onChange={handleChange} />);
 
 		const trigger = screen
