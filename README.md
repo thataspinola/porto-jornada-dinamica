@@ -34,6 +34,34 @@ npm install
 npm run dev
 ```
 
+Abra `https://localhost:3000`.
+
+## Scripts
+
+```bash
+npm run dev       # dev server
+npm run build     # build de produção
+npm run start     # roda o build
+npm run lint      # biome check
+npm run format    # biome format
+npm run test      # vitest (watch)
+npm run test:run  # vitest run (CI)
+```
+
+Se o problema estiver no Turbopack (Next dev):
+
+```bash
+npm run dev:webpack
+```
+
+## Documentação
+
+Guias específicos vivem em [`docs/`](./docs/):
+
+- [Conditions em `SERVICE_CALL` e `NAVIGATION`](./docs/conditions.md) - bloquear chamadas/navegação com regras declarativas (AND/OR), aplicar `notify`, `fieldError` ou `redirect`.
+
+Padrões de cada pasta do `src/` estão documentadas nos `AGENTS.md` locais (ver [AGENTS.md raiz](./AGENTS.md)).
+
 ## Development server
 
 Rode `npm run dev` para executar o servidor local do projeto e acesse `http://localhost:3000/react-ssr-corp-hubv-dinamic-journey`.
