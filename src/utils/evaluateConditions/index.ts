@@ -1,5 +1,5 @@
 import type { Condition } from "@/validation/schemas";
-import { getByPath } from "../getByPath";
+import { getByPath } from "@/utils/getByPath";
 export type ConditionContext = {
 	fields?: Record<string, unknown>;
 	formErrors?: Record<string, unknown>;

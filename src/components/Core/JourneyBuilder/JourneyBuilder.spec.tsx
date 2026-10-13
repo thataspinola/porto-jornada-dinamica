@@ -5,13 +5,14 @@ import {
 	screen,
 	waitFor,
 } from "@testing-library/react";
-import data from "@/../public/jsonContent/financiamento-de-veiculos.json";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { journeySchema } from "@/validation/schemas";
 import { journeyStore } from "@/store/journeyStore";
 import { callService } from "@/services";
 import { JourneyBuilder } from "./JourneyBuilder";
 
-jest.mock("../Header", () => ({ Header: () => null }));
+jest.mock("@/components/Core/Header", () => ({ Header: () => null }));
 jest.mock("@/hooks/useCurrentPathname", () => ({
 	useCurrentPathname: () => "/contrate/financiamento-de-veiculos/cpf",
 }));
@@ -33,7 +34,17 @@ test("CPF válido, negativa real do controller e impressão única dos dois card
 		code: "NOT_ELIGIBLE",
 		message: "Produto indisponível",
 	});
-	const journey = journeySchema.parse(data);
+	const journey = journeySchema.parse(
+		JSON.parse(
+			readFileSync(
+				join(
+					process.cwd(),
+					"public/jsonContent/financiamento-de-veiculos.json",
+				),
+				"utf8",
+			),
+		),
+	);
 	const { rerender } = render(<JourneyBuilder journey={journey} />);
 	expect(screen.queryByText("Empréstimo Consignado")).not.toBeInTheDocument();
 	fireEvent.change(screen.getByLabelText("CPF"), {

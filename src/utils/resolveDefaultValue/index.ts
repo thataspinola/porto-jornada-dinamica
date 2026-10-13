@@ -1,4 +1,4 @@
-import { getByPath } from "../getByPath";
+import { getByPath } from "@/utils/getByPath";
 
 /**
  * Resolve o valor padrão de um campo.

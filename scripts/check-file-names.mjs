@@ -16,7 +16,7 @@ async function inspect(directory) {
 		}
 		const name = entry.name;
 		const display = relative(sourceRoot, path).replaceAll("\\", "/");
-		const componentFile = /^(components|features)\//.test(display);
+		const componentFile = /^(components|features|contexts|scripts)\//.test(display);
 		const fail = (reason) => errors.push(`${display}: ${reason}`);
 		if (/[\s,]/.test(name)) fail("o nome contém espaço ou vírgula");
 		if (componentFile) {

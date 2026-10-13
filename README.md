@@ -49,7 +49,7 @@ Rode `npm run test` para executar os testes unitários via [Jest](https://www.np
 
 ## Verificações
 
-Execute `npm run check:empty`, `npm run check:names`, `npm run format:check`, `npm run type-check`, `npm run lint` e `npm test -- --runInBand`. O runner oficial é Jest; a configuração Vitest é legada.
+Execute `npm run check:imports`, `npm run check:empty`, `npm run check:names`, `npm run format:check`, `npm run type-check`, `npm run lint` e `npm test -- --runInBand`. O runner oficial é Jest; a configuração Vitest é legada.
 
 ## Conteúdo e integração
 

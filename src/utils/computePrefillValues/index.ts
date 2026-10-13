@@ -2,9 +2,9 @@
  * Percorre os elementos da etapa atual para descobrir quais campos podem ser
  * pré-preenchidos automaticamente com dados externos.
  */
-import type { JourneyDefinition } from "../../validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemaValidation";
 
-import { resolveDefaultValue } from "../resolvedDefaultValue";
+import { resolveDefaultValue } from "@/utils/resolveDefaultValue";
 
 type FormValues = Record<string, unknown>;
 type JourneyStep = JourneyDefinition["steps"][number];

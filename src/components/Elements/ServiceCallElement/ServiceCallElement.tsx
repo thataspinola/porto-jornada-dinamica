@@ -1,7 +1,7 @@
 "use client";
 
 import type { JourneyDefinition } from "@/validation/schemaValidation";
-import { Button } from "../../UI/Button";
+import { Button } from "@/components/UI/Button";
 
 type ServiceCallElementType = Extract<
 	JourneyDefinition["steps"][number]["elements"][number],

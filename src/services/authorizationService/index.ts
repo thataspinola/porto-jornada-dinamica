@@ -1,7 +1,7 @@
 "use server";
 import { env } from "next-runtime-env";
 
-import { api } from "../../lib";
+import { api } from "@/lib";
 
 import type { AuthorizationServiceResponse } from "./types";
 

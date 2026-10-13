@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { conditionActionSchema } from "./elements/conditions.schema";
+import { conditionActionSchema } from "@/validation/schemas/elements/conditions.schema";
 
 export const serviceErrorRuleSchema = z.object({
 	code: z.string(),

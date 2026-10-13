@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { baseElementSchema } from "./baseElement.schema";
-import { typographyUiSchema } from "./elementUi.schema";
+import { typographyUiSchema } from "./elementUi.schemas";
 
 export const titleElementSchema = baseElementSchema.extend({
 	type: z.literal("TITLE"),

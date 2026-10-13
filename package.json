@@ -19,7 +19,8 @@
     "test": "jest",
     "test:ci": "jest --findRelatedTests",
     "test:watch": "jest --watch",
-    "check:empty": "node scripts/check-empty-files.mjs"
+    "check:empty": "node scripts/check-empty-files.mjs",
+    "check:imports": "node scripts/check-imports.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1030.0",

@@ -2,6 +2,7 @@
 
 import {
 	CheckboxElement,
+	EmailInputElement,
 	ComposableCardElement,
 	ConditionalWrapperElement,
 	CpfInputElement,
@@ -10,7 +11,7 @@ import {
 	ParagraphElement,
 	RadioElement,
 	ServiceCallElement,
-	SocialNamElement,
+	SocialNameElement,
 	TextInputElement,
 	TextElement,
 	TitleElement,
@@ -29,6 +30,9 @@ const renderers: {
 		Extract<JourneyElement, { type: K }>
 	>;
 } = {
+	EMAIL_INPUT: (element, ctx) => (
+		<EmailInputElement element={element} control={ctx.control} />
+	),
 	TEXT: (element) => <TextElement element={element} />,
 	COMPOSABLE_CARD: (element, ctx) => (
 		<ComposableCardElement
@@ -87,7 +91,7 @@ const renderers: {
 		/>
 	),
 	SOCIAL_NAME: (element, ctx) => (
-		<SocialNamElement
+		<SocialNameElement
 			element={element}
 			register={ctx.register}
 			control={ctx.control}

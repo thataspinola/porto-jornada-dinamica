@@ -15,7 +15,7 @@ import type {
 import { useJourneyStore } from "@/store";
 import { redirectTo } from "@/utils";
 import type { JourneyDefinition } from "@/validation/schemaValidation";
-import { callService } from "../services";
+import { callService } from "@/services";
 
 type FormValues = Record<string, unknown>;
 

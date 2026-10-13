@@ -3,8 +3,8 @@ import {
 	ConfiguredElement,
 	type ConfiguredElementProps,
 } from "@/components/Elements/ConfiguredElement";
-import styles from "./FCDCPriceSimmulationElement.module.scss";
-export function FCDCPriceSimmulationElement(props: ConfiguredElementProps) {
+import styles from "./FCDCPriceSimulationElement.module.scss";
+export function FCDCPriceSimulationElement(props: ConfiguredElementProps) {
 	return (
 		<div className={styles.root}>
 			<ConfiguredElement {...props} />

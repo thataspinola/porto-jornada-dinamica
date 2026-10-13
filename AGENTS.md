@@ -24,6 +24,7 @@ npm run lint         # biome lint ./src (sem alterar arquivos)
 npm run lint:fix     # biome lint --write ./src
 npm run format       # biome format --write ./src
 npm run format:check # biome format ./src
+npm run check:imports # valida resolução dos imports locais
 npm run check:empty  # valida ausência de arquivos vazios
 npm run check:names  # valida nomes e extensões em src/
 npm run type-check   # tsc --noEmit

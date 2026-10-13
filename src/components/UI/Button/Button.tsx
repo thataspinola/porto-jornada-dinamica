@@ -1,4 +1,4 @@
-import { Loader } from "../Loader";
+import { Loader } from "@/components/UI/Loader";
 import "./Button.scss";
 import type { ButtonProps } from "./types";
 /**

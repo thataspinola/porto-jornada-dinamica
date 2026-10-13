@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { baseElementSchema } from "./baseElement.schema";
-import { inputUiSchema } from "./elementUi.schema";
+import { inputUiSchema } from "./elementUi.schemas";
 
 export const phoneInputElementSchema = baseElementSchema.extend({
 	type: z.literal("PHONE_INPUT"),

@@ -5,9 +5,18 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Header } from "./Header";
 
 // Mock dos ícones
-jest.mock("./icons/ic-arrow-left.svg", () => "arrow-left.svg");
-jest.mock("./icons/ic-logo-porto.svg", () => "logo-porto.svg");
-jest.mock("./icons/ic-shopping-cart.svg", () => "shopping-cart.svg");
+jest.mock(
+	"@/components/Core/Header/icons/ic-arrow-left.svg",
+	() => "arrow-left.svg",
+);
+jest.mock(
+	"@/components/Core/Header/icons/ic-logo-porto.svg",
+	() => "logo-porto.svg",
+);
+jest.mock(
+	"@/components/Core/Header/icons/ic-shopping-cart.svg",
+	() => "shopping-cart.svg",
+);
 
 jest.mock("next/image", () => {
 	return function Image({

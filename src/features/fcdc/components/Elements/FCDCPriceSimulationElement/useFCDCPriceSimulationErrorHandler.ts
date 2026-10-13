@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useState } from "react";
-export function useFCDCPriceSimmulationErrorHandler() {
+export function useFCDCPriceSimulationErrorHandler() {
 	const [error, setError] = useState("");
 	const handleError = useCallback(
 		(error: unknown) =>

@@ -1,5 +1,5 @@
 import type { Control, FieldErrors, UseFormRegister } from "react-hook-form";
-import type { JourneyDefinition } from "../../../validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemaValidation";
 
 export type FormValues = Record<string, unknown>;
 

@@ -3,10 +3,10 @@
 import { useJourneyController } from "@/hooks/useJourneyController";
 import { redirectTo } from "@/utils";
 import type { JourneyDefinition } from "@/validation/schemaValidation";
-import { DebugFloatingButton } from "../DebugFloatingButton";
-import { Header } from "../Header";
-import { renderJourneyElement } from "../JourneyRenderElements";
-import { ProgressBar } from "../ProgressBar";
+import { DebugFloatingButton } from "@/components/Core/DebugFloatingButton";
+import { Header } from "@/components/Core/Header";
+import { renderJourneyElement } from "@/components/Core/JourneyRenderElements";
+import { ProgressBar } from "@/components/Core/ProgressBar";
 
 import "./JourneyBuilder.scss";
 

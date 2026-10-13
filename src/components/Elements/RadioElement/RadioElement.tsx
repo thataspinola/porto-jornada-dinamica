@@ -2,7 +2,7 @@
 
 import type { JourneyDefinition } from "@/validation/schemaValidation";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
-import type { FormValues } from "../TextInputElement";
+import type { FormValues } from "@/components/Elements/TextInputElement";
 
 type RadioElementType = Extract<
 	JourneyDefinition["steps"][number]["elements"][number],
