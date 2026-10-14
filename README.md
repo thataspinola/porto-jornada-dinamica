@@ -39,14 +39,13 @@ Abra `http://localhost:3000`.
 ### Scripts
 
 ```bash
-npm run dev        # dev server
-npm run build      # build de produção
-npm run start      # roda a build
-npm run lint       # biome check
-npm run format     # biome format
-npm run test       # vitest run
-npm run test:watch # vitest (watch)
-npm run test:ci    # vitest run com cobertura
+npm run dev         # dev server
+npm run build       # build de produção
+npm run start       # roda a build
+npm run lint        # biome check
+npm run format      # biome format
+npm run test        # vitest (watch)
+npm run test:run    # vitest run (CI)
 ```
 
 Se o problema estiver no Turbopack (Next dev):
@@ -165,7 +164,6 @@ O runner persiste dados em store para reuso e debug:
 - `services`: resultados de SERVICE_CALL
 
 Estado: `src/store/journeyStore.ts`
-
 Hook: `src/store/useJourneyStore.ts`
 
 ## Validação
@@ -183,9 +181,7 @@ export const sampleJourney = journeySchema.parse({
   id: 'j1',
   name: 'Minha Jornada',
   slug: 'minha-jornada',
-  steps: [
-    /* ... */
-  ],
+  steps: [/* ... */],
 })
 ```
 
@@ -207,7 +203,6 @@ O schema é consumido por `useJourneyForm`, que cria o RHF com `zodResolver(sche
 ## Contexto e roteamento interno
 
 O runner mantém o step atual em `stepSlug` (Zustand) e também atualiza a URL via `window.history.pushState`.
-
 Se existir `business.base_url`, ela é usada como prefixo (útil quando o app roda sob um path).
 
 Helper: `src/utils/joinPaths/index.ts`

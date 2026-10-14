@@ -34,16 +34,17 @@
     ]
   },
   "include": [
-    "next-env.d.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "config/**/*.ts",
-    "next.config.ts",
+    "./src",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
     "dist/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
+    "next-env.d.ts",
+    "/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
     "dist/react-ssr-corp-hubv-dinamic-journey/dev/types/**/*.ts",
-    "dist/types/**/*.ts",
+    "/dist/dev/types/**/*.ts",
     "./config/vitest/setup.ts",
-    "/dist/dev/types/**/*.ts"
+    "/dist/types/**/*.ts",
+    "dist/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
