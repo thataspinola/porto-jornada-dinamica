@@ -27,12 +27,10 @@ const headers = [
 const nextConfig: NextConfig = {
   output: "standalone",
   distDir: "dist/react-ssr-corp-hubv-dinamic-journey",
-  sassOptions: {
-    includePaths: [path.join(__dirname, "src")],
-    silenceDeprecations: ["legacy-js-api"],
-    implementation: "sass-embedded",
-    quietDeps: true,
-  },
+	basePath: '/contrate',
+	typescript: {
+		ignoreBuildErrors: true
+	},
   poweredByHeader: false,
   async headers() {
     return [
