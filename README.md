@@ -126,8 +126,7 @@ src/
   utils/
     joinPaths.ts                # helper de URL/path
   validation/
-    schemaValidation/           # schemas Zod da jornada (estrutura)
-    validations/                # geração do schema do formulário por jornada
+    schemas/                    # schemas Zod da jornada (estrutura)
 ```
 
 ## Conceitos principais
