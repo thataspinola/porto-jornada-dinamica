@@ -1,11 +1,12 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import type { ComponentProps } from "react";
 import { Input } from "./Input";
 
-jest.mock("./Input.scss", () => ({}));
+vi.mock("./Input.scss", () => ({}));
 
-jest.mock("@/components/UI/Loader", () => ({
+vi.mock("@/components/UI/Loader", () => ({
 	Loader: ({ className, color }: { className?: string; color?: string }) => (
 		<div data-testid="mock-loader" className={className} data-color={color} />
 	),
@@ -26,7 +27,7 @@ const makeSut = (props: Partial<ComponentProps<typeof Input>> = {}) => {
 
 describe("Input", () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	it("should render correctly with default values", () => {
@@ -124,7 +125,7 @@ describe("Input", () => {
 	});
 
 	it("should call onChange when value changes", () => {
-		const handleChange = jest.fn();
+		const handleChange = vi.fn();
 		const { inputField } = makeSut({ onChange: handleChange });
 
 		fireEvent.change(inputField, { target: { value: "New value" } });

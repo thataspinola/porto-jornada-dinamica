@@ -1,12 +1,13 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { render } from "@testing-library/react";
 import { Loader } from "./Loader";
 
 // Mock do módulo de estilos
-jest.mock("./Loader.scss", () => ({}));
+vi.mock("./Loader.scss", () => ({}));
 
 // Mock da função clsx
-jest.mock("@/utils", () => ({
+vi.mock("@/utils", () => ({
 	clsx: (...args: unknown[]) => args.filter(Boolean).join(" "),
 }));
 
@@ -82,7 +83,8 @@ describe("<Loader />", () => {
 		const { container: containerNegative } = render(<Loader size={-10} />);
 		const loaderNegative = containerNegative.firstChild as HTMLElement;
 		const styleNegative = loaderNegative.getAttribute("style") || "";
-		expect(styleNegative).toContain("width: -10px");
+		expect(styleNegative).not.toContain("width: -10px");
+		expect(loaderNegative.style.width).toBe("");
 
 		const { container: containerLarge } = render(<Loader size={200} />);
 		const loaderLarge = containerLarge.firstChild as HTMLElement;

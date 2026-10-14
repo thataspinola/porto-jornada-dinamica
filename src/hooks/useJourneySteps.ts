@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 
 import { useJourneyStore } from "@/store";
-import type { JourneyDefinition } from "@/validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemas";
 
 import { useCurrentPathname } from "./useCurrentPathname";
 

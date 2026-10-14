@@ -28,8 +28,8 @@ npm run check:imports # valida resolução dos imports locais
 npm run check:empty  # valida ausência de arquivos vazios
 npm run check:names  # valida nomes e extensões em src/
 npm run type-check   # tsc --noEmit
-npm run test         # vitest
-npm run test:watch   # vitest --watch
+npm run test         # vitest run
+npm run test:watch   # vitest
 ```
 
 **Antes de finalizar qualquer alteração:** rode `npm run type-check` e `npm run lint`.
@@ -60,11 +60,11 @@ src/
 - **Sempre** use o alias `@/...` para imports cross-folder. Nunca `../../../`.
 - Imports relativos `./xxx` só dentro da mesma pasta.
 - Importe pelo **barrel** da pasta (`@/utils`, `@/components/UI`) em vez de caminho profundo.
-- Ordem (Biome organiza automaticamente): externos → `@/...` → relativos.
+- Ordem: externos → `@/...` → relativos. O perfil corporativo pode organizar imports automaticamente.
 
 ### Nomes
 
-- Arquivos de componente React: `PascalCase` (ou `index.tsx` dentro de pasta `PascalCase/`).
+- Componentes em `PascalCase.tsx`; exportações no barrel `index.ts`.
 - Hooks: `useNomeDoHook.ts` em camelCase.
 - Funções e variáveis: camelCase.
 - Tipos e componentes: PascalCase.

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { cpfInputElementSchema } from "@/validation/schemaValidation/cpfInput.schema";
+import { cpfInputElementSchema } from "@/validation/schemas/elements/cpfInput.schema";
 
 import { fcdcPlateInputElementSchema } from "@/features/fcdc/validation/schemas/elements/fcdcPlateInput.schema";
 import { fcdcPriceSimulationElementSchema } from "@/features/fcdc/validation/schemas/elements/fcdcPriceSimulation.schema";

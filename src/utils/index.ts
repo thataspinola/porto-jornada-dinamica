@@ -23,3 +23,7 @@ export { readJourneyContent } from "./readJourneyContent";
 export { redirectTo } from "./redirectTo";
 export { resolveDefaultValue } from "./resolveDefaultValue";
 export { sanitize } from "./sanitize";
+
+export { evaluateConditionRules } from "./evaluateConditions";
+
+export { interpolateTemplate } from "./interpolateTemplate";

@@ -1,4 +1,4 @@
-/** @jest-environment node */
+/** @vitest-environment node */
 import { sha256 } from "./index";
 test("vetor SHA-256 conhecido", async () =>
 	expect(await sha256("abc")).toBe(

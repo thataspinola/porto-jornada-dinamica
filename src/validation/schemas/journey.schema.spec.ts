@@ -1,4 +1,4 @@
-/** @jest-environment node */
+/** @vitest-environment node */
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { journeySchema } from "./journey.schema";

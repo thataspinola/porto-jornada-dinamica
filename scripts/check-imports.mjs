@@ -69,7 +69,7 @@ async function inspect(directory) {
 				ts.isStringLiteral(node.arguments[0])
 			) {
 				const target = node.expression.getText(source);
-				if (["import", "require", "jest.mock", "jest.doMock"].includes(target))
+				if (["import", "require", "vi.mock", "vi.doMock"].includes(target))
 					check(node.arguments[0].text);
 			}
 			ts.forEachChild(node, visit);

@@ -1,31 +1,34 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
 import type React from "react";
 import type { ComponentProps } from "react";
 import { Link } from "./Link";
 
-jest.mock("./Link.scss", () => ({}));
+vi.mock("./Link.scss", () => ({}));
 
-jest.mock("next/link", () => {
-	return function NextLink({
-		children,
-		className,
-		...props
-	}: {
-		children: React.ReactNode;
-		className?: string;
-		href: string;
-		[key: string]: unknown;
-	}) {
-		return (
-			<a className={className} {...props}>
-				{children}
-			</a>
-		);
+vi.mock("next/link", () => {
+	return {
+		default: function NextLink({
+			children,
+			className,
+			...props
+		}: {
+			children: React.ReactNode;
+			className?: string;
+			href: string;
+			[key: string]: unknown;
+		}) {
+			return (
+				<a className={className} {...props}>
+					{children}
+				</a>
+			);
+		},
 	};
 });
 
-jest.mock("@/utils", () => ({
+vi.mock("@/utils", () => ({
 	clsx: (...args: unknown[]) => {
 		return args
 			.map((arg) => {

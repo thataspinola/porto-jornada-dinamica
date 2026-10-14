@@ -1,5 +1,8 @@
 export async function recaptchaGenerator(siteKey: string, action: string) {
-	if (!window.grecaptcha) throw new Error("reCAPTCHA indisponível");
-	await new Promise<void>((resolve) => window.grecaptcha.ready(resolve));
-	return window.grecaptcha.execute(siteKey, { action });
+	const client = window.grecaptcha?.enterprise ?? window.grecaptcha;
+	if (!client?.execute) throw new Error("reCAPTCHA indisponível");
+	const execute = client.execute.bind(client);
+	if (client.ready)
+		await new Promise<void>((resolve) => client.ready?.(resolve));
+	return execute(siteKey, { action });
 }

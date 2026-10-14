@@ -1,6 +1,6 @@
 import type { Control, FieldErrors, UseFormRegister } from "react-hook-form";
 import type { GoNextOptions } from "@/hooks/useJourneyNavigation";
-import type { JourneyDefinition } from "@/validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemas";
 
 type FormValues = Record<string, unknown>;
 

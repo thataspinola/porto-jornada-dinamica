@@ -16,18 +16,18 @@
     }
 
     .input__label {
-      font-family: var(--open-sans);
-      color: var(--neutral-500);
-      font-weight: var(--medium);
-      font-size: var(--size-1);
       top: 0.6rem;
+      font-family: var(--open-sans);
+      font-size: var(--size-1);
+      font-weight: var(--medium);
+      color: var(--neutral-500);
     }
   }
 
   &.--focused {
     .input__box {
+      background-color: rgb(0 0 0 / 2%);
       border-color: var(--insurance-550);
-      background-color: rgba(0, 0, 0, 0.02);
     }
   }
 
@@ -62,57 +62,57 @@
   }
 
   &.--outlined .input__box {
-    border-radius: var(--radius-1) var(--radius-1) 0 0;
     background-color: var(--neutral-100);
-    transition: border-color 0.2s ease;
     border-bottom: 2px solid var(--neutral-400);
+    border-radius: var(--radius-1) var(--radius-1) 0 0;
+    transition: border-color 0.2s ease;
   }
 
   &.--default .input__box {
+    background-color: transparent;
     border: 1px solid var(--neutral-400);
     border-radius: var(--radius-1);
-    background-color: transparent;
     transition: border-color 0.2s ease;
   }
 }
 
 .input__box {
   position: relative;
-  height: 52px;
   display: flex;
   align-items: flex-end;
+  height: 52px;
   padding: 1.2rem;
 }
 
 .input__label {
-  pointer-events: none;
   position: absolute;
-  left: 1.2rem;
   top: 1.6rem;
+  left: 1.2rem;
   font-family: var(--open-sans);
   font-size: var(--size-3);
   color: var(--neutral-700);
+  pointer-events: none;
   transition: all 0.2s ease;
 }
 
 .input__field {
   width: 100%;
-  background-color: transparent;
-  border: none;
   font-family: var(--open-sans);
   font-size: var(--size-3);
   line-height: 24px;
   color: var(--neutral-800);
   outline: none;
+  background-color: transparent;
+  border: none;
   transition: all 0.3s ease;
 }
 
 .input__helper-text,
 .input__error-message {
-  font-size: var(--size-3);
-  font-family: var(--open-sans);
   margin-top: 0.4rem;
   margin-left: 1.2rem;
+  font-family: var(--open-sans);
+  font-size: var(--size-3);
   line-height: 1.6rem;
 }
 
@@ -125,13 +125,13 @@
 }
 
 .input__loader {
-  width: 24px;
-  height: 24px;
   position: absolute;
   top: 12px;
   right: 16px;
-  border-radius: var(--radius-full);
+  width: 24px;
+  height: 24px;
   border: 3px solid var(--insurance-900);
   border-bottom-color: transparent;
+  border-radius: var(--radius-full);
   transform: rotate(360deg);
 }

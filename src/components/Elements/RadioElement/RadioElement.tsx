@@ -1,6 +1,6 @@
 "use client";
 
-import type { JourneyDefinition } from "@/validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemas";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import type { FormValues } from "@/components/Elements/TextInputElement";
 

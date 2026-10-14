@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/UI/Input";
-import type { JourneyDefinition } from "@/validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemas";
 import { type Control, Controller } from "react-hook-form";
 
 type FormValues = Record<string, unknown>;

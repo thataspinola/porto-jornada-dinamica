@@ -10,3 +10,5 @@ export { textElementSchema } from "@/validation/schemas/elements/text.schema";
 export { journeySchema } from "./journey.schema";
 export type { JourneyDefinition } from "./journey.schema";
 export { journeyElementSchema } from "./journeyElement.schema";
+
+export type { ServiceErrorsConfig } from "./serviceErrors.schema";

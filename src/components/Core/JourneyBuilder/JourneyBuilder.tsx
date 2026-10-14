@@ -2,7 +2,7 @@
 
 import { useJourneyController } from "@/hooks/useJourneyController";
 import { redirectTo } from "@/utils";
-import type { JourneyDefinition } from "@/validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemas";
 import { DebugFloatingButton } from "@/components/Core/DebugFloatingButton";
 import { Header } from "@/components/Core/Header";
 import { renderJourneyElement } from "@/components/Core/JourneyRenderElements";

@@ -1,11 +1,14 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
 
 import { Spacing } from "./Spacing";
 
-jest.mock("./Spacing.module.scss", () => ({
-	spacing: "spacing-class",
-	inline: "inline-class",
+vi.mock("./Spacing.module.scss", () => ({
+	default: {
+		spacing: "spacing-class",
+		inline: "inline-class",
+	},
 }));
 
 describe("<Spacing />", () => {
@@ -85,7 +88,7 @@ describe("<Spacing />", () => {
 		const el = screen.getByTestId("spacing");
 
 		expect(el).toHaveStyle({
-			backgroundColor: "red",
+			backgroundColor: "rgb(255, 0, 0)",
 			padding: "10px",
 		});
 

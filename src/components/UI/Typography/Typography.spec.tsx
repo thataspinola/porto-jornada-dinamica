@@ -1,9 +1,10 @@
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
 import type { ComponentProps } from "react";
 import { Typography } from "./Typography";
 
-jest.mock("./Typography.scss", () => ({}));
+vi.mock("./Typography.scss", () => ({}));
 
 // Factory to simplify rendering and element selection
 const makeSut = (props: Partial<ComponentProps<typeof Typography>> = {}) => {
