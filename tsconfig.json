@@ -6,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": ["vitest/globals"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -35,9 +36,11 @@
     "src/**/*.tsx",
     "config/**/*.ts",
     "jest.config.ts",
-    "next.config.ts",
     "dist/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
-    "dist/react-ssr-corp-hubv-dinamic-journey/dev/types/**/*.ts"
+    "dist/react-ssr-corp-hubv-dinamic-journey/dev/types/**/*.ts",
+    "dist/types/**/*.ts",
+    "./config/vitest/setup.ts",
+    "/dist/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
