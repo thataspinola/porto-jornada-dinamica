@@ -283,3 +283,30 @@ describe("concorrência, qualidade e efeitos", () => {
 		expect(onError).toHaveBeenCalledWith({ success: false });
 	});
 });
+
+describe("submissão e navegação com múltiplos serviços", () => {
+	it("registry executa todos os pedidos preservando ordem", async () => {
+		const { callMultipleServices } = await import("@/hooks/useMultipleService");
+		const { prefetchActions } = await import("@/utils/prefetchActions");
+		vi.mocked(callService)
+			.mockResolvedValueOnce({ success: true, data: "first" })
+			.mockResolvedValueOnce({ success: false, error: "FAIL" });
+		expect(
+			await callMultipleServices([
+				{ name: "one", input: { id: 1 } },
+				{ name: "two", input: { id: 2 } },
+			]),
+		).toEqual([
+			{ success: true, data: "first" },
+			{ success: false, error: "FAIL" },
+		]);
+		expect(vi.mocked(callService).mock.calls.slice(-2)).toEqual([
+			["one", { id: 1 }],
+			["two", { id: 2 }],
+		]);
+		vi.mocked(callService).mockClear();
+		expect(await prefetchActions([])).toEqual([]);
+		await prefetchActions([{ service: "one", input: { id: 3 } }]);
+		expect(callService).toHaveBeenCalledWith("one", { id: 3 });
+	});
+});

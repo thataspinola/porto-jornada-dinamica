@@ -142,22 +142,10 @@ describe("integração negativa CPF → renderização → view_promotion", () =
 		expect(
 			screen.getByRole("link", { name: "Conhecer 0" }).getAttribute("href"),
 		).toBe("https://example.test/0");
-		expect(
-			(
-				window as Window & {
-					dataLayer?: unknown[];
-				}
-			).dataLayer,
-		).toHaveLength(1);
+		await waitFor(() => expect(window.dataLayer).toHaveLength(1));
 		fireEvent.click(screen.getByRole("button", { name: "Consultar" }));
 		await waitFor(() => expect(callService).toHaveBeenCalledTimes(2));
-		expect(
-			(
-				window as Window & {
-					dataLayer?: unknown[];
-				}
-			).dataLayer,
-		).toHaveLength(1);
+		await waitFor(() => expect(window.dataLayer).toHaveLength(1));
 	});
 	it("não mostra os cards em falhas diferentes de NOT_ELIGIBLE", async () => {
 		vi.mocked(callService).mockResolvedValue({

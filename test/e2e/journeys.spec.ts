@@ -16,7 +16,10 @@ let eligible = false;
 let output = "";
 
 beforeAll(async () => {
-	browser = await chromium.launch({ headless: true });
+	browser = await chromium.launch({
+		headless: true,
+		executablePath: process.env.CHROMIUM_EXECUTABLE_PATH,
+	});
 	backend = createServer(async (request, response) => {
 		let body = "";
 		for await (const chunk of request) body += chunk;
@@ -37,7 +40,14 @@ beforeAll(async () => {
 		throw new Error("Porta indisponível");
 	const port = appAddress.port;
 	await new Promise<void>((resolve) => reservation.close(() => resolve()));
-	baseURL = `http://127.0.0.1:${port}`;
+	const origin = `http://127.0.0.1:${port}`;
+	const manifest = JSON.parse(
+		await readFile(
+			resolve("dist/react-ssr-corp-hubv-dinamic-journey/routes-manifest.json"),
+			"utf8",
+		),
+	) as { basePath?: string };
+	baseURL = origin + (manifest.basePath ?? "");
 	app = spawn(
 		process.execPath,
 		[resolve("dist/react-ssr-corp-hubv-dinamic-journey/standalone/server.js")],
@@ -55,7 +65,7 @@ beforeAll(async () => {
 	app.stdout?.on("data", (data) => {
 		output += String(data);
 		const match = output.match(/http:\/\/127\.0\.0\.1:(\d+)/);
-		if (match && match[0] !== baseURL)
+		if (match && match[0] !== origin)
 			throw new Error("Servidor iniciou em porta inesperada");
 	});
 	app.stderr?.on("data", (data) => {

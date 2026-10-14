@@ -62,7 +62,7 @@ test.each([
 		"eligibility",
 		expect.objectContaining({ fields: { taxvat: "52998224725" } }),
 	);
-	expect(window.dataLayer).toHaveLength(1);
+	await waitFor(() => expect(window.dataLayer).toHaveLength(1));
 	expect(window.dataLayer[0]).toMatchObject({
 		event: "view_promotion",
 		items: [
@@ -71,5 +71,5 @@ test.each([
 		],
 	});
 	rerender(<JourneyBuilder journey={journey} />);
-	expect(window.dataLayer).toHaveLength(1);
+	await waitFor(() => expect(window.dataLayer).toHaveLength(1));
 });

@@ -372,6 +372,10 @@ As dependências `@porto-stack/*` exigem o Nexus corporativo. Nesta conciliaçã
 
 ### Situação da validação em 14/10/2026
 
-Os 460 testes locais passaram no Vitest 3.2.7 disponível em cache. A configuração oficial continua em Vitest 4.1.9. A cobertura provisória ficou em 74,46% de linhas/instruções, 66,81% de funções e 79,29% de branches; a meta de 90% ainda não foi atingida e `test:ci` falha corretamente. Não houve exclusão de código de produção para elevar esses números. É necessário ampliar os testes dos módulos ainda descobertos e repetir a medição com as versões oficiais.
+A suíte passou no Vitest 4.1.9: 625 testes em 122 arquivos. A cobertura V8 global atingiu 95,65% de linhas, 95,04% de instruções, 94,39% de funções e 90,64% de branches. `npm run test:ci` passou com os quatro limites de 90% ativos, incluindo módulos sem testes no denominador; não houve novas exclusões de código de produção.
 
-A instalação das dependências atuais pelo registro npm ficou bloqueada neste ambiente; TypeScript/build completos dependem de instalar `@tanstack/react-query`. A suíte E2E foi criada, mas não executou os cenários porque o binário Chromium não estava disponível. Os pacotes e o preset privados também precisam de validação pela VDI/Nexus. Estes ajustes devem permanecer em draft até concluir essas validações e atingir a cobertura mínima.
+TypeScript, resolução de imports, nomes, arquivos vazios, formatação, lint local e build de produção passaram. A validação usa as dependências públicas nas versões declaradas; o preset Biome corporativo e os pacotes privados continuam dependendo de instalação/validação na VDI/Nexus.
+
+Para E2E, `CHROMIUM_EXECUTABLE_PATH` pode apontar para um Chromium já instalado na máquina ou na pipeline, evitando download do navegador. A instalação padrão continua sendo `npm run test:e2e:install`.
+
+Os 3 cenários E2E também passaram com a aplicação Next standalone real, Chromium 153 e backend HTTP local controlado: negativa de CPF em REFF e FCDC (incluindo impressão única dos dois cards), catálogo, health e jornada desconhecida. A suíte usa o `basePath` do manifest de build, sem presumir URLs de implantação. Esses E2E não representam homologação de integrações corporativas reais.

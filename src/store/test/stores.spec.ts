@@ -21,14 +21,12 @@ describe("stores da jornada", () => {
 		journeyStore.getState().setError({ cpf: "Inválido" });
 		journeyStore.getState().setError({ service: "Falha" });
 		expect(journeyStore.getState().error).toEqual({ service: "Falha" });
-		journeyStore
-			.getState()
-			.setErrors([
-				{
-					code: "INVALID",
-					action: { type: "SET_ERROR", field: "cpf", message: "Inválido" },
-				},
-			]);
+		journeyStore.getState().setErrors([
+			{
+				code: "INVALID",
+				action: { type: "SET_ERROR", field: "cpf", message: "Inválido" },
+			},
+		]);
 		expect(journeyStore.getState().errors).toHaveLength(1);
 		journeyStore.getState().setHasHydrated(false);
 		await journeyStore.persist.rehydrate();
