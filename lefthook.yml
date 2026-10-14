@@ -31,7 +31,7 @@ pre-push:
         - frontend
         - unit tests
         - integration tests
-      run: npm run test
+      run: npm run test:ci
 
     - name: build
       tags:

@@ -44,7 +44,8 @@
     "/dist/dev/types/**/*.ts",
     "./config/vitest/setup.ts",
     "/dist/types/**/*.ts",
-    "dist/types/**/*.ts"
+    "dist/types/**/*.ts",
+    "test/**/*.ts"
   ],
   "exclude": [
     "node_modules"

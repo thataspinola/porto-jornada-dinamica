@@ -16,9 +16,18 @@ async function inspect(directory) {
 		}
 		const name = entry.name;
 		const display = relative(sourceRoot, path).replaceAll("\\", "/");
-		const componentFile = /^(components|features|contexts|scripts)\//.test(display);
+		const componentFile = /^(components|features|contexts|scripts)\//.test(
+			display,
+		);
 		const fail = (reason) => errors.push(`${display}: ${reason}`);
 		if (/[\s,]/.test(name)) fail("o nome contém espaço ou vírgula");
+		if (/\.test\.[cm]?[jt]sx?$/.test(name))
+			fail("testes usam .spec.ts ou .spec.tsx");
+		if (
+			/\.spec\.[cm]?[jt]sx?$/.test(name) &&
+			!display.split("/").includes("test")
+		)
+			fail("specs devem estar em uma pasta test");
 		if (componentFile) {
 			if (name === "index.tsx")
 				fail("use implementação nomeada e barrel index.ts");

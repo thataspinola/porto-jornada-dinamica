@@ -312,9 +312,11 @@ Exemplo (SERVICE_CALL usando Button):
 
 ## Testes
 
-- Integração do runner (validação + actions): `src/components/JourneyRunner.spec.tsx`
-- Service registry: `src/services/serviceRegistry.test.ts`
-- Setup do ambiente de teste: `src/test/setup.ts`
+- Unitários: specs em uma pasta `test` ao lado do módulo, como `src/utils/mask/cpf/test/index.spec.ts`.
+- Integração: `*.integration.spec.ts` / `*.integration.spec.tsx`, incluindo registry → HTTP local e negativa CPF → renderização → analytics.
+- Funcionais: `src/components/Core/JourneyBuilder/test/JourneyBuilder.functional.spec.tsx`, com formulário, validação, store, renderer e analytics de REFF/FCDC. O serviço remoto é substituído por um resultado controlado.
+- E2E: `test/e2e/journeys.spec.ts`, aplicação Next standalone real em Chromium, server action e adaptador HTTP reais com backend local controlado. Não valida o backend corporativo nem a integração real com GTM.
+- Setup do Vitest: `config/vitest/setup.ts`.
 
 É necessária a instalação das dependências do projeto.
 
@@ -332,7 +334,11 @@ Rode `npm run build` para executar o build do projeto. Os artefatos serão armaz
 
 ## Unit tests
 
-Rode `npm run test` para executar os testes unitários via [Vitest](https://vitest.dev/). Use `npm run test:coverage` para gerar os relatórios em `coverage`.
+Todos os runners usam Vitest. Os comandos `test:unit`, `test:integration` e `test:functional` selecionam as suítes locais; `npm test` executa todas elas. `npm run test:coverage` e `test:ci` geram relatórios em `coverage` e falham quando linhas, instruções, funções ou branches ficam abaixo de 90%. O denominador inclui todo o código de produção em `src`, inclusive módulos ainda sem testes; apenas declarações de tipos `.d.ts` e as pastas `test` são excluídas. Configurar o limite não significa que ele já foi atingido.
+
+Para E2E, instale as dependências e execute `npm run test:e2e:install` para instalar Chromium, depois `npm run test:e2e`. O comando faz build de produção, inicia aplicação e backend HTTP locais em portas livres e executa o navegador. `npm run test:all` exige cobertura local mínima e depois executa E2E. A cobertura V8 do Vitest local não contabiliza o código executado no processo Next do E2E.
+
+O hook pre-push exige `test:ci`; configure a pipeline GitLab/Jenkins e a proteção da branch para exigir `npm run test:all`, sem ignorar seu código de saída. A pipeline corporativa externa não é alterada por esta configuração.
 
 ## Conteúdo e integração
 
