@@ -4,4 +4,7 @@ export type ApiRequest = {
 	body?: unknown;
 	headers?: Record<string, string>;
 	signal?: AbortSignal;
+	maxRedirects?: number;
 };
+
+export type ApiServiceInput = ApiRequest & { recaptchaHeader?: string };

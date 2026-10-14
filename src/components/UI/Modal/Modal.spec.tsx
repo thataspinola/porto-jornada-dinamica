@@ -33,6 +33,7 @@ describe("Modal", () => {
 		mockRouterPush = vi.fn();
 		vi.mocked(useRouter).mockReturnValue({
 			push: mockRouterPush,
+			bfcacheId: "test",
 			back: vi.fn(),
 			forward: vi.fn(),
 			refresh: vi.fn(),

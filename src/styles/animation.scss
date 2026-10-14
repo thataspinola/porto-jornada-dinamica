@@ -44,73 +44,73 @@
 
 @keyframes slide-in-top {
   0% {
-    transform: translateY(-50px);
     opacity: 0;
+    transform: translateY(-50px);
   }
 
   100% {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes slide-in-bottom {
   0% {
-    transform: translateY(50px);
     opacity: 0;
+    transform: translateY(50px);
   }
 
   100% {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes scale-in {
   0% {
-    transform: scale(0.8);
     opacity: 0;
+    transform: scale(0.8);
   }
 
   100% {
-    transform: scale(1);
     opacity: 1;
+    transform: scale(1);
   }
 }
 
 @keyframes scale-out {
   0% {
-    transform: scale(1);
     opacity: 1;
+    transform: scale(1);
   }
 
   100% {
-    transform: scale(0.8);
     opacity: 0;
+    transform: scale(0.8);
   }
 }
 
 @keyframes rotate-in {
   0% {
-    transform: rotate(-90deg);
     opacity: 0;
+    transform: rotate(-90deg);
   }
 
   100% {
-    transform: rotate(0);
     opacity: 1;
+    transform: rotate(0);
   }
 }
 
 @keyframes rotate-out {
   0% {
-    transform: rotate(0);
     opacity: 1;
+    transform: rotate(0);
   }
 
   100% {
-    transform: rotate(90deg);
     opacity: 0;
+    transform: rotate(90deg);
   }
 }
 
@@ -125,7 +125,6 @@
 }
 
 @keyframes bounce {
-
   0%,
   20%,
   50%,

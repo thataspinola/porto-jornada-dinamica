@@ -9,8 +9,8 @@ $debug-empty: #6a9955;
 
 .debug-container {
   position: fixed;
-  left: 20px;
   bottom: 20px;
+  left: 20px;
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -19,42 +19,42 @@ $debug-empty: #6a9955;
   .debug-button {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
-    background-color: #004691;
-    color: white;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    font-weight: bold;
     font-size: 1.6rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    background-color: #004691;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
     transition: transform 0.2s ease, background-color 0.2s;
 
     &:hover {
-      transform: scale(1.1);
       background-color: #002d5d;
+      transform: scale(1.1);
     }
   }
 
   .debug-panel {
-    margin-top: 10px;
-    background: $debug-bg;
-    color: $debug-text;
-    padding: 15px;
-    border-radius: 8px;
     width: 380px;
     max-height: 550px;
+    padding: 15px;
+    margin-top: 10px;
     overflow-y: auto;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    font-family: 'Consolas', 'Courier New', monospace;
+    font-family: Consolas, 'Courier New', monospace;
+    color: $debug-text;
+    background: $debug-bg;
     border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 40%);
 
     .debug-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #333;
+      justify-content: space-between;
       padding-bottom: 8px;
       margin-bottom: 10px;
+      border-bottom: 1px solid #333;
 
       h3 {
         margin: 0;
@@ -63,24 +63,24 @@ $debug-empty: #6a9955;
       }
 
       .debug-count {
+        padding: 2px 6px;
         font-size: 1rem;
         color: #666;
         background: #2a2a2a;
-        padding: 2px 6px;
         border-radius: 4px;
       }
     }
 
     .debug-code {
+      margin: 0;
       font-size: 1rem;
       line-height: 1.4;
-      white-space: pre-wrap;
       word-break: break-all;
-      margin: 0;
+      white-space: pre-wrap;
 
       .debug-key {
-        color: $debug-key;
         font-weight: 500;
+        color: $debug-key;
       }
 
       .debug-string {
@@ -92,23 +92,23 @@ $debug-empty: #6a9955;
       }
 
       .debug-boolean {
-        color: $debug-boolean;
         font-weight: bold;
+        color: $debug-boolean;
       }
 
       .debug-null {
-        color: $debug-null;
         font-style: italic;
+        color: $debug-null;
       }
 
       .debug-separator {
-        color: $debug-text;
         margin-right: 4px;
+        color: $debug-text;
       }
 
       .debug-empty {
-        color: $debug-empty;
         font-style: italic;
+        color: $debug-empty;
       }
     }
 

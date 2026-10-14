@@ -5,6 +5,7 @@ export type ConditionContext = {
 	formErrors?: Record<string, unknown>;
 	business?: Record<string, unknown>;
 	services?: Record<string, unknown>;
+	parameters?: Record<string, unknown>;
 };
 export function evaluateConditions(
 	conditions: Condition[],
@@ -25,3 +26,6 @@ export function evaluateConditions(
 		return false;
 	});
 }
+
+export { evaluateCheck, evaluateRule, evaluateConditionRules } from "./rules";
+export type { EvaluationResult } from "./rules";

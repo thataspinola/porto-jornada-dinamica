@@ -8,8 +8,8 @@ import { useJourneyStore } from "@/store";
 import { computePrefillValues } from "@/utils";
 
 import { journeyStore } from "@/store/journeyStore";
-import type { JourneyDefinition } from "@/validation/schemaValidation";
-import { buildJourneyFormSchema } from "@/validation/validations";
+import type { JourneyDefinition } from "@/validation/schemas";
+import { buildJourneyFormSchema } from "@/validation/form";
 
 type JourneyStep = JourneyDefinition["steps"][number];
 type FormValues = Record<string, any>;

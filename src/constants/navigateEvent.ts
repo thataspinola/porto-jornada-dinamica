@@ -1,1 +1,1 @@
-export const NAVIGATE_EVENT = "journey:navigate";
+export { NAVIGATE_EVENT } from "@/utils/dispatchNavigate";

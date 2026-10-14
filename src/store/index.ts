@@ -1,1 +1,1 @@
-export { useJourneyStore } from "./useJourneyStore";
+export { useJourneyStore } from "./journeyStore";

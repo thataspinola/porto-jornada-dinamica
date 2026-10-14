@@ -1,10 +1,10 @@
 .notification {
   position: relative;
+  display: flex;
+  gap: 8px;
   width: 100%;
   padding: var(--space-4);
   border-radius: var(--space-2);
-  display: flex;
-  gap: 8px;
 
   &.--default {
     background-color: var(--neutral-0);
@@ -127,15 +127,15 @@
 .notification__title {
   font-family: var(--open-sans);
   font-size: var(--size-4);
-  line-height: 2.4rem;
   font-weight: bold;
+  line-height: 2.4rem;
 }
 
 .notification__icon {
-  margin-top: 2px;
-  width: var(--size-5);
   display: flex;
   justify-content: center;
+  width: var(--size-5);
+  margin-top: 2px;
 }
 
 .left {
@@ -149,8 +149,8 @@
 .notification__description {
   font-family: var(--open-sans);
   font-size: var(--size-3);
-  line-height: 2.4rem;
   font-weight: var(--regular);
+  line-height: 2.4rem;
 }
 
 .notification__content {
@@ -160,12 +160,12 @@
 }
 
 .notification__link {
-  color: var(--insurance-900);
+  margin-top: var(--space-3);
   font-family: var(--open-sans);
   font-size: var(--size-3);
   font-weight: var(--regular);
   line-height: 20px;
-  margin-top: var(--space-3);
-  cursor: pointer;
+  color: var(--insurance-900);
   text-align: end;
+  cursor: pointer;
 }

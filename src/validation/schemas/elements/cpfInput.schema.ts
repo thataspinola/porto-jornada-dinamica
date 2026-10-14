@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { baseElementSchema } from "./base.schema";
+import { baseElementSchema } from "./baseElement.schema";
 import { inputUiSchema } from "./elementUi.schemas";
 
 export const cpfInputElementSchema = baseElementSchema.extend({

@@ -15,3 +15,22 @@ export * as Skeleton from "./Skeleton";
 export { Spacing } from "./Spacing";
 export { Textarea } from "./Textarea";
 export { Typography } from "./Typography";
+
+export { ChipsImage } from "./ChipsImage";
+export { ConditionalTag } from "./ConditionalTag";
+export { FeedbackView } from "./FeedbackView";
+export { FixedWrapper } from "./FixedWrapper";
+export { IconContentList } from "./IconContentList";
+export { LoadingScreen } from "./LoadingScreen";
+export { PriceSelector } from "./PriceSelector";
+export { ProductCardConsorcio } from "./ProductCardConsorcio";
+export { Tabs } from "./Tabs";
+export { Tag } from "./Tag";
+export { Text } from "./Text";
+export {
+	Slider,
+	SliderRange,
+	SliderRoot,
+	SliderThumb,
+	SliderTrack,
+} from "./Slider";

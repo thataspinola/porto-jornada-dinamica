@@ -1,56 +1,91 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <> */
+
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-type JourneyState = {
-	fields: Record<string, unknown>;
-	error: Record<string, unknown>;
-	business: Record<string, unknown>;
-	services: Record<string, unknown>;
+import type { ServiceErrorsConfig } from "@/validation/schemas";
+
+export type JourneyState = {
+	fields: Record<string, any>;
+	error: Record<string, any>;
+	business: Record<string, any>;
+	services: Record<string, any>;
+	parameters: Record<string, any>;
+	errors: ServiceErrorsConfig;
 	_hasHydrated: boolean;
 	setHasHydrated: (value: boolean) => void;
-	mergeFields: (partial: Record<string, unknown>) => void;
-	setError: (error: Record<string, unknown>) => void;
-	mergeBusiness: (partial: Record<string, unknown>) => void;
-	mergeServices: (partial: Record<string, unknown>) => void;
+	mergeFields: (partial: Record<string, any>) => void;
+	setError: (error: Record<string, any>) => void;
+	mergeBusiness: (partial: Record<string, any>) => void;
+	mergeServices: (partial: Record<string, any>) => void;
+	mergeParameters: (partial: Record<string, any>) => void;
+	setErrors: (errors: ServiceErrorsConfig) => void;
 	reset: () => void;
 };
 
-export const journeyStore = create<JourneyState>()(
+export const useJourneyStore = create<JourneyState>()(
 	persist(
 		(set) => ({
 			fields: {},
 			error: {},
 			business: {},
 			services: {},
+			parameters: {},
+			errors: [],
 			_hasHydrated: false,
-			setHasHydrated: (value) => set({ _hasHydrated: value }),
-			mergeFields: (partial) =>
-				set((state) => ({ fields: { ...state.fields, ...partial } })),
-			setError: (error) => set({ error }),
-			mergeBusiness: (partial) =>
-				set((state) => ({ business: { ...state.business, ...partial } })),
-			mergeServices: (partial) =>
-				set((state) => ({ services: { ...state.services, ...partial } })),
+
+			setHasHydrated: (value: boolean) => set({ _hasHydrated: value }),
+
+			mergeFields: (partial: Record<string, any>) =>
+				set((state: JourneyState) => ({
+					fields: { ...state.fields, ...partial },
+				})),
+
+			setError: (error: Record<string, any>) => set({ error }),
+
+			mergeBusiness: (partial: Record<string, any>) =>
+				set((state: JourneyState) => ({
+					business: { ...state.business, ...partial },
+				})),
+
+			mergeServices: (partial: Record<string, any>) =>
+				set((state: JourneyState) => ({
+					services: { ...state.services, ...partial },
+				})),
+
+			mergeParameters: (partial: Record<string, any>) =>
+				set((state: JourneyState) => ({
+					parameters: { ...state.parameters, ...partial },
+				})),
+
+			setErrors: (errors: ServiceErrorsConfig) => set({ errors }),
+
 			reset: () =>
 				set({
 					fields: {},
 					error: {},
 					business: {},
 					services: {},
+					parameters: {},
+					errors: [],
 				}),
 		}),
 		{
 			name: "journey-storage",
+
 			storage: createJSONStorage(() => window.sessionStorage),
-			partialize: (state) => ({
+
+			partialize: (state: JourneyState) => ({
 				fields: state.fields,
 				error: state.error,
 				business: state.business,
 				services: state.services,
 			}),
-			onRehydrateStorage: () => (state) => {
+
+			onRehydrateStorage: () => (state: JourneyState | undefined) => {
 				state?.setHasHydrated(true);
 			},
 		},
 	),
 );
+export const journeyStore = useJourneyStore;

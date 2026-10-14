@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "@/styles/tokens/breakpoints" as breakpoints;
 
 .typography {
   $variants: (
@@ -67,7 +68,7 @@
     line-height: map.get($style, line);
 
     @if map.has-key($style, md-size) {
-      @media (min-width: var(--desktop)) {
+      @media (min-width: map.get(breakpoints.$breakpoints, "desktop")) {
         font-size: map.get($style, md-size);
         line-height: map.get($style, md-line);
       }

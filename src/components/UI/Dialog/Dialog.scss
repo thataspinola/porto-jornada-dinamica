@@ -3,35 +3,35 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6); // Escurecido para foco
-    backdrop-filter: blur(4px); // Efeito moderno de desfoque
     z-index: 100;
     display: flex;
-    justify-content: center;
+    visibility: hidden;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
     padding: 24px;
+    background: rgb(0 0 0 / 60%); // Escurecido para foco
 
     // Estado inicial (Escondido)
     opacity: 0;
-    visibility: hidden;
+    backdrop-filter: blur(4px); // Efeito moderno de desfoque
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     &.is-open {
-      opacity: 1;
       visibility: visible;
+      opacity: 1;
     }
   }
 
   &__box {
-    background: var(--neutral-0);
-    padding: 32px 24px;
-    border-radius: 12px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    width: 100%;
-    z-index: 110;
     position: relative;
+    z-index: 110;
+    width: 100%;
+    padding: 32px 24px;
+    background: var(--neutral-0);
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 10px 10px -5px rgb(0 0 0 / 4%);
 
     // Estado inicial do conteúdo (Levemente abaixo e menor)
     transform: scale(0.9) translateY(20px);
@@ -58,51 +58,51 @@
     position: absolute;
     top: 16px;
     right: 16px;
-    background: transparent;
-    border: none;
+    padding: 8px;
     color: var(--neutral-60);
     cursor: pointer;
-    padding: 8px;
+    background: transparent;
+    border: none;
     border-radius: 50%;
     transition: background 0.2s;
 
     &:hover {
-      background: var(--neutral-10);
       color: var(--neutral-90);
+      background: var(--neutral-10);
     }
   }
 
   &__header {
-    margin-bottom: 16px;
     display: flex;
-    align-items: flex-start;
     gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 16px;
   }
 
   &__title {
-    color: var(--neutral-90);
+    margin-bottom: 4px;
     font-size: var(--size-6);
     font-weight: 700;
-    margin-bottom: 4px;
+    color: var(--neutral-90);
   }
 
   &__subtitle {
-    color: var(--neutral-60);
     font-size: var(--size-4);
     font-weight: 400;
+    color: var(--neutral-60);
   }
 
   &__description,
   &__body {
-    color: var(--neutral-70);
     font-size: var(--size-4);
     line-height: 1.6;
+    color: var(--neutral-70);
   }
 
   &__footer {
     display: flex;
-    justify-content: flex-end;
     gap: 12px;
+    justify-content: flex-end;
     margin-top: 8px;
 
     &.--column {

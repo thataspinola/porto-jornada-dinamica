@@ -16,7 +16,7 @@ import {
 	TextElement,
 	TitleElement,
 } from "@/components/Elements";
-import { journeyElementSchema } from "@/validation/schemaValidation";
+import { journeyElementSchema } from "@/validation/schemas";
 
 import type {
 	ElementRenderContext,

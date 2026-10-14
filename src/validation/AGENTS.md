@@ -1,4 +1,4 @@
-# AGENTS.md — `src/validation/`
+# AGENTS.md — `src/validation`
 
 Regras para qualquer alteração dentro desta pasta. Leia antes de mexer.
 
@@ -9,7 +9,7 @@ Regras para qualquer alteração dentro desta pasta. Leia antes de mexer.
 | `schemas/`          | Schemas Zod que descrevem a **estrutura do JSON da jornada** (definição declarativa).    | Validações do formulário do usuário, regras de negócio. |
 | `schemas/elements/` | Um arquivo por tipo de elemento da jornada (`<nome>.schema.ts`).                         | Schemas de step/journey/raiz.                           |
 | `primitives/`       | Blocos Zod **genéricos e sem domínio** (`requiredString`, `optionalBoolean`, etc.).      | Qualquer regra de negócio (CPF, CEP, telefone, etc.).   |
-| `fields/`           | Validadores de **campos com regra de domínio** (`cpf`, `cep`, `phone`, `birthDate`).     | Primitivos genéricos, UI.                               |
+| `fields/`           | Validadores de **campos com regra de domínio** (`cpf`, `cep`, `phone`, `birthDate`).     | Primitivos genéricos. UI.                               |
 | `form/`             | Orquestração que monta o schema dinâmico do formulário a partir da definição da jornada. | Validadores em si.                                      |
 | `form/registry/`    | Handlers **complexos** do `elementRegistry` (com `refine` ou helpers próprios).          | Handlers triviais de uma linha.                         |
 
@@ -56,7 +56,7 @@ import type { JourneyDefinition } from '@/validation/schemas/journey.schema'
 2. Inclua-o no `discriminatedUnion` de `schemas/journeyElement.schema.ts`.
 3. Adicione o handler em `form/elementRegistry.ts`:
    - **Trivial** (sem `refine`, ≤ 4 linhas) → inline no `elementRegistry.ts`.
-   - **Complexo** (tem `refine`, helpers próprios, multi-linha) → arquivo em `form/registry/<nome>.ts` tipado com `ElementHandler<'TIPO'>`, referenciado por nome no registry.
+   - **Complexo** (tem `refine`, helpers próprios, multi-linha) → arquivo em `form/registry/<nome>.ts` tipado com `ElementHandler<TIPO>`, referenciado por nome no registry.
 
 ### Novo helper só usado por um handler
 
@@ -67,15 +67,15 @@ Mantenha **dentro** do arquivo do handler em `form/registry/`. Não crie pasta `
 - ❌ Criar pasta `validations/` ou `schemaValidation/` novamente (ambiguidade resolvida no refactor).
 - ❌ Misturar regra de negócio em `primitives/`.
 - ❌ Adicionar lógica de UI, fetch, store ou navegação aqui.
-- ❌ Importar de `form/` dentro de `primitives/`, `fields/` ou `schemas/` (a dependência é unidirecional: `form` → tudo o resto, nada depende de `form`).
+- ❌ Importar de `form/` dentro de `primitives/`, `fields/` ou `schemas/` (a dependência é unidirecional: `form/` → todo o resto; nada depende de `form/`).
 - ❌ Deixar handler do registry com mais de ~15 linhas inline — extraia para `form/registry/`.
 
 ## Direção das dependências
 
-```text
-schemas/       ← form/
-primitives/    ← form/, fields/ (fields pode usar primitives)
-fields/        ← form/
+```bash
+schemas/    ← form/
+primitives/ ← form/, fields/ (fields pode usar primitives)
+fields/     ← form/
 form/registry/ → primitives/, fields/, schemas/ (via tipo)
 ```
 
@@ -85,9 +85,9 @@ Resumo: `schemas/`, `primitives/` e `fields/` **não devem** importar de `form/`
 
 Em português, padrão do projeto:
 
-- Obrigatório: `"Campo obrigatório"`
-- Formato inválido genérico: `"<coisa> inválido(a)"` (ex.: `"CPF inválido"`, `"E-mail inválido"`)
-- Tamanho: `"Deve ter N dígitos"`
+- Obrigatório: `'Campo obrigatório'`
+- Formato inválido genérico: `'<Coisa> inválido(a)'` (ex.: `'CPF inválido'`, `'E-mail inválido'`)
+- Tamanho: `'Deve ter N dígitos'`
 
 ## Validação antes de subir
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { renderJourneyElement } from "./renderJourneyElement";
 import { useJourneyNavigation } from "@/hooks/useJourneyNavigation";
-import { journeyElementSchema } from "@/validation/schemaValidation";
+import { journeyElementSchema } from "@/validation/schemas";
 import { callService } from "@/services";
 vi.mock("@/utils", async () => ({
 	...(await vi.importActual<typeof import("@/utils")>("@/utils")),
