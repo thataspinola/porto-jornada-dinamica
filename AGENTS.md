@@ -110,3 +110,10 @@ src/
 - Não crie helpers/abstrações para uso único.
 - Não valide cenários impossíveis — só nas bordas do sistema.
 - Não crie markdowns de documentação sem ser pedido.
+
+## Testes
+
+- Specs devem estar em uma pasta `test`, como `src/hooks/test/useNavigationLock.spec.tsx`. Não use `.test` ou `__test__`.
+- Integração usa `.integration.spec.ts(x)`, funcional usa `.functional.spec.tsx`; E2E vive em `test/e2e` e também usa Vitest.
+- Execute `npm run test:coverage` e mantenha linhas, instruções, funções e branches acima de 90%. Não retire código de produção do relatório para atingir a meta.
+- Execute `npm run test:e2e` com Chromium instalado. Backend local controlado não equivale a homologação corporativa.

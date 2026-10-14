@@ -43,7 +43,8 @@
     "dist/react-ssr-corp-hubv-dinamic-journey/dev/types/**/*.ts",
     "dist/types/**/*.ts",
     "./config/vitest/setup.ts",
-    "/dist/dev/types/**/*.ts"
+    "/dist/dev/types/**/*.ts",
+    "test/**/*.ts"
   ],
   "exclude": [
     "node_modules"
