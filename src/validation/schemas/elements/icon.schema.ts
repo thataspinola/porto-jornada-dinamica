@@ -1,41 +1,24 @@
-import { z } from "zod";
-import { baseElementSchema } from "./baseElement.schema";
+import { z } from 'zod'
+
+import { icons } from '@/components/UI/Icon/icons'
+
+import { baseElementSchema } from './baseElement.schema'
+
+const iconNames = Object.keys(icons)
+type IconName = keyof typeof icons
+
+export const iconNameSchema = z.custom<IconName>(
+  (value) => typeof value === 'string' && iconNames.includes(value),
+  {
+    message: 'Informe um nome de ícone válido',
+  }
+)
+
 export const iconElementSchema = baseElementSchema.extend({
-	type: z.literal("ICON"),
-	config: z.looseObject({
-		name: z.string().optional(),
-		label: z.string().optional(),
-		text: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
-		required: z.boolean().default(false),
-		placeholder: z.string().optional(),
-		defaultValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
-		sourcePath: z.string().optional(),
-		url: z.string().optional(),
-		options: z
-			.array(z.object({ label: z.string(), value: z.string() }))
-			.default([]),
-		elements: z
-			.array(
-				z.looseObject({
-					id: z.string(),
-					type: z.string(),
-					config: z.record(z.string(), z.unknown()),
-				}),
-			)
-			.default([]),
-		items: z
-			.array(
-				z.looseObject({
-					id: z.string().optional(),
-					title: z.string().optional(),
-					description: z.string().optional(),
-					url: z.string().optional(),
-				}),
-			)
-			.default([]),
-		min: z.number().optional(),
-		max: z.number().optional(),
-	}),
-});
+  type: z.literal('ICON'),
+  config: z.object({
+    icon: iconNameSchema,
+    size: z.number().int().positive().optional(),
+    color: z.string().optional(),
+  }),
+})

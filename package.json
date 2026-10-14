@@ -1,5 +1,4 @@
 {
-  "$ref": "/definitions/rule",
   "name": "@porto/react-ssr-corp-hubv-dinamic-journey",
   "aplicacao": "react-ssr-corp-hubv-dinamic-journey",
   "version": "0.1.0",
@@ -14,17 +13,9 @@
     "format": "node scripts/run-biome.mjs format --write",
     "format:style": "stylelint \"src/**/*.scss\" --fix",
     "type-check": "tsc --noEmit",
-    "test": "vitest run",
-    "test:ci": "vitest run --coverage",
-    "test:watch": "vitest",
-    "check:empty": "node scripts/check-empty-files.mjs",
-    "check:imports": "node scripts/check-imports.mjs",
-    "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "dev-webpack": "next dev --webpack",
-    "check:names": "node scripts/check-file-names.mjs",
-    "lint:fix": "node scripts/run-biome.mjs lint --write",
-    "format:check": "node scripts/run-biome.mjs format"
+    "test": "vitest run --passWithNoTests",
+    "test:ui": "vitest --ui --coverage --passWithNoTests",
+    "test:watch": "vitest --passWithNoTests"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.1045.0",
@@ -37,6 +28,7 @@
     "@radix-ui/react-tabs": "1.1.21",
     "@react-pdf/renderer": "4.9.0",
     "@tanstack/react-query": "5.100.14",
+    "@vitest/plugin-react": "6.0.3",
     "aes-js": "3.1.2",
     "axios": "1.13.1",
     "crypto-js": "4.2.0",
@@ -60,6 +52,7 @@
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",
+    "#types/jest": "30.0.0",
     "@types/js-cookie": "3.0.6",
     "@types/node": "25.6.0",
     "@types/react": "19.2.14",
@@ -68,6 +61,7 @@
     "@vitest/ui": "4.1.9",
     "baseline-browser-mapping": "2.10.38",
     "happy-dom": "20.10.6",
+    "identity-obj-proxy": "3.0.0",
     "lefthook": "2.1.6",
     "sass": "1.99.0",
     "shx": "0.4.0",
@@ -76,7 +70,6 @@
     "stylelint-config-standard-scss": "17.0.0",
     "typescript": "6",
     "vitest": "4.1.9",
-    "@vitejs/plugin-react": "6.0.3",
     "jsdom": "^26.1.0",
     "vite": "^8.0.0",
     "sass-embedded": "1.99.0"

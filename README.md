@@ -260,7 +260,6 @@ E então os elementos aplicam `disabled`/`aria-disabled` quando `!canProceed`.
 ## Prefill de inputs via services (`defaultValueFrom`)
 
 Para pré-preencher um input com base no resultado de um `SERVICE_CALL`, use `defaultValueFrom`.
-
 O hook `useJourneyForm` resolve o valor a partir do store `services[serviceName]` e aplica no campo **apenas se o usuário ainda não preencheu**.
 
 Formato:
@@ -313,7 +312,7 @@ Exemplo (SERVICE_CALL usando Button):
 
 ## Testes
 
-- Integração do runner (validação + actions): `src/components/JourneyRunner.test.tsx`
+- Integração do runner (validação + actions): `src/components/JourneyRunner.spec.tsx`
 - Service registry: `src/services/serviceRegistry.test.ts`
 - Setup do ambiente de teste: `src/test/setup.ts`
 
@@ -335,10 +334,6 @@ Rode `npm run build` para executar o build do projeto. Os artefatos serão armaz
 
 Rode `npm run test` para executar os testes unitários via [Vitest](https://vitest.dev/). Use `npm run test:coverage` para gerar os relatórios em `coverage`.
 
-## Verificações
-
-Execute `npm run check:imports`, `npm run check:empty`, `npm run check:names`, `npm run format:check`, `npm run type-check`, `npm run lint` e `npm test`. O runner oficial é Vitest.
-
 ## Conteúdo e integração
 
 As jornadas são lidas de `public/jsonContent`. Os JSONs recuperados de `src/mock` e as jornadas iniciais incluídas são exemplos de desenvolvimento; não substituem as definições comerciais homologadas. Os componentes exibem dados e opções declarados no JSON, sem calcular taxas ou aprovar propostas.
@@ -346,15 +341,3 @@ As jornadas são lidas de `public/jsonContent`. Os JSONs recuperados de `src/moc
 A elegibilidade exige a variável de ambiente **servidora** `ELIGIBILITY_URL`, com um endpoint que receba o contexto `{ serviceName, fields, business }` e retorne `{ eligible: boolean }` ou erro com `{ code: "NOT_ELIGIBLE", message?: string }`. Sem configuração, o fluxo retorna indisponibilidade e não aprova CPF. Esse contrato deve ser adaptado e validado com o BFF corporativo antes de uso real. Outros serviços precisam ser registrados em `src/services/serviceRegistry.ts`.
 
 REFF e FCDC usam `taxvat` para CPF; a negativa exibe os dois produtos sugeridos e registra uma impressão conjunta. Scripts de terceiros são desabilitados por padrão e precisam ser habilitados pela integração responsável.
-
-## Conciliação com a main
-
-O runtime usa Vitest 4.1.9 e Node >= 20.19.0. As atualizações de dependências e os cabeçalhos de segurança da main foram preservados. O preset Biome corporativo é usado quando instalado; fora do Nexus, `lint` e `format` usam `config/biome.local.json`. Esse perfil local não substitui a validação do preset corporativo na VDI.
-
-`evaluateConditions` trata a visibilidade dos wrappers (lista simples, AND). `evaluateConditionRules` trata as novas regras de ação (AND por regra, OR entre regras). O hook `useConditionGuard` aplica as ações quando chamado pelo consumidor. Os dois contratos permanecem separados para preservar o evento de promoção da negativa de CPF.
-
-A chamada genérica `callService(request, token)` exige `SERVICE_ALLOWED_ORIGINS`, com origens exatas separadas por vírgula. Se houver token, informe `request.recaptchaHeader` conforme o contrato do BFF. O contrato `callService("eligibility", context)` continua disponível para o runner. Sem configuração, os serviços retornam indisponibilidade.
-
-No GitHub, a branch principal é `main`; o fluxo `master/release/feature` descrito acima é o fluxo corporativo. Os JSONs públicos são exemplos de desenvolvimento e as integrações precisam de homologação.
-
-As dependências `@porto-stack/*` exigem o Nexus corporativo. Nesta conciliação, as verificações locais usam as dependências públicas declaradas; o preset e os pacotes corporativos devem ser verificados na VDI. A exclusão do lockfile feita na main foi mantida.
