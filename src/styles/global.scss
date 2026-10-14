@@ -1,0 +1,75 @@
+// ==============
+// DESIGN TOKENS
+// ==============
+@use "./tokens/breakpoints.scss" as *;
+@use "./tokens/colors.scss" as *;
+@use "./tokens/family.scss" as *;
+@use "./tokens/font.scss" as *;
+@use "./tokens/layers.scss" as *;
+@use "./tokens/radius.scss" as *;
+@use "./tokens/shadow.scss" as *;
+@use "./tokens/sizes.scss" as *;
+@use "./tokens/spacing.scss" as *;
+@use "./tokens/style.scss" as *;
+@use "./tokens/weight.scss" as *;
+
+// ============
+// ANIMATIONS
+// ============
+@use "./animation.scss" as *;
+;
+
+// ==========
+// RESET CSS
+// ==========
+@use "./reset.scss" as *;
+
+// ==========
+// GENERATORS CLASS
+// ==========
+@use "./font-helper.scss" as *;
+@use "./fonts.scss" as *;
+
+:root {
+  @each $group, $shades in $colors {
+    @each $key, $value in $shades {
+      --#{"" + $group}-#{"" + $key}: #{$value};
+    }
+  }
+
+  @each $key, $value in $spaces {
+    --space-#{$key}: #{$value};
+  }
+
+  @each $key, $value in $fonts {
+    --size-#{$key}: #{$value};
+  }
+
+  @each $key, $value in $families {
+    --#{$key}: #{$value};
+  }
+
+  @each $key, $value in $weights {
+    --#{$key}: #{$value};
+  }
+
+  @each $key, $value in $styles {
+    --#{$key}: #{$value};
+  }
+
+  @each $key, $value in $layers {
+    --layer-#{$key}: #{$value};
+  }
+
+  @each $key, $value in $radius {
+    --radius-#{$key}: #{$value};
+  }
+
+  @each $key, $value in $shadows {
+    --shadow-#{$key}: #{$value};
+  }
+
+  @each $key, $value in $breakpoints {
+    --#{$key}: #{$value};
+  }
+}

@@ -1,0 +1,28 @@
+@use "./tokens/sizes.scss" as *;
+@use "./tokens/weight.scss" as *;
+@use "./tokens/style.scss" as *;
+
+
+.--font-weight {
+  @each $name, $value in $weights {
+    &-#{$name} {
+      font-weight: #{$value};
+    }
+  }
+}
+
+.--font-style {
+  @each $name, $value in $styles {
+    &-#{$name} {
+      font-style: #{$value};
+    }
+  }
+}
+
+.--font-size {
+  @each $name, $value in $sizes {
+    &-#{$name} {
+      font-size: #{$value};
+    }
+  }
+}

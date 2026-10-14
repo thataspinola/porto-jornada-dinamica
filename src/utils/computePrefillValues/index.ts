@@ -2,7 +2,7 @@
  * Percorre os elementos da etapa atual para descobrir quais campos podem ser
  * pré-preenchidos automaticamente com dados externos.
  */
-import type { JourneyDefinition } from "@/validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemas";
 
 import { resolveDefaultValue } from "@/utils/resolveDefaultValue";
 

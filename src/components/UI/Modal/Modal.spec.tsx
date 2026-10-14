@@ -1,21 +1,23 @@
-import "@testing-library/jest-dom";
+import { useRouter, useSearchParams } from "next/navigation";
+import { vi, type Mock } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { createEvent, fireEvent, render, screen } from "@testing-library/react";
 
 import { Modal } from ".";
 
-jest.mock("./Modal.scss", () => ({}));
+vi.mock("./Modal.scss", () => ({}));
 
-jest.mock("next/navigation", () => ({
-	useRouter: jest.fn(() => ({
-		push: jest.fn(),
+vi.mock("next/navigation", () => ({
+	useRouter: vi.fn(() => ({
+		push: vi.fn(),
 	})),
-	useSearchParams: jest.fn(() => ({
-		get: jest.fn((param) => (param === "modal" ? "test-modal" : null)),
+	useSearchParams: vi.fn(() => ({
+		get: vi.fn((param) => (param === "modal" ? "test-modal" : null)),
 	})),
 }));
 
-jest.mock("@/utils", () => {
-	const mockClsx = jest.fn((...args: unknown[]) =>
+vi.mock("@/utils", () => {
+	const mockClsx = vi.fn((...args: unknown[]) =>
 		args.filter(Boolean).join(" "),
 	);
 	return {
@@ -25,13 +27,18 @@ jest.mock("@/utils", () => {
 
 describe("Modal", () => {
 	const originalLocation = window.location;
-	let mockRouterPush: jest.Mock;
+	let mockRouterPush: Mock;
 
 	beforeEach(() => {
-		mockRouterPush = jest.fn();
-		const { useRouter } = require("next/navigation");
-		useRouter.mockReturnValue({
+		mockRouterPush = vi.fn();
+		vi.mocked(useRouter).mockReturnValue({
 			push: mockRouterPush,
+			bfcacheId: "test",
+			back: vi.fn(),
+			forward: vi.fn(),
+			refresh: vi.fn(),
+			replace: vi.fn(),
+			prefetch: vi.fn(),
 		});
 
 		Object.defineProperty(window, "location", {
@@ -45,7 +52,7 @@ describe("Modal", () => {
 			writable: true,
 			value: originalLocation,
 		});
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	it("deve renderizar corretamente quando aberto", () => {
@@ -116,13 +123,11 @@ describe("Modal", () => {
 	});
 
 	it("não deve estar visível quando o parâmetro de URL não corresponder ao nome do modal", () => {
-		const mockGet = jest.fn((param) =>
-			param === "modal" ? "outro-modal" : null,
+		vi.mocked(useSearchParams).mockReturnValue(
+			new URLSearchParams("?modal=outro-modal") as ReturnType<
+				typeof useSearchParams
+			>,
 		);
-		const { useSearchParams } = require("next/navigation");
-		useSearchParams.mockReturnValue({
-			get: mockGet,
-		});
 
 		const { container } = render(
 			<Modal name="test-modal" title="Título do Modal">
@@ -216,7 +221,7 @@ describe("Modal", () => {
 
 		if (modal) {
 			const clickEvent = createEvent.click(modal);
-			const stopPropagationSpy = jest.spyOn(clickEvent, "stopPropagation");
+			const stopPropagationSpy = vi.spyOn(clickEvent, "stopPropagation");
 
 			fireEvent(modal, clickEvent);
 

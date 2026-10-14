@@ -1,0 +1,1 @@
+import {cp,mkdir} from "node:fs/promises";import {join} from "node:path";const directory="dist/react-ssr-corp-hubv-dinamic-journey";const standalone=join(directory,"standalone");await mkdir(standalone,{recursive:true});await cp("public",join(standalone,"public"),{recursive:true});await cp(join(directory,"static"),join(standalone,directory,"static"),{recursive:true});

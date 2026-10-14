@@ -18,18 +18,18 @@ Regras gerais do projeto. Cada pasta importante tem seu próprio `AGENTS.md` com
 ## Comandos
 
 ```sh
-npm run dev             # next dev --turbopack
-npm run build           # next build
-npm run lint            # biome lint ./src (sem alterar arquivos)
-npm run lint:fix        # biome lint --write ./src
-npm run format          # biome format --write ./src (autofix)
-npm run format:check    # biome format ./src
-npm run check:imports   # valida resolução dos imports locais
-npm run check:empty     # valida ausência de arquivos vazios
-npm run check:names     # valida nomes e extensões em src/
-npm run type-check      # tsc --noEmit
-npm run test            # vitest
-npm run test:watch      # vitest --watch
+npm run dev          # next dev --turbopack
+npm run build        # next build
+npm run lint         # biome lint ./src (sem alterar arquivos)
+npm run lint:fix     # biome lint --write ./src
+npm run format       # biome format --write ./src
+npm run format:check # biome format ./src
+npm run check:imports # valida resolução dos imports locais
+npm run check:empty  # valida ausência de arquivos vazios
+npm run check:names  # valida nomes e extensões em src/
+npm run type-check   # tsc --noEmit
+npm run test         # vitest run
+npm run test:watch   # vitest
 ```
 
 **Antes de finalizar qualquer alteração:** rode `npm run type-check` e `npm run lint`.
@@ -60,11 +60,11 @@ src/
 - **Sempre** use o alias `@/...` para imports cross-folder. Nunca `../../../`.
 - Imports relativos `./xxx` só dentro da mesma pasta.
 - Importe pelo **barrel** da pasta (`@/utils`, `@/components/UI`) em vez de caminho profundo.
-- Ordem (Biome organiza automaticamente): externos → `@/...` → relativos.
+- Ordem: externos → `@/...` → relativos. O perfil corporativo pode organizar imports automaticamente.
 
 ### Nomes
 
-- Arquivos de componente React: `PascalCase` (ou `index.tsx` dentro de pasta `PascalCase/`).
+- Componentes em `PascalCase.tsx`; exportações no barrel `index.ts`.
 - Hooks: `useNomeDoHook.ts` em camelCase.
 - Funções e variáveis: camelCase.
 - Tipos e componentes: PascalCase.

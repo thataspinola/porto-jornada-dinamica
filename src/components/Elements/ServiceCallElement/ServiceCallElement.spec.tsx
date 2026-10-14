@@ -1,7 +1,8 @@
+import { vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ServiceCallElement } from "./ServiceCallElement";
 test("impede chamada quando formulário não está pronto", () => {
-	const onCall = jest.fn();
+	const onCall = vi.fn();
 	render(
 		<ServiceCallElement
 			element={{

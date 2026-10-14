@@ -1,23 +1,23 @@
 @use "sass:map";
 
 .link {
-  font-family: var(--open-sans);
-  font-weight: var(--bold);
-  font-size: var(--size-4);
-  padding: 0 var(--size-6);
-  border-radius: 4px;
-  line-height: 2rem;
-  letter-spacing: 0.4px;
-  text-decoration: none;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-  cursor: pointer;
   display: flex;
+  flex-direction: row;
+  gap: var(--size-6);
   align-items: center;
   justify-content: center;
-  gap: var(--size-6);
-  flex-direction: row;
+  padding: 0 var(--size-6);
+  font-family: var(--open-sans);
+  font-size: var(--size-4);
+  font-weight: var(--bold);
+  line-height: 2rem;
   text-align: center;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 
   &.--small {
     padding: 8px 6px;
@@ -36,7 +36,7 @@
   }
 
   .btn__loader {
-    border: 3px solid currentColor;
+    border: 3px solid currentcolor;
     border-bottom-color: transparent;
   }
 }

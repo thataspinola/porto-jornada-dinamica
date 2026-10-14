@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Dialog } from "./Dialog";
 test("abre e fecha conforme a prop", () => {
@@ -11,7 +12,7 @@ test("abre e fecha conforme a prop", () => {
 	expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 });
 test("overlay fecha e corpo não fecha", () => {
-	const onClose = jest.fn();
+	const onClose = vi.fn();
 	render(<Dialog isOpen onClose={onClose} title="Detalhes" />);
 	fireEvent.click(screen.getByRole("dialog"));
 	expect(onClose).not.toHaveBeenCalled();

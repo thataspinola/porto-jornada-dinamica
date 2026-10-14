@@ -2,7 +2,7 @@
 
 import { Link } from "@/components/UI/Link";
 import { joinPaths } from "@/utils/joinPaths";
-import type { JourneyDefinition } from "@/validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemas";
 
 type JourneyElement = JourneyDefinition["steps"][number]["elements"][number];
 type NavigationElementType = Extract<JourneyElement, { type: "NAVIGATION" }>;

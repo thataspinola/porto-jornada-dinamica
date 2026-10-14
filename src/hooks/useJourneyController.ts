@@ -1,7 +1,7 @@
 "use client";
 
 import { useJourneyStore } from "@/store";
-import type { JourneyDefinition } from "@/validation/schemaValidation";
+import type { JourneyDefinition } from "@/validation/schemas";
 
 import { useJourneyForm } from "./useJourneyForm";
 import { useJourneyNavigation } from "./useJourneyNavigation";
@@ -29,7 +29,7 @@ export function useJourneyController(journey: JourneyDefinition) {
 		error: storedError,
 		business,
 		services,
-		hasHydrated,
+		_hasHydrated: hasHydrated,
 	} = useJourneyStore();
 	const storedErrorEntries = Object.entries(storedError).filter(
 		([, v]) => !!v,

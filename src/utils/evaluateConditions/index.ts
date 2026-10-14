@@ -5,27 +5,27 @@ export type ConditionContext = {
 	formErrors?: Record<string, unknown>;
 	business?: Record<string, unknown>;
 	services?: Record<string, unknown>;
+	parameters?: Record<string, unknown>;
 };
 export function evaluateConditions(
-  rules: ConditionRule[] | undefined,
-  ctx: EvaluationContext
-): EvaluationResult {
-  if (!rules || rules.length === 0) {
-    return {
-      matched: false,
-    }
-  }
-
-  for (const rule of rules) {
-    if (evaluateRule(rule, ctx)) {
-      return {
-        matched: true,
-        rule,
-      }
-    }
-  }
-
-  return {
-    matched: false,
-  }
+	conditions: Condition[],
+	context: ConditionContext,
+): boolean {
+	return conditions.every((condition) => {
+		const actual = getByPath(context[condition.source], condition.path);
+		switch (condition.operator) {
+			case "equals":
+				return actual === condition.value;
+			case "notEquals":
+				return actual !== condition.value;
+			case "exists":
+				return actual !== undefined && actual !== null;
+			case "notExists":
+				return actual === undefined || actual === null;
+		}
+		return false;
+	});
 }
+
+export { evaluateCheck, evaluateRule, evaluateConditionRules } from "./rules";
+export type { EvaluationResult } from "./rules";
