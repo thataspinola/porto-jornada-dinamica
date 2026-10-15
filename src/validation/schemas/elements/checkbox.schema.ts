@@ -5,7 +5,7 @@ import { typographyUiSchema } from './elementUi.schemas'
 
 const checkboxLabelSchema = z.object({
   text: z.string(),
-  ...typographyUiSchema,
+  ...typographyUiSchema.unwrap().shape,
 })
 
 export const checkboxElementSchema = baseElementSchema.extend({

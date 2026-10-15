@@ -5,7 +5,7 @@ import { typographyUiSchema } from './elementUi.schemas'
 
 const labelValueTextSchema = z.object({
   text: z.string(),
-  ...typographyUiSchema,
+  ...typographyUiSchema.unwrap().shape,
 })
 
 export const labelValueElementSchema = baseElementSchema.extend({

@@ -15,7 +15,7 @@ export const radioElementSchema = baseElementSchema.extend({
     required: z.boolean().default(false),
     options: z.array(radioOptionSchema),
     name: z.string(),
-    variant: z.enum(['deafult', 'bordered', 'contained']).default('default'),
+    variant: z.enum(['default', 'bordered', 'contained']).default('default'),
     backgroundColor: z.string().optional(),
   }),
 })

@@ -1,6 +1,15 @@
 import { z } from 'zod'
 
-import { CEP_FIELD_NAMES } from '@/components/Elements/CepElement/hooks/constants'
+const CEP_FIELD_NAMES = {
+  addressZipCode: 'addressZipCode',
+  addressStreetName: 'addressStreetName',
+  addressNeighborhood: 'addressNeighborhood',
+  addressNumber: 'addressNumber',
+  hasNoNumber: 'hasNoNumber',
+  addressAdditionalInfo: 'addressAdditionalInfo',
+  addressState: 'addressState',
+  addressCity: 'addressCity',
+} as const
 
 import { optionalBoolean } from '@/validation/primitives'
 
@@ -34,7 +43,7 @@ export const cep: ElementHandler<'CEP'> = () => ({
     [CEP_FIELD_NAMES.addressState]: '',
     [CEP_FIELD_NAMES.addressCity]: '',
   },
-  refine: (data: Record<string, unknown>, ctx: $RefinementCtx<unknown>) => {
+  refine: (data: Record<string, unknown>, ctx: z.RefinementCtx) => {
     if (
       !data[CEP_FIELD_NAMES.hasNoNumber] &&
       !String(data[CEP_FIELD_NAMES.addressNumber] ?? '').trim()

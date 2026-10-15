@@ -10,7 +10,7 @@ export function ComposableCardElement({
 			className={styles.card}
 			style={element.config.cssProperties}
 		>
-			{element.config.elements.map((child) => (
+			{element.config.children.map(({ element: child }) => (
 				<div key={child.id}>{renderElement(child)}</div>
 			))}
 		</div>

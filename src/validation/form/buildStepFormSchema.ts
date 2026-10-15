@@ -12,6 +12,7 @@ function getNestedElements(element: JourneyElement): JourneyElement[] {
   const config = element.config as Record<string, unknown>
 
   switch (element.type) {
+    case 'CONDITIONAL_WRAPPER':
     case 'BOX':
     case 'FIXED_WRAPPER':
     case 'FEEDBACK_VIEW':
@@ -68,7 +69,7 @@ export function buildStepFormSchema(step: JourneyStep) {
     if (!factory) continue
 
     const definition = (factory as (config: any) => ElementDefinition)(
-      element.config
+      element.config,
     )
 
     Object.assign(shape, definition.schema)

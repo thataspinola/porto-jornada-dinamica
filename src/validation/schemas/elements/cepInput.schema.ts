@@ -11,7 +11,7 @@ export const cepInputElementSchema = baseElementSchema.extend({
     required: z.boolean().default(false),
     name: z.string().default('addressZipCode'),
     defaultValue: z.string().default(''),
-    defaultValueFrom: z.any().default(),
+    defaultValueFrom: z.unknown().optional(),
     ...inputUiSchema,
   }),
 })

@@ -1,13 +1,11 @@
 import { z } from 'zod'
 
-import { tagVariants } from '@/components/UI/Tag/Tag'
-
 import { baseElementSchema } from './baseElement.schema'
 import { confirmNavigationButtonElementSchema } from './confirmNavigationButton.schema'
 import { navigationElementSchema } from './navigation.schema'
 import { serviceCallElementSchema } from './serviceCall.schema'
 
-const tagVariantSchema = z.enum(tagVariants)
+const tagVariantSchema = z.string().min(1)
 
 const comparableSchema = z.union([z.string(), z.boolean(), z.number()])
 
@@ -25,7 +23,7 @@ const tagRuleSchema = z.object({
       (rule) => rule.equals !== undefined || rule.notEquals !== undefined,
       {
         message: 'Informe `equals` ou `notEquals` na regra de tag',
-      }
+      },
     ),
 })
 
@@ -47,7 +45,7 @@ export const resumeElementSchema = baseElementSchema.extend({
           value: z.string().optional(),
           tag: z.array(tagRuleSchema).optional(),
           hasDivider: z.boolean().optional(),
-        })
+        }),
       )
       .optional(),
     children: z.array(resumeChildSchema).optional(),

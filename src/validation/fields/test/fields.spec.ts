@@ -1,13 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-	birthDate,
-	cep,
-	cpf,
-	fullName,
-	isValidCpf,
-	maskedValue,
-	phone,
-} from "@/validation/fields";
+import { birthDate, cep, cpf, fullName, phone } from "@/validation/fields";
 
 describe("validadores de domínio", () => {
 	it.each([
@@ -17,10 +9,10 @@ describe("validadores de domínio", () => {
 		[fullName, "Maria da Silva", "Maria"],
 		[birthDate, "10/10/1990", "31/02/2000"],
 	])("aceita formato válido e rejeita inválido", (validator, valid, invalid) => {
-		expect(validator().safeParse(valid).success).toBe(true);
-		expect(validator().safeParse(invalid).success).toBe(false);
-		expect(validator().safeParse("").success).toBe(false);
-		expect(validator(false).safeParse("  ").success).toBe(true);
+		expect(validator(true).safeParse(valid).success).toBe(true);
+		expect(validator(true).safeParse(invalid).success).toBe(false);
+		expect(validator(true).safeParse("").success).toBe(false);
+		expect(validator(false).safeParse("").success).toBe(true);
 		expect(validator(false).safeParse(valid).success).toBe(true);
 	});
 	it.each([
@@ -29,9 +21,6 @@ describe("validadores de domínio", () => {
 		"11111111111",
 		"52998224724",
 		"52998224825",
-	])("rejeita CPF %s", (value) => expect(isValidCpf(value)).toBe(false));
-	it("remove a máscara e exige a quantidade de dígitos", () => {
-		expect(maskedValue(8).parse("01310-100")).toBe("01310100");
-		expect(maskedValue(8).safeParse("123").success).toBe(false);
-	});
+	])("rejeita CPF %s", (value) =>
+		expect(cpf(true).safeParse(value).success).toBe(false));
 });

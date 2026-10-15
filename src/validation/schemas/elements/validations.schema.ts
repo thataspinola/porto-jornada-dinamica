@@ -11,7 +11,7 @@ const isValidRegex = (value: string) => {
 
 const lengthValidationFields = {
   value: z.number().int().positive(),
-  message: z.strin(),
+  message: z.string(),
 } as const
 
 export const fieldValidationSchema = z.discriminatedUnion('type', [

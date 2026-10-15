@@ -7,7 +7,7 @@ export const planCardElementSchema = baseElementSchema.extend({
   config: z.object({
     name: z.string(),
     sourcePath: z.string(),
-    drawerSlugPrefix: z.string().deafult('cobertura'),
+    drawerSlugPrefix: z.string().default('cobertura'),
     returnUrl: z.string(),
     productTitle: z.string().optional(),
     productSuffix: z.string().optional(),

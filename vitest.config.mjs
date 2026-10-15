@@ -5,7 +5,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
 	plugins: [react()],
 	resolve: {
-		alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
+		alias: { "@": fileURLToPath(new URL("./src", import.meta.url)), "@porto-stack/ui": fileURLToPath(new URL("./test/mocks/portoUi.tsx", import.meta.url)) },
 	},
 	test: {
 		globals: true,

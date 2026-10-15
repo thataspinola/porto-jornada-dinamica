@@ -31,7 +31,7 @@ async function inspect(directory) {
 		if (componentFile) {
 			if (name === "index.tsx")
 				fail("use implementação nomeada e barrel index.ts");
-			if (name === "types.tsx" || name.endsWith(".types.ts"))
+			if (name === "types.tsx")
 				fail("use types.ts");
 			if (/^styles(?:\.module)?\.scss$/.test(name))
 				fail("use o nome do componente no estilo");

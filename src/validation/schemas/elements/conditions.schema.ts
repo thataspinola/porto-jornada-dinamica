@@ -110,3 +110,17 @@ export type ConditionCheck = z.infer<typeof conditionCheckSchema>
 export type ConditionAction = z.infer<typeof conditionActionSchema>
 export type ConditionRule = z.infer<typeof conditionRuleSchema>
 export type ButtonOnClickAction = z.infer<typeof buttonOnClickActionSchema>
+
+export const visibilityConditionsSchema = z
+  .array(
+    z.object({
+      source: operandSourceSchema.default('fields'),
+      path: z.string(),
+      operator: z
+        .enum(['equals', 'notEquals', 'exists', 'notExists'])
+        .default('equals'),
+      value: z.unknown().optional(),
+    }),
+  )
+  .default([])
+export type Condition = z.infer<typeof visibilityConditionsSchema>[number]

@@ -4,7 +4,6 @@ import { fcdcPlateInputElementSchema } from '@/features/fcdc/validation/schemas/
 
 import { addressRadioElementSchema } from './addressRadio.schema'
 import { baseElementSchema } from './baseElement.schema'
-import { biologicalSex } from '../../form/registry/biologicalSex'
 import { birthDateInputElementSchema } from './birthDateInput.schema'
 import { cepElementSchema } from './cep.schema'
 import { cepInputElementSchema } from './cepInput.schema'

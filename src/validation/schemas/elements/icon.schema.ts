@@ -1,17 +1,18 @@
 import { z } from 'zod'
 
-import { icons } from '@/components/UI/Icon/icons'
+import { iconNames } from '@/components/UI/Icon/iconNames'
 
 import { baseElementSchema } from './baseElement.schema'
 
-const iconNames = Object.keys(icons)
-type IconName = keyof typeof icons
+type IconName = (typeof iconNames)[number]
 
 export const iconNameSchema = z.custom<IconName>(
-  (value) => typeof value === 'string' && iconNames.includes(value),
+  (value) =>
+    typeof value === 'string' &&
+    (iconNames as readonly string[]).includes(value),
   {
     message: 'Informe um nome de ícone válido',
-  }
+  },
 )
 
 export const iconElementSchema = baseElementSchema.extend({

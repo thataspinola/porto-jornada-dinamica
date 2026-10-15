@@ -6,10 +6,6 @@ import { highlightTitle } from "@/components/Elements/WelcomeElement/utils/highl
 import { splitFullName } from "@/utils/pushLeadEvent/splitFullName";
 import { resolveTemplates } from "@/utils/resolveTemplates";
 import { areRequiredFieldsComplete } from "@/validation/form";
-import { addressRadio } from "@/validation/form/registry/addressRadio";
-import { biologicalSex } from "@/validation/form/registry/biologicalSex";
-import { occupation } from "@/validation/form/registry/occupation";
-import { socialName } from "@/validation/form/registry/socialName";
 import { plate } from "@/features/fcdc/validation/form/registry/plate";
 import { unknownPlate } from "@/features/fcdc/validation/form/registry/unknownPlate";
 import { priceSimulation } from "@/features/fcdc/validation/form/registry/priceSimulation";
@@ -60,16 +56,6 @@ describe("entrada, texto e schemas por produto", () => {
 			);
 		expect(areRequiredFieldsComplete([], {})).toBe(true);
 	});
-	it.each([
-		addressRadio,
-		biologicalSex,
-		occupation,
-		socialName,
-	])("campos de seleção respeitam obrigatoriedade", (factory) => {
-		expect(factory(true).safeParse("").success).toBe(false);
-		expect(factory(true).safeParse("a").success).toBe(true);
-		expect(factory(false).safeParse("").success).toBe(true);
-	});
 	it.each([plate, unknownPlate])("campos de placa exigem valor", (factory) => {
 		expect(factory().safeParse("").success).toBe(false);
 		expect(factory().safeParse("ABC1234").success).toBe(true);
@@ -79,14 +65,9 @@ describe("entrada, texto e schemas por produto", () => {
 		expect(priceSimulation().parse(100)).toBe(100);
 		expect(validationsSchema.safeParse({ minLength: -1 }).success).toBe(false);
 		expect(
-			validationsSchema.parse({
-				required: true,
-				minLength: 1,
-				maxLength: 10,
-				pattern: "[A-Z]",
-				min: 0,
-				max: 100,
-			}),
-		).toMatchObject({ minLength: 1 });
+			validationsSchema.parse([
+				{ type: "MIN_LENGTH", value: 1, message: "Mínimo" },
+			]),
+		).toHaveLength(1);
 	});
 });

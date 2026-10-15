@@ -16,7 +16,10 @@ export type HeadingTypes =
 	| "caption"
 	| "label"
 	| "overline"
-	| "button";
+	| "button"
+	| "display"
+	| "body1Expanded"
+	| "body2Expanded";
 
 export type HeadingTags =
 	| "h1"

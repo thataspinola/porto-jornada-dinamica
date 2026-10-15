@@ -10,13 +10,13 @@ function applyValidation(schema: z.ZodString, validation: FieldValidation) {
     case 'MAX_LENGTH':
       return schema.max(validation.value, validation.message)
     case 'REGEX':
-      return schema.regez(new RegExp(validation.value), validation.message)
+      return schema.regex(new RegExp(validation.value), validation.message)
   }
 }
 
 export function applyValidations(
-  schema: z.zodString,
-  validations: FieldValidation[]
+  schema: z.ZodString,
+  validations: FieldValidation[] = [],
 ) {
   let currentSchema = schema
 
@@ -28,8 +28,8 @@ export function applyValidations(
 }
 
 export function applyOptionalValidations(
-  validations: FieldValidation[],
-  { trim = false }: { trim?: boolean } = {}
+  validations: FieldValidation[] = [],
+  { trim = false }: { trim?: boolean } = {},
 ) {
   const base = trim ? z.string().trim() : z.string()
   return optionalString().pipe(applyValidations(base, validations).optional())
