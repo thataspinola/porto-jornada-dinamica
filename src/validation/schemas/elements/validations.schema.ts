@@ -1,11 +1,40 @@
-import { z } from "zod";
+import { z } from 'zod'
+
+const isValidRegex = (value: string) => {
+  try {
+    new RegExp(value)
+    return true
+  } catch {
+    return false
+  }
+}
+
+const lengthValidationFields = {
+  value: z.number().int().positive(),
+  message: z.strin(),
+} as const
+
+export const fieldValidationSchema = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('MIN_LENGTH'),
+    ...lengthValidationFields,
+  }),
+  z.object({
+    type: z.literal('MAX_LENGTH'),
+    ...lengthValidationFields,
+  }),
+  z.object({
+    type: z.literal('REGEX'),
+    value: z.string().refine(isValidRegex, {
+      message: 'Informe uma expressão regular válida',
+    }),
+    message: z.string(),
+  }),
+])
+
 export const validationsSchema = z
-	.object({
-		required: z.boolean().optional(),
-		minLength: z.number().int().nonnegative().optional(),
-		maxLength: z.number().int().nonnegative().optional(),
-		pattern: z.string().optional(),
-		min: z.number().optional(),
-		max: z.number().optional(),
-	})
-	.optional();
+  .array(fieldValidationSchema)
+  .optional()
+  .default([])
+
+export type FieldValidation = z.infer<typeof fieldValidationSchema>

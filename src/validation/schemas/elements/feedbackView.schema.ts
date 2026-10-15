@@ -1,41 +1,48 @@
-import { z } from "zod";
-import { baseElementSchema } from "./baseElement.schema";
+import { z } from 'zod'
+
+import {
+  FEEDBACK_VIEW_STYLES,
+  FEEDBACK_VIEW_TONES,
+} from '@/components/UI/FeedbackView/types'
+
+import { baseElementSchema } from './baseElement.schema'
+import { boxElementSchema } from './box.schema'
+import { confirmNavigationButtonElementSchema } from './confirmNavigationButton.schema'
+import { fixedWrapperElementSchema } from './fixedWrapper.schema'
+import { iconNameSchema } from './icon.schema'
+import { navigationElementSchema } from './navigation.schema'
+import { serviceCallElementSchema } from './serviceCall.schema'
+import { textElementSchema } from './text.schema'
+
+const feedbackViewChildSchema = z.discriminatedUnion('type', [
+  serviceCallElementSchema,
+  navigationElementSchema,
+  confirmNavigationButtonElementSchema,
+  textElementSchema,
+  boxElementSchema,
+  fixedWrapperElementSchema,
+])
+
 export const feedbackViewElementSchema = baseElementSchema.extend({
-	type: z.literal("FEEDBACK_VIEW"),
-	config: z.looseObject({
-		name: z.string().optional(),
-		label: z.string().optional(),
-		text: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
-		required: z.boolean().default(false),
-		placeholder: z.string().optional(),
-		defaultValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
-		sourcePath: z.string().optional(),
-		url: z.string().optional(),
-		options: z
-			.array(z.object({ label: z.string(), value: z.string() }))
-			.default([]),
-		elements: z
-			.array(
-				z.looseObject({
-					id: z.string(),
-					type: z.string(),
-					config: z.record(z.string(), z.unknown()),
-				}),
-			)
-			.default([]),
-		items: z
-			.array(
-				z.looseObject({
-					id: z.string().optional(),
-					title: z.string().optional(),
-					description: z.string().optional(),
-					url: z.string().optional(),
-				}),
-			)
-			.default([]),
-		min: z.number().optional(),
-		max: z.number().optional(),
-	}),
-});
+  type: z.literal('FEEDBACK_VIEW'),
+  config: z.object({
+    styles: z.enum(FEEDBACK_VIEW_STYLES).optional(),
+    tone: z.enum(FEEDBACK_VIEW_TONES).optional(),
+    icon: iconNameSchema.optional(),
+    iconSize: z.number().int().positive().optional(),
+    title: z.string(),
+    description: z.string().optional(),
+    notification: z
+      .object({
+        title: z.string().optional(),
+        text: z.string(),
+        variant: z
+          .enum(['default', 'information', 'warning', 'success', 'danger'])
+          .optional(),
+        styles: z.enum(['stroke', 'filled', 'flat']).optional(),
+      })
+      .optional(),
+    disclaimer: z.string().optional(),
+    children: z.array(feedbackViewChildSchema).optional().default([]),
+  }),
+})

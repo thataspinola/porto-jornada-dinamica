@@ -1,6 +1,6 @@
-export { requiredString } from "./requiredString";
-export { optionalString } from "./optionalString";
-export { optionalBoolean } from "./optionalBoolean";
-export { requiredTrueBoolean } from "./requiredTrueBoolean";
-export { requiredNumber } from "./requiredNumber";
-export { optionalNumber } from "./optionalNumber";
+export { requiredString } from './requiredString'
+export { optionalString } from './optionalString'
+export { optionalBoolean } from './optionalBoolean'
+export { requiredTrueBoolean } from './requiredTrueBoolean'
+export { requiredNumber } from './requiredNumber'
+export { optionalNumber } from './optionalNumber'

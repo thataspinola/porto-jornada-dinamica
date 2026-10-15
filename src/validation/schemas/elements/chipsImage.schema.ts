@@ -1,41 +1,25 @@
-import { z } from "zod";
-import { baseElementSchema } from "./baseElement.schema";
+import { z } from 'zod'
+
+import { baseElementSchema } from './baseElement.schema'
+import { analyticsSchema } from './analytics.schema'
+
+const chipsImageOptionSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+  image: z.string(),
+  description: z.string().optional(),
+  tooltip: z.string().optional(),
+})
+
 export const chipsImageElementSchema = baseElementSchema.extend({
-	type: z.literal("CHIPS_IMAGE"),
-	config: z.looseObject({
-		label: z.string().optional(),
-		text: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
-		required: z.boolean().default(false),
-		placeholder: z.string().optional(),
-		defaultValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
-		sourcePath: z.string().optional(),
-		url: z.string().optional(),
-		options: z
-			.array(z.object({ label: z.string(), value: z.string() }))
-			.default([]),
-		elements: z
-			.array(
-				z.looseObject({
-					id: z.string(),
-					type: z.string(),
-					config: z.record(z.string(), z.unknown()),
-				}),
-			)
-			.default([]),
-		items: z
-			.array(
-				z.looseObject({
-					id: z.string().optional(),
-					title: z.string().optional(),
-					description: z.string().optional(),
-					url: z.string().optional(),
-				}),
-			)
-			.default([]),
-		min: z.number().optional(),
-		max: z.number().optional(),
-		name: z.string().min(1),
-	}),
-});
+  type: z.literal('CHIPS_IMAGE'),
+  config: z.object({
+    defaultValue: z.string().default(''),
+    defaultValueFrom: z.any().optional(),
+    required: z.boolean().default(false),
+    variant: z.enum(['vertical', 'horizontal']).default('vertical'),
+    options: z.array(chipsImageOptionSchema),
+    name: z.string(),
+    analyticsSchema: analyticsSchema,
+  }),
+})

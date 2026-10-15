@@ -1,6 +1,5 @@
-export { buildStepFormSchema } from "./buildStepFormSchema";
-export { areRequiredFieldsComplete } from "./areRequiredFieldsComplete";
-export { applyValidations } from "./applyValidations";
-export type { ElementHandler, StepFields } from "./types";
-
-export { buildJourneyFormSchema } from "./buildJourneyFormSchema";
+export { buildStepFormSchema } from './buildStepFormSchema'
+export { areRequiredFieldsComplete } from './areRequiredFieldsComplete'
+export { elementRegistry } from './elementRegistry'
+export type { ElementDefinition, StepFields } from './types'
+export { buildJourneyFormSchema } from './buildJourneyFormSchema'

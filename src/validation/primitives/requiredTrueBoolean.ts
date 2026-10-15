@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const requiredTrueBoolean = () =>
-	z.boolean().refine((value) => value === true, "Obrigatório");
+  z.boolean().refine((value) => value === true, 'Campo obrigatório')

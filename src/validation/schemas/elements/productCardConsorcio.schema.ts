@@ -1,41 +1,34 @@
-import { z } from "zod";
-import { baseElementSchema } from "./baseElement.schema";
+import { z } from 'zod'
+
+import { tagVariants } from '@/components/UI/Tag/Tag'
+
+import { baseElementSchema } from './baseElement.schema'
+import { iconNameSchema } from './icon.schema'
+
+const labelValueSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+})
+
 export const productCardConsorcioElementSchema = baseElementSchema.extend({
-	type: z.literal("PRODUCT_CARD_CONSORCIO"),
-	config: z.looseObject({
-		name: z.string().optional(),
-		label: z.string().optional(),
-		text: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
-		required: z.boolean().default(false),
-		placeholder: z.string().optional(),
-		defaultValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
-		sourcePath: z.string().optional(),
-		url: z.string().optional(),
-		options: z
-			.array(z.object({ label: z.string(), value: z.string() }))
-			.default([]),
-		elements: z
-			.array(
-				z.looseObject({
-					id: z.string(),
-					type: z.string(),
-					config: z.record(z.string(), z.unknown()),
-				}),
-			)
-			.default([]),
-		items: z
-			.array(
-				z.looseObject({
-					id: z.string().optional(),
-					title: z.string().optional(),
-					description: z.string().optional(),
-					url: z.string().optional(),
-				}),
-			)
-			.default([]),
-		min: z.number().optional(),
-		max: z.number().optional(),
-	}),
-});
+  type: z.literal('PRODUCT_CARD_CONSORCIO'),
+  config: z.object({
+    badge: z.string().optional(),
+    label: z.string().optional(),
+    value: z.string,
+    tag: z
+      .object({
+        text: z.string(),
+        variant: z.enum(tagVariants).optional(),
+      })
+      .optional(),
+    info: z
+      .object({
+        text: z.string(),
+        icon: iconNameSchema.optional(),
+      })
+      .optional(),
+    highlight: labelValueSchema.optional(),
+    details: z.array(labelValueSchema).optional(),
+  }),
+})

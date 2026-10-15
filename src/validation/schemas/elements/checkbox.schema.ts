@@ -1,11 +1,19 @@
-import { z } from "zod";
-import { baseElementSchema } from "./baseElement.schema";
+import { z } from 'zod'
+
+import { baseElementSchema } from './baseElement.schema'
+import { typographyUiSchema } from './elementUi.schemas'
+
+const checkboxLabelSchema = z.object({
+  text: z.string(),
+  ...typographyUiSchema,
+})
 
 export const checkboxElementSchema = baseElementSchema.extend({
-	type: z.literal("CHECKBOX"),
-	config: z.object({
-		label: z.string(),
-		required: z.boolean().default(false),
-		name: z.string(),
-	}),
-});
+  type: z.literal('CHECKBOX'),
+  config: z.object({
+    label: checkboxLabelSchema,
+    required: z.boolean().default(false),
+    defaultValue: z.boolean().default(false),
+    name: z.string(),
+  }),
+})

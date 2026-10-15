@@ -1,3 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
-export const requiredString = () => z.string().min(1, "Obrigatório");
+export const requiredString = (message = 'Insira um valor válido.') =>
+  z.string().nonempty(message)

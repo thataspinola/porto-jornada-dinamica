@@ -1,14 +1,36 @@
-import type { z } from "zod";
+import { z } from 'zod'
+
+import { optionalString } from '@/validation/primitives'
+import type { FieldValidation } from '@/validation/schemas/elements/validations.schema'
+
+function applyValidation(schema: z.ZodString, validation: FieldValidation) {
+  switch (validation.type) {
+    case 'MIN_LENGTH':
+      return schema.min(validation.value, validation.message)
+    case 'MAX_LENGTH':
+      return schema.max(validation.value, validation.message)
+    case 'REGEX':
+      return schema.regez(new RegExp(validation.value), validation.message)
+  }
+}
+
 export function applyValidations(
-	schema: z.ZodString,
-	config: { minLength?: number; maxLength?: number; pattern?: string },
+  schema: z.zodString,
+  validations: FieldValidation[]
 ) {
-	let result = schema;
-	if (config.minLength !== undefined)
-		result = result.min(config.minLength, "Texto muito curto");
-	if (config.maxLength !== undefined)
-		result = result.max(config.maxLength, "Texto muito longo");
-	if (config.pattern)
-		result = result.regex(new RegExp(config.pattern), "Formato inválido");
-	return result;
+  let currentSchema = schema
+
+  for (const validation of validations) {
+    currentSchema = applyValidation(currentSchema, validation)
+  }
+
+  return currentSchema
+}
+
+export function applyOptionalValidations(
+  validations: FieldValidation[],
+  { trim = false }: { trim?: boolean } = {}
+) {
+  const base = trim ? z.string().trim() : z.string()
+  return optionalString().pipe(applyValidations(base, validations).optional())
 }

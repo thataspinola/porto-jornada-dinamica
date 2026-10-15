@@ -1,10 +1,31 @@
-import { z } from "zod";
-export const phone = (required = true) =>
-	z
-		.string()
-		.refine(
-			(v) =>
-				(!required && !v.trim()) ||
-				/^[1-9]\d{9,10}$/.test(v.replace(/\D/g, "")),
-			"Telefone inválido",
-		);
+import { z } from 'zod'
+
+import { isMaskedPhone } from './maskedValue'
+
+export const phone = (required: boolean) => {
+  const base = z.preprocess((value: unknown) => {
+    if (typeof value !== 'string') return value
+    if (value.includes('*')) return value
+    return value.replace(/\D/g, '')
+  }, z.string().optional())
+
+  const isValidLength = (val: string) => val.length === 10 || val.length === 11
+
+  if (required) {
+    return base
+      .refine(
+        (val: string) => val !== undefined && val.length > 0,
+        'Insira o seu celular.'
+      )
+      .refine(
+        (val: string) =>
+          isMaskedPhone(val) || (val !== undefined && isValidLength(val)),
+        'Insira um número de celular válido.'
+      )
+  }
+
+  return base.refine(
+    (val: string) => !val || isMaskedPhone(val) || isValidLength(val),
+    'Insira um número de celular válido.'
+  )
+}

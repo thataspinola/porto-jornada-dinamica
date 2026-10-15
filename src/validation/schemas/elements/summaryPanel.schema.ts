@@ -1,41 +1,23 @@
-import { z } from "zod";
-import { baseElementSchema } from "./baseElement.schema";
+import { z } from 'zod'
+
+import { baseElementSchema } from './baseElement.schema'
+import { boxElementSchema } from './box.schema'
+import { checkboxElementSchema } from './checkbox.schema'
+import { labelValueElementSchema } from './labelValue.schema'
+import { navigationElementSchema } from './navigation.schema'
+import { textElementSchema } from './text.schema'
+
+const summaryPanelChildSchema = z.discriminatedUnion('type', [
+  textElementSchema,
+  checkboxElementSchema,
+  navigationElementSchema,
+  labelValueElementSchema,
+  boxElementSchema,
+])
+
 export const summaryPanelElementSchema = baseElementSchema.extend({
-	type: z.literal("SUMMARY_PANEL"),
-	config: z.looseObject({
-		name: z.string().optional(),
-		label: z.string().optional(),
-		text: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
-		required: z.boolean().default(false),
-		placeholder: z.string().optional(),
-		defaultValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
-		sourcePath: z.string().optional(),
-		url: z.string().optional(),
-		options: z
-			.array(z.object({ label: z.string(), value: z.string() }))
-			.default([]),
-		elements: z
-			.array(
-				z.looseObject({
-					id: z.string(),
-					type: z.string(),
-					config: z.record(z.string(), z.unknown()),
-				}),
-			)
-			.default([]),
-		items: z
-			.array(
-				z.looseObject({
-					id: z.string().optional(),
-					title: z.string().optional(),
-					description: z.string().optional(),
-					url: z.string().optional(),
-				}),
-			)
-			.default([]),
-		min: z.number().optional(),
-		max: z.number().optional(),
-	}),
-});
+  type: z.literal('SUMMARY_PANEL'),
+  config: z.object({
+    children: z.array(summaryPanelChildSchema).optional().default([]),
+  }),
+})

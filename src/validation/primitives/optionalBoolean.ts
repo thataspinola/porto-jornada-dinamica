@@ -1,3 +1,3 @@
-import { z } from "zod";
+import { z } from 'zod'
 
-export const optionalBoolean = () => z.boolean().optional();
+export const optionalBoolean = () => z.boolean().optional()
