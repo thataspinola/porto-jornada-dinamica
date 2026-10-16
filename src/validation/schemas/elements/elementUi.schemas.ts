@@ -12,6 +12,7 @@ export const inputUiSchema = {
 } as const
 
 export const buttonUiFields = {
+  disabled: z.boolean().optional(),
   size: z.enum(['sm', 'md']).default('md'),
   styles: z.enum(['filled', 'stroke', 'ghost']).default('filled'),
   variant: z.enum(['primary', 'secondary']).default('primary'),

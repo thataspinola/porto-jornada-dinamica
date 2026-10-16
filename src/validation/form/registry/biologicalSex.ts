@@ -23,12 +23,9 @@ export const biologicalSex: ElementHandler<'BIOLOGICAL_SEX'> = ({
   return {
     schema: {
       [name]: required
-        ? enumSchema.refine(
-            (val: 'BIO_GENDER_MALE' | 'BIO_GENDER_FEMALE' | '') => Boolean(val),
-            {
-              message: 'Insira o seu sexo biológico.',
-            }
-          )
+        ? enumSchema.refine((val) => Boolean(val), {
+            message: 'Insira o seu sexo biológico.',
+          })
         : z.union([z.literal(''), enumSchema]).optional(),
     },
     defaultValues: { [name]: '' },

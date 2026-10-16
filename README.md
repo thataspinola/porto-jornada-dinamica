@@ -364,6 +364,8 @@ Todos os runners usam Vitest. Os testes locais incluem unitários, integração 
 | `npm run format` / `format:check`            | Formatação Biome / conferência         |
 | `npm run lint:style` / `format:style`        | Stylelint / correção dos estilos       |
 
+Os testes locais usam um dublê explícito de `@porto-stack/ui` em `test/mocks/portoUi.tsx`. Isso isola a lógica da aplicação do pacote externo; o build e a conferência dos tipos corporativos continuam exigindo as dependências reais do Nexus.
+
 O setup é [config/vitest/setup.ts](./config/vitest/setup.ts). O fluxo funcional de CPF está em [JourneyBuilder.functional.spec.tsx](./src/components/Core/JourneyBuilder/test/JourneyBuilder.functional.spec.tsx); os E2E estão em [test/e2e/journeys.spec.ts](./test/e2e/journeys.spec.ts).
 
 A cobertura inclui todo o código de produção em `src`, inclusive módulos ainda sem testes; exclui apenas declarações `.d.ts` e pastas `test`. O comando falha se linhas, instruções, funções ou branches ficarem abaixo de 90%. Os relatórios são gerados em `coverage`. A cobertura local não contabiliza o código executado no processo Next do E2E.
@@ -374,7 +376,7 @@ Para usar Chromium já instalado na máquina ou pipeline, configure `CHROMIUM_EX
 
 Consulte [AGENTS.md](./AGENTS.md) e as regras locais de [Core](./src/components/Core/AGENTS.md), [Elements](./src/components/Elements/AGENTS.md), [UI](./src/components/UI/AGENTS.md), [hooks](./src/hooks/AGENTS.md), [services](./src/services/AGENTS.md), [store](./src/store/AGENTS.md), [utils](./src/utils/AGENTS.md), [validation](./src/validation/AGENTS.md) e [features](./src/features/AGENTS.md).
 
-Use componentes em `PascalCase.tsx`, hooks em `useNome.ts`, schemas em `<nome>.schema.ts`, barrels `index.ts` e testes `.spec.ts` / `.spec.tsx` dentro de `test`. Os imports entre pastas usam o alias `@/`; prefira os barrels públicos.
+Use componentes em `PascalCase.tsx`, hooks em `useNome.ts`, schemas em `<nome>.schema.ts`, tipos em `types.ts` ou `<Componente>.types.ts`, barrels `index.ts` e testes `.spec.ts` / `.spec.tsx` dentro de `test`. Os imports entre pastas usam o alias `@/`; prefira os barrels públicos.
 
 ### GitHub
 

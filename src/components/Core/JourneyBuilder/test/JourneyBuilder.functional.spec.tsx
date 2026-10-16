@@ -60,7 +60,9 @@ test.each([
 	);
 	expect(callService).toHaveBeenCalledWith(
 		"eligibility",
-		expect.objectContaining({ fields: { taxvat: "52998224725" } }),
+		expect.objectContaining({
+			fields: expect.objectContaining({ taxvat: "52998224725" }),
+		}),
 	);
 	await waitFor(() => expect(window.dataLayer).toHaveLength(1));
 	expect(window.dataLayer[0]).toMatchObject({

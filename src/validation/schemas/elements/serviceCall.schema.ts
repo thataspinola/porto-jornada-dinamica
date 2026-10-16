@@ -11,7 +11,7 @@ import { buttonUiFields } from './elementUi.schemas'
 const serviceRefSchema = z.object({
   action: z.string(),
   module: z.string(),
-  successEvent: z.enum(['purchase', 'add_to_cart']).optional,
+  successEvent: z.enum(['purchase', 'add_to_cart']).optional(),
 })
 
 const additionalPayloadSchema = z.record(z.string(), z.unknown())
@@ -21,7 +21,9 @@ export const serviceCallElementSchema = baseElementSchema.extend({
   type: z.literal('SERVICE_CALL'),
   config: z.object({
     label: z.string(),
-    service: z.union([serviceRefSchema, z.array(serviceRefSchema)]).optional(),
+    service: z
+      .union([z.string().min(1), serviceRefSchema, z.array(serviceRefSchema)])
+      .optional(),
     additionalPayload: z
       .union([additionalPayloadSchema, z.array(additionalPayloadSchema)])
       .optional(),

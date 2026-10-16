@@ -34,11 +34,11 @@ export function CheckboxElement({
 		<Controller
 			control={control}
 			name={name}
-			defaultValue=""
-			render={({ field, fieldState, formState }) => (
+			defaultValue={element.config.defaultValue}
+			render={({ field }) => (
 				<Checkbox
 					title={name}
-					label={label}
+					label={label.text}
 					value={!!field.value}
 					handleClick={() => field.onChange(!field.value)}
 				/>

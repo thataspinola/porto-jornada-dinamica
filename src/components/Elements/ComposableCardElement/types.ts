@@ -7,6 +7,6 @@ export type ComposableCardElementType = z.infer<
 export type ComposableCardElementProps = {
 	element: ComposableCardElementType;
 	renderElement: (
-		element: ComposableCardElementType["config"]["elements"][number],
+		element: ComposableCardElementType["config"]["children"][number]["element"],
 	) => ReactNode;
 };

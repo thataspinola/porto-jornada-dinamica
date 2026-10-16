@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import { tagVariants } from '@/components/UI/Tag/Tag'
-
 import { baseElementSchema } from './baseElement.schema'
 import { iconNameSchema } from './icon.schema'
 
@@ -19,7 +17,7 @@ export const productCardConsorcioElementSchema = baseElementSchema.extend({
     tag: z
       .object({
         text: z.string(),
-        variant: z.enum(tagVariants).optional(),
+        variant: z.string().min(1).optional(),
       })
       .optional(),
     info: z

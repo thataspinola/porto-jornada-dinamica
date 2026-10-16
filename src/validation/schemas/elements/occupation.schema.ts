@@ -7,5 +7,6 @@ export const occupationElementSchema = baseElementSchema.extend({
   config: z.object({
     name: z.string().default('occupationCode'),
     required: z.boolean().default(false),
+    professionsRequiredFor: z.array(z.string()).default([]),
   }),
 })

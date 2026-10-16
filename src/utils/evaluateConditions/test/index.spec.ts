@@ -1,7 +1,7 @@
 import { evaluateConditions } from "@/utils/evaluateConditions/index";
-import { conditionsSchema } from "@/validation/schemas";
+import { visibilityConditionsSchema } from "@/validation/schemas";
 describe("evaluateConditions", () => {
-	const conditions = conditionsSchema.parse([
+	const conditions = visibilityConditionsSchema.parse([
 		{ source: "formErrors", path: "taxvat.type", value: "server" },
 	]);
 	it("exibe apenas após o erro server do CPF", () => {
@@ -19,7 +19,7 @@ describe("evaluateConditions", () => {
 	});
 	it("permite wrappers sem condições e exige todas as condições configuradas", () => {
 		expect(evaluateConditions([], {})).toBe(true);
-		const parsed = conditionsSchema.parse([
+		const parsed = visibilityConditionsSchema.parse([
 			...conditions,
 			{ source: "business", path: "allowed", value: true },
 		]);
@@ -35,7 +35,7 @@ describe("evaluateConditions", () => {
 		"notExists",
 		"notEquals",
 	] as const)("avalia %s", (operator) => {
-		const parsed = conditionsSchema.parse([
+		const parsed = visibilityConditionsSchema.parse([
 			{ path: "cpf", operator, value: "123" },
 		]);
 		expect(

@@ -1,10 +1,5 @@
 import { z } from 'zod'
 
-import { priceSimulation } from '@/features/fcdc/validation/form/registry/priceSimulation'
-import { unknownPlate } from '@/features/fcdc/validation/form/registry/unknownPlate'
-import { plate as reffPlate } from '@/features/reff/validation/form/registry/plate'
-import { reffSimulation } from '@/features/reff/validation/form/registry/reffSimulation'
-import { plate } from '@/features/fcdc/validation/form/registry/plate'
 import {
   birthDate,
   cep as cepValidation,
@@ -35,16 +30,26 @@ type JourneyElement = JourneyStep['elements'][number]
 
 type ElementRegistryMap = Partial<{
   [K in JourneyElement['type']]: (
-    config: Extract<JourneyElement, { type: K }>['config']
+    config: Extract<JourneyElement, { type: K }>['config'],
   ) => ElementDefinition
 }>
 
 export const elementRegistry: ElementRegistryMap = {
+  CPF_INPUT: ({ name, required, defaultValue }) => ({
+    schema: { [name]: cpf(required) },
+    defaultValues: { [name]: defaultValue ?? '' },
+  }),
   NUMERIC_INPUT: ({ name, required, defaultValue, validations }) => ({
     schema: {
-      [name]: required
-        ? applyValidations(requiredString(), validations)
-        : applyOptionalValidations(validations),
+      [name]: z.preprocess(
+        (value) =>
+          typeof value === 'number' && Number.isFinite(value)
+            ? String(value)
+            : value,
+        required
+          ? applyValidations(requiredString(), validations)
+          : applyOptionalValidations(validations),
+      ),
     },
     defaultValues: { [name]: defaultValue },
   }),
@@ -66,7 +71,7 @@ export const elementRegistry: ElementRegistryMap = {
       [name]: required
         ? applyValidations(
             z.string().trim().nonempty('Insira um valor válido'),
-            validations
+            validations,
           )
         : applyOptionalValidations(validations, { trim: true }),
     },
@@ -79,7 +84,7 @@ export const elementRegistry: ElementRegistryMap = {
   }),
 
   TAXVAT_INPUT: ({ name, required, defaultValue, mode }) => ({
-    schema: { [name]: mode === 'cpnpj' ? cnpj(required) : cpf(required) },
+    schema: { [name]: mode === 'cnpj' ? cnpj(required) : cpf(required) },
     defaultValues: { [name]: defaultValue },
   }),
 
@@ -106,11 +111,32 @@ export const elementRegistry: ElementRegistryMap = {
     defaultValues: { [name]: defaultValue },
   }),
 
-  FCDC_PLATE_INPUT: plate,
-  REFF_PLATE_INPUT: reffPlate,
-  FCDC_UNKNOWN_PLATE: unknownPlate,
-  FCDC_PRICE_SIMULATION: priceSimulation,
-  REFF_SIMULATION: reffSimulation,
+  FCDC_PLATE_INPUT: ({ name, required, defaultValue }) => ({
+    schema: name
+      ? { [name]: required ? requiredString() : optionalString() }
+      : {},
+    defaultValues: name ? { [name]: defaultValue ?? '' } : {},
+  }),
+  REFF_PLATE_INPUT: ({ name, required, defaultValue }) => ({
+    schema: name
+      ? { [name]: required ? requiredString() : optionalString() }
+      : {},
+    defaultValues: name ? { [name]: defaultValue ?? '' } : {},
+  }),
+  FCDC_UNKNOWN_LICENSE_PLATE: ({ name, required, defaultValue }) => ({
+    schema: name
+      ? { [name]: required ? requiredString() : optionalString() }
+      : {},
+    defaultValues: name ? { [name]: defaultValue ?? '' } : {},
+  }),
+  FCDC_PRICE_SIMULATION: ({ name, defaultValue }) => ({
+    schema: name ? { [name]: z.number().positive() } : {},
+    defaultValues: name ? { [name]: defaultValue } : {},
+  }),
+  REFF_SIMULATION: ({ name, defaultValue }) => ({
+    schema: name ? { [name]: z.number().positive() } : {},
+    defaultValues: name ? { [name]: defaultValue } : {},
+  }),
 
   RADIO: ({ name, required, defaultValue }) => ({
     schema: { [name]: required ? requiredString() : optionalString() },
@@ -138,7 +164,7 @@ export const elementRegistry: ElementRegistryMap = {
   }),
 
   CHECKBOX: ({ name, required, defaultValue }) => ({
-    schema: { [name]: required ? requiredString() : optionalString() },
+    schema: { [name]: required ? requiredTrueBoolean() : optionalBoolean() },
     defaultValues: { [name]: defaultValue },
   }),
 

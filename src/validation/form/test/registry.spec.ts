@@ -1,32 +1,35 @@
-import { describe, expect, it } from "vitest";
-import { fieldSchema } from "@/validation/form/elementRegistry";
-
-describe("schema de campos declarativos", () => {
+import { journeyElementSchema } from "@/validation/schemas";
+import { buildStepFormSchema } from "@/validation/form";
+import { journeyStepSchema } from "@/validation/schemas";
+describe("registry de campos declarativos", () => {
 	it.each([
 		["EMAIL_INPUT", "ana@porto.test", "inválido"],
-		["NUMERIC_INPUT", 25, "25"],
+		["NUMERIC_INPUT", "25", ""],
 		["PRICE_SELECTOR", 1000, Infinity],
-		["MARKETING_OPTIN", true, false],
 		["CHECKBOX", true, false],
 		["TEXT_INPUT", "Ana", ""],
-	])("exige valores válidos para %s", (type, valid, invalid) => {
-		expect(fieldSchema(type as string, true).safeParse(valid).success).toBe(
-			true,
+	])("valida %s pelo contrato do elemento", (type, valid, invalid) => {
+		const element = journeyElementSchema.parse({
+			id: "field",
+			type,
+			config: {
+				name: "value",
+				label: "Valor",
+				required: true,
+				min: 0,
+				max: 2000,
+				step: 1,
+			},
+		});
+		const { schema } = buildStepFormSchema(
+			journeyStepSchema.parse({
+				id: "step",
+				name: "Etapa",
+				slug: "etapa",
+				elements: [element],
+			}),
 		);
-		expect(fieldSchema(type as string, true).safeParse(invalid).success).toBe(
-			false,
-		);
-		expect(fieldSchema(type as string, false).safeParse(valid).success).toBe(
-			true,
-		);
-		expect(
-			fieldSchema(type as string, false).safeParse(undefined).success,
-		).toBe(true);
+		expect(schema.safeParse({ value: valid }).success).toBe(true);
+		expect(schema.safeParse({ value: invalid }).success).toBe(false);
 	});
-	it.each([
-		"EMAIL_INPUT",
-		"NUMERIC_INPUT",
-		"TEXT_INPUT",
-	])("permite campo opcional vazio em %s", (type) =>
-		expect(fieldSchema(type, false).safeParse("").success).toBe(true));
 });

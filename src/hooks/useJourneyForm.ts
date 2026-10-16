@@ -19,7 +19,8 @@ export function useJourneyForm(
 	currentStep: JourneyStep,
 ) {
 	const { fields, mergeFields, services } = useJourneyStore();
-	const { schema, stepFields } = buildJourneyFormSchema(journey);
+	const { schema, stepFields, defaultValues } = buildJourneyFormSchema(journey);
+	const initialValues = useRef({ ...defaultValues, ...fields }).current;
 
 	const {
 		control,
@@ -35,7 +36,7 @@ export function useJourneyForm(
 		reset,
 	} = useForm<FormValues>({
 		resolver: zodResolver(schema),
-		defaultValues: useRef(fields).current,
+		defaultValues: initialValues,
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
@@ -83,7 +84,7 @@ export function useJourneyForm(
 			currentState._hasHydrated &&
 			Object.keys(currentState.fields).length > 0
 		) {
-			reset(currentState.fields as FormValues, {
+			reset({ ...initialValues, ...currentState.fields } as FormValues, {
 				keepDirty: false,
 				keepTouched: false,
 			});
@@ -91,14 +92,14 @@ export function useJourneyForm(
 
 		const unsub = journeyStore.subscribe((state, prev) => {
 			if (!prev._hasHydrated && state._hasHydrated) {
-				reset(state.fields as FormValues, {
+				reset({ ...initialValues, ...state.fields } as FormValues, {
 					keepDirty: false,
 					keepTouched: false,
 				});
 			}
 		});
 		return unsub;
-	}, [reset]);
+	}, [reset, initialValues]);
 
 	useEffect(() => {
 		applyPrefill();

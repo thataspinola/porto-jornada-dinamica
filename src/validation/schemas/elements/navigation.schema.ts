@@ -6,7 +6,7 @@ import { buttonUiFields } from './elementUi.schemas'
 
 export const navigationConfigSchema = z.object({
   label: z.string(),
-  url: z.string().optional().default(''),
+  url: z.string().min(1),
   cookies: z.record(z.string(), z.string()).optional(),
   fixed: z.boolean().default(false),
   requiresStepCompletion: z.boolean().optional().default(false),

@@ -40,7 +40,7 @@ const wrapper = conditionalWrapperElementSchema.parse({
 		elements: cards,
 	},
 });
-const renderElement = (child: (typeof wrapper.config.elements)[number]) => (
+const renderElement = (child: (typeof wrapper.config.children)[number]) => (
 	<span>{child.id}</span>
 );
 function dataLayer() {
@@ -96,7 +96,7 @@ describe("ConditionalWrapperElement view_promotion", () => {
 				{...props}
 				element={{
 					...wrapper,
-					config: { ...wrapper.config, elements: [...wrapper.config.elements] },
+					config: { ...wrapper.config, children: [...wrapper.config.children] },
 				}}
 				context={{ formErrors: { taxvat: { type: "server" } } }}
 			/>,
@@ -157,7 +157,7 @@ describe("ConditionalWrapperElement view_promotion", () => {
 			...wrapper,
 			config: {
 				...wrapper.config,
-				elements: wrapper.config.elements.slice(0, 1),
+				children: wrapper.config.children.slice(0, 1),
 			},
 		};
 		const props = {
@@ -173,13 +173,13 @@ describe("ConditionalWrapperElement view_promotion", () => {
 		expect(dataLayer()).toHaveLength(1);
 	});
 	it("não envia quando falta a URL do card", () => {
-		const badCards = JSON.parse(JSON.stringify(wrapper.config.elements));
-		badCards[0].config.elements[2].config.url = "";
+		const badCards = JSON.parse(JSON.stringify(wrapper.config.children));
+		badCards[0].config.children[2].element.config.url = "";
 		render(
 			<ConditionalWrapperElement
 				element={{
 					...wrapper,
-					config: { ...wrapper.config, elements: badCards },
+					config: { ...wrapper.config, children: badCards },
 				}}
 				journeySlug="financiamento-de-veiculos"
 				renderElement={renderElement}

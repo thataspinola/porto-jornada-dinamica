@@ -10,6 +10,6 @@ export type ConditionalWrapperElementProps = {
 	context: ConditionContext;
 	journeySlug: string;
 	renderElement: (
-		element: ConditionalWrapperElementType["config"]["elements"][number],
+		element: ConditionalWrapperElementType["config"]["children"][number],
 	) => ReactNode;
 };

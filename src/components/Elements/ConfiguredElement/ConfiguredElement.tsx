@@ -22,13 +22,27 @@ export function ConfiguredElement({
 	const options = Array.isArray(c.options)
 		? (c.options as { label: string; value: string }[])
 		: [];
-	const children = Array.isArray(c.elements)
-		? (c.elements as ConfiguredElementProps["element"][])
-		: [];
+	const nested =
+		element.type === "DRAWER" &&
+		(c.headerChildren || c.bodyChildren || c.footerChildren)
+			? [
+					...(Array.isArray(c.headerChildren) ? c.headerChildren : []),
+					...(Array.isArray(c.bodyChildren) ? c.bodyChildren : []),
+					...(Array.isArray(c.footerChildren) ? c.footerChildren : []),
+				]
+			: (c.children ?? c.elements);
+	const children = (Array.isArray(nested) ? nested : []).flatMap((child) =>
+		element.type === "GRID" && child.type === "GRID_ITEM"
+			? child.config.children
+			: [child],
+	) as ConfiguredElementProps["element"][];
 	const items = Array.isArray(c.items)
 		? (c.items as {
 				id?: string;
 				title?: string;
+				label?: string;
+				value?: string;
+				children?: ConfiguredElementProps["element"][];
 				description?: string;
 				url?: string;
 			}[])
@@ -57,7 +71,7 @@ export function ConfiguredElement({
 		FCDC_PLATE_INPUT: "text",
 		REFF_PLATE_INPUT: "text",
 	};
-	const isField = !!name;
+	const isField = !!name && element.type !== "TABS";
 	if (isField) {
 		const optionType = [
 			"ADDRESS_RADIO",
@@ -175,8 +189,8 @@ export function ConfiguredElement({
 				)}
 			</section>
 		);
-	if (element.type === "TABS")
-		return (
+	if (element.type === "TABS") {
+		const renderTabs = (select?: (value: string) => void) => (
 			<section>
 				<div role="tablist" aria-label={label}>
 					{items.map((item, i) => (
@@ -185,15 +199,42 @@ export function ConfiguredElement({
 							role="tab"
 							type="button"
 							aria-selected={tab === i}
-							onClick={() => setTab(i)}
+							onClick={() => {
+								setTab(i);
+								select?.(item.value ?? "");
+							}}
 						>
-							{item.title}
+							{item.label ?? item.title}
 						</button>
 					))}
 				</div>
-				<div role="tabpanel">{body[tab] ?? items[tab]?.description}</div>
+				<div role="tabpanel">
+					{items[tab]?.children?.map((child) => (
+						<div key={child.id}>
+							{renderElement ? (
+								renderElement(child)
+							) : (
+								<ConfiguredElement element={child} />
+							)}
+						</div>
+					)) ??
+						body[tab] ??
+						items[tab]?.description}
+				</div>
 			</section>
 		);
+		return name && control ? (
+			<Controller
+				control={control}
+				name={name}
+				defaultValue={items[0]?.value ?? ""}
+				render={({ field }) => renderTabs(field.onChange)}
+			/>
+		) : (
+			renderTabs()
+		);
+	}
+
 	if (element.type === "INPUT_HIDDEN") return null;
 	if (element.type === "ICON")
 		return (

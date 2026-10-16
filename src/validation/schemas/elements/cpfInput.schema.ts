@@ -12,6 +12,6 @@ export const cpfInputElementSchema = baseElementSchema.extend({
     name: z.string(),
     defaultValue: z.string().optional(),
     defaultValueFrom: z.any().optional(),
-    ui: inputUiSchema,
+    ui: z.object(inputUiSchema).optional(),
   }),
 })

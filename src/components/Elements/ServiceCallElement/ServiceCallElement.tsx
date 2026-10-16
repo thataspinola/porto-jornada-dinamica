@@ -19,23 +19,29 @@ export function ServiceCallElement({
 	canProceed,
 	onCall,
 }: ServiceCallElementProps) {
-	const ui = element.config.ui;
-	const hardDisabled = ui?.disabled === true;
+	const ui = element.config;
+	const hardDisabled = ui.disabled === true || typeof ui.service !== "string";
 	const blocked = !canProceed;
-	const variant = blocked ? "disabled" : ui?.variant;
+	const variant = blocked ? "disabled" : "insurance";
 	const disabled = hardDisabled || blocked;
 	return (
 		<Button
 			type="button"
 			variant={variant}
-			styles={ui?.styles}
-			size={ui?.size}
-			width={ui?.width}
+			styles={
+				ui?.styles === "ghost"
+					? "ghost"
+					: ui?.styles === "stroke"
+						? "secondary"
+						: "primary"
+			}
+			size={ui?.size === "sm" ? "small" : "large"}
 			disabled={disabled}
 			className={ui?.className ?? ""}
 			aria-disabled={disabled}
 			onClick={() => {
 				if (disabled) return;
+				if (typeof element.config.service !== "string") return;
 				onCall(element.config.service, element.config.targetStepOnSuccess);
 			}}
 		>

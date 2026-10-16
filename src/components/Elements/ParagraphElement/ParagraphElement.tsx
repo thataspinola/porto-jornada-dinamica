@@ -13,7 +13,7 @@ type ParagraphElementProps = {
 };
 
 export function ParagraphElement({ element }: ParagraphElementProps) {
-	const ui = element.config.ui;
+	const ui = element.config;
 	return (
 		<Typography
 			as={ui?.as ?? "p"}

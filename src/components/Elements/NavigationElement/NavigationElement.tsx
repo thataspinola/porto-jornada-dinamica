@@ -21,19 +21,25 @@ export function NavigationElement({
 	const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 	const href = joinPaths(baseUrl, url);
-	const ui = element.config.ui;
+	const ui = element.config;
 
 	return (
 		<Link
 			href={href}
-			variant={ui?.variant}
-			styles={ui?.styles}
-			size={ui?.size}
-			width={ui?.width}
-			disabled={ui?.disabled}
+			variant="insurance"
+			styles={
+				ui?.styles === "ghost"
+					? "ghost"
+					: ui?.styles === "stroke"
+						? "secondary"
+						: "primary"
+			}
+			size={ui?.size === "sm" ? "small" : "large"}
 			className={ui?.className}
+			disabled={ui.disabled}
 			onClick={(event: { preventDefault: () => void }) => {
 				event.preventDefault();
+				if (ui.disabled) return;
 				onNavigate(url);
 			}}
 		>

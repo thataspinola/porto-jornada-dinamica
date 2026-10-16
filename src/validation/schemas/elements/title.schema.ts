@@ -8,6 +8,6 @@ export const titleElementSchema = baseElementSchema.extend({
   config: z.object({
     text: z.string(),
     size: z.enum(['sm', 'md', 'lg']).optional().default('md'),
-    ...typographyUiSchema,
+    ...typographyUiSchema.unwrap().shape,
   }),
 })

@@ -7,6 +7,6 @@ export const paragraphElementSchema = baseElementSchema.extend({
   type: z.literal('PARAGRAPH'),
   config: z.object({
     text: z.string(),
-    ...typographyUiSchema,
+    ...typographyUiSchema.unwrap().shape,
   }),
 })

@@ -25,16 +25,16 @@ export function ConditionalWrapperElement({
 		)
 			return;
 		const items: Item[] = [];
-		for (const child of element.config.elements) {
+		for (const child of element.config.children) {
 			if (child.type !== "COMPOSABLE_CARD") continue;
 			const result = composableCardElementSchema.safeParse(child);
 			if (!result.success) return;
-			const texts = result.data.config.elements.filter(
-				(part) => part.type === "TEXT",
-			);
-			const navigation = result.data.config.elements.find(
-				(part) => part.type === "NAVIGATION",
-			);
+			const texts = result.data.config.children
+				.map((child) => child.element)
+				.filter((part) => part.type === "TEXT");
+			const navigation = result.data.config.children
+				.map((child) => child.element)
+				.find((part) => part.type === "NAVIGATION");
 			const title = texts[0]?.config.text;
 			const description = texts[1]?.config.text;
 			const url = navigation?.config.url;
@@ -55,7 +55,7 @@ export function ConditionalWrapperElement({
 			ev_action: "ecommerce:visualizar:promocao:sucesso",
 			items,
 		});
-	}, [isVisible, element.id, element.config.elements, journeySlug]);
+	}, [isVisible, element.id, element.config.children, journeySlug]);
 	if (!isVisible) return null;
 	return (
 		<div
@@ -63,7 +63,7 @@ export function ConditionalWrapperElement({
 			className={styles.wrapper}
 			style={element.config.cssProperties}
 		>
-			{element.config.elements.map((child) => (
+			{element.config.children.map((child) => (
 				<div key={child.id}>{renderElement(child)}</div>
 			))}
 		</div>

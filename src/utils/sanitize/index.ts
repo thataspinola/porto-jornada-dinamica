@@ -5,6 +5,8 @@ import sanitizeHtml from "sanitize-html";
  * Focado em garantir a integridade dos dados antes de salvar no Store ou enviar para APIs.
  */
 export const sanitize = {
+	alphanumericUpper: (value: string): string =>
+		value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase(),
 	/**
 	 * Remove todos os caracteres que não sejam letras (incluindo acentuadas) ou espaços.
 	 * Útil para nomes de pessoas e descrições simples.

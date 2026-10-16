@@ -1,7 +1,6 @@
-import {
-  OCCUPATION_FIELD_NAMES,
-  OCCUPATIONS_WITH_PROFESSION,
-} from '@/components/Elements/OccupationElement/constants'
+import { z } from 'zod'
+
+import { OCCUPATION_FIELD_NAMES } from '@/components/Elements/OccupationElement/constants'
 
 import {
   optionalNumber,
@@ -12,26 +11,24 @@ import {
 import type { ElementHandler } from './types'
 
 export const occupation: ElementHandler<'OCCUPATION'> = ({
+  name,
   required,
-}: {
-  name: string
-  required: boolean
-  cssProperties: unknown
+  professionsRequiredFor,
 }) => ({
   schema: {
-    [OCCUPATION_FIELD_NAMES.occupation]: required
+    [name]: required
       ? requiredString('Insira a sua ocupação.')
       : optionalString(),
     [OCCUPATION_FIELD_NAMES.occupationIncome]: optionalNumber(),
     [OCCUPATION_FIELD_NAMES.occupationProfession]: optionalString(),
   },
   defaultValues: {
-    [OCCUPATION_FIELD_NAMES.occupation]: '',
+    [name]: '',
     [OCCUPATION_FIELD_NAMES.occupationIncome]: undefined,
     [OCCUPATION_FIELD_NAMES.occupationProfession]: '',
   },
-  refine: (data: Record<string, unknown>, ctx: $RefinementCtx<unknown>) => {
-    const occupation = data[OCCUPATION_FIELD_NAMES.occupation] as string
+  refine: (data: Record<string, unknown>, ctx: z.RefinementCtx) => {
+    const occupation = data[name] as string
     if (!occupation) return
 
     const income = data[OCCUPATION_FIELD_NAMES.occupationIncome]
@@ -43,7 +40,7 @@ export const occupation: ElementHandler<'OCCUPATION'> = ({
       })
     }
 
-    const showProfession = OCCUPATIONS_WITH_PROFESSION.includes(occupation)
+    const showProfession = professionsRequiredFor.includes(occupation)
     const profession = data[OCCUPATION_FIELD_NAMES.occupationProfession]
     if (showProfession && (!profession || String(profession).trim() === '')) {
       ctx.addIssue({
