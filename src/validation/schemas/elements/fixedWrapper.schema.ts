@@ -60,6 +60,7 @@ const fixedWrapperChildSchema = z.discriminatedUnion('type', [
   phoneInputElementSchema,
   fcdcPlateInputElementSchema,
   priceSelectorElementSchema,
+  privacyPoliceElementSchema,
   radioElementSchema,
   selectElementSchema,
   serviceCallElementSchema,

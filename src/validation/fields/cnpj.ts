@@ -13,8 +13,9 @@ const calcularDigito = (base: string, pesos: number[]) => {
     .reduce(
       (acc: number, char: string, i: number) =>
         acc + caractereValor(char) * pesos[i],
-      0,
+      0
     )
+
   const resto = soma % 11
   return resto < 2 ? 0 : 11 - resto
 }
@@ -26,7 +27,7 @@ const validateCNPJ = (cnpj: string) => {
   const primeiroDV = calcularDigito(base, [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2])
   const segundoDV = calcularDigito(
     base + primeiroDV,
-    [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2],
+    [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
   )
 
   return cnpj.slice(12) === `${primeiroDV}${segundoDV}`
@@ -43,25 +44,25 @@ export const cnpj = (required: boolean) => {
     return baseValidation
       .refine(
         (val: string) => val !== undefined && val.length > 0,
-        'Insira o seu CNPJ.',
+        'Insira o seu CNPJ.'
       )
       .refine(
         (val: string) => isMaskedCnpj(val) || (val && val.length === 14),
-        'Informe um número de CNPJ válido.',
+        'Informe um número de CNPJ válido.'
       )
       .refine(
         (val: string) => isMaskedCnpj(val) || (val && validateCNPJ(val)),
-        'Informe um número de CNPJ válido.',
+        'Informe um número de CNPJ válido.'
       )
   }
 
   return baseValidation
     .refine(
       (val: string) => !val || isMaskedCnpj(val) || val.length === 14,
-      'Informe um número de CNPJ válido.',
+      'Informe um número de CNPJ válido.'
     )
     .refine(
       (val: string) => !val || isMaskedCnpj(val) || validateCNPJ(val),
-      'Informe um número de CNPJ válido.',
+      'Informe um número de CNPJ válido.'
     )
 }

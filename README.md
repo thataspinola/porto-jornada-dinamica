@@ -358,13 +358,10 @@ Todos os runners usam Vitest. Os testes locais incluem unitários, integração 
 | `npm run test:all`                           | Cobertura local e E2E                  |
 | `npm run type-check`                         | TypeScript                             |
 | `npm run check:imports`                      | Imports, aliases e barrels             |
-| `npm run check:names`                        | Nomes e localização dos specs          |
 | `npm run check:empty`                        | Arquivos vazios                        |
 | `npm run lint` / `lint:fix`                  | Lint Biome / correção automática       |
 | `npm run format` / `format:check`            | Formatação Biome / conferência         |
 | `npm run lint:style` / `format:style`        | Stylelint / correção dos estilos       |
-
-Os testes locais usam um dublê explícito de `@porto-stack/ui` em `test/mocks/portoUi.tsx`. Isso isola a lógica da aplicação do pacote externo; o build e a conferência dos tipos corporativos continuam exigindo as dependências reais do Nexus.
 
 O setup é [config/vitest/setup.ts](./config/vitest/setup.ts). O fluxo funcional de CPF está em [JourneyBuilder.functional.spec.tsx](./src/components/Core/JourneyBuilder/test/JourneyBuilder.functional.spec.tsx); os E2E estão em [test/e2e/journeys.spec.ts](./test/e2e/journeys.spec.ts).
 
@@ -381,12 +378,6 @@ Use componentes em `PascalCase.tsx`, hooks em `useNome.ts`, schemas em `<nome>.s
 ### GitHub
 
 A branch principal deste repositório é `main`. Crie branches `feat/`, `fix/`, `refactor/` ou `chore/`, use Conventional Commits e abra PR para `main`.
-
-```sh
-git checkout main
-git pull --ff-only
-git checkout -b chore/minha-alteracao
-```
 
 Antes do PR, execute as verificações aplicáveis acima, incluindo TypeScript, lint e cobertura. O hook pre-push exige `test:ci`. Para exigir cobertura e E2E na integração contínua, configure a pipeline e a proteção da branch para executar `npm run test:all` e respeitar o código de saída.
 

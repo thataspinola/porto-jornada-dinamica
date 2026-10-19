@@ -19,7 +19,6 @@ export {
   serviceErrorRuleSchema,
   serviceErrorsSchema,
 } from './serviceErrors.schema'
-
 export { composableCardElementSchema } from './elements/composableCard.schema'
 export { conditionalWrapperElementSchema } from './elements/conditionalWrapper.schema'
 export { textElementSchema } from './elements/text.schema'

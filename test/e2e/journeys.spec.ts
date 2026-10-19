@@ -75,6 +75,7 @@ beforeAll(async () => {
   app.stdout?.on('data', (data) => {
     output += String(data)
     const match = output.match(/http:\/\/127\.0\.0\.1:(\d+)/)
+
     if (match && match[0] !== origin)
       throw new Error('Servidor iniciou em porta inesperada')
   })
@@ -257,6 +258,7 @@ describe('E2E das jornadas com backend HTTP local controlado', () => {
       const health = await fetch(`${baseURL}/api/health`)
       expect(health.status).toBe(200)
       expect(health.headers.get('x-content-type-options')).toBe('nosniff')
+      expect(health.headers).get('content-type').toBe('application/json')
     } finally {
       await page.close()
     }

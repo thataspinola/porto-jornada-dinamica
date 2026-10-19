@@ -120,7 +120,8 @@ export const visibilityConditionsSchema = z
         .enum(['equals', 'notEquals', 'exists', 'notExists'])
         .default('equals'),
       value: z.unknown().optional(),
-    }),
+    })
   )
   .default([])
+
 export type Condition = z.infer<typeof visibilityConditionsSchema>[number]

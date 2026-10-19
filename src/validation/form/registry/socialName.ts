@@ -1,8 +1,4 @@
-import {
-  requiredString,
-  optionalString,
-  optionalBoolean,
-} from '@/validation/primitives'
+import { optionalString, optionalBoolean } from '@/validation/primitives'
 
 import type { ElementHandler } from './types'
 
@@ -10,7 +6,7 @@ export const socialName: ElementHandler<'SOCIAL_NAME'> = ({ name }) => ({
   schema: {
     hasSocialName: optionalBoolean(),
     [name]: optionalString().transform((value) =>
-      typeof value === 'string' ? value.trim() : value,
+      typeof value === 'string' ? value.trim() : value
     ),
   },
   defaultValues: { hasSocialName: false, [name]: '' },

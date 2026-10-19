@@ -23,6 +23,7 @@ type WithConfigStyle<Shape extends z.ZodRawShape> = {
 
 function extendWithConfigStyle<Shape extends z.ZodRawShape>(shape: Shape) {
   const { config } = shape
+
   const nextShape =
     config instanceof z.ZodObject
       ? {
@@ -33,9 +34,9 @@ function extendWithConfigStyle<Shape extends z.ZodRawShape>(shape: Shape) {
                 shape.type instanceof z.ZodLiteral
                   ? String(shape.type.value)
                   : '',
-                value,
+                value
               ),
-            config.extend(configStyleFields),
+            config.extend(configStyleFields)
           ),
         }
       : shape
@@ -55,11 +56,14 @@ const operators: Record<string, string> = {
   exists: 'EXISTS',
   notExists: 'NOT_EXISTS',
 }
+
 function normalizeElementConfig(type: string, value: unknown): unknown {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return value
   const config = { ...(value as Record<string, unknown>) }
+
   if (config.ui && typeof config.ui === 'object')
     Object.assign(config, { ...config.ui, ...config })
+
   if (config.children === undefined && Array.isArray(config.elements)) {
     config.children =
       type === 'COMPOSABLE_CARD'
@@ -69,6 +73,7 @@ function normalizeElementConfig(type: string, value: unknown): unknown {
           }))
         : config.elements
   }
+
   if (
     type === 'CONDITIONAL_WRAPPER' &&
     config.checks === undefined &&
@@ -83,10 +88,12 @@ function normalizeElementConfig(type: string, value: unknown): unknown {
             ...(condition.value !== undefined
               ? { right: { value: condition.value } }
               : {}),
-          },
+          }
     )
   }
+
   if (type === 'CHECKBOX' && typeof config.label === 'string')
     config.label = { text: config.label }
+
   return config
 }

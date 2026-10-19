@@ -4,7 +4,7 @@ import { iconNameSchema } from './icon.schema'
 
 export const inputUiSchema = {
   variant: z.enum(['outlined', 'default', 'big']).optional(),
-  width: z.enum(['fluid', 'contain']).optional(),
+  width: z.enum(['fluid', 'contain']).optional().default('fluid'),
   disabled: z.boolean().optional(),
   autoFocus: z.boolean().optional(),
   helperText: z.string().optional(),

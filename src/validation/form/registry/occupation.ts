@@ -30,8 +30,8 @@ export const occupation: ElementHandler<'OCCUPATION'> = ({
   refine: (data: Record<string, unknown>, ctx: z.RefinementCtx) => {
     const occupation = data[name] as string
     if (!occupation) return
-
     const income = data[OCCUPATION_FIELD_NAMES.occupationIncome]
+
     if (typeof income !== 'number' || income <= 0) {
       ctx.addIssue({
         path: [OCCUPATION_FIELD_NAMES.occupationIncome],
@@ -42,6 +42,7 @@ export const occupation: ElementHandler<'OCCUPATION'> = ({
 
     const showProfession = professionsRequiredFor.includes(occupation)
     const profession = data[OCCUPATION_FIELD_NAMES.occupationProfession]
+
     if (showProfession && (!profession || String(profession).trim() === '')) {
       ctx.addIssue({
         path: [OCCUPATION_FIELD_NAMES.occupationProfession],
