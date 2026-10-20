@@ -1,4 +1,22 @@
-import { toSnakeCase } from "@/utils/toSnakeCase";
-export function normalizeVertical(value: string) {
-	return toSnakeCase(value.trim());
+const verticalValues = [
+  'holding',
+  'bank',
+  'servico',
+  'seguro',
+  'saude',
+] as const
+
+export type VerticalValue = (typeof verticalValues)[number] | ''
+
+export function normalizeVertical(value?: string | null): VerticalValue {
+  if (typeof value !== 'string') return ''
+  const normalizedValue = value.trim().toLocaleUpperCase()
+
+  if (
+    verticalValues.includes(normalizedValue as (typeof verticalValues)[number])
+  ) {
+    return normalizedValue as VerticalValue
+  }
+
+  return ''
 }

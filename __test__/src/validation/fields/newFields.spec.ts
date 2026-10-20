@@ -52,7 +52,8 @@ describe('campos normalizados e mascarados', () => {
   it('aceita máscaras completas e rejeita máscaras parciais inválidas', () => {
     expect(cpf(true).parse('***.982.247-**')).toBe('***.982.247-**')
     expect(cnpj(false).parse('**.222.333/0001-**')).toBe('**.222.333/0001-**')
-    expect(phone(true).parse('(11) *****-8888')).toBe('(11) *****-8888')
+		expect(phone(true).parse('(11) *****-8888')).toBe('(11) *****-8888')
+		
     for (const factory of [cpf, cnpj, phone])
       expect(factory(false).safeParse('*').success).toBe(false)
   })

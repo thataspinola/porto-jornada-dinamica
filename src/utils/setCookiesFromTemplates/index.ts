@@ -1,10 +1,22 @@
-import { interpolateTemplate } from "@/utils/interpolateTemplate";
+import Cookies from 'js-cookie'
+
+import { getCookieOptions } from '../getCookieOptions'
+import { interpolateTemplate } from '../interpolateTemplate'
+
+/**
+ * Resolves each `{{...}}` template and sets the resulting value as a cookie,
+ * skipping entries whose template can't be fully resolved.
+ */
 export function setCookiesFromTemplates(
-	templates: Record<string, string>,
-	context: Record<string, unknown>,
-) {
-	for (const [name, value] of Object.entries(templates)) {
-		if (!/^[\w-]+$/.test(name)) throw new Error("Nome de cookie inválido");
-		document.cookie = `${name}=${encodeURIComponent(interpolateTemplate(value, context))}; Path=/; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
-	}
+  templates: Record<string, string> | undefined,
+  context: Record<string, unknown>
+): void {
+  if (!templates) return
+
+  const options = getCookieOptions()
+
+  for (const [name, template] of Object.entries(templates)) {
+    const value = interpolateTemplate(template, context)
+    if (value !== undefined) Cookies.set(name, value, options)
+  }
 }

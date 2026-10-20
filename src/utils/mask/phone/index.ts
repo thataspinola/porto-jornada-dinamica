@@ -5,11 +5,11 @@
  * @returns The formatted phone number string.
  */
 export const phoneMask = (value: string): string => {
-	if (typeof value !== "string") return "";
+  if (typeof value !== 'string') return ''
 
-	const cleanPhoneNumber = value.replace(/\D/g, "").slice(0, 11);
+  const cleanPhoneNumber = value.replace(/\D/g, '').slice(0, 11)
 
-	return cleanPhoneNumber.length <= 10
-		? cleanPhoneNumber.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")
-		: cleanPhoneNumber.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
-};
+  return cleanPhoneNumber.length <= 10
+    ? cleanPhoneNumber.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3')
+    : cleanPhoneNumber.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')
+}

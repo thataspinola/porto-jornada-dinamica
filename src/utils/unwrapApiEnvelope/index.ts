@@ -1,5 +1,12 @@
-export function unwrapApiEnvelope<T>(value: T | { data: T }): T {
-	return value && typeof value === "object" && "data" in value
-		? (value as { data: T }).data
-		: (value as T);
+// As respostas do backend seguem o envelope { data, metada }; consumimos só o "data"
+export function unwrapApiEnvelope(response: unknown): unknown {
+  if (
+    response &&
+    typeof response === 'object' &&
+    'data' in (response as Record<string, unknown>)
+  ) {
+    return response as Record<string, unknown>
+  }
+
+  return response
 }

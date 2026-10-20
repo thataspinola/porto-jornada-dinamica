@@ -1,8 +1,20 @@
-export async function recaptchaGenerator(siteKey: string, action: string) {
-	const client = window.grecaptcha?.enterprise ?? window.grecaptcha;
-	if (!client?.execute) throw new Error("reCAPTCHA indisponível");
-	const execute = client.execute.bind(client);
-	if (client.ready)
-		await new Promise<void>((resolve) => client.ready?.(resolve));
-	return execute(siteKey, { action });
+'use client'
+
+import { RECAPTCHA_KEY } from '@/scripts/recaptchaClient'
+
+export async function recaptcha(action) {
+  let recaptchaTokenReturn = ''
+
+  if (
+    typeof window !== 'undefined' &&
+    RECAPTCHA_KEY &&
+    window.grecaptcha?.enterprise
+  ) {
+    recaptchaTokenReturn = await window.grecaptcha.enterprise.execute(
+      RECAPTCHA_KEY,
+      { action: action ?? 'submit' }
+    )
+  }
+
+  return recaptchaTokenReturn
 }

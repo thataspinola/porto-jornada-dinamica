@@ -1,4 +1,4 @@
-import { formatPercentage } from "@/utils/formatPercentage";
-export function formatPercentageFromFactor(value: number) {
-	return formatPercentage(value * 100);
+export const formatPercentageFromFactor = (factor: number): string => {
+  const percentage = Math.round(factor * 10000) / 100
+  return `${percentage.toString().replace('.', ',')}%`
 }

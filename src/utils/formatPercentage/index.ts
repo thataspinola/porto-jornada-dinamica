@@ -1,6 +1,3 @@
-export function formatPercentage(value: number) {
-	return (
-		new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value) +
-		"%"
-	);
+export const formatPercentage = (value: number): string => {
+  return `${value.toString().replace('.', ',')}%`
 }

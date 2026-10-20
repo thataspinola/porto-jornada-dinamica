@@ -4,7 +4,7 @@
  * @returns A string containing only numeric characters.
  */
 export const onlyNumbers = (value: string): string => {
-	if (typeof value !== "string") return "";
+  if (typeof value !== 'string') return ''
 
-	return value.replace(/\D/g, "");
-};
+  return value.replace(/\D/g, '')
+}

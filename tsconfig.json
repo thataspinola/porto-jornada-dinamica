@@ -44,7 +44,7 @@
     ".next/types/**/*.ts",
     "dist/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
     "dist/react-ssr-corp-hubv-dinamic-journey/dev/types/**/*.ts"
-  ],
+,     "__test__/src/validation/schemas/journey.schema.spec.ts", "__test__/src/validation/schemas/elements/compatibility.schema.spec.ts", "__test__/src/validation/schemas/elements/drawer.schema.spec.ts", "__test__/src/validation/schemas/elements/navigation.schema.spec.ts", "__test__/src/validation/primitives/primitives.spec.ts", "__test__/src/validation/form/registry/handlers.spec.ts", "__test__/src/validation/form/applyValidations.spec.ts", "__test__/src/validation/form/buildStepFormSchema.spec.ts", "__test__/src/validation/form/containers.integration.spec.ts", "__test__/src/validation/form/fieldContracts.integration.spec.ts", "__test__/src/validation/form/registry.spec.ts", "__test__/src/validation/fields/fields.spec.ts", "__test__/src/validation/fields/newFields.spec.ts", "__test__/src/store/stores.spec.ts", "__test__/src/services/adapters.spec.ts", "__test__/src/services/eligibility.integration.spec.ts", "__test__/src/services/serviceRegistry.spec.ts", "__test__/src/services/eligibilityService/index.spec.ts"  ],
   "exclude": [
     "node_modules"
   ]

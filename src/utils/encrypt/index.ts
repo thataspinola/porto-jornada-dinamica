@@ -1,20 +1,23 @@
-import * as AesJs from "aes-js";
-import * as CryptoJS from "crypto-js";
+'use server'
 
-const DEFAULT_ENCRYPTION_KEY = "chave";
+import * as AesJs from 'aes-js'
+import * as CryptoJS from 'crypto-js'
+import { env } from 'next-runtime-env'
 
-const getEncryptedKeyBuffer = (key: string) => {
-	const key256 = CryptoJS.SHA256(key);
-	const buffer = Buffer.from(key256.toString(CryptoJS.enc.Hex), "hex");
-	return new Uint8Array(buffer).slice(0, 16);
-};
+const DEFAULT_ENCRYPTION_KEY = env('GTM-ENCRYPTION') as string
 
-export const encryptGtmClientId = (text = "") => {
-	if (!text) return;
+function getEncryptedKeyBuffer(key: string) {
+  const key256 = CryptoJS.SHA256(key)
+  const buffer = Buffer.from(key256.toString(CryptoJS.enc.Hex), 'hex')
+  return new Uint8Array(buffer).slice(0, 16)
+}
 
-	const textAsBytes = AesJs.utils.utf8.toBytes(text);
-	const aes = new AesJs.AES(getEncryptedKeyBuffer(DEFAULT_ENCRYPTION_KEY));
-	const encryptedBytes = aes.encrypt(AesJs.padding.pkcs7.pad(textAsBytes));
-
-	return AesJs.utils.hex.fromBytes(encryptedBytes);
-};
+export async function encryptGtmClientId(
+  text = ''
+): Promise<string | undefined> {
+  if (!text) return
+  const textAsBytes = AesJs.utils.utf8.toBytes(text)
+  const aes = new AesJs.AES(getEncryptedKeyBuffer(DEFAULT_ENCRYPTION_KEY))
+  const encryptedBytes = aes.encrypt(AesJs.padding.pkcs7.pad(textAsBytes))
+  return AesJs.utils.hex.fromBytes(encryptedBytes)
+}

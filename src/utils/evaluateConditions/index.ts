@@ -1,31 +1,34 @@
-import type { Condition } from "@/validation/schemas";
-import { getByPath } from "@/utils/getByPath";
+import type { Condition } from '@/validation/schemas'
+import { getByPath } from '@/utils/getByPath'
 export type ConditionContext = {
-	fields?: Record<string, unknown>;
-	formErrors?: Record<string, unknown>;
-	business?: Record<string, unknown>;
-	services?: Record<string, unknown>;
-	parameters?: Record<string, unknown>;
-};
-export function evaluateConditions(
-	conditions: Condition[],
-	context: ConditionContext,
-): boolean {
-	return conditions.every((condition) => {
-		const actual = getByPath(context[condition.source], condition.path);
-		switch (condition.operator) {
-			case "equals":
-				return actual === condition.value;
-			case "notEquals":
-				return actual !== condition.value;
-			case "exists":
-				return actual !== undefined && actual !== null;
-			case "notExists":
-				return actual === undefined || actual === null;
-		}
-		return false;
-	});
+  fields?: Record<string, unknown>
+  formErrors?: Record<string, unknown>
+  business?: Record<string, unknown>
+  services?: Record<string, unknown>
+  parameters?: Record<string, unknown>
 }
 
-export { evaluateCheck, evaluateRule, evaluateConditionRules } from "./rules";
-export type { EvaluationResult } from "./rules";
+export function evaluateConditions(
+  conditions: Condition[],
+  context: ConditionContext
+): boolean {
+  return conditions.every((condition) => {
+    const actual = getByPath(context[condition.source], condition.path)
+
+    switch (condition.operator) {
+      case 'equals':
+        return actual === condition.value
+      case 'notEquals':
+        return actual !== condition.value
+      case 'exists':
+        return actual !== undefined && actual !== null
+      case 'notExists':
+        return actual === undefined || actual === null
+      default:
+        return false
+    }
+  })
+}
+
+export { evaluateCheck, evaluateRule, evaluateConditionRules } from './rules'
+export type { EvaluationResult } from './rules'

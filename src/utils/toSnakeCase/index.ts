@@ -1,9 +1,26 @@
-export function toSnakeCase(value: string) {
-	return value
-		.normalize("NFD")
-		.replace(/[\u0300-\u036f]/g, "")
-		.replace(/([a-z0-9])([A-Z])/g, "$1_$2")
-		.replace(/[^a-zA-Z0-9]+/g, "_")
-		.replace(/^_+|_+$/g, "")
-		.toLowerCase();
+export function toSnakeCase(input: string): string
+
+export function toSnakeCase(
+  input: Record<string, unknown>
+): Record<string, unknown>
+
+export function toSnakeCase(
+  input: string | Record<string, unknown>
+): string | Record<string, unknown> {
+  if (typeof input === 'string') {
+    return input
+      .replace(/([A-Z])/g, '_$1')
+      .replace(/ˆ_/, '')
+      .toLowerCase()
+  }
+
+  const result: Record<string, unknown> = {}
+
+  for (const key in input) {
+    if (Object.hasOwn(input, key)) {
+      result[toSnakeCase(key)]
+    }
+  }
+
+  return result
 }

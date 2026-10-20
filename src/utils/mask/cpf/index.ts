@@ -4,10 +4,10 @@
  * @returns The formatted CPF string in the format XXX.XXX.XXX-XX.
  */
 export const cpfMask = (value: string): string => {
-	const cpfNumbers = value.replace(/\D/g, "").slice(0, 11);
+  const cpfNumbers = value.replace(/\D/g, '').slice(0, 11)
 
-	return cpfNumbers
-		.replace(/(\d{3})(\d)/, "$1.$2")
-		.replace(/(\d{3})(\d)/, "$1.$2")
-		.replace(/(\d{3})(\d{2})$/, "$1-$2");
-};
+  return cpfNumbers
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{2})$/, '$1-$2')
+}
