@@ -1,50 +1,115 @@
-import { carbonClient } from "@/lib/carbonClient";
-import type { ApiRequest } from "./types";
-export async function apiService<T>(request: ApiRequest): Promise<T> {
-	const response = await carbonClient.request<T>({
-		url: request.url,
-		method: request.method ?? "GET",
-		data: request.body,
-		headers: request.headers,
-		signal: request.signal,
-		maxRedirects: request.maxRedirects,
-	});
-	return response.data;
-}
+'use server'
 
-import axios from "axios";
-import type { ApiServiceInput } from "./types";
-import type { ServiceResult } from "@/services/types";
+import { AxiosError } from 'axios'
+import { cookies } from 'next/headers'
+import { env } from 'next-runtime-env'
+
+import { carbonClient } from '@/lib/carbonClient'
+
+import { getTraceId } from '@/utils/traceId'
+import { resolveCookiePayload } from '@/utils/resolveCookiePayload'
+
+import { SERVICE_ERROR_CODE, type ServiceResult } from '../types'
+import { promoteCustomerTokenCookie } from './promoteCustomerTokenCookies'
+import type { ApiServiceInput } from './types'
+
+const journeyPath = env('NEXT_PUBLIC_JORNADA_DINAMICA')
+const SESSION_HEADER_NAME = 'hubSessionId'
+
 export async function callApi(
-	input: ApiServiceInput,
-	recaptchaToken: string,
+  input: ApiServiceInput,
+  recaptachaToken: string
 ): Promise<ServiceResult> {
-	if (recaptchaToken && !input.recaptchaHeader)
-		return {
-			success: false,
-			error: "INVALID_CONFIGURATION",
-			message: "Cabeçalho reCAPTCHA não configurado",
-		};
-	try {
-		const data = await apiService({
-			...input,
-			maxRedirects: 0,
-			headers: {
-				...input.headers,
-				...(recaptchaToken && input.recaptchaHeader
-					? { [input.recaptchaHeader]: recaptchaToken }
-					: {}),
-			},
-		});
-		return { success: true, data };
-	} catch (error) {
-		if (axios.isAxiosError(error))
-			return {
-				success: false,
-				error: error.response?.data?.code ?? "CONNECTION_ERROR",
-				statusCode: error.response?.status,
-				message: error.response?.data?.message,
-			};
-		return { success: false, error: "INTERNAL_SERVER_ERROR" };
+  const cookieStore = await cookies()
+  const sessionId = cookieStore.get(SESSION_HEADER_NAME)?.value
+
+  try {
+    const endpoint = `/${journeyPath}`
+    const traceId = await getTraceId()
+
+    const mergePayload = {
+      ...input.fields,
+      ...input.serviceConfig.additionalPayload,
+    }
+
+    promoteCustomerTokenCookie(cookieStore, input.serviceConfig.clientCookies)
+
+    const data = {
+      payload: resolveCookiePayload(
+        mergePayload,
+        cookieStore,
+        input.serviceConfig.clientCookies,
+        input.business.metadata.userAgent
+      ),
+      metadata: { ...input.business.metadata },
+    }
+
+		const httpResponse = await carbonClient.post(endpoint, data, {
+      headers: {
+        ...input.serviceConfig.headers,
+        'X-Recaptcha-Token': recaptachaToken,
+				'X-Recaptacha-Action': `${recaptachaToken}_dynamic_journey`,,
+				...(input.variant === 'app' && {
+					'X-Recaptcha-Verification-Disabled': 'true'
+				}),
+				'porto-hub-trace-id': traceId,
+				'carbon-trace-id': traceId,
+				...(sessionId ? { 'porto-session-id': sessionId } : {})
+      },
+		})
+
+		const rawResponseSessionId = httpResponse.headers['porto-session-id']
+		const isString = typeof rawResponseSessionId === 'string'
+		const hasValue = isString && rawResponseSessionId.length > 0
+		const isNewSessionId = hasValue && rawResponseSessionId !== sessionId
+
+		if (isNewSessionId) {
+			cookieStore.set(SESSION_HEADER_NAME, rawResponseSessionId, {
+				path: '/',
+				sameSite: 'lax',
+				httpOnly: true,
+				secure: env('NEXT_PUBLIC_NODE_ENV') === 'production'
+			})
+		}
+
+		if (sessionId && isNewSessionId) {
+			return {success: false, sessionRestarted: true}
+		}
+
+		return {success: true, data: httpResponse.data}
+  } catch (error) {
+		if (!(error instanceof AxiosError)) {
+			throw error
+		}
+
+		const rawResponseSessionId = error.response?.headers?.['porto-session-id']
+		const isString = typeof rawResponseSessionId === 'string'
+		const hasValue = isString && rawResponseSessionId.length > 0
+		const isNewSessionId = hasValue && rawResponseSessionId !== sessionId
+
+		if (isNewSessionId) {
+			cookieStore.set(SESSION_HEADER_NAME, rawResponseSessionId, {
+				path: '/',
+				sameSite: 'lax',
+				httpOnly: true,
+				secure: env('NEXT_PUBLIC_NODE_ENV') === 'production'
+			})
+		}
+
+		if (sessionId && isNewSessionId) {
+			return {success: false, sessionRestarted: true}
+		}
+
+		const status = error.response?.status ?? 0
+		const message = error.response?.data?.message
+
+		const errorCode =
+			status === 0
+				? SERVICE_ERROR_CODE.CONNECTION_ERROR
+				: typeof message === 'string' && message.length > 0
+					? message
+					: SERVICE_ERROR_CODE.INTERNAL_SERVER_ERROR
+
+		return {success: false, error: errorCode, statusCode: status}
 	}
 }
