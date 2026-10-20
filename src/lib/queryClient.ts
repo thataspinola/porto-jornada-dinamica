@@ -1,12 +1,26 @@
-import { QueryClient as TanstackQueryClient } from "@tanstack/react-query";
-export class QueryClient extends TanstackQueryClient {
-	fetch<T>(key: string, load: () => Promise<T>) {
-		return this.fetchQuery({ queryKey: [key], queryFn: load });
-	}
-	invalidate(key?: string) {
-		return this.invalidateQueries(key ? { queryKey: [key] } : {});
-	}
+import { QueryClient as TanstackQueryClient } from '@tanstack/react-query'
+
+import { ServiceError } from '@/services/types'
+import { QueryClientProvider } from '@/contexts/QueryClientProvider'
+
+const QUERY_CACHE_LIFETIME_MS = 10 * 60 * 1000
+const MAX_RETRIES = 2
+
+function shouldRetry(failureCont: number, error: unknown): boolean {
+  if (failureCont >= MAX_RETRIES) return false
+  if (!(error instanceof ServiceError)) return false
+
+  const { statusCode } = error
+  return statusCode === 0 || statusCode >= 500
 }
-export const queryClient = new QueryClient({
-	defaultOptions: { queries: { retry: false, staleTime: 30000 } },
-});
+
+export const queryClient = new QueryClientProvider({
+  defaultOptions: {
+    queries: {
+      staleTime: 5000,
+      refetchOnWindowFocus: false,
+      retry: shouldRetry,
+      gcTime: QUERY_CACHE_LIFETIME_MS,
+    },
+  },
+})

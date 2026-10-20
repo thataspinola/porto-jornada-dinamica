@@ -1,5 +1,9 @@
-import axios from "axios";
-export const carbonClient = axios.create({
-	timeout: 15000,
-	headers: { "Content-Type": "application/json" },
-});
+'server-only'
+
+import { createCarbonClient } from '@porto-stack/utils'
+import { env } from 'next-runtime-env'
+
+export const carbonClient = createCarbonClient({
+  baseUrl: env('NEXT_PUBLIC_SENSEDIA_CLOUD_URL'),
+  recaptchaSecret: env('RECAPTCHA'),
+})

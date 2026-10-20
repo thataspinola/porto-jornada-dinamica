@@ -1,11 +1,14 @@
-"use client";
-import { useEffect } from "react";
-import type { ServiceResult } from "@/services";
-export function useServiceErrorEffect(
-	result: ServiceResult | undefined,
-	onError: (result: ServiceResult) => void,
-) {
-	useEffect(() => {
-		if (result && !result.success) onError(result);
-	}, [result, onError]);
+'use client'
+
+import { useEffect } from 'react'
+
+import { useServiceErrorHandler } from './useServiceErrorHandler'
+
+export function useServiceErrorEffect(error: unknown | null | undefined) {
+  const { handleServiceError } = useServiceErrorHandler()
+
+  useEffect(() => {
+    if (!error) return
+    handleServiceError(error)
+  }, [error, handleServiceError])
 }

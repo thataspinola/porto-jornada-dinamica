@@ -1,27 +1,28 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { NAVIGATE_EVENT } from "@/constants";
+import { NAVIGATE_EVENT } from '@/constants'
 
 export function useCurrentPathname() {
-	const resolvedPathname =
-		typeof window !== "undefined" ? window.location.pathname : "/";
-	const [pathname, setPathname] = useState(resolvedPathname);
+  const resolvedPathname =
+    typeof window !== 'undefined' ? window.location.pathname : '/'
 
-	const handleSyncNavigate = () => {
-		setPathname(window.location.pathname);
-	};
+  const [pathname, setPathname] = useState(resolvedPathname)
 
-	useEffect(() => {
-		window.addEventListener("popstate", handleSyncNavigate);
-		window.addEventListener(NAVIGATE_EVENT, handleSyncNavigate);
+  const handleSyncNavigate = () => {
+    setPathname(window.location.pathname)
+  }
 
-		return () => {
-			window.removeEventListener("popstate", handleSyncNavigate);
-			window.removeEventListener(NAVIGATE_EVENT, handleSyncNavigate);
-		};
-	});
+  useEffect(() => {
+    window.addEventListener('popstate', handleSyncNavigate)
+    window.addEventListener(NAVIGATE_EVENT, handleSyncNavigate)
 
-	return pathname;
+    return () => {
+      window.removeEventListener('popstate', handleSyncNavigate)
+      window.removeEventListener(NAVIGATE_EVENT, handleSyncNavigate)
+    }
+  })
+
+  return pathname
 }

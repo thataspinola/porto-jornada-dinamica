@@ -1,124 +1,126 @@
 /** biome-ignore-all lint/performance/noAccumulatingSpread: <> */
 /** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useRef } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { useJourneyStore } from "@/store";
-import { computePrefillValues } from "@/utils";
+import { useJourneyStore } from '@/store'
+import { computePrefillValues } from '@/utils'
 
-import { journeyStore } from "@/store/journeyStore";
-import type { JourneyDefinition } from "@/validation/schemas";
-import { buildJourneyFormSchema } from "@/validation/form";
+import { journeyStore } from '@/store/journeyStore'
+import type { JourneyDefinition } from '@/validation/schemas'
+import { buildJourneyFormSchema } from '@/validation/form'
 
-type JourneyStep = JourneyDefinition["steps"][number];
-type FormValues = Record<string, any>;
+type JourneyStep = JourneyDefinition['steps'][number]
+type FormValues = Record<string, any>
 
 export function useJourneyForm(
-	journey: JourneyDefinition,
-	currentStep: JourneyStep,
+  journey: JourneyDefinition,
+  currentStep: JourneyStep
 ) {
-	const { fields, mergeFields, services } = useJourneyStore();
-	const { schema, stepFields, defaultValues } = buildJourneyFormSchema(journey);
-	const initialValues = useRef({ ...defaultValues, ...fields }).current;
+  const { fields, mergeFields, services } = useJourneyStore()
+  const { schema, stepFields, defaultValues } = buildJourneyFormSchema(journey)
+  const initialValues = useRef({ ...defaultValues, ...fields }).current
 
-	const {
-		control,
-		register,
-		handleSubmit,
-		trigger,
-		getValues,
-		getFieldState,
-		setValue,
-		setError,
-		formState,
-		watch,
-		reset,
-	} = useForm<FormValues>({
-		resolver: zodResolver(schema),
-		defaultValues: initialValues,
-		mode: "onChange",
-		reValidateMode: "onChange",
-	});
+  const {
+    control,
+    register,
+    handleSubmit,
+    trigger,
+    getValues,
+    getFieldState,
+    setValue,
+    setError,
+    formState,
+    watch,
+    reset,
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: initialValues,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  })
 
-	const currentStepFields: string[] = stepFields[currentStep.id];
-	function canProceedToNextStep() {
-		const result = schema.safeParse(watch());
+  const currentStepFields: string[] = stepFields[currentStep.id] || []
 
-		if (result.success) true;
+  function canProceedToNextStep() {
+    const result = schema.safeParse(watch())
+    if (result.success) true
 
-		const errors = new Set(
-			result.error?.issues
-				.map((issue) => issue.path[0] as string)
-				.filter((key) => typeof key === "string"),
-		);
-		return !currentStepFields.some((field) => errors.has(field));
-	}
+    const errors = new Set(
+      result.error?.issues
+        .map((issue) => issue.path[0] as string)
+        .filter((key) => typeof key === 'string')
+    )
 
-	function applyPrefill() {
-		if (!currentStep) return;
+    return !currentStepFields.some((field) => errors.has(field))
+  }
 
-		const prefill = computePrefillValues(
-			currentStep.elements,
-			getValues(),
-			services,
-		);
+  function applyPrefill() {
+    if (!currentStep) return
 
-		if (Object.keys(prefill).length === 0) return;
+    const prefill = computePrefillValues(
+      currentStep.elements,
+      getValues(),
+      services
+    )
 
-		for (const [key, value] of Object.entries(prefill)) {
-			setValue(key as never, value as never, {
-				shouldValidate: true,
-				shouldDirty: false,
-				shouldTouch: false,
-			});
-		}
+    if (Object.keys(prefill).length === 0) return
 
-		mergeFields(prefill);
-	}
+    for (const [key, value] of Object.entries(prefill)) {
+      setValue(key as never, value as never, {
+        shouldValidate: true,
+        shouldDirty: false,
+        shouldTouch: false,
+      })
+    }
 
-	useEffect(() => {
-		const currentState = journeyStore.getState();
+    mergeFields(prefill)
+  }
 
-		if (
-			currentState._hasHydrated &&
-			Object.keys(currentState.fields).length > 0
-		) {
-			reset({ ...initialValues, ...currentState.fields } as FormValues, {
-				keepDirty: false,
-				keepTouched: false,
-			});
-		}
+  useEffect(() => {
+    const currentState = journeyStore.getState()
 
-		const unsub = journeyStore.subscribe((state, prev) => {
-			if (!prev._hasHydrated && state._hasHydrated) {
-				reset({ ...initialValues, ...state.fields } as FormValues, {
-					keepDirty: false,
-					keepTouched: false,
-				});
-			}
-		});
-		return unsub;
-	}, [reset, initialValues]);
+    if (
+      currentState._hasHydrated &&
+      Object.keys(currentState.fields).length > 0
+    ) {
+      reset({ ...initialValues, ...currentState.fields } as FormValues, {
+        keepDirty: false,
+        keepTouched: false,
+      })
+    }
 
-	useEffect(() => {
-		applyPrefill();
-	}, [currentStep, getValues, mergeFields, services, setValue]);
+    const unsub = journeyStore.subscribe((state, prev) => {
+      if (!prev._hasHydrated && state._hasHydrated) {
+        reset({ ...initialValues, ...state.fields } as FormValues, {
+          keepDirty: false,
+          keepTouched: false,
+        })
+      }
+    })
 
-	return {
-		schema,
-		stepFields,
-		control,
-		register,
-		handleSubmit,
-		trigger,
-		getValues,
-		getFieldState,
-		setValue,
-		setFormError: setError,
-		fields: watch(),
-		formState,
-		currentStepFields,
-		canProceed: canProceedToNextStep(),
-	};
+    return unsub
+  }, [reset, initialValues])
+
+  useEffect(() => {
+    applyPrefill()
+  }, [currentStep, getValues, mergeFields, services, setValue])
+
+  return {
+    schema,
+    stepFields,
+    control,
+    register,
+    handleSubmit,
+    trigger,
+    getValues,
+    getFieldState,
+    setValue,
+    setFormError: setError,
+    fields: watch(),
+    formState,
+    currentStepFields,
+    canProceed: canProceedToNextStep(),
+  }
 }
