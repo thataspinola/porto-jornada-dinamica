@@ -1,6 +1,8 @@
 'use client'
 
-import { notify } from '@/components/Core/JourneyNotifier'
+import { notify } from '@porto-stack/ui/utils'
+import { interpolateFullscreenAction } from './serviceErrorHandlers/resolveErrorAction'
+import type { FullscreenAction } from './serviceErrorHandlers/types'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import type { FieldValues, UseFormReturn } from 'react-hook-form'
@@ -61,7 +63,8 @@ function applyConditionAction(
   ctx: Record<string, unknown>,
   methods: UseFormReturn<FieldValues> | null,
   router: ReturnType<typeof useRouter>,
-  pathname: string
+  pathname: string,
+  onFullscreen?: (action: FullscreenAction) => void
 ) {
   switch (action.kind) {
     case 'notify': {
@@ -81,7 +84,8 @@ function applyConditionAction(
                   ctx,
                   methods,
                   router,
-                  pathname
+                  pathname,
+                  onFullscreen
                 )
             : undefined,
         },
@@ -113,32 +117,9 @@ function applyConditionAction(
 
       return
     }
-    case 'fullscreen': {
-      const attempt = action.attempts[0]
-
-      if (attempt)
-        notify({
-          type: 'error',
-          title: interpolate(attempt.title, ctx),
-          description: interpolate(attempt.description ?? '', ctx),
-          fullscreen: true,
-          actionButton: {
-            children: attempt.actionButton.children,
-            onClick: attempt.actionButton.onClickAction
-              ? () =>
-                  applyConditionAction(
-                    attempt.actionButton.onClickAction!,
-                    ctx,
-                    methods,
-                    router,
-                    pathname
-                  )
-              : undefined,
-          },
-        })
-
+    case 'fullscreen':
+      onFullscreen?.(interpolateFullscreenAction(action, ctx))
       return
-    }
     case 'redirect':
       navigateToUrl(action.url, router, pathname)
       return
@@ -150,7 +131,8 @@ export type ConditionGuardResult =
   | { matched: false }
 
 export function useConditionGuard<TFieldValues extends FieldValues>(
-  methods: UseFormReturn<TFieldValues>
+  methods: UseFormReturn<TFieldValues>,
+  onFullscreen?: (action: FullscreenAction) => void
 ) {
   const router = useRouter()
   const pathname = usePathname()
@@ -204,12 +186,22 @@ export function useConditionGuard<TFieldValues extends FieldValues>(
         ctx,
         (methods ?? null) as UseFormReturn<FieldValues> | null,
         router,
-        pathname
+        pathname,
+        onFullscreen
       )
 
       return result
     },
-    [methods, router, pathname, business, fields, parameters, services]
+    [
+      methods,
+      router,
+      pathname,
+      business,
+      fields,
+      parameters,
+      services,
+      onFullscreen,
+    ]
   )
 
   return { evaluate }

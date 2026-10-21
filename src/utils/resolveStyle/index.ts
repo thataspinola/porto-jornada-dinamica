@@ -49,12 +49,12 @@ export function resolveStyle(
       ? configuredValue[responsiveMode]
       : configuredValue
 
-		if (value === undefined || !parser) {
-			resolveStyle[property] = value
-		} else {
-			resolveStyle[property] = parser(value)
-		}
+    if (value === undefined || !parser) {
+      resolvedStyle[property] = value
+    } else {
+      resolvedStyle[property] = parser(value)
+    }
   }
 
-	return resolvedStyle as CSSProperties
+  return resolvedStyle as CSSProperties
 }

@@ -1,6 +1,10 @@
 import { getByPath } from '@/utils'
 
-import type { ConditionalTagProps, ResolvedConditionalTag } from './types'
+import type {
+  ConditionalTagProps,
+  ConditionalTagRule,
+  ResolvedConditionalTag,
+} from './types'
 
 const normalizeCompare = (value: unknown) =>
   String(value ?? '')

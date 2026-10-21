@@ -18,7 +18,7 @@ const SESSION_HEADER_NAME = 'hubSessionId'
 
 export async function callApi(
   input: ApiServiceInput,
-  recaptachaToken: string
+  recaptchaToken: string
 ): Promise<ServiceResult> {
   const cookieStore = await cookies()
   const sessionId = cookieStore.get(SESSION_HEADER_NAME)?.value
@@ -44,72 +44,72 @@ export async function callApi(
       metadata: { ...input.business.metadata },
     }
 
-		const httpResponse = await carbonClient.post(endpoint, data, {
+    const httpResponse = await carbonClient.post(endpoint, data, {
       headers: {
         ...input.serviceConfig.headers,
-        'X-Recaptcha-Token': recaptachaToken,
-				'X-Recaptacha-Action': `${recaptachaToken}_dynamic_journey`,,
-				...(input.variant === 'app' && {
-					'X-Recaptcha-Verification-Disabled': 'true'
-				}),
-				'porto-hub-trace-id': traceId,
-				'carbon-trace-id': traceId,
-				...(sessionId ? { 'porto-session-id': sessionId } : {})
+        'X-Recaptcha-Token': recaptchaToken,
+        'X-Recaptcha-Action': input.serviceConfig.headers['porto-action'],
+        ...(input.variant === 'app' && {
+          'X-Recaptcha-Verification-Disabled': 'true',
+        }),
+        'porto-hub-trace-id': traceId,
+        'carbon-trace-id': traceId,
+        ...(sessionId ? { 'porto-session-id': sessionId } : {}),
       },
-		})
+    })
 
-		const rawResponseSessionId = httpResponse.headers['porto-session-id']
-		const isString = typeof rawResponseSessionId === 'string'
-		const hasValue = isString && rawResponseSessionId.length > 0
-		const isNewSessionId = hasValue && rawResponseSessionId !== sessionId
+    const rawResponseSessionId = httpResponse.headers['porto-session-id']
+    const isString = typeof rawResponseSessionId === 'string'
+    const hasValue = isString && rawResponseSessionId.length > 0
+    const isNewSessionId = hasValue && rawResponseSessionId !== sessionId
 
-		if (isNewSessionId) {
-			cookieStore.set(SESSION_HEADER_NAME, rawResponseSessionId, {
-				path: '/',
-				sameSite: 'lax',
-				httpOnly: true,
-				secure: env('NEXT_PUBLIC_NODE_ENV') === 'production'
-			})
-		}
+    if (isNewSessionId) {
+      cookieStore.set(SESSION_HEADER_NAME, rawResponseSessionId, {
+        path: '/',
+        sameSite: 'lax',
+        httpOnly: true,
+        secure: env('NEXT_PUBLIC_NODE_ENV') === 'production',
+      })
+    }
 
-		if (sessionId && isNewSessionId) {
-			return {success: false, sessionRestarted: true}
-		}
+    if (sessionId && isNewSessionId) {
+      return { success: false, sessionRestarted: true }
+    }
 
-		return {success: true, data: httpResponse.data}
+    return { success: true, data: httpResponse.data }
   } catch (error) {
-		if (!(error instanceof AxiosError)) {
-			throw error
-		}
+    if (!(error instanceof AxiosError)) {
+      throw error
+    }
 
-		const rawResponseSessionId = error.response?.headers?.['porto-session-id']
-		const isString = typeof rawResponseSessionId === 'string'
-		const hasValue = isString && rawResponseSessionId.length > 0
-		const isNewSessionId = hasValue && rawResponseSessionId !== sessionId
+    const rawResponseSessionId = error.response?.headers?.['porto-session-id']
+    const isString = typeof rawResponseSessionId === 'string'
+    const hasValue = isString && rawResponseSessionId.length > 0
+    const isNewSessionId = hasValue && rawResponseSessionId !== sessionId
 
-		if (isNewSessionId) {
-			cookieStore.set(SESSION_HEADER_NAME, rawResponseSessionId, {
-				path: '/',
-				sameSite: 'lax',
-				httpOnly: true,
-				secure: env('NEXT_PUBLIC_NODE_ENV') === 'production'
-			})
-		}
+    if (isNewSessionId) {
+      cookieStore.set(SESSION_HEADER_NAME, rawResponseSessionId, {
+        path: '/',
+        sameSite: 'lax',
+        httpOnly: true,
+        secure: env('NEXT_PUBLIC_NODE_ENV') === 'production',
+      })
+    }
 
-		if (sessionId && isNewSessionId) {
-			return {success: false, sessionRestarted: true}
-		}
+    if (sessionId && isNewSessionId) {
+      return { success: false, sessionRestarted: true }
+    }
 
-		const status = error.response?.status ?? 0
-		const message = error.response?.data?.message
+    const status = error.response?.status ?? 0
+    const message = error.response?.data?.message
 
-		const errorCode =
-			status === 0
-				? SERVICE_ERROR_CODE.CONNECTION_ERROR
-				: typeof message === 'string' && message.length > 0
-					? message
-					: SERVICE_ERROR_CODE.INTERNAL_SERVER_ERROR
+    const errorCode =
+      status === 0
+        ? SERVICE_ERROR_CODE.CONNECTION_ERROR
+        : typeof message === 'string' && message.length > 0
+          ? message
+          : SERVICE_ERROR_CODE.INTERNAL_SERVER_ERROR
 
-		return {success: false, error: errorCode, statusCode: status}
-	}
+    return { success: false, error: errorCode, statusCode: status }
+  }
 }

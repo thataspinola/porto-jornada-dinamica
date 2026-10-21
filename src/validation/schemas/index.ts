@@ -7,7 +7,10 @@ export type {
   ConditionRule,
   FullscreenAttempt,
 } from './elements/conditions.schema'
-export type { selectOptionSchema } from './elements/select.schema'
+export type {
+  SelectOptionsSource,
+  selectOptionSchema,
+} from './elements/select.schema'
 export { type JourneyDefinition, journeySchema } from './journey.schema'
 export { journeyElementSchema } from './journeyElement.schema'
 export { journeyStepSchema } from './journeyStep.schema'

@@ -99,7 +99,7 @@ export const sanitize = {
    * @example sanitize.isoDate('28/02/2007') // '2007-02-28'
    */
   isoDate: (value: string): string => {
-    if (/ˆ\d{4}-\d{2}-\s{2}$/.test(value)) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
       return value
     }
 

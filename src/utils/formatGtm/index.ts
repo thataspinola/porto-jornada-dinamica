@@ -28,8 +28,8 @@ export function formatGtmText(value: unknown) {
   return text
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .replace(/<[ˆ]*>/g, '')
-    .replace('', '') // aqui precisa ter os caracteres especiais
+    .replace(/<[^>]*>/g, '')
+    .replace(/[^\p{L}\p{N}\s:|._-]/gu, '')
     .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '')
     .toLocaleLowerCase()
     .trim()

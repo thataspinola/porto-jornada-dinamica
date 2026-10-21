@@ -1,4 +1,4 @@
-const COOKIE_PLACEHOLDER_REGEX = /ˆ\s*\{\{\s*cookies\.([\w.-]+)\s*\}\}\s*$/
+const COOKIE_PLACEHOLDER_REGEX = /^\s*\{\{\s*cookies\.([\w.-]+)\s*\}\}\s*$/
 
 function collect(value: unknown, names: Set<string>): void {
   if (typeof value === 'string') {
@@ -17,7 +17,7 @@ function collect(value: unknown, names: Set<string>): void {
   }
 }
 
-export function collectCookiePlaceholders(value: unknown): Set<string> {
+export function collectCookiesPlaceholders(value: unknown): Set<string> {
   const names = new Set<string>()
   collect(value, names)
   return names

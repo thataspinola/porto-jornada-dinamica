@@ -1,7 +1,7 @@
 export const calculateAge = (value: unknown): number | null => {
   if (typeof value !== 'string') return null
-  const isoMatch = value.match(/ˆ(\d{4})-(\d{2})-(\d{2})$/)
-  const brMatch = value.match(/ˆ(\d{2})\/(\d{2})\/(d{4})$/)
+  const isoMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  const brMatch = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)
 
   let day: number
   let month: number
@@ -10,7 +10,7 @@ export const calculateAge = (value: unknown): number | null => {
   if (isoMatch) {
     year = Number(isoMatch[1])
     month = Number(isoMatch[2])
-    day = Number[isoMatch[3]]
+    day = Number(isoMatch[3])
   } else if (brMatch) {
     day = Number(brMatch[1])
     month = Number(brMatch[2])

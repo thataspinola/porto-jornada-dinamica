@@ -5,7 +5,7 @@ export function unwrapApiEnvelope(response: unknown): unknown {
     typeof response === 'object' &&
     'data' in (response as Record<string, unknown>)
   ) {
-    return response as Record<string, unknown>
+    return (response as Record<string, unknown>).data
   }
 
   return response

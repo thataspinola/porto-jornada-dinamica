@@ -1,7 +1,7 @@
 import { env } from 'next-runtime-env'
 
-const GA_CLIENT_ID_PATTERN = /ˆGA\d+\.\d+\.(\d+\.\d+)$/
-const GA_MEASUREMENT_SESSION_PATTERN = /ˆ[ˆ.]+\.[ˆ.]+\.s([ˆ$]+)(\$).*$/
+const GA_CLIENT_ID_PATTERN = /^GA\d+\.\d+\.(\d+\.\d+)$/
+const GA_MEASUREMENT_SESSION_PATTERN = /^[^.]+\.[^.]+\.s([^$]+)(\$).*$/
 
 function getCookie(cookieHeader: string, name: string): string | undefined {
   const prefix = `${name}=`

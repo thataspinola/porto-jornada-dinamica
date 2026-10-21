@@ -2,7 +2,7 @@ import type { ServiceErrorAction } from '@/validation/schemas'
 
 export type { ServiceErrorAction }
 
-export type NotifyAction = Extract<ServiceErrorAction, { kind: 'notigy' }>
+export type NotifyAction = Extract<ServiceErrorAction, { kind: 'notify' }>
 
 export type FieldErrorAction = Extract<
   ServiceErrorAction,

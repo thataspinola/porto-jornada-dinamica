@@ -149,8 +149,10 @@ export function pushEvent(event: GtmEvent): void {
   const payload = buildPayload(event)
   const analyticsUserId = getAnalyticsUserId()
 
-  window.dataLayer.push({
-    ...payload,
-    ...(analyticsUserId ? { userId: analyticsUserId } : {}),
-  })
+  window.dataLayer.push(
+    toSnakeCase({
+      ...payload,
+      ...(analyticsUserId ? { userId: analyticsUserId } : {}),
+    })
+  )
 }

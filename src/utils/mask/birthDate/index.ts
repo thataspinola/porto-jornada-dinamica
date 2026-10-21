@@ -19,7 +19,7 @@ export const birthDateMask = (value: string): string => {
   return `${numericValue.slice(0, 2)}/${numericValue.slice(2, 4)}/${numericValue.slice(4)}`
 }
 
-const ISO_DATE_PATTERN = /ˆ(\d{4})-(\d{2})-(\d{2})$/
+const ISO_DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/
 
 /**
  * Converts a form value (ISO `YYYY-MM-DD`, `DD/MM/YYYY` or raw digits) into the display representation `DD/MM/YYYY`.

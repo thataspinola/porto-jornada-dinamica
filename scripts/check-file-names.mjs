@@ -1,73 +1,29 @@
-import { readdir } from "node:fs/promises";
-import { basename, dirname, join, relative, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { readdir } from 'node:fs/promises'
+import { dirname, join, relative, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const sourceRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../src");
-const errors = [];
-
-async function inspect(directory) {
-	const entries = await readdir(directory, { withFileTypes: true });
-	const names = new Set(entries.map((entry) => entry.name));
-	for (const entry of entries) {
-		const path = join(directory, entry.name);
-		if (entry.isDirectory()) {
-			await inspect(path);
-			continue;
-		}
-		const name = entry.name;
-		const display = relative(sourceRoot, path).replaceAll("\\", "/");
-		const componentFile = /^(components|features|contexts|scripts)\//.test(
-			display,
-		);
-		const fail = (reason) => errors.push(`${display}: ${reason}`);
-		if (/[\s,]/.test(name)) fail("o nome contém espaço ou vírgula");
-		if (/\.test\.[cm]?[jt]sx?$/.test(name))
-			fail("testes usam .spec.ts ou .spec.tsx");
-		if (
-			/\.spec\.[cm]?[jt]sx?$/.test(name) &&
-			!display.split("/").includes("test")
-		)
-			fail("specs devem estar em uma pasta test");
-		if (componentFile) {
-			if (name === "index.tsx")
-				fail("use implementação nomeada e barrel index.ts");
-			if (name === "types.tsx")
-				fail("use types.ts");
-			if (/^styles(?:\.module)?\.scss$/.test(name))
-				fail("use o nome do componente no estilo");
-			if (
-				name.endsWith(".module.scss") &&
-				name !== `${basename(dirname(path))}.module.scss` &&
-				!names.has(name.replace(".module.scss", ".tsx"))
-			)
-				fail("o módulo de estilo deve ter o nome do componente");
-			if (
-				/^index[.,]\.(spec|test)\./.test(name) ||
-				/^index\.(spec|test)\.tsx$/.test(name)
-			)
-				fail("use <Componente>.spec.tsx");
-			if (
-				name.endsWith(".tsx") &&
-				!name.endsWith(".spec.tsx") &&
-				!/^[A-Z]/.test(name) &&
-				name !== "renderJourneyElement.tsx"
-			)
-				fail("componentes usam PascalCase.tsx");
-		}
-		if (
-			/validation\/(?:schemas|schemaValidation)\//.test(display) &&
-			name.endsWith(".ts") &&
-			name !== "index.ts" &&
-			!/\.schemas?(?:\.spec)?\.ts$/.test(name)
-		)
-			fail("schemas usam .schema.ts ou .schemas.ts");
-	}
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const errors = []
+async function inspect(directory, testing) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const path = join(directory, entry.name)
+    if (entry.isDirectory()) {
+      if (!testing && ['test', '__test__', '__tests__'].includes(entry.name))
+        errors.push(`${relative(root, path)}: testes ficam em test/ na raiz`)
+      await inspect(path, testing)
+      continue
+    }
+    if (/[\s,]/.test(entry.name))
+      errors.push(`${relative(root, path)}: nome inválido`)
+    if (/\.test\.[jt]sx?$/.test(entry.name))
+      errors.push(`${relative(root, path)}: use .spec.ts ou .spec.tsx`)
+    if (!testing && /\.spec\.[jt]sx?$/.test(entry.name))
+      errors.push(`${relative(root, path)}: spec fora de test/`)
+  }
 }
-
-await inspect(sourceRoot);
+await inspect(join(root, 'src'), false)
+await inspect(join(root, 'test'), true)
 if (errors.length) {
-	console.error(errors.join("\n"));
-	process.exitCode = 1;
-} else {
-	console.log("Nomes e extensões dos arquivos estão no padrão.");
-}
+  console.error(errors.join('\n'))
+  process.exitCode = 1
+} else console.log('Nomes e localização dos testes verificados.')

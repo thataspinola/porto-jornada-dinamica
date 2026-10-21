@@ -2,9 +2,9 @@ import Cookies from 'js-cookie'
 
 import { collectCookiesPlaceholders } from '../collectCookiesPlaceholders'
 
-export function readReferenceCookies(
+export function readReferencedCookies(
   payload: Record<string, unknown>
-): Record<string, unknown> {
+): Record<string, string> {
   const result: Record<string, string> = {}
 
   for (const name of collectCookiesPlaceholders(payload)) {

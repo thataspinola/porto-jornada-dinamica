@@ -6,27 +6,32 @@ const SIMULATED_TICK_INTERVAL_MS = 300
 const SIMULATED_TICK_INCREMENT = 2
 
 type SimulatedProgressConfig = {
-	from: number
-	to: number
-	complete?: boolean
+  from: number
+  to: number
+  complete?: boolean
 }
 
-export function useSimulatedProgress(from, to, complete = false) {
-	const [value, setValue] = useState(from)
+export function useSimulatedProgress({
+  from,
+  to,
+  complete = false,
+}: SimulatedProgressConfig) {
+  const [value, setValue] = useState(from)
 
-	useEffect(() => {
-		if (complete) {
-			setValue(to)
-			return
-		}
+  useEffect(() => {
+    if (complete) {
+      setValue(100)
+      return
+    }
 
-		const tickId = setInterval(
-			() => setValue((current) => Math.min(current + SIMULATED_TICK_INCREMENT, to)),
-			SIMULATED_TICK_INTERVAL_MS,
-		)
+    const tickId = setInterval(
+      () =>
+        setValue((current) => Math.min(current + SIMULATED_TICK_INCREMENT, to)),
+      SIMULATED_TICK_INTERVAL_MS
+    )
 
-		return () => clearInterval(tickId)
-	}, [to, complete])
+    return () => clearInterval(tickId)
+  }, [to, complete])
 
-	return value
+  return value
 }

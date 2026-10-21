@@ -12,7 +12,7 @@ export function interpolateTemplate(
   data: Record<string, unknown>,
   options: InterpolateOptions = {}
 ): string | undefined {
-  if (template === null) return template
+  if (template == null) return template
   const { keepMissing = false } = options
   let hasMissing = false
 

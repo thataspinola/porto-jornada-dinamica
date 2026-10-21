@@ -1,7 +1,7 @@
 import { clsx } from '@porto-stack/ui/utils'
 import type { HTMLAttributes } from 'react'
 
-import s from '../styles.component.scss'
+import s from '../styles.module.scss'
 
 export type IconContentListRootProps = HTMLAttributes<HTMLUListElement> & {
   divider?: boolean

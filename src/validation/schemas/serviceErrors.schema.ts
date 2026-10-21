@@ -4,14 +4,7 @@ import { conditionActionSchema } from '@/validation/schemas/elements/conditions.
 
 export const serviceErrorRuleSchema = z.object({
   code: z.string(),
-  action: z.union([
-    conditionActionSchema,
-    z.object({
-      type: z.literal('SET_ERROR'),
-      field: z.string(),
-      message: z.string(),
-    }),
-  ]),
+  action: conditionActionSchema,
 })
 
 export const serviceErrorsSchema = z

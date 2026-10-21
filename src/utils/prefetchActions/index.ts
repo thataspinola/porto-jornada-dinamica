@@ -54,8 +54,8 @@ async function processGetSessionEncryptedResponse(
   privateKey?: CryptoKey
 ): Promise<unknown> {
   if (typeof data !== 'string' || !privateKey) return data
-  const { plainText } = await compactDecrypt(data, privateKey)
-  const decryptedText = new TextDecoder().decode(plainText)
+  const { plaintext } = await compactDecrypt(data, privateKey)
+  const decryptedText = new TextDecoder().decode(plaintext)
   return JSON.parse(decryptedText)
 }
 
