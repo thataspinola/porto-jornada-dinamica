@@ -1,105 +1,37 @@
-/** biome-ignore-all lint/a11y/useKeyWithClickEvents: <> */
-/** biome-ignore-all lint/a11y/noStaticElementInteractions: <> */
+'use client'
 
-"use client";
-import type { ReactNode } from "react";
-import { clsx } from "@/utils";
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { Dialog as DialogPrimitive } from '@porto-stack/ui'
+import { clsx } from '@porto-stack/ui/utils'
+import type { ComponentProps } from 'react'
 
-import "./Dialog.scss";
-import type { DialogProps } from "./types";
+import styles from './Dialog.module.scss'
 
-export const Dialog = ({
-	isOpen,
-	onClose,
-	variant = "small",
-	title,
-	subtitle,
-	description,
-	icon,
-	children,
-	footer,
-	footerVariant = "row",
-	className = "",
-	...restProps
-}: DialogProps) => {
-	const [mounted, setMounted] = useState(false);
+type DialogContentProps = ComponentProps<typeof DialogPrimitive.Content>
 
-	// Garante que o portal só seja criado no cliente
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+const Content = ({ className, ...props }: DialogContentProps) => (
+  <DialogPrimitive.Content
+    className={clsx(styles.maxWidth, className)}
+    {...props}
+  />
+)
 
-	// Impede o scroll do body quando o modal está aberto
-	useEffect(() => {
-		if (isOpen) {
-			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "unset";
-		}
-		return () => {
-			document.body.style.overflow = "unset";
-		};
-	}, [isOpen]);
+type DialogFooterProps = ComponentProps<typeof DialogPrimitive.Footer> & {
+  flexDirectionRow?: boolean
+}
 
-	if (!mounted || !isOpen) return null;
+const Footer = ({
+  className,
+  flexDirectionRow = true,
+  ...props
+}: DialogFooterProps) => (
+  <DialogPrimitive.Footer
+    className={clsx(flexDirectionRow && styles.flexDirectionRow, className)}
+    {...props}
+  />
+)
 
-	const handleOverlayClick = () => onClose?.();
-
-	const overlayClasses = clsx("dialog__overlay", {
-		"is-open": isOpen,
-	});
-
-	const boxClasses = clsx("dialog__box", `--${variant}`, className, {
-		"is-open": isOpen,
-	});
-
-	return createPortal(
-		<div className={overlayClasses} onClick={handleOverlayClick} {...restProps}>
-			<div
-				role="dialog"
-				aria-modal="true"
-				className={boxClasses}
-				onClick={(e) => e.stopPropagation()}
-			>
-				{(title || subtitle || icon) && (
-					<div className="dialog__header">
-						{icon && (
-							<div className="dialog__icon">
-								{typeof icon === "object" &&
-								icon !== null &&
-								"iconName" in icon ? (
-									<span role="img" aria-label={String(icon.iconName)}>
-										{icon.iconName === "info" ? "i" : "•"}
-									</span>
-								) : (
-									(icon as ReactNode)
-								)}
-							</div>
-						)}
-						{(title || subtitle) && (
-							<div className="dialog__title-container">
-								{title && <h2 className="dialog__title">{title}</h2>}
-								{subtitle && <h3 className="dialog__subtitle">{subtitle}</h3>}
-							</div>
-						)}
-					</div>
-				)}
-
-				{description && (
-					<div className="dialog__description">{description}</div>
-				)}
-
-				{children && <div className="dialog__body">{children}</div>}
-
-				{footer && (
-					<div className={clsx("dialog__footer", `--${footerVariant}`)}>
-						{footer}
-					</div>
-				)}
-			</div>
-		</div>,
-		document.body,
-	);
-};
+export const Dialog = {
+  ...DialogPrimitive,
+  Content,
+  Footer,
+}

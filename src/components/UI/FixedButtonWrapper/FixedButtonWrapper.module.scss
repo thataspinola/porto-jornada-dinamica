@@ -1,4 +1,19 @@
-.root {
-  display: block;
-  min-width: 0;
+.fixedButtonWrapper {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: var(--ui-spacing-24) var(--ui-spacing-20);
+
+	@media (width <= 767px) {
+		:global(.journeyButton) {
+			margin-bottom: 0;
+		}
+	}
+
+	@media (width >= 768px) {
+		position: relative;
+		padding: 0;
+		border-top: none;
+	}
 }

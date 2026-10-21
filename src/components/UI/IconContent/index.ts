@@ -1,1 +1,0 @@
-export { IconContent } from "./IconContent";

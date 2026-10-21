@@ -1,4 +1,24 @@
-import type { ReactNode } from "react";
-export function Root({ children }: { children: ReactNode }) {
-	return <div>{children}</div>;
+import { clsx } from '@porto-stack/ui/utils'
+import type { HTMLAttributes } from 'react'
+
+import s from '../styles.component.scss'
+
+export type IconContentListRootProps = HTMLAttributes<HTMLUListElement> & {
+  divider?: boolean
+}
+
+export function Root({
+  divider,
+  className,
+  children,
+  ...props
+}: IconContentListRootProps) {
+  return (
+    <ul
+      className={clsx(s.iconContentList, divider && s.withDivider, className)}
+      {...props}
+    >
+      {children}
+    </ul>
+  )
 }

@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
-export function Item({ children }: { children: ReactNode }) {
-	return <li>{children}</li>;
+import type { LiHTMLAttributes } from 'react'
+
+export function Item({ children, ...props }: LiHTMLAttributes) {
+  return <li {...props}>{children}</li>
 }

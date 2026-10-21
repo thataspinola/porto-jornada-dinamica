@@ -1,3 +1,8 @@
-import type { ComponentProps } from "react";
-import type { PriceSelector } from "./PriceSelector";
-export type PriceSelectorProps = ComponentProps<typeof PriceSelector>;
+export type PriceSelectorProps = {
+	value: number
+	min: number
+	max: number
+	step: number
+	editable?: boolean
+	onChange: (value: number) => void
+}

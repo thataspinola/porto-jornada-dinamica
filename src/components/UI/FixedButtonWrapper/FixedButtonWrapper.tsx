@@ -1,15 +1,16 @@
-import type { ReactNode } from "react";
-export function FixedButtonWrapper({ children }: { children: ReactNode }) {
-	return (
-		<div
-			style={{
-				position: "sticky",
-				bottom: 0,
-				background: "white",
-				padding: "1rem",
-			}}
-		>
-			{children}
-		</div>
-	);
+import clsx from 'clsx'
+
+import styles from './FixedButtonWrapper.module.scss'
+
+interface FixedButtonWrapperProps {
+	children: React.ReactNode
+	className?: string
+}
+
+export const FixedButtonWrapper = (props: FixedButtonWrapperProps) => {
+	const {children, className} = props
+
+	return(
+		<div className={clsx(stiles.fixedButtonWrapper, className)}>{children}</div>
+	)
 }

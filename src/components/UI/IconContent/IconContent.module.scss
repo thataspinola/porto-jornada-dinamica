@@ -1,4 +1,33 @@
-.root {
-  display: block;
-  min-width: 0;
+.iconContent {
+	display: flex;
+	gap: var(--ui-spacing-16);
+	align-items: center;
+}
+
+.alignStart {
+	align-items: flex-start;
+}
+
+.icon {
+	flex-shrink: 0;
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	gap: var(--ui-spacing-4)
+}
+
+.action {
+	align-self: flex-start;
+	margin-top: var(--ui-spacing-4)
+}
+
+.actionEnd {
+	align-self: flex-end;
+}
+
+.trailing {
+	flex-shrink: 0;
+	margin-left: auto;
 }

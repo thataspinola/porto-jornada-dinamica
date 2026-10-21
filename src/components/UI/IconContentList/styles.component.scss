@@ -1,4 +1,16 @@
-.root {
-  display: block;
-  min-width: 0;
+.iconContentList {
+	display: flex;
+	flex-direction: column;
+	gap: var(--ui-spacing-16);
+	list-style: none;
+}
+
+.withDivider {
+	gap: 0;
+
+	li:not(:last-child) {
+		padding-bottom: var(--ui-spacing-16);
+		margin-bottom: var(--ui-spacing-16);
+		border-bottom: 1px solid var(--ui-colors-neutral-400);
+	}
 }

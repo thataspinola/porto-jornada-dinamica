@@ -1,152 +1,123 @@
+
 'use client'
 
-import { useState } from 'react'
-import {
-  useServiceErrorHandler,
-  type SetFormError,
-} from './useServiceErrorHandler'
-import type {
-  UseFormGetFieldState,
-  UseFormGetValues,
-  UseFormHandleSubmit,
-  UseFormTrigger,
-} from 'react-hook-form'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useCallback } from 'react'
 
-import { useJourneyStore } from '@/store'
-import { redirectTo } from '@/utils'
-import type { JourneyDefinition } from '@/validation/schemas'
-import { callService } from '@/services'
+const EXTERNAL_URL_REGEX = /^https?:\/\//i
+const HOME_ROUTE = '/'
+const EXTERNAL_BACK_PARAM = 'backUrl'
+const BACK_ORIGIN_PARAM = 'backOrigin'
 
-type FormValues = Record<string, unknown>
-
-type JourneyStep = JourneyDefinition['steps'][number]
-
-export type GoNextOptions =
-  | { type: 'navigation'; targetSlug: string }
-  | { type: 'service'; serviceName: string; targetSlug: string }
-  | { type: 'next' }
-
-type SubmittedPayload = {
-  fields: FormValues
-  error: Record<string, unknown>
-  business: Record<string, unknown>
-  services: Record<string, unknown>
+type NavigateOptions = {
+  removeSearchParams?: string[]
 }
 
-export type UseJourneyNavigationParams = {
-  setFormError: SetFormError
-  journeySlug: string
-  steps: JourneyDefinition['steps']
-  currentStep: JourneyStep | null
-  currentStepIndex: number
-  currentStepFields: string[]
-  getValues: UseFormGetValues<FormValues>
-  handleSubmit: UseFormHandleSubmit<FormValues>
-  trigger: UseFormTrigger<FormValues>
-  getFieldState: UseFormGetFieldState<FormValues>
+function isExternalUrl(destination: string) {
+  return EXTERNAL_URL_REGEX.test(destination)
 }
 
-export function useJourneyNavigation({
-  setFormError,
-  journeySlug,
-  steps,
-  currentStep,
-  currentStepIndex,
-  currentStepFields,
-  getValues,
-  handleSubmit,
-  trigger,
-  getFieldState,
-}: UseJourneyNavigationParams) {
-  const handleServiceError = useServiceErrorHandler(setFormError)
-  const { mergeFields, setError, mergeServices, business, services } =
-    useJourneyStore()
-  const [submitted, setSubmitted] = useState<SubmittedPayload | null>(null)
-
-  async function validateCurrentStep() {
-    if (!currentStep || currentStepFields.length === 0) return true
-
-    const ok = await trigger(currentStepFields)
-
-    if (!ok) {
-      const fieldErrors: FormValues = {}
-
-      for (const field of currentStepFields) {
-        const message = getFieldState(field).error?.message
-        if (message) fieldErrors[field] = message
-      }
-      setError(fieldErrors)
-      return false
-    }
-
-    setError({})
-    mergeFields(getValues())
-    return true
+function resolveInternalPath(destination: string, pathname: string) {
+  if (destination === HOME_ROUTE) {
+    return HOME_ROUTE
   }
 
-  async function goNext(options: GoNextOptions) {
-    if (!currentStep) return
+  const normalizedPath = destination.replace(/^\/+/, '')
 
-    const valid = await validateCurrentStep()
-    if (!valid) return
+  const isAbsolutePath = normalizedPath.includes('/')
+  if (isAbsolutePath) {
+    return `/${normalizedPath}`
+  }
 
-    if (options.type === 'service') {
-      const input = getValues()
+  const currentSegments = pathname.split('/').filter(Boolean)
+  const journeyBasePath =
+    currentSegments.length >= 2
+      ? `/${currentSegments[0]}/${currentSegments[1]}`
+      : `/${currentSegments[0] ?? ''}`
 
-      const result = await callService(options.serviceName, {
-        serviceName: options.serviceName,
-        fields: input,
-        business,
-      })
+  return `${journeyBasePath}/${normalizedPath}`
+}
 
-      mergeServices({ [options.serviceName]: result })
+function buildQueryWithOrigin(
+  currentQuery: string,
+  pathname: string,
+  removeSearchParams: string[] = []
+) {
+  const params = new URLSearchParams(currentQuery)
 
-      if (!result.success) {
-        const cpf = currentStep.elements.find(
-          (element) => element.type === 'CPF_INPUT'
-        )
-        handleServiceError(result, journeySlug, cpf?.config.name ?? 'taxvat')
-        setError({
-          service:
-            result.message ?? result.error ?? 'Não foi possível continuar.',
+  for (const key of removeSearchParams) params.delete(key)
+
+  if (params.has(EXTERNAL_BACK_PARAM) && !params.has(BACK_ORIGIN_PARAM)) {
+    params.set(BACK_ORIGIN_PARAM, pathname)
+  }
+
+  return params.toString()
+}
+
+function appendQuery(path: string, queryString: string) {
+  return queryString ? `${path}?${queryString}` : path
+}
+
+function isBackOrigin(backOrigin: string | null, pathname: string) {
+  return !backOrigin || backOrigin === pathname
+}
+
+export function useJourneyNavigation() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const navigateTo = useCallback(
+    (destination: string, options: NavigateOptions = {}) => {
+      if (destination.startsWith('?')) {
+        const params = new URLSearchParams(searchParams.toString())
+        const destinationParams = new URLSearchParams(destination)
+
+        destinationParams.forEach((value: string, key: string) => {
+          params.set(key, value)
         })
+
+        for (const key of options.removeSearchParams ?? []) {
+          params.delete(key)
+        }
+
+        router.push(`${pathname}?${params.toString()}`)
         return
       }
 
-      redirectTo(options.targetSlug)
-      return
-    }
+      if (isExternalUrl(destination)) {
+        window.location.assign(destination)
+        return
+      }
 
-    if (options.type === 'navigation') {
-      redirectTo(options.targetSlug)
-      return
-    }
+      const queryString = buildQueryWithOrigin(
+        searchParams.toString(),
+        pathname,
+        options.removeSearchParams
+      )
 
-    const nextStep = steps[currentStepIndex + 1]
-    if (nextStep) {
-      redirectTo(nextStep.slug)
-      return
-    }
+      const targetPath = resolveInternalPath(destination, pathname)
+      router.push(appendQuery(targetPath, queryString))
+    },
+    [router, pathname, searchParams]
+  )
 
-    handleSubmit((values) => {
-      mergeFields(values)
-      setError({})
-      setSubmitted({ fields: values, error: {}, business, services })
-    })()
-  }
+  const goBack = useCallback(
+    (backSlug?: string | null) => {
+      const externalBackUrl = searchParams.get(EXTERNAL_BACK_PARAM)
+      const backOrigin = searchParams.get(BACK_ORIGIN_PARAM)
 
-  function goPrev() {
-    if (!currentStep?.backStepSlug) return
-    const backStepSlug = currentStep.backStepSlug
+      if (externalBackUrl && isBackOrigin(backOrigin, pathname)) {
+        navigateTo(externalBackUrl)
+        return
+      }
 
-    mergeFields(getValues())
+      if (!backSlug) return
 
-    if (backStepSlug === '/') {
-      redirectTo('/')
-      return
-    }
-    redirectTo(backStepSlug)
-  }
+      navigateTo(backSlug)
+    },
+    [navigateTo, searchParams, pathname]
+  )
 
-  return { goNext, goPrev, submitted, setSubmitted }
+  return { navigateTo, goBack }
 }

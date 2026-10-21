@@ -365,7 +365,7 @@ import {
   IconWindow,
   IconWorker,
   IconWrenchTool,
-  IconYoutube,
+  IconYoutube
 } from '@porto-stack/icons'
 
 export const icons = {
@@ -736,5 +736,5 @@ export const icons = {
   'wrench-tool': IconWrenchTool,
   'xls-file': IconFileXLS,
   pause: IconPause,
-  play: IconPlay,
+  play: IconPlay
 }

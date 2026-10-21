@@ -1,4 +1,49 @@
-.root {
-  display: block;
-  min-width: 0;
+
+.container {
+  --step-button-size: 4.8rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-24);
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: var(--step-button-size) minmax(0, 1fr) var(--step-button-size);
+  gap: var(--ui-spacing-8);
+  align-items: center;
+}
+
+.stepButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--step-button-size);
+  height: var(--step-button-size);
+  cursor: pointer;
+  background: none;
+  border: 0;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.sliderThumbIcon {
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.bottomContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-8);
+}
+
+.bounds {
+  display: flex;
+  justify-content: space-between;
 }

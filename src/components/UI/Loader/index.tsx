@@ -1,13 +1,12 @@
-import type { HTMLAttributes, JSX } from "react";
-
-import { clsx } from "@/utils";
-import "./Loader.scss";
+import { clsx } from '@porto-stack/ui/utils'
+import type { HTMLAttributes, JSX } from 'react'
+import './styles.scss'
 
 type LoaderProps = HTMLAttributes<HTMLSpanElement> & {
-	color?: any;
-	size?: number;
-	className?: string;
-};
+  color?: string
+  size?: number
+  className?: string
+}
 
 /**
  * Componente Loader que exibe um indicador de carregamento animado.
@@ -32,24 +31,25 @@ type LoaderProps = HTMLAttributes<HTMLSpanElement> & {
  *
  * @returns {JSX.Element} Componente Loader renderizado
  */
-
 export const Loader = ({
-	color = "neutral-900",
-	size = 24,
-	className,
-	...props
+  color = 'neutral-900',
+  size = 24,
+  className,
+  ...props
 }: LoaderProps): JSX.Element => {
-	const classes = clsx("loader", `--border-${color}`, className);
+  const classes = clsx('loader', `--border-${color}`, className)
 
-	return (
-		<span
-			className={classes}
-			style={{
-				width: size,
-				height: size - 1,
-				borderBottomColor: "transparent",
-			}}
-			{...props}
-		/>
-	);
-};
+  return (
+    <span
+      role='status'
+      aria-label='Carregando'
+      className={classes}
+      style={{
+        width: size,
+        height: size,
+        borderBottomColor: 'transparent',
+      }}
+      {...props}
+    />
+  )
+}

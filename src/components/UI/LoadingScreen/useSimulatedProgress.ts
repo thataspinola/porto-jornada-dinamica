@@ -1,17 +1,32 @@
-"use client";
-import { useEffect, useState } from "react";
-export function useSimulatedProgress(complete = false) {
-	const [progress, setProgress] = useState(0);
+'use client'
+
+import { useEffect, useState } from 'react'
+
+const SIMULATED_TICK_INTERVAL_MS = 300
+const SIMULATED_TICK_INCREMENT = 2
+
+type SimulatedProgressConfig = {
+	from: number
+	to: number
+	complete?: boolean
+}
+
+export function useSimulatedProgress(from, to, complete = false) {
+	const [value, setValue] = useState(from)
+
 	useEffect(() => {
 		if (complete) {
-			setProgress(100);
-			return;
+			setValue(to)
+			return
 		}
-		const timer = setInterval(
-			() => setProgress((p) => Math.min(90, p + 5)),
-			500,
-		);
-		return () => clearInterval(timer);
-	}, [complete]);
-	return progress;
+
+		const tickId = setInterval(
+			() => setValue((current) => Math.min(current + SIMULATED_TICK_INCREMENT, to)),
+			SIMULATED_TICK_INTERVAL_MS,
+		)
+
+		return () => clearInterval(tickId)
+	}, [to, complete])
+
+	return value
 }

@@ -1,1 +1,1 @@
-export { ChipsImage } from "./ChipsImage";
+export { ChipsImage, type ChipsImageVariant } from './ChipsImage'
