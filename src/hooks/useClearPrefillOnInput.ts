@@ -29,7 +29,7 @@ export function useClearPrefillOnInput({
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.ctrlKey || event.metqaKey) return
+      if (event.ctrlKey || event.metaKey) return
 
       if (
         !shouldReplace ||

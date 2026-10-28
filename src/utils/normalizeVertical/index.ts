@@ -10,7 +10,7 @@ export type VerticalValue = (typeof verticalValues)[number] | ''
 
 export function normalizeVertical(value?: string | null): VerticalValue {
   if (typeof value !== 'string') return ''
-  const normalizedValue = value.trim().toLocaleUpperCase()
+  const normalizedValue = value.trim().toLocaleLowerCase()
 
   if (
     verticalValues.includes(normalizedValue as (typeof verticalValues)[number])

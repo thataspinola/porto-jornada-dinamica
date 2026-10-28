@@ -68,13 +68,13 @@ function decimalToBase64(decimalNumber) {
 
 function base64EncodeString(inputString) {
   const buffer = Buffer.from(inputString, 'utf8')
-  const base64String = Buffer.toString('base64')
+  const base64String = buffer.toString('base64')
   const compactedBase64String = base64String.replace(/=+$/, '')
   return compactedBase64String
 }
 
 function base64EncodeIp(inputIp: string) {
-  const validIpRegex = /ˆ[0-9]{1,3}(\.[0-9]{1,3}){3}$/gm
+  const validIpRegex = /^[0-9]{1,3}(\.[0-9]{1,3}){3}$/gm
   let valueToConvert = '000000000000'
 
   if (validIpRegex.test(inputIp)) {

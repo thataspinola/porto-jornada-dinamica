@@ -95,3 +95,9 @@ Em português, padrão do projeto:
 npx tsc --noEmit
 npx biome check src
 ```
+
+## Integração com o código original
+
+Preserve os schemas, mensagens e contratos recebidos do projeto original. Não recrie schemas permissivos apenas para aceitar fixtures antigas. Corrija os consumidores e mantenha adapters de formato explícitos quando a compatibilidade for necessária.
+
+Os testes ficam exclusivamente em `test/src/validation`, fora desta pasta. Exercite o registry pelo contrato declarativo, incluindo refinamentos, defaults e campos aninhados. O preset de lint é o corporativo, sem alternativa específica de uma máquina.

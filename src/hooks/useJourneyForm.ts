@@ -22,6 +22,13 @@ export function useJourneyForm(
   const { schema, stepFields, defaultValues } = buildJourneyFormSchema(journey)
   const initialValues = useRef({ ...defaultValues, ...fields }).current
 
+  const methods = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: initialValues,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  })
+
   const {
     control,
     register,
@@ -34,18 +41,13 @@ export function useJourneyForm(
     formState,
     watch,
     reset,
-  } = useForm<FormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: initialValues,
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-  })
+  } = methods
 
-  const currentStepFields: string[] = stepFields[currentStep.id] || []
+  const currentStepFields: string[] = stepFields[currentStep?.id] || []
 
   function canProceedToNextStep() {
     const result = schema.safeParse(watch())
-    if (result.success) true
+    if (result.success) return true
 
     const errors = new Set(
       result.error?.issues
@@ -108,6 +110,7 @@ export function useJourneyForm(
   }, [currentStep, getValues, mergeFields, services, setValue])
 
   return {
+    methods,
     schema,
     stepFields,
     control,

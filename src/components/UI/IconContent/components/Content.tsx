@@ -1,5 +1,5 @@
 import { clsx } from '@porto-stack/ui/utils'
-import HTMLAttributes from 'react'
+import type { HTMLAttributes } from 'react'
 
 import s from '../IconContent.module.scss'
 
@@ -9,7 +9,7 @@ export function Content({
   className,
   children,
   ...props
-}: IconContextContextProps) {
+}: IconContentContentProps) {
   return (
     <div className={clsx(s.text, className)} {...props}>
       {children}

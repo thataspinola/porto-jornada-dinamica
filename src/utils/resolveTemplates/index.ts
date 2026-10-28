@@ -1,7 +1,7 @@
 import { getByPath } from '../getByPath/index'
 import { interpolateTemplate } from '../interpolateTemplate/index'
 
-const FULL_PLACEHOLDER_REGEX = /ˆ\s*\{\{\s*([\w.-]+)\s*\}\}\s*$/
+const FULL_PLACEHOLDER_REGEX = /^\s*\{\{\s*([\w.-]+)\s*\}\}\s*$/
 const COOKIES_SCOPE_PREFIX = 'cookies.'
 
 function isMissing(value: unknown): boolean {
@@ -25,7 +25,7 @@ function resolve(value: unknown, data: Record<string, unknown>): unknown {
   if (Array.isArray(value)) return resolveArray(value, data)
 
   if (value !== null && typeof value === 'object') {
-    return resolveObject(value as Record<string, unknown>)
+    return resolveObject(value as Record<string, unknown>, data)
   }
 
   return value

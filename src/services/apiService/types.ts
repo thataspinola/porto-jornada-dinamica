@@ -2,7 +2,7 @@ import type { JourneyDefinition } from '@/validation/schemas'
 
 export interface ServiceConfig {
   headers: Record<string, string>
-  additionalPayload?: Record<string, string>
+  additionalPayload?: Record<string, unknown>
   clientCookies?: Record<string, string>
   mockResponse?: {
     data: Record<string, unknown>

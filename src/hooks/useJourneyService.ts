@@ -17,7 +17,7 @@ import {
 import { ensureAnalyticsUserId } from '@/utils/ensureAnalyticsUserId'
 import { recaptcha } from '@/utils/recaptchaGenerator'
 
-import { useJourneyStore } from '@/store/journeyStore'
+import { useJourneyStore, type JourneyState } from '@/store/journeyStore'
 
 import { JourneyVariantContext } from './journeyVariantContext'
 
@@ -41,7 +41,7 @@ type BusinessMetadata = {
   [key: string]: string | undefined
 }
 
-const isDev = env('NEXT_PUBLIC_NODE_ENV') !== 'production'
+const isDev = env('NEXT_PUBLIC_NODE_ENV') === 'development'
 
 async function restartJourney() {
   useJourneyStore.getState().reset()

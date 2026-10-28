@@ -4,26 +4,21 @@ import { useJourneyStore } from '@/store'
 import type { JourneyDefinition } from '@/validation/schemas'
 
 import { useJourneyForm } from './useJourneyForm'
-import { useJourneyNavigation } from './useJourneyNavigation'
+import { useJourneyActions } from './useJourneyActions'
 import { useJourneySteps } from './useJourneySteps'
 
-export type { GoNextOptions } from './useJourneyNavigation'
+export type { GoNextOptions } from './useJourneyActions'
 
 export function useJourneyController(journey: JourneyDefinition) {
   const steps = useJourneySteps(journey)
   const form = useJourneyForm(journey, steps.currentStep)
 
-  const navigation = useJourneyNavigation({
-    steps: steps.steps,
+  const navigation = useJourneyActions({
+    journey,
     currentStep: steps.currentStep,
     currentStepIndex: steps.currentStepIndex,
     currentStepFields: form.currentStepFields,
-    getValues: form.getValues,
-    handleSubmit: form.handleSubmit,
-    trigger: form.trigger,
-    getFieldState: form.getFieldState,
-    setFormError: form.setFormError,
-    journeySlug: journey.slug,
+    methods: form.methods,
   })
 
   const {
@@ -44,19 +39,20 @@ export function useJourneyController(journey: JourneyDefinition) {
     currentStepIndex: steps.currentStepIndex,
     sortedElements: steps.elements,
     navigationElements: steps.navigationElements,
+    methods: form.methods,
     register: form.register,
     control: form.control,
     formState: form.formState,
     getValues: form.getValues,
     fields: form.fields,
-    canProceed: hasHydrated && form.canProceed,
+    canProceed: hasHydrated && form.canProceed && !navigation.isLoading,
     business,
     services,
     storedError,
     storedErrorEntries,
+    fullscreen: navigation.fullscreen,
+    onFullscreenAction: navigation.onFullscreenAction,
     goNext: navigation.goNext,
     goPrev: navigation.goPrev,
-    submitted: navigation.submitted,
-    setSubmitted: navigation.setSubmitted,
   }
 }

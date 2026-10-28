@@ -10,7 +10,7 @@ export function toSnakeCase(
   if (typeof input === 'string') {
     return input
       .replace(/([A-Z])/g, '_$1')
-      .replace(/ˆ_/, '')
+      .replace(/^_/, '')
       .toLowerCase()
   }
 
@@ -18,7 +18,7 @@ export function toSnakeCase(
 
   for (const key in input) {
     if (Object.hasOwn(input, key)) {
-      result[toSnakeCase(key)]
+      result[toSnakeCase(key)] = input[key]
     }
   }
 

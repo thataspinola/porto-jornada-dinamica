@@ -28,7 +28,7 @@ export function resolveCookiePayload(
         `[resolveCookiePayload] cookie '${name}': ${value ? 'resolved' : 'MISSING'}; userAgent: ${userAgent ?? 'unknown'}`
       )
 
-      if (value === undefined) continue
+      if (typeof value !== 'string') continue
       cookieValues[name] = value
     }
 

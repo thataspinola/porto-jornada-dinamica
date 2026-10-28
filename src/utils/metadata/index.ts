@@ -18,11 +18,14 @@ export const Metada = ({ organizationId }: { organizationId: string }) => {
     const googleAnalytics = await resolveGoogleAnalyticsMetadata()
 
     mergeBusiness({
-      sessionId: organizationId,
-      ipAddress: userAddressIP,
-      userAgent: window.navigator.userAgent,
-      ...marketingParams,
-      ...googleAnalytics,
+      metadata: {
+        ...useJourneyStore.getState().business.metadata,
+        sessionId: organizationId,
+        ipAddress: userAddressIP,
+        userAgent: window.navigator.userAgent,
+        ...marketingParams,
+        ...googleAnalytics,
+      },
     })
   }
 

@@ -11,7 +11,7 @@ import { useShallow } from 'zustand/shallow'
 
 import { interpolateTemplate } from '@/utils'
 
-import { useJourneyStore } from '@/store/journeyStore'
+import { useJourneyStore, type JourneyState } from '@/store/journeyStore'
 
 import { useJourneyNavigation } from '@/hooks/useJourneyNavigation'
 

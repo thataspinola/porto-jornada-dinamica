@@ -3,9 +3,11 @@
 import { Notifier } from '@porto-stack/ui'
 import { QueryClientProvider as TanstackProvider } from '@tanstack/react-query'
 
-import { queryClient } from '@/lib/queryClient'
+import { createQueryClient } from '@/lib/queryClient'
+import { useState, type ReactNode } from 'react'
 
-export const QueryClientProvider = ({ children }: { children: any }) => {
+export const QueryClientProvider = ({ children }: { children: ReactNode }) => {
+  const [queryClient] = useState(createQueryClient)
   return (
     <>
       <Notifier />

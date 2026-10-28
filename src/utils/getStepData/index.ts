@@ -15,7 +15,10 @@
  * console.log(stepData.isLast);   // false
  * }
  */
-export const getStepData = (steps: unknown[], currentSlug: string) => {
+export const getStepData = <T extends { slug: string }>(
+  steps: T[],
+  currentSlug: string
+) => {
   const index = steps.findIndex((s) => s.slug === currentSlug)
   if (index === -1) return null
 

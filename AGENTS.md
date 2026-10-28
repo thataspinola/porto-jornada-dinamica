@@ -1,119 +1,36 @@
-# AGENTS.md — Jornada Dinâmica
+# Jornada Dinâmica
 
-Regras gerais do projeto. Cada pasta importante tem seu próprio `AGENTS.md` com regras específicas (sempre leia o mais próximo do arquivo que você está editando).
+Leia este arquivo e o AGENTS.md mais próximo antes de editar. Os componentes, serviços e contratos originais existentes são a referência de produção. Preserve seu estilo, organização, nomes, propriedades e integrações; corrija consumidores e erros de transcrição sem reconstruir versões simplificadas desses contratos.
 
-## Stack
+## Organização
 
-- **Next.js 16** (App Router, Turbopack) + **React 19**
-- **TypeScript** com `strict: false` mas com `forceConsistentCasingInFileNames`
-- **Zod** para schemas/validações
-- **react-hook-form** + `@hookform/resolvers/zod`
-- **Zustand** (com `persist`) para estado global
-- **TanStack Query** para data fetching
-- **Biome** para lint + format (não use ESLint/Prettier)
-- **Vitest** + Testing Library
-- **SCSS Modules** (`*.module.scss`) para estilos por componente
-- **@porto-stack/ui** e **@porto-stack/icons** como design system
+- `src/app`: rotas e composição da aplicação.
+- `src/components/Core`: orquestração e renderização da jornada.
+- `src/components/Elements`: integração entre schemas, formulário e componentes.
+- `src/components/UI`: apresentação e composição do design system corporativo.
+- `src/hooks`: estado e efeitos React, consultas e ações da jornada.
+- `src/services`: adapters do backend e contratos de integração.
+- `src/store`: estado da jornada, navegação e hidratação.
+- `src/validation`: schemas, validadores de domínio, primitivos e montagem de formulário.
+- `src/utils`: transformações e integrações auxiliares existentes.
+- `test`: todos os specs e suporte; nunca criar testes dentro de `src`.
 
-## Comandos
+## Padrões
 
-```sh
-npm run dev          # next dev --turbopack
-npm run build        # next build
-npm run lint         # biome lint ./src (sem alterar arquivos)
-npm run lint:fix     # biome lint --write ./src
-npm run format       # biome format --write ./src
-npm run format:check # biome format ./src
-npm run check:imports # valida resolução dos imports locais
-npm run check:empty  # valida ausência de arquivos vazios
-npm run check:names  # valida nomes e extensões em src/
-npm run type-check   # tsc --noEmit
-npm run test         # vitest run
-npm run test:watch   # vitest
-```
+Use TypeScript, React, Next, Zod, React Hook Form, Zustand e TanStack Query conforme os módulos existentes. Mantenha Vitest como runner único e o preset Biome corporativo. Preserve componentes compostos, `index.tsx`, `styles.module.scss`, barrels e arquivos de tipos conforme a pasta de produção; não renomeie módulos apenas para impor uma convenção diferente.
 
-**Antes de finalizar qualquer alteração:** rode `npm run type-check` e `npm run lint`.
+Prefira `@/` entre domínios e imports relativos para composição interna da pasta. Separe dependências de servidor das de cliente: não exporte leitura de arquivos, segredos ou adapters de backend em barrels consumidos pelo navegador.
 
-## Estrutura de alto nível
+## Responsabilidades e qualidade
 
-```bash
-src/
-├── app/             ← rotas Next (App Router), pages, layouts, error boundaries.
-├── components/
-│   ├── Core/        ← componentes de orquestração (containers com lógica)
-│   ├── Elements/    ← componentes de elemento de jornada (1:1 com schema)
-│   └── UI/          ← componentes de apresentação pura (sem regra de negócio)
-├── features/        ← código vertical por feature (ex.: fcdc)
-├── hooks/           ← hooks reutilizáveis cross-feature
-├── lib/             ← infra (axios, query client, auth)
-├── scripts/         ← integrações third-party client-side (GTM, VWO, etc.)
-├── services/        ← chamadas server-side ('use server'); ver AGENTS.md local
-├── store/           ← Zustand stores globais
-├── utils/           ← funções puras reutilizáveis
-└── validation/      ← schemas Zod da jornada + form schema builder
-```
+Aplique SOLID para resolver dependências concretas: UI não chama backend; Elements ligam contratos ao formulário; hooks coordenam efeitos; services adaptam o protocolo; schemas validam estruturas; utils transformam dados. Evite duplicação e componentes genéricos que substituam implementações de produção. Não introduza interfaces ou classes sem necessidade de substituição real.
 
-## Convenções universais
+Use tipos derivados dos contratos existentes. Prefira nomes claros, retornos explícitos e funções com uma responsabilidade. Não altere regra comercial, nomes de headers, cookies ou eventos sem evidência no contrato. Erros devem continuar como erros; não invente taxas, produtos, elegibilidade ou respostas de sucesso.
 
-### Imports
+Não adicione configurações exclusivas de um ambiente de desenvolvimento, caminhos absolutos, aliases de pacotes corporativos para dublês, presets locais alternativos, shims de tipos ou endpoints simulados à aplicação. Não versionar credenciais, logs, relatórios de execução ou mensagens de conversa.
 
-- **Sempre** use o alias `@/...` para imports cross-folder. Nunca `../../../`.
-- Imports relativos `./xxx` só dentro da mesma pasta.
-- Importe pelo **barrel** da pasta (`@/utils`, `@/components/UI`) em vez de caminho profundo.
-- Ordem: externos → `@/...` → relativos. O perfil corporativo pode organizar imports automaticamente.
+## Validação e entrega
 
-### Nomes
+Execute `npm run check:imports`, `npm run check:names`, `npm run check:empty`, `npm run type-check`, `npm run lint` e os testes relevantes. Execute `npm run test:coverage`; mantenha os quatro limites globais em 90% sem reduzir o conjunto de produção. E2E exige o ambiente descrito em `test/AGENTS.md`.
 
-- Componentes em `PascalCase.tsx`; exportações no barrel `index.ts`.
-- Hooks: `useNomeDoHook.ts` em camelCase.
-- Funções e variáveis: camelCase.
-- Tipos e componentes: PascalCase.
-- Schemas Zod: `<nome>.schema.ts` (apenas em `src/validation/schemas/`).
-- Constantes globais: `SCREAMING_SNAKE_CASE`.
-- Mensagens de UI e erro em **português** (padrão do projeto).
-
-### Componentes
-
-- Server Component por padrão. Use `"use client"` **apenas** quando precisar de hook React, evento DOM, ou store cliente.
-- Server actions e código `next-runtime-env` ficam em arquivos com `"use server"` no topo.
-- Estilo via `*.module.scss` ao lado do componente. Importe como `import styles from './X.module.scss'`.
-
-### TypeScript
-
-- Evite `any`. Quando inevitável, comente com `// biome-ignore lint/suspicious/noExplicitAny: <motivo>` e justifique.
-- Prefira tipos derivados (`Extract<Union, ...>`, `infer`, `z.infer<>`) ao invés de duplicar shapes.
-- Não adicione docstrings/comentários em código que não está sendo alterado.
-
-### Git
-
-- Branches: `feat/...`, `refactor/...`, `fix/...`, `chore/...`.
-- Use `git mv` ao mover/renomear arquivos para preservar histórico.
-- Não use `--force`, `--no-verify`, `git reset --hard` em código compartilhado sem confirmação.
-
-## Onde aprender padrões específicos
-
-| Tarefa                                         | AGENTS.md a consultar                                                                                                         |
-| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| Adicionar/editar elemento da jornada           | [src/components/Elements/AGENTS.md](src/components/Elements/AGENTS.md) e [src/validation/AGENTS.md](src/validation/AGENTS.md) |
-| Mexer em container/orquestrador (form, render) | [src/components/Core/AGENTS.md](src/components/Core/AGENTS.md)                                                                |
-| Criar componente visual reutilizável           | [src/components/UI/AGENTS.md](src/components/UI/AGENTS.md)                                                                    |
-| Chamar backend (API)                           | [src/services/AGENTS.md](src/services/AGENTS.md)                                                                              |
-| Criar/editar validação ou schema               | [src/validation/AGENTS.md](src/validation/AGENTS.md)                                                                          |
-| Criar função util / máscara                    | [src/utils/AGENTS.md](src/utils/AGENTS.md)                                                                                    |
-| Estado global (Zustand)                        | [src/store/AGENTS.md](src/store/AGENTS.md)                                                                                    |
-| Hook customizado                               | [src/hooks/AGENTS.md](src/hooks/AGENTS.md)                                                                                    |
-| Código de feature isolada                      | [src/features/AGENTS.md](src/features/AGENTS.md)                                                                              |
-
-## Disciplina
-
-- Não adicione features, refatorações ou "melhorias" além do que foi pedido.
-- Não crie helpers/abstrações para uso único.
-- Não valide cenários impossíveis — só nas bordas do sistema.
-- Não crie markdowns de documentação sem ser pedido.
-
-## Testes
-
-- Specs devem estar em uma pasta `test`, como `src/hooks/test/useNavigationLock.spec.tsx`. Não use `.test` ou `__test__`.
-- Integração usa `.integration.spec.ts(x)`, funcional usa `.functional.spec.tsx`; E2E vive em `test/e2e` e também usa Vitest.
-- Execute `npm run test:coverage` e mantenha linhas, instruções, funções e branches acima de 90%. Não retire código de produção do relatório para atingir a meta.
-- Execute `npm run test:e2e` com Chromium instalado. Backend local controlado não equivale a homologação corporativa.
+Use Conventional Commits e branches `fix/`, `feat/`, `refactor/` ou `chore/`. Preserve alterações do usuário. Não use force push ou desative verificações para concluir uma entrega. Dependências indisponíveis e verificações bloqueadas devem ser informadas com precisão.

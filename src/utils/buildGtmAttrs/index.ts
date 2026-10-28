@@ -13,7 +13,7 @@ type BaseInput = {
 }
 
 type FormatInputInput = BaseInput & {
-  kinf: 'format-input'
+  kind: 'format-input'
   label: string
 }
 
@@ -32,46 +32,46 @@ type ClickComponentInput = BaseInput & {
 }
 
 export type BuildGtmAttrsInput =
-	| FormatInputInput
-	| ButtonInput
-	| ClickComponentInput
+  | FormatInputInput
+  | ButtonInput
+  | ClickComponentInput
 
 function joinSubname(parts: Array<string | undefined>): string {
-	return parts
-		.filter((part): part id string => Boolean(part?.trim()))
-		.map((part) => formatGtmText(part))
-		.filter(Boolean)
-		.join(':')
+  return parts
+    .filter((part): part is string => Boolean(part?.trim()))
+    .map((part) => formatGtmText(part))
+    .filter(Boolean)
+    .join(':')
 }
 
-export function buildGrmAttrs(input: BuildGtmAttrsInput): GtmDataAttrs {
-	const name = formatGtmText(input.stepTitle)
+export function buildGtmAttrs(input: BuildGtmAttrsInput): GtmDataAttrs {
+  const name = formatGtmText(input.stepTitle)
 
-	if (input.kind === 'format-input') {
-		return {
-			'data-gtm-type': 'form',
-			'data-gtm-form': 'input',
-			'data-gtm-name': name,
-			'data-gtm-subname': formatGtmText(input.label)
-		}
-	}
+  if (input.kind === 'format-input') {
+    return {
+      'data-gtm-type': 'form',
+      'data-gtm-form': 'input',
+      'data-gtm-name': name,
+      'data-gtm-subname': formatGtmText(input.label),
+    }
+  }
 
-	if(input.kind === 'button') {
-		return {
-			'data-gtm-type': 'click',
-			'data-gtm-clicktype': 'button',
-			'data-gtm-name': name,
-			'data-gtm-subname': formatGtmText(input.label)
-		}
-	}
+  if (input.kind === 'button') {
+    return {
+      'data-gtm-type': 'click',
+      'data-gtm-clicktype': 'button',
+      'data-gtm-name': name,
+      'data-gtm-subname': formatGtmText(input.label),
+    }
+  }
 
-	const target = input.target ?? 'self'
-	const clicktype = `${formatGtmText(input.componentName)}-${target}`
+  const target = input.target ?? 'self'
+  const clicktype = `${formatGtmText(input.componentName)}-${target}`
 
-	return {
-		'data-gtm-type': 'click',
-		'data-gtm-clicktype': clicktype,
-		'data-gtm-name': name,
-		'data-gtm-subname': joinSubname([input.title, input.subtitle, input.label])
-	}
+  return {
+    'data-gtm-type': 'click',
+    'data-gtm-clicktype': clicktype,
+    'data-gtm-name': name,
+    'data-gtm-subname': joinSubname([input.title, input.subtitle, input.label]),
+  }
 }
