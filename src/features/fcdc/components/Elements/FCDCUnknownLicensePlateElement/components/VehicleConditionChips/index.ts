@@ -1,1 +1,1 @@
-export * from "./VehicleConditionChips";
+export * from './VehicleConditionChips'

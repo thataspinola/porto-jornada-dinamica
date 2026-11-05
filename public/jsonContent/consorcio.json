@@ -1,33 +1,104 @@
 {
-  "id": "consorcio",
-  "name": "Consórcio",
+  "id": "consorcio01",
+  "name": "consorcio",
   "slug": "consorcio",
+  "backStepSlug": "/",
+  "completion": {
+    "type": "FINAL_SUCCESS"
+  },
   "steps": [
     {
-      "id": "consorcio-inicio",
-      "name": "Início",
-      "slug": "inicio",
+      "id": "cnsbemvindas",
+      "name": "Boas-vindas",
+      "slug": "boas-vindas",
+      "order": 0,
+      "showProgressBar": false,
+      "mobileBg": "seguro-900",
+      "backStepSlug": "/",
       "elements": [
         {
-          "id": "consorcio-title",
-          "type": "TITLE",
+          "id": "cnswelcome",
+          "type": "WELCOME",
+          "order": 0,
           "config": {
-            "text": "Consórcio"
+            "titlePartToHighlight": "Seu bem mais perto",
+            "title": "Seu bem mais perto com o Consórcio Porto Bank",
+            "subtitle": "Realize seus planos sem pagar juros e com parcelas que cabem no seu bolso",
+            "iconContentList": {
+              "items": [
+                {
+                  "iconName": "calculator",
+                  "title": "Simule de forma simples e rápida"
+                },
+                {
+                  "iconName": "star-check",
+                  "title": "Escolha o melhor plano para você"
+                },
+                {
+                  "iconName": "computer-and-smartphone",
+                  "title": "Contrate 100% online"
+                }
+              ]
+            }
           }
         },
         {
-          "id": "consorcio-description",
-          "type": "PARAGRAPH",
-          "config": {
-            "text": "Conheça as opções disponíveis para você."
-          }
-        },
-        {
-          "id": "consorcio-navigation",
+          "id": "cnswelcomecta",
           "type": "NAVIGATION",
+          "order": 1,
           "config": {
-            "label": "Conhecer produto",
-            "url": "https://www.portoseguro.com.br/consorcio"
+            "label": "Simular sem compromisso",
+            "url": "/consorcio/produto",
+            "fixed": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsproduto",
+      "name": "Produto",
+      "slug": "produto",
+      "order": 1,
+      "showProgressBar": false,
+      "backStepSlug": "consorcio/boas-vindas",
+      "elements": [
+        {
+          "id": "cnsprodutotitle",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Qual sonho você deseja tirar do papel?",
+            "color": "seguro-900"
+          }
+        },
+        {
+          "id": "cnsprodutoopcoes",
+          "type": "OPTION_CARD_LIST",
+          "order": 1,
+          "config": {
+            "name": "tipoBem",
+            "options": [
+              {
+                "icon": {
+                  "icon": "home",
+                  "color": "seguro-900"
+                },
+                "title": "Imóvel",
+                "description": "Casas, apartamentos, terrenos e imóveis comerciais",
+                "value": "IMV",
+                "url": "/consorcio-imovel/valor"
+              },
+              {
+                "icon": {
+                  "icon": "car",
+                  "color": "seguro-900"
+                },
+                "title": "Carro",
+                "description": "Carros novos ou semi novos",
+                "value": "AUT",
+                "url": "/consorcio-veiculo/valor"
+              }
+            ]
           }
         }
       ]

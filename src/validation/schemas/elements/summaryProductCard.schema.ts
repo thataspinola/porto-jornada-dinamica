@@ -17,6 +17,6 @@ export const summaryProductCardElementSchema = baseElementSchema.extend({
     drawerSlug: z.string().default('cobertura'),
     itemListName: z.string().optional(),
     itemListId: z.string().optional(),
-    discount: z.number().optional(),
-  }),
+    discount: z.number().optional()
+  })
 })

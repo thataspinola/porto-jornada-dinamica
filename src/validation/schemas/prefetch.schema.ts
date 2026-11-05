@@ -20,10 +20,10 @@ export const prefetchSchema = z.object({
       'select_promotion',
       'add_to_cart',
       'lead',
-      'select_content',
+      'select_content'
     ])
     .optional(),
-  alertAction: z.string().optional(),
+  alertAction: z.string().optional()
 })
 
 export type PrefetchDefinition = z.infer<typeof prefetchSchema>

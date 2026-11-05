@@ -8,6 +8,6 @@ export const biologicalSexElementSchema = baseElementSchema.extend({
     name: z.string().default('biologicalGender'),
     label: z.string().default('Sexo biológico'),
     required: z.boolean().default(false),
-    showIntersex: z.boolean().default(true),
-  }),
+    showIntersex: z.boolean().default(true)
+  })
 })

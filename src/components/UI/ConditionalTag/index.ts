@@ -3,5 +3,5 @@ export { resolveConditionalTag } from './resolveConditionalTag'
 export type {
   ConditionalTagProps,
   ConditionalTagRule,
-  ResolvedConditionalTag,
+  ResolvedConditionalTag
 } from './types'

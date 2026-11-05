@@ -1,9 +1,53 @@
-# UI
+# AGENTS.md — `src/components/UI`
 
-Leia o AGENTS.md da raiz. Mantenha as composições e propriedades dos pacotes corporativos originais. Componentes visuais não conhecem serviços, store de jornada ou regras de elegibilidade.
+Componentes **puramente apresentacionais**, sem regra de negócio nem conhecimento da jornada.
 
-Preserve os padrões da pasta: componentes compostos, `index.tsx`, barrels, `styles.module.scss` ou estilos nomeados conforme o código existente. Corrija referências e erros de transcrição sem reconstruir versões locais do design system.
+## Regra de ouro
 
-Prefira tipos derivados com ComponentProps e atributos HTML concretos. Mantenha semântica, teclado e foco acessíveis. Não substitua tokens por valores ad hoc para fazer um componente funcionar em outro ambiente.
+Se o componente importa de `@/store`, `@/services`, `@/validation`, `@/hooks` (cross-feature) ou conhece `JourneyDefinition`, **ele não pertence a `UI/`**. Mova para `Core/` ou `Elements/`.
 
-Specs ficam em `test/src/components/UI`. A validação de componentes corporativos exige as dependências reais; não simule tipos nem configure substituições globais para fazê-la passar.
+## Estrutura
+
+```
+UI/
+├── index.ts                ← barrel
+├── Button/
+│   └── Button.tsx          ← arquivo nomeado OU index.tsx (não padronizado)
+├── Input/
+│   └── index.tsx
+├── Loader/
+│   ├── index.tsx
+│   ├── styles.scss         ← também aceito .scss puro aqui
+│   └── index.spec.tsx
+└── ProgressBar/
+    ├── index.tsx
+    └── index.spec.tsx
+```
+
+## Convenções
+
+- Named exports (`export function Button(...)`).
+- Props tipadas inline ou em `types.ts` na pasta — sem importar tipos de domínio.
+- Sem `'use client'` a menos que precise de hook/evento DOM.
+- Estilos via `*.module.scss` preferencialmente; `.scss` puro só quando estiver replicando estilo global de um pacote do design system.
+- Quando possível, encapsule componentes do `@porto-stack/ui` aqui em vez de espalhar pelo projeto.
+
+## Quando criar um UI novo
+
+Pergunte-se:
+1. Esse componente é genérico o suficiente para ser usado fora desta tela?
+2. Ele funciona com qualquer dado, sem assumir shape da jornada?
+3. Não tem side-effect, store, ou fetch?
+
+Se "sim" para os três → `UI/`. Caso contrário → `Core/` (com lógica) ou `Elements/` (1:1 com elemento da jornada).
+
+## Barrel
+
+Adicione novos componentes em [src/components/UI/index.ts](index.ts) com export nomeado.
+
+## Anti-padrões
+
+- ❌ Importar `useJourneyStore`, `callService`, ou qualquer coisa de `@/validation`.
+- ❌ Hardcode de textos específicos de uma jornada (use props).
+- ❌ Lógica condicional baseada em `type` de elemento.
+- ❌ `useEffect` para data fetching.

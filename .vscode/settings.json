@@ -1,17 +1,38 @@
 {
-  "editor.defaultFormatter": "biomejs.biome",
+  "editor.codeActionsOnSave": {
+    "source.action.useSortedKeys.biome": "explicit",
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
   "editor.formatOnSave": true,
-  "files.eol": "\n",
-  "[typescript]": {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-  },
+  "stylelint.validate": ["css", "scss"],
+  "stylelint.snippet": ["css", "scss"],
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[scss]": {
+    "editor.formatOnSave": false
   }
 }

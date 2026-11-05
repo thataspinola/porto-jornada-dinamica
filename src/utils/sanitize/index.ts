@@ -5,9 +5,6 @@ import sanitizeHtml from 'sanitize-html'
  * Focado em garantir a integridade dos dados antes de salvar no Store ou enviar para APIs.
  */
 export const sanitize = {
-  alphanumericUpper: (value: string): string =>
-    value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase(),
-
   /**
    * Remove todos os caracteres que não sejam letras (incluindo acentuadas) ou espaços.
    * Útil para nomes de pessoas e descrições simples.
@@ -16,7 +13,7 @@ export const sanitize = {
    * @example sanitize.text("João @ Silva 123!") // "João Silva"
    */
   text: (value: string): string => {
-    return value.replace(/[^a-zA-Z\u00C0-\u00FF\s]/g, '').trim()
+    return value.replace(/[^a-zA-Z\u00C0-\u00FF\s]/g, '')
   },
 
   /**
@@ -36,11 +33,7 @@ export const sanitize = {
    * @returns {number | string} O número convertido ou string vazia se inválido.
    * @example sanitize.number("R$ 1.500,00") // 150000
    */
-  number: (value: string): number | string => {
-    const newValue = value?.replace(/\D/g, '').trim()
-    if (newValue === '') return ''
-    return Number(newValue)
-  },
+  number: (value: string) => value.replace(/\D/g, ''),
 
   /**
    * Sanitiza strings de e-mail, forçando minúsculas e removendo caracteres proibidos em protocolos SMTP.
@@ -72,7 +65,7 @@ export const sanitize = {
   dom: (input: string): string => {
     return sanitizeHtml(input, {
       allowedTags: [],
-      allowedAttributes: {},
+      allowedAttributes: {}
     })
   },
 
@@ -91,12 +84,12 @@ export const sanitize = {
   },
 
   /**
-   * Converte uma data no formato BR (`DD/MM/AAAA`) para ISO (`YYYY-MM_DD`).
+   * Converte uma data no formato BR (`DD/MM/YYYY`) para ISO (`YYYY-MM-DD`).
    * Se o valor já estiver em ISO (`YYYY-MM-DD`), retorna sem alterações.
    * Se o valor não tiver 8 dígitos, retorna apenas os dígitos extraídos.
-   * @param {string} value - Data no formato `DD-MM-AAAA` ou `YYYY-MM-DD` (ou variações com/sem separadores).
-   * @returns {string} Data do formado `YYYY-MM-DD`.
-   * @example sanitize.isoDate('28/02/2007') // '2007-02-28'
+   * @param {string} value - Data no formato `DD/MM/YYYY` ou `YYYY-MM-DD` (ou variações com/sem separadores).
+   * @returns {string} Data no formato `YYYY-MM-DD`.
+   * @example sanitize.isoDate("28/07/2000") // "2000-07-28"
    */
   isoDate: (value: string): string => {
     if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
@@ -112,19 +105,22 @@ export const sanitize = {
     const day = digits.slice(0, 2)
     const month = digits.slice(2, 4)
     const year = digits.slice(4, 8)
+
     return `${year}-${month}-${day}`
   },
 
   /**
-   * Converte uma string monetária BRL (`R$ 10.000,00`) para números em reais.
+   * Converte uma string monetária BRL (`R$ 10.000,00`) para número em reais.
    * Interpreta os dígitos como centavos e divide por 100.
-   * @param {string} value - Valor monetário mascarado (ex.: `'R$ 10.000,00'`).
+   * @param {string} value - Valor monetário mascarado (ex.: `"R$ 10.000,00"`).
    * @returns {number} Valor em reais (ex.: `10000` para `R$ 10.000,00`, `10500.5` para `R$ 10.500,50`).
-   * @example sanitize.currencyToNumber('R$ 10.000,00') // 10000
+   * @example sanitize.currencyToNumber("R$ 10.000,00") // 10000
    */
   currencyToNumber: (value: string): number => {
     const digits = value.replace(/\D/g, '')
+
     if (!digits) return 0
+
     return Number(digits) / 100
-  },
+  }
 }

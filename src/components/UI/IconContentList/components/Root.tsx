@@ -16,8 +16,7 @@ export function Root({
   return (
     <ul
       className={clsx(s.iconContentList, divider && s.withDivider, className)}
-      {...props}
-    >
+      {...props}>
       {children}
     </ul>
   )

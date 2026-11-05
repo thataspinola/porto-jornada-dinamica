@@ -12,21 +12,6 @@ export function isMaskedCpf(value?: string) {
   )
 }
 
-export function isMaskedCnpj(value?: string) {
-  if (!value?.includes('*')) {
-    return false
-  }
-
-  const compact = value.replace(/[./-]/g, '')
-
-  return (
-    /^[0-9A-Z*]{14}$/.test(compact) &&
-    value.includes('.') &&
-    value.includes('/') &&
-    value.includes('-')
-  )
-}
-
 export function isMaskedPhone(value?: string) {
   if (!value?.includes('*')) return false
 

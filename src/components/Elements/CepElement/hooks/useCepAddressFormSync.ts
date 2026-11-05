@@ -1,13 +1,30 @@
-"use client";
-import { useEffect } from "react";
-import type { UseFormSetValue } from "react-hook-form";
-export function useCepAddressFormSync(
-	address: Record<string, unknown> | undefined,
-	setValue: UseFormSetValue<Record<string, unknown>>,
-) {
-	useEffect(() => {
-		if (address)
-			for (const [key, value] of Object.entries(address))
-				setValue(key, value, { shouldValidate: true });
-	}, [address, setValue]);
+import { useEffect } from 'react'
+import type { FieldValues, UseFormSetValue } from 'react-hook-form'
+
+import { CEP_FIELD_NAMES } from './constants'
+
+type AddressData = {
+  bairro?: string
+  localidade?: string
+  logradouro?: string
+  uf?: string
+}
+
+type UseCepAddressFormSyncParams = {
+  addressData?: AddressData
+  setValue: UseFormSetValue<FieldValues>
+}
+
+export function useCepAddressFormSync({
+  addressData,
+  setValue
+}: UseCepAddressFormSyncParams) {
+  useEffect(() => {
+    if (!addressData) return
+
+    setValue(CEP_FIELD_NAMES.addressStreetName, addressData.logradouro ?? '')
+    setValue(CEP_FIELD_NAMES.addressNeighborhood, addressData.bairro ?? '')
+    setValue(CEP_FIELD_NAMES.addressCity, addressData.localidade ?? '')
+    setValue(CEP_FIELD_NAMES.addressState, addressData.uf ?? '')
+  }, [addressData, setValue])
 }

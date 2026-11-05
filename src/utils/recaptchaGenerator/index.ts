@@ -1,10 +1,9 @@
 'use client'
 
-import { RECAPTCHA_KEY } from '@/scripts/recaptchaClient'
+import { RECAPTCHA_KEY } from '../../scripts/recaptchatClient'
 
 export async function recaptcha(action) {
   let recaptchaTokenReturn = ''
-
   if (
     typeof window !== 'undefined' &&
     RECAPTCHA_KEY &&

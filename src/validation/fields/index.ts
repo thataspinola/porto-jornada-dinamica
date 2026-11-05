@@ -1,13 +1,6 @@
-export * from './cpf'
-export * from './cep'
-export * from './phone'
-export * from './fullName'
-export * from './birthDate'
-export * from './maskedValue'
-export * from './cnpj'
-export {
-  isMaskedCnpj,
-  isMaskedCpf,
-  isMaskedEmail,
-  isMaskedPhone,
-} from './maskedValue'
+export { birthDate } from './birthDate'
+export { cep } from './cep'
+export { cpf } from './cpf'
+export { fullName } from './fullName'
+export { isMaskedCpf, isMaskedEmail, isMaskedPhone } from './maskedValue'
+export { phone } from './phone'

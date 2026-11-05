@@ -13,16 +13,15 @@ export function StepperButton({
   icon,
   label,
   disabled,
-  onClick,
+  onClick
 }: StepperButtonProps) {
   return (
     <button
-      type='button'
+      type="button"
       onClick={onClick}
       aria-label={label}
       disabled={disabled}
-      className={styles.stepButton}
-    >
+      className={styles.stepButton}>
       <Icon
         size={20}
         icon={icon}

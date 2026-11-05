@@ -12,12 +12,12 @@ import {
   readReferencedCookies,
   redirectTo,
   resolveGoogleAnalyticsMetadata,
-  unwrapApiEnvelope,
+  unwrapApiEnvelope
 } from '@/utils'
 import { ensureAnalyticsUserId } from '@/utils/ensureAnalyticsUserId'
 import { recaptcha } from '@/utils/recaptchaGenerator'
 
-import { useJourneyStore, type JourneyState } from '@/store/journeyStore'
+import { useJourneyStore } from '@/store/journeyStore'
 
 import { JourneyVariantContext } from './journeyVariantContext'
 
@@ -41,7 +41,7 @@ type BusinessMetadata = {
   [key: string]: string | undefined
 }
 
-const isDev = env('NEXT_PUBLIC_NODE_ENV') === 'development'
+const isDev = env('NEXT_PUBLIC_NODE_ENV') !== 'production'
 
 async function restartJourney() {
   useJourneyStore.getState().reset()
@@ -59,9 +59,9 @@ export function useJourneyService() {
   const variant = useContext(JourneyVariantContext)
 
   const { business, mergeServices } = useJourneyStore(
-    useShallow((state: JourneyState) => ({
+    useShallow((state) => ({
       business: state.business as { metadata?: BusinessMetadata },
-      mergeServices: state.mergeServices,
+      mergeServices: state.mergeServices
     }))
   )
 
@@ -71,8 +71,7 @@ export function useJourneyService() {
     ): Promise<ServiceResult<TData>> => {
       if (!!input.mockResponse && isDev) {
         const { mockResponse } = input
-
-        await new Promise((resolve: (value: unknown) => void) =>
+        await new Promise((resolve) =>
           setTimeout(resolve, mockResponse.delayMs)
         )
 
@@ -84,13 +83,13 @@ export function useJourneyService() {
         mergeServices({
           [input.module]: {
             ...currentModule,
-            [input.action]: mockResponse.data,
-          },
+            [input.action]: mockResponse.data
+          }
         })
 
         return {
           success: true,
-          data: mockResponse.data,
+          data: mockResponse.data
         } as ServiceResult<TData>
       }
 
@@ -100,13 +99,13 @@ export function useJourneyService() {
         action,
         module,
         additionalPayload,
-        recaptchaAction,
+        recaptchaAction
       } = input
 
       const headers = {
         'porto-product': product,
         'porto-action': action,
-        'porto-module': module,
+        'porto-module': module
       }
 
       const recaptchaToken = await recaptcha(recaptchaAction)
@@ -122,7 +121,7 @@ export function useJourneyService() {
 
       const clientCookies = readReferencedCookies({
         ...fields,
-        ...additionalPayload,
+        ...additionalPayload
       })
 
       const metadata = business.metadata ?? {}
@@ -133,7 +132,7 @@ export function useJourneyService() {
           serviceConfig: {
             headers,
             ...(additionalPayload !== undefined && { additionalPayload }),
-            ...(Object.keys(clientCookies).length > 0 && { clientCookies }),
+            ...(Object.keys(clientCookies).length > 0 && { clientCookies })
           },
           fields,
           business: {
@@ -144,13 +143,13 @@ export function useJourneyService() {
                     sessionId: metadata.sessionId ?? '',
                     ipAddress: metadata.ipAddress ?? '',
                     userAgent: metadata.userAgent ?? '',
-                    analyticsUserId: analyticsUserId ?? '',
+                    analyticsUserId: analyticsUserId ?? ''
                   }
                 : {}),
               ...googleAnalytics,
-              ...(analyticsUserId ? { analyticsUserId } : {}),
-            },
-          },
+              ...(analyticsUserId ? { analyticsUserId } : {})
+            }
+          }
         },
         recaptchaToken
       )
@@ -177,14 +176,11 @@ export function useJourneyService() {
       mergeServices({
         [module]: {
           ...currentModule,
-          [action]: unwrappedData,
-        },
+          [action]: unwrappedData
+        }
       })
 
-      return {
-        ...result,
-        data: unwrappedData,
-      } as ServiceResult<TData>
+      return { ...result, data: unwrappedData } as ServiceResult<TData>
     },
     [business.metadata, mergeServices, variant]
   )

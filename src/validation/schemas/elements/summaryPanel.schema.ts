@@ -12,12 +12,12 @@ const summaryPanelChildSchema = z.discriminatedUnion('type', [
   checkboxElementSchema,
   navigationElementSchema,
   labelValueElementSchema,
-  boxElementSchema,
+  boxElementSchema
 ])
 
 export const summaryPanelElementSchema = baseElementSchema.extend({
   type: z.literal('SUMMARY_PANEL'),
   config: z.object({
-    children: z.array(summaryPanelChildSchema).optional().default([]),
-  }),
+    children: z.array(summaryPanelChildSchema).optional().default([])
+  })
 })

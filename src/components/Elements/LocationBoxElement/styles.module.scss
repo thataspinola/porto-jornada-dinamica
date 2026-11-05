@@ -1,0 +1,37 @@
+.locationBox {
+  display: flex;
+  gap: var(--ui-spacing-12);
+  align-items: center;
+  width: 100%;
+  padding: var(--ui-spacing-16) var(--ui-spacing-20);
+  color: var(--ui-colors-neutral-800);
+  text-align: left;
+  appearance: none;
+  background: var(--ui-colors-neutral-200);
+  border: 0;
+
+  &:is(button) {
+    cursor: pointer;
+  }
+
+  &:is(button):focus-visible {
+    outline: 2px solid var(--ui-colors-seguro-900);
+    outline-offset: 2px;
+  }
+
+  @media (width <= 767px) {
+    width: calc(100% + 40px);
+    margin-inline: -20px;
+  }
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.trailingIcon {
+  flex-shrink: 0;
+  margin-left: auto;
+}

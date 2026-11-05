@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { baseElementSchema } from './baseElement.schema'
-import { inputUiSchema } from './elementUi.schemas'
+import { inputUiFields } from './elementUi.schemas'
 
 export const taxvatInputElementSchema = baseElementSchema.extend({
   type: z.literal('TAXVAT_INPUT'),
@@ -10,9 +10,8 @@ export const taxvatInputElementSchema = baseElementSchema.extend({
     placeholder: z.string().default(''),
     required: z.boolean().default(false),
     name: z.string().default('taxvat'),
-    mode: z.enum(['cpf', 'cnpj']).default('cpf'),
     defaultValue: z.string().default(''),
     defaultValueFrom: z.any().optional(),
-    ...inputUiSchema,
-  }),
+    ...inputUiFields
+  })
 })

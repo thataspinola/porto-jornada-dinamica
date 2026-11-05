@@ -15,5 +15,5 @@ export const useNavigationStore = create<NavigationState>()((set) => ({
   hideNavigation: () => set({ isNavigationVisible: false }),
   showNavigation: () => set({ isNavigationVisible: true }),
   disableNavigation: () => set({ isNavigationDisabled: true }),
-  enableNavigation: () => set({ isNavigationDisabled: false }),
+  enableNavigation: () => set({ isNavigationDisabled: false })
 }))

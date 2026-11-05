@@ -1,3 +1,9 @@
-export function notifyVehicleBrandsError(notify: (message: string) => void) {
-	notify("Não foi possível carregar os dados. Tente novamente.");
+import { notify } from '@porto-stack/ui/utils'
+
+export function notifyVehicleBrandsError() {
+  notify({
+    type: 'error',
+    title: 'Poxa, parece que nosso sistema não está funcionando',
+    description: 'Estamos trabalhando para que volte ao normal o quanto antes.'
+  })
 }

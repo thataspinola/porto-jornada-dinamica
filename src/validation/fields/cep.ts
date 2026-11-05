@@ -8,8 +8,8 @@ export const cep = (required: boolean) => {
           typeof value === 'string' ? value.replace(/\D/g, '') : '',
         z.string()
       )
-      .refine((val: string) => val.length > 0, 'Insira um CEP.')
-      .refine((val: string) => val.length === 8, 'CEP inválido')
+      .refine((val) => val.length > 0, 'Insira um CEP.')
+      .refine((val) => val.length === 8, 'CEP inválido')
   }
 
   return z
@@ -18,5 +18,5 @@ export const cep = (required: boolean) => {
         typeof value === 'string' ? value.replace(/\D/g, '') : value,
       z.string().optional()
     )
-    .refine((val: string) => !val || val.length === 8, 'CEP inválido')
+    .refine((val) => !val || val.length === 8, 'CEP inválido')
 }

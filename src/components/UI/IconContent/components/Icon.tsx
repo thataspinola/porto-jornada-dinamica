@@ -1,4 +1,4 @@
-import { clsx } from '@porto-stack/ui'
+import { clsx } from '@porto-stack/ui/utils'
 
 import { Icon as BaseIcon, type IconProps } from '@/components/UI/Icon'
 

@@ -6,33 +6,7 @@ import { formatPrice } from '@/utils'
 
 import { PriceInput } from './components/PriceInput'
 import { PriceSelectorLayout } from './components/PriceSelectorLayout'
-import { Slider as SliderParts } from '@/components/UI/Slider'
-import { SliderThumbIcon } from './components/SliderThumbIcon'
-
-function Slider({
-  min,
-  max,
-  step,
-  value,
-  onChange,
-}: Pick<PriceSelectorProps, 'min' | 'max' | 'step' | 'value' | 'onChange'>) {
-  return (
-    <SliderParts.Root
-      min={min}
-      max={max}
-      step={step}
-      value={[value]}
-      onValueChange={([next]) => onChange(next)}
-    >
-      <SliderParts.Track>
-        <SliderParts.Range />
-      </SliderParts.Track>
-      <SliderParts.Thumb aria-label="Valor">
-        <SliderThumbIcon />
-      </SliderParts.Thumb>
-    </SliderParts.Root>
-  )
-}
+import { Slider } from './components/Slider'
 import { StepperButton } from './components/StepperButton'
 import type { PriceSelectorProps } from './types'
 
@@ -41,8 +15,7 @@ function PriceSelectorComponent({
   min,
   max,
   step,
-  editable = false,
-  onChange,
+  onChange
 }: PriceSelectorProps) {
   const normalizeValue = (next: number) => {
     if (next < min || next > max) {
@@ -65,13 +38,7 @@ function PriceSelectorComponent({
           onClick={() => setValue(clampedValue - step)}
         />
 
-        <PriceInput
-          value={clampedValue}
-          min={min}
-          max={max}
-          editable={editable}
-          onChange={setValue}
-        />
+        <PriceInput value={clampedValue} />
 
         <StepperButton
           icon="circle-add"
@@ -110,7 +77,7 @@ const priceSelectorParts = {
   Root: PriceSelectorLayout.Root,
   Bounds: PriceSelectorLayout.Bounds,
   Bottom: PriceSelectorLayout.Bottom,
-  Stepper: PriceSelectorLayout.Stepper,
+  Stepper: PriceSelectorLayout.Stepper
 }
 
 export const PriceSelector = Object.assign(

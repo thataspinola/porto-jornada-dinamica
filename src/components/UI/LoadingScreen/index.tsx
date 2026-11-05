@@ -16,14 +16,13 @@ type LoadingScreenProps = {
 
 export function LoadingScreen({
   config,
-  complete = false,
+  complete = false
 }: LoadingScreenProps) {
   const progressValue = useSimulatedProgress({
     from: config.from,
     to: config.to,
-    complete,
+    complete
   })
-
   const range = config.to - config.from
 
   const relativeProgress =

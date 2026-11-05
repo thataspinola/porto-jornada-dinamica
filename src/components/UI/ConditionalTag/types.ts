@@ -1,4 +1,4 @@
-import type { TagProps } from '../Tag/Tag.types'
+import type { TagProps } from '../Tag/Tag'
 
 type ComparableValue = string | boolean | number
 

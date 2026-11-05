@@ -11,12 +11,11 @@ export const journeyStepSchema = z.object({
   contentWidth: z.enum(['grid', 'fit']).optional(),
   gridColumn: z.enum(['1/13', '3/11', '4/10', '5/9']).optional(),
   showProgressBar: z.boolean().optional().default(true),
-  showBackButton: z.boolean().optional().default(true),
   mobileBg: z.enum(['seguro-900']).optional(),
   progress: z
     .object({
       initialValue: z.number(),
-      value: z.number(),
+      value: z.number()
     })
     .optional(),
   prefetch: z
@@ -24,5 +23,5 @@ export const journeyStepSchema = z.object({
     .optional(),
   elements: z.array(journeyElementSchema),
   empty: z.boolean().optional().default(false),
-  backStepSlug: z.string().optional().default(''),
+  backStepSlug: z.string().optional().default('')
 })

@@ -9,6 +9,6 @@ export const addressRadioElementSchema = baseElementSchema.extend({
     sourcePath: z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]),
     required: z.boolean().default(true),
     variant: z.enum(['default', 'bordered', 'contained']).default('contained'),
-    backgroundColor: z.string().optional(),
-  }),
+    backgroundColor: z.string().optional()
+  })
 })

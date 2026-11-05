@@ -1,117 +1,330 @@
-# Jornada Dinâmica
+# @porto/react-ssr-corp-hubv-dinamic-journey
 
-Aplicação Next.js e React que interpreta definições declarativas de jornadas, valida formulários e integra serviços e analytics. Os contratos e componentes originais são a referência para alterações e para a transferência ao projeto de produção.
+Esse projeto foi gerando via [Tech Store](https://portostage.portoseguro.brasil/).
 
-## Preparação
+## Pré-requisitos
 
-Use Node conforme `engines` do `package.json`. Instale as dependências com `npm install` no ambiente com acesso ao registro corporativo e ao certificado configurado em `.npmrc`. Os pacotes `@porto-stack/ui`, `@porto-stack/icons`, `@porto-stack/utils` e o preset Biome são dependências reais: não há substituição global por componentes de teste ou por presets alternativos.
+Para execução dos comandos `npm` é necessário Dynamic Journey
 
-Configure as variáveis usadas pelos módulos originais, sem versionar valores ou credenciais:
+Aplicação Next.js para **executar jornadas (flows) declaradas em JSON**, com:
 
-| Integração | Variáveis |
-| --- | --- |
-| Carbon | `NEXT_PUBLIC_SENSEDIA_CLOUD_URL`, `NEXT_PUBLIC_JORNADA_DINAMICA` |
-| reCAPTCHA | `NEXT_PUBLIC_RECAPTCHA_SITE_K`, `RECAPTCHA` |
-| Cookies e ambiente | `NEXT_PUBLIC_COOKIE_DOMAIN`, `NEXT_PUBLIC_NODE_ENV` |
-| Analytics e metadados | `GTM-ENCRYPTION`, `NEXT_PUBLIC_GA_COOKIE_SESSION_ID`, `NEXT_PUBLIC_IP_SERVICE` |
-| Autorização | `NEXT_PUBLIC_SERVICE_AUTHORIZATION_PATH`, `CREDENTIALS` |
+- renderização dinâmica de elementos por `type`
+- validação de formulário gerada automaticamente a partir da jornada (Zod)
+- navegação entre steps e chamadas de serviço (actions `NAVIGATION` e `SERVICE_CALL`)
+- persistência de estado (Zustand)
 
-Segredos permanecem no servidor. Reutilize os parâmetros, conteúdo de jornadas e configuração de hospedagem do projeto original. Não substitua endpoints ou respostas para contornar ausência de configuração.
+## Stack
 
-## Estrutura
+- Next.js (App Router): UI e runtime
+- React Hook Form: controle de formulário
+- Zod: validação estrutural (jornada) e validação do formulário (gerada dinamicamente)
+- Zustand: store global do runner
+- Vitest + Testing Library: testes
+- Biome: lint/format
+- Sass: estilos (`.scss`) dos componentes base
 
-```text
+## Como rodar
+
+```bash
+npm install
+npm run dev
+```
+
+Abra `http://localhost:3000`.
+
+### Scripts
+
+```bash
+npm run dev          # dev server
+npm run build        # build de produção
+npm run start        # roda a build
+npm run lint         # biome check
+npm run format       # biome format
+npm run test         # vitest (watch)
+npm run test:run     # vitest run (CI)
+```
+
+Se o problema estiver no Turbopack (Next dev):
+
+```bash
+npm run dev:webpack
+```
+
+## Documentação
+
+Guias específicos vivem em [`docs/`](./docs):
+
+- [Conditions em `SERVICE_CALL` e `NAVIGATION`](./docs/conditions.md) — bloquear chamadas/navegação com regras declarativas (AND/OR), aplicar `notify`, `fieldError` ou `redirect`.
+
+Padrões de cada pasta do `src/` estão documentados nos `AGENTS.md` locais (ver [AGENTS.md raiz](./AGENTS.md)).
+
+## Contribuindo
+
+### Estratégia de branches
+
+Fluxo de branches adotado:
+
+- Base: `master`
+- Início da sprint: criar `release-dd/mm/aaaa` a partir da `master`
+- Features/Bugs: criar `feature/HDV-XXXX` a partir da `release-dd/mm/aaaa`
+- Deploy: branches de `feature/HDV-XXXX` podem subir para `dev` e `hml` (homologação)
+- Fechamento da sprint: tudo que estiver homologado volta para a `release-dd/mm/aaaa`
+- Final: merge da `release-dd/mm/aaaa` para `master`
+
+Sugestão prática de rotina:
+
+- Criar branch:
+
+```bash
+git checkout master
+git pull
+git checkout -b release-26/03/2026
+git push -u origin release-26/03/2026
+git checkout -b feature/HDV-1234 origin/release-26/03/2026
+```
+
+- Antes de abrir PR:
+
+```bash
+npm run format
+npm run lint
+npm run test:run
+npm run build
+```
+
+- PR alvo:
+  - `feature/HDV-XXXX` → `release-dd/mm/aaaa`
+  - `release-dd/mm/aaaa` → `master` (fechamento de sprint)
+
+## Árvore de pastas (resumo)
+
+```
 src/
-  app/                 Rotas e layouts
+  app/                       # Next App Router
   components/
-    Core/              Orquestração da jornada
-    Elements/          Integração com formulário e schemas
-    UI/                Componentes visuais e design system
-  contexts/            Providers
-  features/            REFF e FCDC
-  hooks/               Efeitos, navegação, consultas e ações
-  lib/                 Carbon e configuração do cache
-  scripts/             Integrações de scripts
-  services/            Adapters do backend
-  store/               Estado e hidratação
-  utils/               Transformações e builders
+    JourneyRunner.tsx        # orquestração do flow (steps/actions/validação)
+    elementRegistry.tsx      # roteia element.type -> componente
+    elements/
+      Button|Link|Input|Typography/  # componentes base de UI (SCSS)
+      *Element.tsx                  # elementos do flow (adapters)
+  hooks/
+    useJourneyRunnerController.ts  # compõe os hooks abaixo (ponto de entrada)
+    useJourneySteps.ts             # gerenciamento de steps e slug
+    useJourneyForm.ts              # schema RHF, prefill e canProceed
+    useJourneyNavigation.ts        # navegação, validação e SERVICE_CALL
+  mock/
+    sampleJourney.ts         # jornada de exemplo (parseada pelo Zod)
+  services/
+    serviceRegistry.ts       # registry de serviços (SERVICE_CALL)
+  store/
+    journeyStore.ts          # estado Zustand (getState / subscribe)
+    useJourneyStore.ts       # hook Zustand do runner
+  utils/
+    joinPaths.ts             # helper de URL/path
   validation/
-    schemas/           Estrutura declarativa
-    fields/            Validação de domínio
-    primitives/        Validadores genéricos
-    form/              Montagem dos formulários
-test/
-  src/                 Specs que espelham os módulos de src
-  e2e/                 Testes no navegador
-  setup.ts             Setup do Vitest
+    schemaValidation/        # schemas Zod da jornada (estrutura)
+    validations/             # geração do schema do formulário por jornada
 ```
 
-Todos os specs ficam na pasta externa `test`; não há testes dentro de `src`. Use `.spec.ts` e `.spec.tsx`, com `.integration.spec` e `.functional.spec` quando aplicável. Preserve os nomes, componentes compostos, `index.tsx`, barrels e arquivos de estilos presentes no código original.
+## Conceitos principais
 
-## Responsabilidades e contratos
+### JourneyDefinition (o “JSON da jornada”)
 
-`JourneyBuilder` compõe o formulário. `useJourneyController` reúne os dados da etapa; `useJourneyActions` valida, executa condições e coordena chamadas. `useJourneyNavigation` mantém o contrato original `navigateTo`/`goBack`. `useJourneyService` prepara metadados e reCAPTCHA; `callService` e `callApi` usam o contrato Carbon com headers de produto, módulo e ação. Não há adapter alternativo de elegibilidade por URL independente.
+Uma jornada tem `id/name/slug` e uma lista de `steps`. Cada step possui `slug` e uma lista de `elements`.
 
-Os schemas de formulário continuam usando o registry e seus refinamentos. A hidratação preserva defaults ausentes na sessão. O cache TanStack é criado por provider para evitar compartilhamento de dados entre renderizações de servidor.
+- Schema: [journeySchema.ts](file:///home/henrique/dev/dynamic-journey/src/validation/schemaValidation/journeySchema.ts)
+- Step schema: [journeyStepSchema.ts](file:///home/henrique/dev/dynamic-journey/src/validation/schemaValidation/journeyStepSchema.ts)
+- Element union (discriminatedUnion por `type`): [journeyElementSchema.ts](file:///home/henrique/dev/dynamic-journey/src/validation/schemaValidation/journeyElementSchema.ts)
+- Exemplo: [sampleJourney.ts](file:///home/henrique/dev/dynamic-journey/src/mock/sampleJourney.ts)
 
-Aplique SOLID por responsabilidade e direção de dependências: UI apresenta; Elements integram formulário; hooks coordenam efeitos; services adaptam o protocolo; validators e utils não renderizam UI. Evite duplicação de hooks, dependências circulares, abstrações sem uso real e regras comerciais inventadas.
+### Renderização dinâmica (elementRegistry)
 
-Serviços declarativos precisam de `product` na jornada e referências com `module` e `action`. As definições de conteúdo devem corresponder aos contratos do backend de produção. Uma definição antiga contendo apenas o nome de serviço não é convertida em endpoint presumido.
+A UI é montada percorrendo `step.elements` e renderizando cada elemento baseado no campo `type`.
 
-A fonte estática de bancos contém apenas o cadastro fornecido no código original. Sua completude depende desse cadastro; não foram inventados dados adicionais.
+- Registry: [elementRegistry.tsx](file:///home/henrique/dev/dynamic-journey/src/components/elementRegistry.tsx)
 
-## Promoção após negativa de CPF
+Fluxo simplificado:
 
-Nas jornadas `emprestimo-com-garantia-de-veiculo` e `financiamento-de-veiculos`, a negativa `NOT_ELIGIBLE` deve resultar em erro de formulário `server` no CPF. Regras declaradas no componente e na jornada têm precedência. Quando não existe regra específica, a integração aplica o erro ao campo CPF dessas duas jornadas.
-
-Quando `cpf-recommended-products-wrapper` fica visível, o builder de promoção coleta os dois `COMPOSABLE_CARD` e seus elementos `TEXT` e `NAVIGATION`. O wrapper impede repetição em re-render e StrictMode. Outros wrappers e jornadas não entram nesse tagueamento.
-
-O contrato original de `pushEvent` recebe `evAction` e retorna `void`; o payload enviado ao dataLayer usa chaves em snake_case:
-
-```text
-event = view_promotion
-ev_action = ecommerce:visualizar:promocao:sucesso
-items[].item_id = URL da navegação
-items[].item_name = título
-items[].promotion_name = descrição
-items[].item_brand = porto
-items[].affiliation = porto
-items[].creative_name = produtos-recomendados
-items[].creative_slot = cpf-negativa-elegibilidade
+```
+JourneyRunner → renderJourneyElement(element, ctx) → componente do elemento
 ```
 
-Os dois cards são enviados no mesmo evento. `currency`, `value`, preço e SKU não são fabricados. `dispatchAlert` continua tratando somente eventos de falha. O dataLayer deve ser inicializado pela integração GTM da aplicação; não duplique o script quando o host de produção já o fornece.
+### Store (Zustand)
 
-## Comandos e validação
+O runner persiste dados em store para reuso e debug:
 
-| Comando | Finalidade |
-| --- | --- |
-| `npm run dev` | Desenvolvimento Next |
-| `npm run build` / `npm start` | Build e execução standalone |
-| `npm run type-check` | TypeScript, incluindo testes |
-| `npm run lint` / `npm run lint:fix` | Biome com preset corporativo |
-| `npm run format:check` / `npm run format` | Conferir ou aplicar formatação |
-| `npm run lint:style` | Conferir SCSS |
-| `npm run check:imports` | Resolução de imports em src e test |
-| `npm run check:names` | Nomes e localização externa dos specs |
-| `npm run check:empty` | Arquivos vazios |
-| `npm test` | Suíte Vitest |
-| `npm run test:unit` | Testes unitários |
-| `npm run test:integration` | Integração |
-| `npm run test:functional` | Fluxos funcionais |
-| `npm run test:coverage` | Cobertura V8 |
-| `npm run test:e2e:install` | Instalar Chromium do Playwright |
-| `npm run test:e2e` | Navegador contra a aplicação configurada |
-| `npm run test:all` | Cobertura e E2E |
+- `stepSlug`: step atual
+- `fields`: valores do formulário
+- `error`: erros “de alto nível” (ex: erro de service)
+- `business`: contexto/metadata (ex: base_url, journeyId, stepSlug)
+- `services`: resultados de SERVICE_CALL
 
-A cobertura inclui todo código de produção em `src`, excluindo somente declarações de tipos. Os limites globais são 90% para linhas, instruções, funções e branches. O limite configurado não substitui uma execução bem-sucedida; resultados precisam ser medidos após cada integração.
+Estado: [journeyStore.ts](file:///home/henrique/dev/dynamic-journey/src/store/journeyStore.ts)
+Hook: [useJourneyStore.ts](file:///home/henrique/dev/dynamic-journey/src/store/useJourneyStore.ts)
 
-Os mocks pontuais de rede e efeitos externos ficam restritos aos specs. O Vitest não redireciona pacotes corporativos para implementações alternativas. Os mesmos comandos e contratos devem funcionar no ambiente de desenvolvimento e na pipeline do projeto.
+## Validação
 
-Para E2E, configure `E2E_BASE_URL` com a URL da aplicação no ambiente de testes, incluindo o `basePath`, e instale Chromium. Para os fluxos de negativa, configure também `E2E_REFF_URL`, `E2E_FCDC_URL` (URLs das etapas de CPF) e `E2E_NOT_ELIGIBLE_CPF` (dado de homologação autorizado). Os testes não iniciam um backend alternativo nem usam caminhos de navegador específicos de uma máquina. Configure dados e serviços de homologação para validar os fluxos comerciais completos.
+### 1) Validação estrutural do JSON (Zod)
 
-## Transferência e manutenção
+Antes de executar, o JSON é validado/parseado via `journeySchema` (inclui validação do shape de cada elemento por `type`).
 
-Transfira código-fonte, testes, configurações e documentação aplicáveis. Não transfira `node_modules`, `.next`, `dist`, `coverage`, credenciais ou arquivos gerados de uma execução. Preserve as versões, os contratos do backend e a infraestrutura de hospedagem do projeto original.
+Exemplo (jornada mock):
 
-Siga [AGENTS.md](./AGENTS.md), as instruções próximas ao módulo e [test/AGENTS.md](./test/AGENTS.md). Use Conventional Commits. Execute os checks e a suíte com as dependências corporativas reais antes de integrar alterações à branch principal. Falhas ou bloqueios devem permanecer explícitos na entrega.
+```ts
+import { journeySchema } from "@/validation/schemaValidation/journey.schema";
+
+export const sampleJourney = journeySchema.parse({
+  id: "j1",
+  name: "Minha Jornada",
+  slug: "minha-jornada",
+  steps: [/* ... */],
+});
+```
+
+### 2) Validação do formulário (gerada a partir da jornada)
+
+O schema do formulário é gerado dinamicamente com base nos elementos do step (ex.: `TEXT_INPUT.required`).
+
+- Builder: [buildJourneyFormSchema.ts](file:///home/henrique/dev/dynamic-journey/src/validation/validations/buildJourneyFormSchema.ts)
+
+Ele retorna:
+
+- `schema`: um Zod object “flat” (cada field é uma key)
+- `stepFields`: mapeamento `{ [stepId]: string[] }` com os nomes dos campos do step
+
+O schema é consumido por `useJourneyForm`, que cria o RHF com `zodResolver(schema)`:
+
+- [useJourneyForm.ts](file:///home/henrique/dev/dynamic-journey/src/hooks/useJourneyForm.ts)
+
+## Contexto e roteamento interno
+
+O runner mantém o step atual em `stepSlug` (Zustand) e também atualiza a URL via `window.history.pushState`.
+Se existir `business.base_url`, ela é usada como prefixo (útil quando o app roda sob um path).
+
+Helper: [joinPaths.ts](file:///home/henrique/dev/dynamic-journey/src/utils/joinPaths.ts)
+
+## Actions: NAVIGATION e SERVICE_CALL
+
+As actions são elementos que disparam efeitos:
+
+### NAVIGATION
+
+Objetivo: navegar para um step (slug/url), respeitando validação do step atual.
+
+- Elemento: [NavigationElement.tsx](file:///home/henrique/dev/dynamic-journey/src/components/elements/NavigationElement.tsx)
+- Schema: [navigationElementSchema.ts](file:///home/henrique/dev/dynamic-journey/src/validation/schemaValidation/navigationElementSchema.ts)
+- Execução: `goNext` em [useJourneyNavigation.ts](file:///home/henrique/dev/dynamic-journey/src/hooks/useJourneyNavigation.ts)
+
+### SERVICE_CALL
+
+Objetivo: chamar um serviço registrado e, em sucesso, navegar para um step alvo.
+
+- Elemento: [ServiceCallElement.tsx](file:///home/henrique/dev/dynamic-journey/src/components/elements/ServiceCallElement.tsx)
+- Schema: [serviceCallElementSchema.ts](file:///home/henrique/dev/dynamic-journey/src/validation/schemaValidation/serviceCallElementSchema.ts)
+- Execução: `goNext` com `type: "service"` em [useJourneyNavigation.ts](file:///home/henrique/dev/dynamic-journey/src/hooks/useJourneyNavigation.ts)
+- Registry de serviços: [serviceRegistry.ts](file:///home/henrique/dev/dynamic-journey/src/services/serviceRegistry.ts)
+
+Exemplo de implementação de um novo serviço:
+
+```ts
+// src/services/serviceRegistry.ts
+const myService: ServiceHandler = async (input) => {
+  return { success: true, data: { ok: true, input } };
+};
+
+const handlers: Record<string, ServiceHandler> = {
+  eligibility,
+  myService,
+};
+```
+
+## Bloqueio de ações quando o step está inválido (A1)
+
+O hook `useJourneyForm` calcula `canProceed` para o step atual usando:
+
+- `mode: "onChange"` e `reValidateMode: "onChange"` no RHF
+- `schema.safeParse(watchedValues)` para checar erros nos campos do step atual
+
+Trecho-chave: [useJourneyForm.ts](file:///home/henrique/dev/dynamic-journey/src/hooks/useJourneyForm.ts)
+
+Esse `canProceed` é passado para `NAVIGATION` e `SERVICE_CALL` via `ElementRenderContext` no registry:
+
+- [elementRegistry.tsx](file:///home/henrique/dev/dynamic-journey/src/components/elementRegistry.tsx)
+
+E então os elementos aplicam `disabled`/`aria-disabled` quando `!canProceed`.
+
+## Prefill de inputs via services (`defaultValueFrom`)
+
+Para pré-preencher um input com base no resultado de um `SERVICE_CALL`, use `defaultValueFrom`.
+O hook `useJourneyForm` resolve o valor a partir do store `services[serviceName]` e aplica no campo **apenas se o usuário ainda não preencheu**.
+
+Formato:
+
+```json
+{
+  "defaultValueFrom": {
+    "service": "eligibility",
+    "path": "data.input.fields.field_cpf-input_m7oqd4"
+  }
+}
+```
+
+Também existe `defaultValue` (string literal) para defaults fixos.
+
+## UI via JSON (`config.ui`)
+
+Alguns elementos aceitam um bloco `ui` no `config` para repassar props de UI (whitelist), sem permitir “spread” de props arbitrárias do JSON.
+
+Schemas:
+
+- [elementUiSchemas.ts](file:///home/henrique/dev/dynamic-journey/src/validation/schemaValidation/elementUiSchemas.ts)
+
+Exemplo (SERVICE_CALL usando Button):
+
+```json
+{
+  "type": "SERVICE_CALL",
+  "config": {
+    "label": "Continuar",
+    "service": "eligibility",
+    "targetStepOnSuccess": "placa",
+    "ui": {
+      "variant": "insurance",
+      "styles": "primary",
+      "size": "large",
+      "width": "fluid"
+    }
+  }
+}
+```
+
+## Como adicionar um novo tipo de elemento
+
+1) Criar um schema em `src/validation/schemaValidation/*ElementSchema.ts`
+2) Registrar o schema no `discriminatedUnion` em [journeyElementSchema.ts](file:///home/henrique/dev/dynamic-journey/src/validation/schemaValidation/journeyElementSchema.ts)
+3) Criar um componente em `src/components/elements/*Element.tsx`
+4) Renderizar no registry: [elementRegistry.tsx](file:///home/henrique/dev/dynamic-journey/src/components/elementRegistry.tsx)
+5) Se o elemento cria/usa um field de formulário, adicionar regra em [buildJourneyFormSchema.ts](file:///home/henrique/dev/dynamic-journey/src/validation/validations/buildJourneyFormSchema.ts)
+
+## Testes
+
+- Integração do runner (validação + actions): [JourneyRunner.test.tsx](file:///home/henrique/dev/dynamic-journey/src/components/JourneyRunner.test.tsx)
+- Service registry: [serviceRegistry.test.ts](file:///home/henrique/dev/dynamic-journey/src/services/serviceRegistry.test.ts)
+- Setup do ambiente de teste: [setup.ts](file:///home/henrique/dev/dynamic-journey/src/test/setup.ts)
+essário a instalação das dependências do projeto.
+
+```bash
+npm install
+```
+
+## Development server
+
+Rode `npm run dev` para executar o servidor local do projeto e acesse `http://localhost:3000/react-ssr-corp-hubv-dinamic-journey`.
+
+## Build
+
+Rode `npm run build` para executar o build do projeto. Os artefatos serão armazenados no diretório `dist/react-ssr-corp-hubv-dinamic-journey`.
+
+## Unit tests
+
+Rode `npm run test` para executar os testes unitários via [Vitest](https://www.npmjs.com/package/vitest). Os resultados serão armazenados no diretório `coverage`.

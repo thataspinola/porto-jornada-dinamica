@@ -1,5 +1,5 @@
 import { Button as ButtonPrimitive } from '@porto-stack/ui'
-import { clsx } from '@porto-stack/utils'
+import { clsx } from '@porto-stack/ui/utils'
 import type { ComponentProps } from 'react'
 
 import { Loader } from '../Loader'
@@ -19,8 +19,7 @@ export const Button = ({
     <ButtonPrimitive
       disabled={disabled || isLoading}
       className={clsx('journeyButton', className)}
-      {...props}
-    >
+      {...props}>
       {isLoading ? <Loader /> : children}
     </ButtonPrimitive>
   )

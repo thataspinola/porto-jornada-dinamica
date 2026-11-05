@@ -1,1 +1,1 @@
-export * from "./FullScreenErrorView";
+export { FullscreenErrorView } from './FullscreenErrorView'

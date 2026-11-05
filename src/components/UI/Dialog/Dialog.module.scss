@@ -1,15 +1,15 @@
 .maxWidth {
-	max-width: 60rem;
+  max-width: 60rem;
 }
 
 .flexDirectionRow {
-	display: flex;
-	flex-direction: row !important;
-	gap: var(--ui-spacing-12);
-	width: fit-content;
-	margin-left: auto;
+  display: flex;
+  flex-direction: row !important;
+  gap: var(--ui-spacing-12);
+  width: fit-content;
+  margin-left: auto;
 
-	button {
-		padding-inline: 2rem !important;
-	}
+  button {
+    padding-inline: 2rem !important;
+  }
 }

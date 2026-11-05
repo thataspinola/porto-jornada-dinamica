@@ -1,4 +1,41 @@
-.root {
-  display: block;
-  min-width: 0;
+.panelMeasure {
+  height: auto;
+  min-height: unset;
+
+  @media (width >= 768px) {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  min-height: unset;
+  max-height: calc(100svh - (var(--ui-spacing-20) * 2));
+  padding: var(--ui-spacing-24);
+  background: var(--ui-colors-neutral-200);
+  border-radius: 0;
+
+  @media (width >= 768px) {
+    justify-content: space-between;
+    width: 392px;
+    height: 546px;
+    min-height: 0;
+    max-height: none;
+    padding: var(--ui-spacing-16);
+    border-radius: 4px;
+  }
+}
+
+.scrollSpacer {
+  --content-panel-spacer-height: 0px;
+
+  height: var(--content-panel-spacer-height);
+
+  @media (width >= 768px) {
+    height: 0;
+  }
 }

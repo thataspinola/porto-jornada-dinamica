@@ -1,4 +1,73 @@
-.root {
-  display: block;
-  min-width: 0;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-24);
+}
+
+.vehicleDataContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-24);
+  width: 100%;
+  padding: var(--ui-spacing-24);
+  border: 0.1rem solid var(--ui-colors-neutral-400);
+  border-radius: 1.2rem;
+}
+
+.vehicleDataContainerTitle {
+  display: flex;
+  gap: var(--ui-spacing-8);
+  align-items: center;
+}
+
+.vehicleDataContainerMessage {
+  display: flex;
+  gap: var(--ui-spacing-8);
+  align-items: center;
+}
+
+.vehicleData {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-4);
+}
+
+.summaryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--ui-spacing-24);
+  background-color: var(--ui-colors-neutral-200);
+  border-radius: 0.4rem;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.summaryTitle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-8);
+  padding-bottom: var(--ui-spacing-16);
+  border-bottom: 0.1rem solid var(--ui-colors-neutral-400);
+}
+
+.totalValueContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ui-spacing-16) 0;
+  border-top: 0.1rem solid var(--ui-colors-neutral-400);
+}
+
+.resumeItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--ui-colors-neutral-800);
 }

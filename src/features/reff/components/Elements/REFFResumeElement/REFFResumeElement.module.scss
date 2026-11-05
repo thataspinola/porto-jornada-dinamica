@@ -1,4 +1,61 @@
-.root {
-  display: block;
-  min-width: 0;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-24);
+  margin-bottom: var(--ui-spacing-32);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+  padding: var(--ui-spacing-16) var(--ui-spacing-24);
+  background: var(--ui-colors-neutral-200);
+  border: 1px solid var(--ui-colors-neutral-400);
+  border-radius: 1.2rem;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  background: var(--ui-colors-neutral-400);
+  border: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-4);
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-4);
+  align-items: flex-start;
+}
+
+.optionLabel {
+  display: flex;
+  gap: var(--ui-spacing-4);
+  align-items: center;
+}
+
+.stackedValues {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-4);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-12);
 }

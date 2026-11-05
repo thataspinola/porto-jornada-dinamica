@@ -18,7 +18,7 @@ const drawerChildSchema = z.discriminatedUnion('type', [
   radioElementSchema,
   selectElementSchema,
   checkboxElementSchema,
-  navigationElementSchema,
+  navigationElementSchema
 ])
 
 export const drawerElementSchema = baseElementSchema.extend({
@@ -27,6 +27,6 @@ export const drawerElementSchema = baseElementSchema.extend({
     slug: z.string().min(1, 'Informe o identificador do drawer'),
     headerChildren: z.array(drawerChildSchema).optional().default([]),
     bodyChildren: z.array(drawerChildSchema).optional().default([]),
-    footerChildren: z.array(drawerChildSchema).optional().default([]),
-  }),
+    footerChildren: z.array(drawerChildSchema).optional().default([])
+  })
 })

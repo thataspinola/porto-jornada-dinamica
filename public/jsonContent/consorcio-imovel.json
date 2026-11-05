@@ -1,33 +1,111 @@
 {
-  "id": "consorcio-imovel",
-  "name": "Consórcio de imóvel",
+  "id": "consorcioimovel01",
+  "name": "Consórcio Imóvel",
   "slug": "consorcio-imovel",
+  "backStepSlug": "/consorcio/produto",
+  "defaultFields": {
+    "tipoBem": "IMV"
+  },
+  "completion": {
+    "type": "FINAL_SUCCESS"
+  },
   "steps": [
     {
-      "id": "consorcio-imovel-inicio",
-      "name": "Início",
-      "slug": "inicio",
+      "id": "cnsimovelvalor",
+      "name": "Valor",
+      "slug": "valor",
+      "order": 0,
+      "backStepSlug": "/consorcio/produto",
       "elements": [
         {
-          "id": "consorcio-imovel-title",
+          "id": "cnsimovelvalortitle",
           "type": "TITLE",
+          "order": 0,
           "config": {
-            "text": "Consórcio de imóvel"
+            "text": "Qual o valor ideal para conquistar seu imóvel?",
+            "color": "seguro-900"
           }
         },
         {
-          "id": "consorcio-imovel-description",
-          "type": "PARAGRAPH",
+          "id": "cnsimovelvalortabs",
+          "type": "TABS",
+          "order": 1,
           "config": {
-            "text": "Conheça as opções disponíveis para você."
+            "name": "tipoValor",
+            "items": [
+              {
+                "label": "Valor do crédito",
+                "value": "valorCarta",
+                "children": [
+                  {
+                    "id": "cnsimovelvalorcreditoselector",
+                    "type": "PRICE_SELECTOR",
+                    "order": 0,
+                    "config": {
+                      "name": "valorCartaImovel",
+                      "min": 70000,
+                      "max": 1500000,
+                      "step": 5000,
+                      "defaultValue": 70000
+                    }
+                  }
+                ]
+              },
+              {
+                "label": "Valor da parcela",
+                "value": "parcelas",
+                "children": [
+                  {
+                    "id": "cnsimovelvalorparcelaselector",
+                    "type": "PRICE_SELECTOR",
+                    "order": 0,
+                    "config": {
+                      "name": "valorParcelaImovel",
+                      "min": 280,
+                      "max": 3100,
+                      "step": 10,
+                      "defaultValue": 280
+                    }
+                  }
+                ]
+              }
+            ]
           }
         },
         {
-          "id": "consorcio-imovel-navigation",
+          "id": "cnsimovelvalorcta",
           "type": "NAVIGATION",
+          "order": 2,
           "config": {
-            "label": "Conhecer produto",
-            "url": "https://www.portoseguro.com.br/consorcio-imovel"
+            "label": "Continuar",
+            "url": "/consorcio-imovel/periodo",
+            "fixed": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsimovelperiodo",
+      "name": "periodo",
+      "slug": "periodo",
+      "order": 1,
+      "backStepSlug": "/consorcio-imovel/valor",
+      "elements": [
+        {
+          "id": "cnsimovelsucessotitle",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Conte um pouco mais sobre os seus planos",
+            "color": "seguro-900"
+          }
+        },
+        {
+          "id": "cnsimovelsucessoparagraph",
+          "type": "PARAGRAPH",
+          "order": 1,
+          "config": {
+            "text": "Assim a gente encontra as opções de consórcio que mais combinam com o seu momento."
           }
         }
       ]

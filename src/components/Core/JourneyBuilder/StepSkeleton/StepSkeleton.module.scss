@@ -1,4 +1,22 @@
-.root {
-  display: block;
-  min-width: 0;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-24);
+  margin-top: var(--ui-spacing-16);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-8);
+}
+
+.actions {
+  margin-top: var(--ui-spacing-32);
 }

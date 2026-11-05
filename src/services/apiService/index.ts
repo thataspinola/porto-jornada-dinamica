@@ -1,19 +1,17 @@
 'use server'
-
 import { AxiosError } from 'axios'
 import { cookies } from 'next/headers'
 import { env } from 'next-runtime-env'
 
 import { carbonClient } from '@/lib/carbonClient'
 
-import { getTraceId } from '@/utils/traceId'
-import { resolveCookiePayload } from '@/utils/resolveCookiePayload'
+import { getTraceId, resolveCookiePayload } from '@/utils'
 
 import { SERVICE_ERROR_CODE, type ServiceResult } from '../types'
-import { promoteCustomerTokenCookie } from './promoteCustomerTokenCookies'
 import type { ApiServiceInput } from './types'
 
 const journeyPath = env('NEXT_PUBLIC_JORNADA_DINAMICA')
+
 const SESSION_HEADER_NAME = 'hubSessionId'
 
 export async function callApi(
@@ -27,38 +25,37 @@ export async function callApi(
     const endpoint = `/${journeyPath}`
     const traceId = await getTraceId()
 
-    const mergePayload = {
+    const mergedPayload = {
       ...input.fields,
-      ...input.serviceConfig.additionalPayload,
+      ...input.serviceConfig.additionalPayload
     }
-
-    promoteCustomerTokenCookie(cookieStore, input.serviceConfig.clientCookies)
 
     const data = {
       payload: resolveCookiePayload(
-        mergePayload,
+        mergedPayload,
         cookieStore,
         input.serviceConfig.clientCookies,
         input.business.metadata.userAgent
       ),
-      metadata: { ...input.business.metadata },
+      metadata: { ...input.business.metadata }
     }
 
     const httpResponse = await carbonClient.post(endpoint, data, {
       headers: {
         ...input.serviceConfig.headers,
         'X-Recaptcha-Token': recaptchaToken,
-        'X-Recaptcha-Action': input.serviceConfig.headers['porto-action'],
+        'X-Recaptcha-Action': `${recaptchaToken}_dynamic_journey`,
         ...(input.variant === 'app' && {
-          'X-Recaptcha-Verification-Disabled': 'true',
+          'X-Recaptcha-Verification-Disabled': 'true'
         }),
         'porto-hub-trace-id': traceId,
         'carbon-trace-id': traceId,
-        ...(sessionId ? { 'porto-session-id': sessionId } : {}),
-      },
+        ...(sessionId ? { 'porto-session-id': sessionId } : {})
+      }
     })
 
     const rawResponseSessionId = httpResponse.headers['porto-session-id']
+
     const isString = typeof rawResponseSessionId === 'string'
     const hasValue = isString && rawResponseSessionId.length > 0
     const isNewSessionId = hasValue && rawResponseSessionId !== sessionId
@@ -68,7 +65,7 @@ export async function callApi(
         path: '/',
         sameSite: 'lax',
         httpOnly: true,
-        secure: env('NEXT_PUBLIC_NODE_ENV') === 'production',
+        secure: env('NEXT_PUBLIC_NODE_ENV') === 'production'
       })
     }
 
@@ -83,6 +80,7 @@ export async function callApi(
     }
 
     const rawResponseSessionId = error.response?.headers?.['porto-session-id']
+
     const isString = typeof rawResponseSessionId === 'string'
     const hasValue = isString && rawResponseSessionId.length > 0
     const isNewSessionId = hasValue && rawResponseSessionId !== sessionId
@@ -92,7 +90,7 @@ export async function callApi(
         path: '/',
         sameSite: 'lax',
         httpOnly: true,
-        secure: env('NEXT_PUBLIC_NODE_ENV') === 'production',
+        secure: env('NEXT_PUBLIC_NODE_ENV') === 'production'
       })
     }
 

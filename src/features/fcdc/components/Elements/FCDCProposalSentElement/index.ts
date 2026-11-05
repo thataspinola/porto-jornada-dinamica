@@ -1,1 +1,1 @@
-export * from "./FCDCProposalSentElement";
+export * from './FCDCProposalSentElement'

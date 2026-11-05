@@ -9,7 +9,7 @@ export const conditionOperatorSchema = z.enum([
   'LESS_THAN_OR_EQUAL',
   'INCLUDES',
   'EXISTS',
-  'NOT_EXISTS',
+  'NOT_EXISTS'
 ])
 
 const operandSourceSchema = z.enum([
@@ -17,37 +17,37 @@ const operandSourceSchema = z.enum([
   'parameters',
   'services',
   'business',
-  'formErrors',
+  'formErrors'
 ])
 
 const operandRefSchema = z.object({
   from: operandSourceSchema,
-  path: z.string(),
+  path: z.string()
 })
 
 const operandLiteralSchema = z.object({
-  value: z.union([z.string(), z.number(), z.boolean(), z.null()]),
+  value: z.union([z.string(), z.number(), z.boolean(), z.null()])
 })
 
 export const conditionOperandSchema = z.union([
   operandRefSchema,
-  operandLiteralSchema,
+  operandLiteralSchema
 ])
 
 export const conditionCheckSchema = z.object({
   left: conditionOperandSchema,
   op: conditionOperatorSchema,
-  right: conditionOperandSchema.optional(),
+  right: conditionOperandSchema.optional()
 })
 
 const redirectActionSchema = z.object({
   kind: z.literal('redirect'),
-  url: z.string(),
+  url: z.string()
 })
 
-// Single-member union intentionally - new click action kinds (e.g. submitForm) expected
+// Single-member union intentionally — new click action kinds (e.g. submitForm) extend this list.
 const buttonOnClickActionSchema = z.discriminatedUnion('kind', [
-  redirectActionSchema,
+  redirectActionSchema
 ])
 
 const notifyActionSchema = z.object({
@@ -57,16 +57,16 @@ const notifyActionSchema = z.object({
   actionButton: z
     .object({
       children: z.string(),
-      onClickAction: buttonOnClickActionSchema.optional(),
+      onClickAction: buttonOnClickActionSchema.optional()
     })
-    .optional(),
+    .optional()
 })
 
 const fieldErrorActionSchema = z.object({
   kind: z.literal('fieldError'),
   field: z.string(),
   message: z.string(),
-  focus: z.boolean().optional(),
+  focus: z.boolean().optional()
 })
 
 const fullscreenAttemptSchema = z.object({
@@ -74,14 +74,14 @@ const fullscreenAttemptSchema = z.object({
   description: z.string().optional(),
   actionButton: z.object({
     children: z.string(),
-    onClickAction: buttonOnClickActionSchema.optional(),
-  }),
+    onClickAction: buttonOnClickActionSchema.optional()
+  })
 })
 
 const fullscreenActionSchema = z.object({
   kind: z.literal('fullscreen'),
   icon: z.string(),
-  attempts: z.array(fullscreenAttemptSchema).min(1),
+  attempts: z.array(fullscreenAttemptSchema).min(1)
 })
 
 export type FullscreenAttempt = z.infer<typeof fullscreenAttemptSchema>
@@ -90,13 +90,13 @@ export const conditionActionSchema = z.discriminatedUnion('kind', [
   notifyActionSchema,
   fieldErrorActionSchema,
   redirectActionSchema,
-  fullscreenActionSchema,
+  fullscreenActionSchema
 ])
 
 export const conditionRuleSchema = z.object({
   id: z.string().optional(),
   checks: z.array(conditionCheckSchema).min(1),
-  action: conditionActionSchema,
+  action: conditionActionSchema
 })
 
 export const conditionsSchema = z
@@ -110,18 +110,3 @@ export type ConditionCheck = z.infer<typeof conditionCheckSchema>
 export type ConditionAction = z.infer<typeof conditionActionSchema>
 export type ConditionRule = z.infer<typeof conditionRuleSchema>
 export type ButtonOnClickAction = z.infer<typeof buttonOnClickActionSchema>
-
-export const visibilityConditionsSchema = z
-  .array(
-    z.object({
-      source: operandSourceSchema.default('fields'),
-      path: z.string(),
-      operator: z
-        .enum(['equals', 'notEquals', 'exists', 'notExists'])
-        .default('equals'),
-      value: z.unknown().optional(),
-    })
-  )
-  .default([])
-
-export type Condition = z.infer<typeof visibilityConditionsSchema>[number]

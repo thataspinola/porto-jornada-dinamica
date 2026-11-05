@@ -6,5 +6,5 @@ export { IconContent } from '../IconContent'
 
 export const IconContentList = {
   Root,
-  Item,
+  Item
 }

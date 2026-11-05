@@ -1,4 +1,15 @@
-.root {
-  display: block;
-  min-width: 0;
+.checkbox {
+  display: flex;
+  gap: var(--ui-spacing-8);
+  align-items: flex-start;
+}
+
+.label {
+  flex: 1;
+  cursor: pointer;
+
+  a {
+    color: var(--ui-colors-seguro-900);
+    text-decoration: underline;
+  }
 }

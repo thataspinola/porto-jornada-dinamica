@@ -4,8 +4,9 @@ import { fcdcPlateInputElementSchema } from '@/features/fcdc/validation/schemas/
 
 import { addressRadioElementSchema } from './addressRadio.schema'
 import { baseElementSchema } from './baseElement.schema'
+import { biologicalSexElementSchema } from './biologicalSex.schema'
 import { birthDateInputElementSchema } from './birthDateInput.schema'
-import { cepElementSchema } from './cep.schema'
+import { cepElementSchema } from './cepElementSchema'
 import { cepInputElementSchema } from './cepInput.schema'
 import { checkboxElementSchema } from './checkbox.schema'
 import { chipsElementSchema } from './chips.schema'
@@ -32,7 +33,6 @@ import { tabsElementSchema } from './tabs.schema'
 import { taxvatInputElementSchema } from './taxvatInput.schema'
 import { textElementSchema } from './text.schema'
 import { textInputElementSchema } from './textInput.schema'
-import { biologicalSexElementSchema } from './biologicalSex.schema'
 
 export const fixedModeSchema = z.enum(['none', 'mobile', 'all'])
 
@@ -69,7 +69,7 @@ const fixedWrapperChildSchema = z.discriminatedUnion('type', [
   tabsElementSchema,
   taxvatInputElementSchema,
   textElementSchema,
-  textInputElementSchema,
+  textInputElementSchema
 ])
 
 export const fixedWrapperElementSchema = baseElementSchema.extend({
@@ -79,6 +79,6 @@ export const fixedWrapperElementSchema = baseElementSchema.extend({
     fixedPosition: fixedPositionSchema.optional().default('bottom-center'),
     zIndex: z.number().int().optional().default(20),
     fillHeight: z.boolean().optional().default(false),
-    children: z.array(fixedWrapperChildSchema).optional().default([]),
-  }),
+    children: z.array(fixedWrapperChildSchema).optional().default([])
+  })
 })

@@ -12,7 +12,7 @@ export function useSelectOptions(optionsSource?: SelectOptionsSource) {
   const {
     source = '',
     valueKey = 'value',
-    labelTemplate = '{{label}}',
+    labelTemplate = '{{label}}'
   } = optionsSource ?? {}
 
   const { data: options, isLoading: isOptionsLoading } = useQuery({
@@ -22,18 +22,18 @@ export function useSelectOptions(optionsSource?: SelectOptionsSource) {
 
       return result.data ?? []
     },
-    select: (items: any) =>
-      items.map((item: any) => ({
+    select: (items) =>
+      items.map((item) => ({
         value: String(getByPath(item, valueKey) ?? ''),
-        label: interpolateTemplate(labelTemplate, item) ?? '',
+        label: interpolateTemplate(labelTemplate, item) ?? ''
       })),
     enabled: !!source,
     staleTime: Infinity,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false
   })
 
   return {
     options: options ?? [],
-    isOptionsLoading,
+    isOptionsLoading
   }
 }

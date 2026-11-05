@@ -1,25 +1,23 @@
 'use client'
 
 import { notify } from '@porto-stack/ui/utils'
-import { interpolateFullscreenAction } from './serviceErrorHandlers/resolveErrorAction'
-import type { FullscreenAction } from './serviceErrorHandlers/types'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import type { FieldValues, UseFormReturn } from 'react-hook-form'
 import { useShallow } from 'zustand/shallow'
 
-import { evaluateConditionRules, interpolateTemplate } from '@/utils'
+import { evaluateConditions, interpolateTemplate } from '@/utils'
 
-import { useJourneyStore, type JourneyState } from '@/store/journeyStore'
+import { useJourneyStore } from '@/store/journeyStore'
 
 import type {
   ConditionAction,
-  ConditionRule,
+  ConditionRule
 } from '@/validation/schemas/elements/conditions.schema'
 
 function interpolate(template: string, ctx: Record<string, unknown>): string {
   const result = interpolateTemplate(template, ctx, {
-    keepMissing: true,
+    keepMissing: true
   })
 
   return result ?? template
@@ -32,12 +30,6 @@ function navigateToUrl(
 ) {
   const trimmed = url.trim()
 
-  if (
-    (/^[a-z][a-z0-9+.-]*:/i.test(trimmed) && !/^https?:\/\//i.test(trimmed)) ||
-    trimmed.startsWith('//')
-  )
-    throw new Error('Destino inválido')
-
   if (/^https?:\/\//i.test(trimmed)) {
     window.location.assign(trimmed)
     return
@@ -49,12 +41,10 @@ function navigateToUrl(
   }
 
   const segments = pathname.split('/').filter(Boolean)
-
   const base =
     segments.length >= 2
       ? `/${segments[0]}/${segments[1]}`
       : `/${segments[0] ?? ''}`
-
   router.push(`${base}/${trimmed.replace(/^\/+/, '')}`)
 }
 
@@ -63,8 +53,7 @@ function applyConditionAction(
   ctx: Record<string, unknown>,
   methods: UseFormReturn<FieldValues> | null,
   router: ReturnType<typeof useRouter>,
-  pathname: string,
-  onFullscreen?: (action: FullscreenAction) => void
+  pathname: string
 ) {
   switch (action.kind) {
     case 'notify': {
@@ -84,13 +73,11 @@ function applyConditionAction(
                   ctx,
                   methods,
                   router,
-                  pathname,
-                  onFullscreen
+                  pathname
                 )
-            : undefined,
-        },
+            : undefined
+        }
       })
-
       return
     }
     case 'fieldError': {
@@ -99,27 +86,18 @@ function applyConditionAction(
       if (methods) {
         methods.setError(action.field as never, {
           type: 'condition',
-          message,
+          message
         })
 
         if (action.focus) {
           methods.setFocus(action.field as never)
         }
-
         return
       }
 
-      notify({
-        type: 'error',
-        title: message,
-        description: '',
-      })
-
+      notify({ type: 'error', title: message, description: '' })
       return
     }
-    case 'fullscreen':
-      onFullscreen?.(interpolateFullscreenAction(action, ctx))
-      return
     case 'redirect':
       navigateToUrl(action.url, router, pathname)
       return
@@ -131,32 +109,31 @@ export type ConditionGuardResult =
   | { matched: false }
 
 export function useConditionGuard<TFieldValues extends FieldValues>(
-  methods: UseFormReturn<TFieldValues>,
-  onFullscreen?: (action: FullscreenAction) => void
+  methods?: UseFormReturn<TFieldValues>
 ) {
   const router = useRouter()
   const pathname = usePathname()
 
   const { fields, parameters, services, business } = useJourneyStore(
-    useShallow((state: JourneyState) => ({
+    useShallow((state) => ({
       fields: state.fields,
       parameters: state.parameters,
       services: state.services,
-      business: state.business,
+      business: state.business
     }))
   )
 
   const evaluate = useCallback(
     ({
       rules,
-      formData,
+      formData
     }: {
       rules: ConditionRule[] | undefined
       formData: Record<string, unknown>
     }): ConditionGuardResult => {
       if (!rules || rules.length === 0) {
         return {
-          matched: false,
+          matched: false
         }
       }
 
@@ -170,14 +147,14 @@ export function useConditionGuard<TFieldValues extends FieldValues>(
         formErrors: (methods?.formState?.errors ?? {}) as Record<
           string,
           unknown
-        >,
+        >
       }
 
-      const result = evaluateConditionRules(rules, ctx)
+      const result = evaluateConditions(rules, ctx)
 
       if (!result.matched) {
         return {
-          matched: false,
+          matched: false
         }
       }
 
@@ -186,22 +163,12 @@ export function useConditionGuard<TFieldValues extends FieldValues>(
         ctx,
         (methods ?? null) as UseFormReturn<FieldValues> | null,
         router,
-        pathname,
-        onFullscreen
+        pathname
       )
 
       return result
     },
-    [
-      methods,
-      router,
-      pathname,
-      business,
-      fields,
-      parameters,
-      services,
-      onFullscreen,
-    ]
+    [methods, router, pathname, business, fields, parameters, services]
   )
 
   return { evaluate }

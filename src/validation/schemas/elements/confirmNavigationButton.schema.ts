@@ -13,7 +13,7 @@ export const confirmNavigationButtonElementSchema = baseElementSchema.extend({
       title: z.string(),
       description: z.string().optional(),
       confirmLabel: z.string(),
-      cancelLabel: z.string(),
-    }),
-  }),
+      cancelLabel: z.string()
+    })
+  })
 })

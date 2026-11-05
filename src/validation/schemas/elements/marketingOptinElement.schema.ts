@@ -10,6 +10,6 @@ export const marketingOptinElementSchema = baseElementSchema.extend({
       .string()
       .default(
         '<p>Tenho interesse em receber comunicação com condições especiais e ofertas de Produtos e Serviços Porto.</p>'
-      ),
-  }),
+      )
+  })
 })

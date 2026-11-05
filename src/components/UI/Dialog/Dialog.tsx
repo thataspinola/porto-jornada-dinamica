@@ -33,5 +33,5 @@ const Footer = ({
 export const Dialog = {
   ...DialogPrimitive,
   Content,
-  Footer,
+  Footer
 }

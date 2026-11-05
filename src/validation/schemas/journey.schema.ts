@@ -5,7 +5,7 @@ import { prefetchSchema } from './prefetch.schema'
 import { serviceErrorsSchema } from './serviceErrors.schema'
 
 const completionSchema = z.object({
-  type: z.string(),
+  type: z.string()
 })
 
 const analyticsSchema = z.object({
@@ -13,7 +13,7 @@ const analyticsSchema = z.object({
   vertical: z.string(),
   product: z.string(),
   funnel: z.string().default('pdp'),
-  subProduct: z.string().default(''),
+  subProduct: z.string().default('')
 })
 
 export const journeySchema = z.object({
@@ -28,7 +28,7 @@ export const journeySchema = z.object({
   whatsapp: z
     .object({
       link: z.url(),
-      exclude: z.array(z.string()).optional(),
+      exclude: z.array(z.string()).optional()
     })
     .optional(),
   prefetch: z
@@ -37,7 +37,7 @@ export const journeySchema = z.object({
   errors: serviceErrorsSchema,
   analytics: analyticsSchema.optional(),
   createdAt: z.string().optional(),
-  updatedAt: z.string().optional(),
+  updatedAt: z.string().optional()
 })
 
 export type JourneyDefinition = z.infer<typeof journeySchema>

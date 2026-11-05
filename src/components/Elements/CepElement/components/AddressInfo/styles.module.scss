@@ -1,0 +1,15 @@
+.addressInfo {
+  display: flex;
+  gap: var(--ui-spacing-12);
+  align-items: flex-start;
+
+  .addressInfoText {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ui-spacing-4);
+
+    > * {
+      margin-bottom: 0;
+    }
+  }
+}

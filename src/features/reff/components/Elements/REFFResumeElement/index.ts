@@ -1,1 +1,1 @@
-export * from "./REFFResumeElement";
+export * from './REFFResumeElement'

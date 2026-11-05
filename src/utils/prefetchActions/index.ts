@@ -2,7 +2,7 @@ import {
   type CryptoKey,
   compactDecrypt,
   exportJWK,
-  generateKeyPair,
+  generateKeyPair
 } from 'jose'
 
 export type PrefetchActionContext = Record<string, unknown>
@@ -26,7 +26,7 @@ async function prepareGetSessionEncryptedPayload(
 ): Promise<PreparedPrefetchPayload> {
   const { publicKey, privateKey } = await generateKeyPair('RSA-OAEP-256', {
     modulusLength: 2048,
-    extractable: true,
+    extractable: true
   })
 
   const publicJwk = await exportJWK(publicKey)
@@ -42,10 +42,10 @@ async function prepareGetSessionEncryptedPayload(
         kty: publicJwk.kty ?? 'RSA',
         n: publicJwk.n,
         e: publicJwk.e,
-        alg: 'RSA-OAEP-256',
-      },
+        alg: 'RSA-OAEP-256'
+      }
     },
-    privateKey,
+    privateKey
   }
 }
 
@@ -53,17 +53,21 @@ async function processGetSessionEncryptedResponse(
   data: unknown,
   privateKey?: CryptoKey
 ): Promise<unknown> {
-  if (typeof data !== 'string' || !privateKey) return data
+  if (typeof data !== 'string' || !privateKey) {
+    return data
+  }
+
   const { plaintext } = await compactDecrypt(data, privateKey)
   const decryptedText = new TextDecoder().decode(plaintext)
+
   return JSON.parse(decryptedText)
 }
 
 const PREFETCH_ACTIONS: Record<string, PrefetchActionHandler> = {
   'get-session-encrypted': {
     preparePayload: prepareGetSessionEncryptedPayload,
-    processResponse: processGetSessionEncryptedResponse,
-  },
+    processResponse: processGetSessionEncryptedResponse
+  }
 }
 
 export async function preparePrefetchPayload(

@@ -1,17 +1,17 @@
 import { z } from 'zod'
 
-import { baseElementSchema } from './baseElement.schema'
 import { loadingScreenSchema } from '../loadingScreen.schema'
 import { mockResponseSchema } from '../mockResponse.schema'
 import { serviceErrorsSchema } from '../serviceErrors.schema'
 import { analyticsSchema } from './analytics.schema'
+import { baseElementSchema } from './baseElement.schema'
 import { conditionsSchema } from './conditions.schema'
 import { buttonUiFields } from './elementUi.schemas'
 
 const serviceRefSchema = z.object({
   action: z.string(),
   module: z.string(),
-  successEvent: z.enum(['purchase', 'add_to_cart']).optional(),
+  successEvent: z.enum(['purchase', 'add_to_cart']).optional()
 })
 
 const additionalPayloadSchema = z.record(z.string(), z.unknown())
@@ -21,9 +21,7 @@ export const serviceCallElementSchema = baseElementSchema.extend({
   type: z.literal('SERVICE_CALL'),
   config: z.object({
     label: z.string(),
-    service: z
-      .union([z.string().min(1), serviceRefSchema, z.array(serviceRefSchema)])
-      .optional(),
+    service: z.union([serviceRefSchema, z.array(serviceRefSchema)]).optional(),
     additionalPayload: z
       .union([additionalPayloadSchema, z.array(additionalPayloadSchema)])
       .optional(),
@@ -52,10 +50,10 @@ export const serviceCallElementSchema = baseElementSchema.extend({
         'select_promotion',
         'add_to_cart',
         'lead',
-        'purchase',
+        'purchase'
       ])
       .optional(),
     analytics: analyticsSchema,
-    ...buttonUiFields,
-  }),
+    ...buttonUiFields
+  })
 })

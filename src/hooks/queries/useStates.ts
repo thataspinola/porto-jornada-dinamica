@@ -26,7 +26,7 @@ export function useStates({ enabled = true }: UseStatesParams = {}) {
     isSuccess: isStatesSuccess,
     error: statesError,
     isError: isStatesError,
-    refetch: refetchStates,
+    refetch: refetchStates
   } = useQuery({
     queryKey: ['states'],
     queryFn: async () => {
@@ -35,18 +35,18 @@ export function useStates({ enabled = true }: UseStatesParams = {}) {
         product: 'postal-guide',
         action: 'state-search',
         module: 'support',
-        recaptchaAction: 'state_search',
+        recaptchaAction: 'state_search'
       })
 
       const states = result.data?.estados || []
 
       return {
-        states,
+        states
       }
     },
     enabled,
     staleTime: Infinity,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false
   })
 
   return {
@@ -55,6 +55,6 @@ export function useStates({ enabled = true }: UseStatesParams = {}) {
     isStatesError,
     isStatesSuccess,
     statesError,
-    refetchStates,
+    refetchStates
   }
 }

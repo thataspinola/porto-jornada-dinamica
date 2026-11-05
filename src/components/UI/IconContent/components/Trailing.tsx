@@ -1,5 +1,5 @@
-import type { HTMLAttributes } from 'react'
 import { clsx } from '@porto-stack/ui/utils'
+import type { HTMLAttributes } from 'react'
 
 import s from '../IconContent.module.scss'
 

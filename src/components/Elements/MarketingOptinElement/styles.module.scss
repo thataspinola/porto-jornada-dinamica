@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  gap: var(--ui-spacing-8);
+  align-items: flex-start;
+  margin-bottom: var(--ui-spacing-32);
+}
+
+.label {
+  flex: 1;
+}

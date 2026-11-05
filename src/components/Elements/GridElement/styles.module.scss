@@ -1,0 +1,35 @@
+.grid {
+  --grid-columns: 12;
+  --grid-gap: var(--ui-spacing-24);
+  --grid-column-gap-mobile: var(--ui-spacing-16);
+
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  row-gap: var(--grid-gap);
+  column-gap: var(--grid-gap);
+  width: 100%;
+  min-width: 0;
+
+  @media (width <= 767px) {
+    column-gap: min(var(--grid-gap), var(--grid-column-gap-mobile));
+  }
+}
+
+.gridItem {
+  grid-column: span var(--col-span-desktop) / span var(--col-span-desktop);
+  min-width: 0;
+
+  @media (width <= 767px) {
+    grid-column: span var(--col-span-mobile) / span var(--col-span-mobile);
+  }
+}
+
+.gridStretch {
+  align-items: stretch;
+}
+
+.gridItemStretch {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}

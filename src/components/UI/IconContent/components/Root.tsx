@@ -20,8 +20,7 @@ export function Root({
         align === 'start' && s.alignStart,
         className
       )}
-      {...props}
-    >
+      {...props}>
       {children}
     </div>
   )

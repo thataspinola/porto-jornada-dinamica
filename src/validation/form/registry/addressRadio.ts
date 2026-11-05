@@ -6,11 +6,7 @@ import type { ElementHandler } from './types'
 
 export const addressRadio: ElementHandler<'ADDRESS_RADIO'> = ({
   name,
-  required,
-}: {
-  name: string
-  required: boolean
-  variant?: string
+  required
 }) => ({
   schema: {
     [name]: required ? requiredString() : z.string().optional(),
@@ -21,7 +17,7 @@ export const addressRadio: ElementHandler<'ADDRESS_RADIO'> = ({
     hasNoNumber: optionalBoolean(),
     addressAdditionalInfo: z.string().optional(),
     addressState: requiredString(),
-    addressCity: requiredString(),
+    addressCity: requiredString()
   },
   defaultValues: {
     [name]: '',
@@ -32,6 +28,6 @@ export const addressRadio: ElementHandler<'ADDRESS_RADIO'> = ({
     hasNoNumber: false,
     addressAdditionalInfo: '',
     addressState: '',
-    addressCity: '',
-  },
+    addressCity: ''
+  }
 })

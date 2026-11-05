@@ -1,4 +1,6 @@
-.root {
-  display: block;
-  min-width: 0;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-32);
+  margin-bottom: var(--ui-spacing-32);
 }

@@ -3,5 +3,5 @@ import { Root } from './components/Root'
 
 export const ProgressBar = {
   Root,
-  Indicator,
+  Indicator
 }

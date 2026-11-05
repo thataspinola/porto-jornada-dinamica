@@ -1,1 +1,1 @@
-export * from "./FullNameInputElement";
+export * from './FullNameInputElement'

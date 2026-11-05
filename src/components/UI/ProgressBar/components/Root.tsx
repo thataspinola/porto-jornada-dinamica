@@ -1,5 +1,4 @@
 'use client'
-
 import { clsx } from '@porto-stack/ui/utils'
 import { useMemo } from 'react'
 
@@ -20,14 +19,13 @@ export function Root({
     <ProgressBarProvider value={{ value, max, progressPercentage }}>
       <div
         className={clsx(s.progressBar, className)}
-        role='progressbar'
-        aria-label='barra de progresso'
+        role="progressbar"
+        aria-label="barra de progresso"
         aria-valuemin={0}
         aria-valuemax={max}
         aria-valuenow={value}
         aria-valuetext={`${Math.round(progressPercentage)}%`}
-        {...props}
-      >
+        {...props}>
         {children}
       </div>
     </ProgressBarProvider>

@@ -18,7 +18,7 @@ export function useLocalities({ stateAcronym, enabled }: UseLocalitiesParams) {
     isSuccess: isLocalitiesSuccess,
     error: localitiesError,
     isError: isLocalitiesError,
-    refetch: refetchLocalities,
+    refetch: refetchLocalities
   } = useQuery({
     queryKey: ['localities', { stateAcronym }],
     queryFn: async () => {
@@ -26,23 +26,23 @@ export function useLocalities({ stateAcronym, enabled }: UseLocalitiesParams) {
         fields: {
           stateAcronym: stateAcronym,
           page: 0,
-          perPage: 999,
+          perPage: 999
         },
         product: 'postal-guide',
         action: 'locality-search',
         module: 'support',
-        recaptchaAction: 'city_search',
+        recaptchaAction: 'city_search'
       })
 
       const localities = result.data
 
       return {
-        localities,
+        localities
       }
     },
     enabled: enabled ?? !!stateAcronym,
     staleTime: Infinity,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false
   })
 
   return {
@@ -51,6 +51,6 @@ export function useLocalities({ stateAcronym, enabled }: UseLocalitiesParams) {
     isLocalitiesError,
     isLocalitiesSuccess,
     localitiesError,
-    refetchLocalities,
+    refetchLocalities
   }
 }

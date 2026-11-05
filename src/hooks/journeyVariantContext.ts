@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext } from 'react'
+import { createContext } from 'react'
 
 import type { JourneyDefinition } from '@/validation/schemas'
 

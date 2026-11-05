@@ -1,4 +1,10 @@
-export type {
-	ConfiguredElementProps as LocationBoxElementProps,
-	ConfiguredJourneyElement as LocationBoxElementType,
-} from "@/components/Elements/ConfiguredElement";
+import type { JourneyDefinition } from '@/validation/schemas'
+
+type LocationBoxElementType = Extract<
+  JourneyDefinition['steps'][number]['elements'][number],
+  { type: 'LOCATION_BOX' }
+>
+
+export type LocationBoxElementProps = {
+  element: LocationBoxElementType
+}

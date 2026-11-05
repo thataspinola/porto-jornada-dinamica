@@ -21,7 +21,6 @@ const isValidDate = (digits: string): boolean => {
   if (year < 1900) return false
 
   const date = new Date(year, month - 1, day)
-
   return (
     date.getFullYear() === year &&
     date.getMonth() === month - 1 &&
@@ -33,46 +32,46 @@ const isFutureDate = (digits: string): boolean => {
   const day = parseInt(digits.slice(0, 2), 10)
   const month = parseInt(digits.slice(2, 4), 10)
   const year = parseInt(digits.slice(4, 8), 10)
+
   const inputDate = new Date(year, month - 1, day)
   const today = new Date()
-
   today.setHours(0, 0, 0, 0)
-
   return inputDate > today
 }
 
 export const birthDate = (required: boolean) => {
   const base = z.string().optional()
+
   const digits = (val: string | undefined) => toDayMonthYearDigits(val) ?? ''
 
   if (required) {
     return base
-      .refine((val: string) => !!val, 'Insira a sua data de nascimento.')
+      .refine((val) => !!val, 'Insira a sua data de nascimento.')
       .refine(
-        (val: string) => digits(val).length === 8,
+        (val) => digits(val).length === 8,
         'Por favor, insira uma data completa (DD/MM/AAAA).'
       )
       .refine(
-        (val: string) => isValidDate(digits(val)),
+        (val) => isValidDate(digits(val)),
         'Data inválida. Por favor, verifique os dados.'
       )
       .refine(
-        (val: string) => !isFutureDate(digits(val)),
+        (val) => !isFutureDate(digits(val)),
         'A data de nascimento não pode ser uma data futura.'
       )
   }
 
   return base
     .refine(
-      (val: string) => !val || digits(val).length === 8,
+      (val) => !val || digits(val).length === 8,
       'Por favor, insira uma data completa (DD/MM/AAAA).'
     )
     .refine(
-      (val: string) => !val || isValidDate(digits(val)),
+      (val) => !val || isValidDate(digits(val)),
       'Data inválida. Por favor, verifique os dados.'
     )
     .refine(
-      (val: string) => !val || !isFutureDate(digits(val)),
+      (val) => !val || !isFutureDate(digits(val)),
       'A data de nascimento não pode ser uma data futura.'
     )
 }

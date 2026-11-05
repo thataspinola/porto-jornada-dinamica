@@ -4,14 +4,14 @@ Regras para qualquer alteração dentro desta pasta. Leia antes de mexer.
 
 ## Mapa de responsabilidades
 
-| Pasta               | O que vai aqui                                                                           | O que NÃO vai aqui                                      |
-| ------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| `schemas/`          | Schemas Zod que descrevem a **estrutura do JSON da jornada** (definição declarativa).    | Validações do formulário do usuário, regras de negócio. |
-| `schemas/elements/` | Um arquivo por tipo de elemento da jornada (`<nome>.schema.ts`).                         | Schemas de step/journey/raiz.                           |
-| `primitives/`       | Blocos Zod **genéricos e sem domínio** (`requiredString`, `optionalBoolean`, etc.).      | Qualquer regra de negócio (CPF, CEP, telefone, etc.).   |
-| `fields/`           | Validadores de **campos com regra de domínio** (`cpf`, `cep`, `phone`, `birthDate`).     | Primitivos genéricos. UI.                               |
-| `form/`             | Orquestração que monta o schema dinâmico do formulário a partir da definição da jornada. | Validadores em si.                                      |
-| `form/registry/`    | Handlers **complexos** do `elementRegistry` (com `refine` ou helpers próprios).          | Handlers triviais de uma linha.                         |
+| Pasta | O que vai aqui | O que NÃO vai aqui |
+|---|---|---|
+| `schemas/` | Schemas Zod que descrevem a **estrutura do JSON da jornada** (definição declarativa). | Validações do formulário do usuário, regras de negócio. |
+| `schemas/elements/` | Um arquivo por tipo de elemento da jornada (`<nome>.schema.ts`). | Schemas de step/journey/raiz. |
+| `primitives/` | Blocos Zod **genéricos e sem domínio** (`requiredString`, `optionalBoolean`, etc.). | Qualquer regra de negócio (CPF, CEP, telefone, etc.). |
+| `fields/` | Validadores de **campos com regra de domínio** (`cpf`, `cep`, `phone`, `birthDate`). | Primitivos genéricos. UI. |
+| `form/` | Orquestração que monta o schema dinâmico do formulário a partir da definição da jornada. | Validadores em si. |
+| `form/registry/` | Handlers **complexos** do `elementRegistry` (com `refine` ou helpers próprios). | Handlers triviais de uma linha. |
 
 ## Convenções de nome de arquivo
 
@@ -41,25 +41,21 @@ import type { JourneyDefinition } from '@/validation/schemas/journey.schema'
 ## Onde adicionar coisas novas
 
 ### Novo primitivo Zod genérico
-
 1. Crie `primitives/<nome>.ts` exportando uma função.
 2. Adicione `export { <nome> } from './<nome>'` em `primitives/index.ts`.
 
 ### Novo validador de campo com regra de negócio
-
 1. Crie `fields/<nome>.ts`.
 2. Adicione `export { <nome> } from './<nome>'` em `fields/index.ts`.
 
 ### Novo tipo de elemento da jornada
-
 1. Crie o schema Zod em `schemas/elements/<nome>.schema.ts` estendendo `baseElementSchema`.
 2. Inclua-o no `discriminatedUnion` de `schemas/journeyElement.schema.ts`.
 3. Adicione o handler em `form/elementRegistry.ts`:
    - **Trivial** (sem `refine`, ≤ 4 linhas) → inline no `elementRegistry.ts`.
-   - **Complexo** (tem `refine`, helpers próprios, multi-linha) → arquivo em `form/registry/<nome>.ts` tipado com `ElementHandler<TIPO>`, referenciado por nome no registry.
+   - **Complexo** (tem `refine`, helpers próprios, multi-linha) → arquivo em `form/registry/<nome>.ts` tipado com `ElementHandler<'TIPO'>`, referenciado por nome no registry.
 
 ### Novo helper só usado por um handler
-
 Mantenha **dentro** do arquivo do handler em `form/registry/`. Não crie pasta `utils/` aqui — se virar realmente reutilizável, mova para `src/utils/`.
 
 ## Anti-padrões proibidos
@@ -67,15 +63,15 @@ Mantenha **dentro** do arquivo do handler em `form/registry/`. Não crie pasta `
 - ❌ Criar pasta `validations/` ou `schemaValidation/` novamente (ambiguidade resolvida no refactor).
 - ❌ Misturar regra de negócio em `primitives/`.
 - ❌ Adicionar lógica de UI, fetch, store ou navegação aqui.
-- ❌ Importar de `form/` dentro de `primitives/`, `fields/` ou `schemas/` (a dependência é unidirecional: `form/` → todo o resto; nada depende de `form/`).
+- ❌ Importar de `form/` dentro de `primitives/`, `fields/` ou `schemas/` (a dependência é unidirecional: `form` → tudo o resto; nada depende de `form`).
 - ❌ Deixar handler do registry com mais de ~15 linhas inline — extraia para `form/registry/`.
 
 ## Direção das dependências
 
-```bash
-schemas/    ← form/
+```
+schemas/  ← form/
 primitives/ ← form/, fields/ (fields pode usar primitives)
-fields/     ← form/
+fields/  ← form/
 form/registry/ → primitives/, fields/, schemas/ (via tipo)
 ```
 
@@ -84,7 +80,6 @@ Resumo: `schemas/`, `primitives/` e `fields/` **não devem** importar de `form/`
 ## Mensagens de erro
 
 Em português, padrão do projeto:
-
 - Obrigatório: `'Campo obrigatório'`
 - Formato inválido genérico: `'<Coisa> inválido(a)'` (ex.: `'CPF inválido'`, `'E-mail inválido'`)
 - Tamanho: `'Deve ter N dígitos'`
@@ -95,9 +90,3 @@ Em português, padrão do projeto:
 npx tsc --noEmit
 npx biome check src
 ```
-
-## Integração com o código original
-
-Preserve os schemas, mensagens e contratos recebidos do projeto original. Não recrie schemas permissivos apenas para aceitar fixtures antigas. Corrija os consumidores e mantenha adapters de formato explícitos quando a compatibilidade for necessária.
-
-Os testes ficam exclusivamente em `test/src/validation`, fora desta pasta. Exercite o registry pelo contrato declarativo, incluindo refinamentos, defaults e campos aninhados. O preset de lint é o corporativo, sem alternativa específica de uma máquina.

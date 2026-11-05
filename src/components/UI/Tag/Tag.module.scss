@@ -1,4 +1,24 @@
-.root {
-  display: block;
-  min-width: 0;
+@use 'sass:list';
+
+$tagInvertedVariants: (
+  'primary': (#404040, var(--ui-colors-neutral-white)),
+  'secondary': (#e0e0e0, #404040),
+  'seguro': (#d9f1ff, var(--ui-colors-seguro-900)),
+  'bank': (#dfe2f2, #474075),
+  'saude': (#d9deea, #40528b),
+  'green': (#c0f0d3, #29684e),
+  'red': (#ffcdc6, #97453c),
+  'yellow': (#f8f6c2, #94621f),
+  'violet': (#dbc7ff, #48316d),
+  'pink': (#fdd1fc, #890099)
+);
+
+/* stylelint-disable-next-line selector-class-pattern */
+.negative:global(.c-tag) {
+  @each $name, $colors in $tagInvertedVariants {
+    &[data-variant='#{$name}'][data-styles='filled'] {
+      color: list.nth($colors, 2);
+      background: list.nth($colors, 1);
+    }
+  }
 }

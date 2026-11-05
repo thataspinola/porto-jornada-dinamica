@@ -1,23 +1,38 @@
 appFramework: react
 ingress:
   enabled: true
-  contextURL: /
-  host: ""
+  contextURL: /contrate
+  host: "dynamic-form.hub-de-vendas-ecommerce.hml.awsporto"
 
 namespace: corp-hubv
 containerPort: 3000
 
 hpa:
-  #Número mínimo de PODS
+  enabled: true
+  enableMemory: false
+  enableCpu: true
   minReplicas: 1
-  #Número máximo de PODS
-  maxReplicas: 5
-  #Porcentagem de média para escalar o POD (Quando bater a média de consumo o POD escala!), melhores detalhes consultar a documentação.
-  targetMemoryUtilizationPercentage: 70
+  maxReplicas: 2
+  targetCpuUtilizationPercentage: 85
+
+resources:
+  cpu: 250m
+  memory: 500Mi
 
 # Habilita ou não as secrets que são "puxadas" através do Backstage
-enable_secrets: false
+enable_secrets: true
+secrets:
+  RECAPTCHA: 88a14675-a2d6-4091-ac25-db6a7b95f694
+  GTM-ENCRYPTION: 4d5f0f61-20af-4f67-a2af-1b7d4afa8947
 
 configmap:
- profile: "hml"
-
+  profile: "hml"
+  NEXT_PUBLIC_ENVIRONMENT: "staging"
+  NEXT_PUBLIC_ORGANIZATION_ID: "6T4XUGKR"
+  NEXT_PUBLIC_NODE_ENV: "staging"
+  NEXT_PUBLIC_RECAPTCHA_SITE_K: "6LdNVNwqAAAAAJEgi_TYTi7FyD6BIpCIePUC2vAL"
+  NEXT_PUBLIC_SENSEDIA_CLOUD_URL: "https://portoapicloud-hml.portoseguro.brasil"
+  NEXT_PUBLIC_COOKIE_DOMAIN: ".portoseguro.com.br"
+  NEXT_PUBLIC_IP_SERVICE: "https://www.portoseguro.com.br/content/rest/commerce/get/global/client-ip"
+  NEXT_PUBLIC_JORNADA_DINAMICA: "hub-vendas/cliente/v1/jornada-dinamica"
+  NEXT_PUBLIC_GA_COOKIE_SESSION_ID: "PGMXQZ7PG8"

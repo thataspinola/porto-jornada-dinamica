@@ -1,1 +1,1 @@
-export * from "./FCDCUnknownLicensePlateElement";
+export * from './FCDCUnknownLicensePlateElement'

@@ -13,6 +13,6 @@ export const planCardElementSchema = baseElementSchema.extend({
     productSuffix: z.string().optional(),
     itemListName: z.string().optional(),
     itemListId: z.string().optional(),
-    discount: z.number().optional(),
-  }),
+    discount: z.number().optional()
+  })
 })

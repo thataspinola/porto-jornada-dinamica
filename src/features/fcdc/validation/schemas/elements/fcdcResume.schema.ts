@@ -1,41 +1,19 @@
-import { z } from "zod";
-import { baseElementSchema } from "@/validation/schemas/elements/baseElement.schema";
+import { z } from 'zod'
+
+import { baseElementSchema } from '@/validation/schemas/elements/baseElement.schema'
+import { confirmNavigationButtonElementSchema } from '@/validation/schemas/elements/confirmNavigationButton.schema'
+import { navigationElementSchema } from '@/validation/schemas/elements/navigation.schema'
+import { serviceCallElementSchema } from '@/validation/schemas/elements/serviceCall.schema'
+
+const resumeChildSchema = z.discriminatedUnion('type', [
+  navigationElementSchema,
+  serviceCallElementSchema,
+  confirmNavigationButtonElementSchema
+])
+
 export const fcdcResumeElementSchema = baseElementSchema.extend({
-	type: z.literal("FCDC_RESUME"),
-	config: z.looseObject({
-		name: z.string().optional(),
-		label: z.string().optional(),
-		text: z.string().optional(),
-		title: z.string().optional(),
-		description: z.string().optional(),
-		required: z.boolean().default(false),
-		placeholder: z.string().optional(),
-		defaultValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
-		sourcePath: z.string().optional(),
-		url: z.string().optional(),
-		options: z
-			.array(z.object({ label: z.string(), value: z.string() }))
-			.default([]),
-		elements: z
-			.array(
-				z.looseObject({
-					id: z.string(),
-					type: z.string(),
-					config: z.record(z.string(), z.unknown()),
-				}),
-			)
-			.default([]),
-		items: z
-			.array(
-				z.looseObject({
-					id: z.string().optional(),
-					title: z.string().optional(),
-					description: z.string().optional(),
-					url: z.string().optional(),
-				}),
-			)
-			.default([]),
-		min: z.number().optional(),
-		max: z.number().optional(),
-	}),
-});
+  type: z.literal('FCDC_RESUME'),
+  config: z.object({
+    children: z.array(resumeChildSchema).optional()
+  })
+})

@@ -4,13 +4,13 @@ import { baseElementSchema } from './baseElement.schema'
 
 export const selectOptionSchema = z.object({
   label: z.string(),
-  value: z.string(),
+  value: z.string()
 })
 
 export const selectOptionsSourceSchema = z.object({
   source: z.string(),
   valueKey: z.string().default('value'),
-  labelTemplate: z.string().default('{{label}}'),
+  labelTemplate: z.string().default('{{label}}')
 })
 
 export type SelectOptionsSource = z.infer<typeof selectOptionsSourceSchema>
@@ -23,7 +23,6 @@ export const selectElementSchema = baseElementSchema.extend({
     options: z.array(selectOptionSchema).default([]),
     optionsSource: selectOptionsSourceSchema.optional(),
     name: z.string(),
-    defaultValue: z.string().optional(),
-    defaultValueFrom: z.any().optional(),
-  }),
+    defaultValue: z.string().default('')
+  })
 })

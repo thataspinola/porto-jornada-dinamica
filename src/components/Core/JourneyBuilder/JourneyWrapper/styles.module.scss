@@ -1,0 +1,105 @@
+.journeyWrapper {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.mobileBgSeguro900 {
+  background-color: var(--ui-colors-seguro-900);
+
+  @media (width >= 768px) {
+    background-color: transparent;
+  }
+
+  @media (width <= 767px) {
+    :global(.journeyButton) {
+      color: var(--ui-colors-seguro-900);
+      background: var(--ui-colors-neutral-white);
+
+      &[data-disabled='false']:hover {
+        color: var(--ui-colors-seguro-900);
+        background: linear-gradient(0deg,
+            rgb(0 0 0 / 8%) 0%,
+            rgb(0 0 0 / 8%) 100%),
+          var(--ui-colors-neutral-white);
+      }
+
+      &[data-disabled='false']:active {
+        color: var(--ui-colors-seguro-900);
+        background: linear-gradient(0deg,
+            rgb(0 0 0 / 16%) 0%,
+            rgb(0 0 0 / 16%) 100%),
+          var(--ui-colors-neutral-white);
+      }
+    }
+  }
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--ui-spacing-20);
+  min-height: calc(100svh - var(--header-height));
+  padding: var(--ui-spacing-32) var(--ui-spacing-20);
+
+  @media (width >= 768px) {
+    padding: var(--ui-spacing-40) var(--ui-spacing-40);
+  }
+
+  @media (width >= 1440px) {
+    padding: var(--ui-spacing-40) var(--ui-spacing-64);
+  }
+}
+
+.heightWithProgressBar {
+  min-height: calc(100svh - var(--header-height) - var(--progress-bar-height));
+}
+
+.appProgressBar {
+  @media (width <= 767px) {
+    display: none;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / 13;
+  min-width: 0;
+
+  @media (width >= 768px) {
+    grid-column: 5 / 9;
+  }
+}
+
+.contentFit:not(:has([aria-busy='true'])) {
+  @media (width >= 768px) {
+    justify-self: center;
+    width: fit-content;
+    max-width: 100%;
+  }
+}
+
+.gridColumn59 {
+  @media (width >= 768px) {
+    grid-column: 5 / 9;
+  }
+}
+
+.gridColumnFull {
+  @media (width >= 768px) {
+    grid-column: 1 / 13;
+  }
+}
+
+.gridColumn311 {
+  @media (width >= 768px) {
+    grid-column: 3 / 11;
+  }
+}
+
+.gridColumn410 {
+  @media (width >= 768px) {
+    grid-column: 4 / 10;
+  }
+}

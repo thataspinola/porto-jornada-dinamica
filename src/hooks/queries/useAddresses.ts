@@ -40,7 +40,7 @@ type UseAddressesParams = {
 export function useAddresses({
   addressName,
   locationName,
-  stateAcronym,
+  stateAcronym
 }: UseAddressesParams) {
   const { executeJourneyService } = useJourneyService()
 
@@ -50,7 +50,7 @@ export function useAddresses({
     isSuccess: isAddressesSuccess,
     error: addressesError,
     isError: isAddressesError,
-    refetch: refetchAddresses,
+    refetch: refetchAddresses
   } = useQuery({
     queryKey: ['addresses', { stateAcronym, locationName, addressName }],
     queryFn: async () => {
@@ -60,12 +60,12 @@ export function useAddresses({
             stateAcronym: stateAcronym,
             locationName: locationName,
             addressName: addressName,
-            perPage: 5,
+            perPage: 5
           },
           product: 'postal-guide',
           action: 'address-search',
           module: 'support',
-          recaptchaAction: 'address_search',
+          recaptchaAction: 'address_search'
         })
 
         const addresses = result.data?.logradouros || []
@@ -73,32 +73,31 @@ export function useAddresses({
         pushEvent({
           event: 'search_address',
           evAction: 'buscar-endereco:sucesso',
-          evLabel: String(addresses.length),
+          evLabel: String(addresses.length)
         })
 
         return {
-          addresses,
+          addresses
         }
       } catch (error) {
         const errorCode =
           error instanceof Error && error.message
             ? error.message
             : SERVICE_ERROR_CODE.INTERNAL_SERVER_ERROR
-
         const alertCode =
           error instanceof ServiceError && error.statusCode > 0
-            ? `${error.statusCode}||${errorCode}`
+            ? `${error.statusCode}|${errorCode}`
             : errorCode
 
         pushEvent({
           event: 'alert',
-          evLabel: [addressName, errorCode].map(formatGtmText).join(' | '),
+          evLabel: [addressName, errorCode].map(formatGtmText).join(':'),
           evAction: 'buscar-endereco:alert',
           alertCode,
           errorService: 'address-search/support',
           alertServiceMessage: errorCode,
           alertType: 'erro',
-          alertEvent: 'search_address',
+          alertEvent: 'search_address'
         })
 
         throw error
@@ -107,19 +106,19 @@ export function useAddresses({
     enabled: !!stateAcronym && !!locationName && !!addressName,
     retry: false,
     refetchOnWindowFocus: false,
-    select: (data: { addresses: Logradouros[] }) => {
+    select: (data) => {
       return {
         addresses:
-          data?.addresses.map((Logradouro: Logradouros) => ({
-            neighborhood: Logradouro.bairro.nomeBairro,
-            state: Logradouro.localidade.estado.nomeEstado,
-            stateAcronym: Logradouro.localidade.estado.siglaEstado,
-            locality: Logradouro.localidade.nomeLocalidade,
-            zipcode: `${Logradouro.numeroCepLogradouro}-${Logradouro.numeroCepComplementoLogradouro}`,
-            address: `${Logradouro.tipoLogradouro.nomeTipoLogradouro ?? ''} ${Logradouro.nomeLogradouro} - ${Logradouro.bairro.nomeBairro} - ${Logradouro.localidade.nomeLocalidade} - ${Logradouro.localidade.estado.siglaEstado}`,
-          })) || [],
+          data?.addresses.map((logradouro) => ({
+            neighborhood: logradouro.bairro.nomeBairro,
+            state: logradouro.localidade.estado.nomeEstado,
+            stateAcronym: logradouro.localidade.estado.siglaEstado,
+            locality: logradouro.localidade.nomeLocalidade,
+            zipcode: `${logradouro.numeroCepLogradouro}-${logradouro.numeroCepComplementoLogradouro}`,
+            address: `${logradouro.tipoLogradouro.nomeTipoLogradouro ?? ''} ${logradouro.nomeLogradouro} - ${logradouro.bairro.nomeBairro} - ${logradouro.localidade.nomeLocalidade}, ${logradouro.localidade.estado.siglaEstado}`
+          })) || []
       }
-    },
+    }
   })
 
   return {
@@ -128,6 +127,6 @@ export function useAddresses({
     isAddressesError,
     isAddressesSuccess,
     addressesError,
-    refetchAddresses,
+    refetchAddresses
   }
 }

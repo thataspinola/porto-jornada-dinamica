@@ -14,7 +14,7 @@ export function ConditionalTag({
   const resolvedTag = resolveConditionalTag({
     fields,
     resolveLabel,
-    conditionalRules,
+    conditionalRules
   })
 
   const content = resolvedTag?.label ?? children
@@ -25,8 +25,7 @@ export function ConditionalTag({
     <Tag
       {...props}
       variant={resolvedTag?.variant ?? variant}
-      negative={resolvedTag?.negative ?? negative}
-    >
+      negative={resolvedTag?.negative ?? negative}>
       {content}
     </Tag>
   )

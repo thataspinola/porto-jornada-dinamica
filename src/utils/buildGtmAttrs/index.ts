@@ -12,8 +12,8 @@ type BaseInput = {
   stepTitle: string
 }
 
-type FormatInputInput = BaseInput & {
-  kind: 'format-input'
+type FormInputInput = BaseInput & {
+  kind: 'form-input'
   label: string
 }
 
@@ -32,7 +32,7 @@ type ClickComponentInput = BaseInput & {
 }
 
 export type BuildGtmAttrsInput =
-  | FormatInputInput
+  | FormInputInput
   | ButtonInput
   | ClickComponentInput
 
@@ -47,12 +47,12 @@ function joinSubname(parts: Array<string | undefined>): string {
 export function buildGtmAttrs(input: BuildGtmAttrsInput): GtmDataAttrs {
   const name = formatGtmText(input.stepTitle)
 
-  if (input.kind === 'format-input') {
+  if (input.kind === 'form-input') {
     return {
       'data-gtm-type': 'form',
       'data-gtm-form': 'input',
       'data-gtm-name': name,
-      'data-gtm-subname': formatGtmText(input.label),
+      'data-gtm-subname': formatGtmText(input.label)
     }
   }
 
@@ -61,7 +61,7 @@ export function buildGtmAttrs(input: BuildGtmAttrsInput): GtmDataAttrs {
       'data-gtm-type': 'click',
       'data-gtm-clicktype': 'button',
       'data-gtm-name': name,
-      'data-gtm-subname': formatGtmText(input.label),
+      'data-gtm-subname': formatGtmText(input.label)
     }
   }
 
@@ -72,6 +72,6 @@ export function buildGtmAttrs(input: BuildGtmAttrsInput): GtmDataAttrs {
     'data-gtm-type': 'click',
     'data-gtm-clicktype': clicktype,
     'data-gtm-name': name,
-    'data-gtm-subname': joinSubname([input.title, input.subtitle, input.label]),
+    'data-gtm-subname': joinSubname([input.title, input.subtitle, input.label])
   }
 }

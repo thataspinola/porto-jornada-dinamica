@@ -4,7 +4,7 @@ export const injectProgressToSteps = (
   journey: JourneyDefinition
 ): JourneyDefinition => {
   const totalSteps = journey.steps.length
-  const stepWeight = 1000 / totalSteps
+  const stepWeight = 100 / totalSteps
 
   return {
     ...journey,
@@ -16,9 +16,9 @@ export const injectProgressToSteps = (
         ...step,
         progress: {
           initialValue,
-          value,
-        },
+          value
+        }
       }
-    }),
+    })
   }
 }

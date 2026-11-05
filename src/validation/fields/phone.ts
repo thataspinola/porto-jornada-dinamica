@@ -14,18 +14,18 @@ export const phone = (required: boolean) => {
   if (required) {
     return base
       .refine(
-        (val: string) => val !== undefined && val.length > 0,
+        (val) => val !== undefined && val.length > 0,
         'Insira o seu celular.'
       )
       .refine(
-        (val: string) =>
+        (val) =>
           isMaskedPhone(val) || (val !== undefined && isValidLength(val)),
         'Insira um número de celular válido.'
       )
   }
 
   return base.refine(
-    (val: string) => !val || isMaskedPhone(val) || isValidLength(val),
+    (val) => !val || isMaskedPhone(val) || isValidLength(val),
     'Insira um número de celular válido.'
   )
 }

@@ -1,4 +1,3 @@
-
 'use client'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -34,7 +33,6 @@ function resolveInternalPath(destination: string, pathname: string) {
     currentSegments.length >= 2
       ? `/${currentSegments[0]}/${currentSegments[1]}`
       : `/${currentSegments[0] ?? ''}`
-
   return `${journeyBasePath}/${normalizedPath}`
 }
 
@@ -44,13 +42,11 @@ function buildQueryWithOrigin(
   removeSearchParams: string[] = []
 ) {
   const params = new URLSearchParams(currentQuery)
-
   for (const key of removeSearchParams) params.delete(key)
 
   if (params.has(EXTERNAL_BACK_PARAM) && !params.has(BACK_ORIGIN_PARAM)) {
     params.set(BACK_ORIGIN_PARAM, pathname)
   }
-
   return params.toString()
 }
 
@@ -73,14 +69,12 @@ export function useJourneyNavigation() {
         const params = new URLSearchParams(searchParams.toString())
         const destinationParams = new URLSearchParams(destination)
 
-        destinationParams.forEach((value: string, key: string) => {
+        destinationParams.forEach((value, key) => {
           params.set(key, value)
         })
-
         for (const key of options.removeSearchParams ?? []) {
           params.delete(key)
         }
-
         router.push(`${pathname}?${params.toString()}`)
         return
       }
@@ -95,7 +89,6 @@ export function useJourneyNavigation() {
         pathname,
         options.removeSearchParams
       )
-
       const targetPath = resolveInternalPath(destination, pathname)
       router.push(appendQuery(targetPath, queryString))
     },
@@ -111,9 +104,7 @@ export function useJourneyNavigation() {
         navigateTo(externalBackUrl)
         return
       }
-
       if (!backSlug) return
-
       navigateTo(backSlug)
     },
     [navigateTo, searchParams, pathname]

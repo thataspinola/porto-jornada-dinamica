@@ -1,1 +1,1 @@
-export * from "./RequestedValueInput";
+export * from './RequestedValueInput'

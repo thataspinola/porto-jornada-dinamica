@@ -31,7 +31,6 @@ export function resolveGoogleAnalyticsMetadata(): {
 } {
   const gaClientId = resolveGoogleClientId()
   const measurementId = env('NEXT_PUBLIC_GA_COOKIE_SESSION_ID')
-
   const gaMeasurementSessionId = measurementId
     ? getBrowserCookie(`_ga_${measurementId}`)?.match(
         GA_MEASUREMENT_SESSION_PATTERN
@@ -40,6 +39,6 @@ export function resolveGoogleAnalyticsMetadata(): {
 
   return {
     ...(gaClientId ? { gaClientId } : {}),
-    ...(gaMeasurementSessionId ? { gaMeasurementSessionId } : {}),
+    ...(gaMeasurementSessionId ? { gaMeasurementSessionId } : {})
   }
 }

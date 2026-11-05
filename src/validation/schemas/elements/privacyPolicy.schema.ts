@@ -9,6 +9,6 @@ export const privacyPoliceElementSchema = baseElementSchema.extend({
       .string()
       .default(
         '<p>Ao continuar, você está ciente de que a Porto irá coletar e tratar seus dados pessoais de acordo com a nossa <a target="_blank" href="https://www.portoseguro.com.br/privacidade" rel="noreferrer">Política de Privacidade</a></p>'
-      ),
-  }),
+      )
+  })
 })

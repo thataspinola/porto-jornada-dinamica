@@ -11,8 +11,10 @@ export const generateSessionId = (orgid: string): string => {
   const hours = now.getHours()
   const minutes = now.getMinutes()
   const seconds = now.getSeconds()
-  const milliseconds = now.getMilliseconds()
+  const milliseconds = now.getUTCMilliseconds()
   const randomPart = Math.ceil(Math.random() * 1e6)
+
   const sessionId = `${orgid}-${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}-${randomPart}`
+
   return sessionId
 }

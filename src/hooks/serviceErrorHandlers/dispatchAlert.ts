@@ -26,14 +26,13 @@ const DEFAULT_ALERT_ACTION: Partial<
   lead: 'lead:alert',
   purchase: 'ecommerce:purchase:alert',
   search_address: 'buscar-endereco:alert',
-  select_content: 'carregar:alert',
+  select_content: 'carregar:alert'
 }
 
 function extractHttpStatus(error: unknown): string | undefined {
   if (error instanceof ServiceError && error.statusCode > 0) {
     return String(error.statusCode)
   }
-
   return undefined
 }
 
@@ -61,7 +60,6 @@ export function dispatchAlert(
 
   const httpStatus = extractHttpStatus(error)
   const alertCode = httpStatus ? `${httpStatus}|${code}` : code
-
   const rawMessage =
     error instanceof Error && error.message ? error.message : code
 
@@ -73,6 +71,6 @@ export function dispatchAlert(
     errorService: context.errorService,
     alertServiceMessage: rawMessage,
     alertType: alertTypeForAction(action),
-    alertEvent: context.alertEvent,
+    alertEvent: context.alertEvent
   })
 }

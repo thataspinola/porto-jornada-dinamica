@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.title {
+  width: 90%;
+
+  @media (width >= 768px) {
+    width: 48%;
+  }
+}
+
+.item {
+  display: flex;
+  gap: var(--ui-spacing-16);
+  align-items: flex-start;
+  padding: var(--ui-spacing-16);
+  background-color: var(--ui-colors-neutral-200);
+  border-radius: 0.8rem;
+
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ui-spacing-4);
+  padding-top: 0.2rem;
+}

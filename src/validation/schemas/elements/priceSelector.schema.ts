@@ -9,7 +9,6 @@ export const priceSelectorElementSchema = baseElementSchema.extend({
     min: z.number(),
     max: z.number(),
     step: z.number(),
-    editable: z.boolean().optional(),
-    defaultValue: z.number().optional(),
-  }),
+    defaultValue: z.number().optional()
+  })
 })

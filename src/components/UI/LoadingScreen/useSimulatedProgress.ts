@@ -14,21 +14,19 @@ type SimulatedProgressConfig = {
 export function useSimulatedProgress({
   from,
   to,
-  complete = false,
+  complete = false
 }: SimulatedProgressConfig) {
   const [value, setValue] = useState(from)
 
   useEffect(() => {
     if (complete) {
-      setValue(100)
+      setValue(to)
       return
     }
 
-    const tickId = setInterval(
-      () =>
-        setValue((current) => Math.min(current + SIMULATED_TICK_INCREMENT, to)),
-      SIMULATED_TICK_INTERVAL_MS
-    )
+    const tickId = setInterval(() => {
+      setValue((current) => Math.min(current + SIMULATED_TICK_INCREMENT, to))
+    }, SIMULATED_TICK_INTERVAL_MS)
 
     return () => clearInterval(tickId)
   }, [to, complete])

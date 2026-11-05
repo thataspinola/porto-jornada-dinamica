@@ -15,7 +15,7 @@ type AddressAPIResponse = {
 
 export function useAddress({
   zipcode,
-  enabled,
+  enabled
 }: {
   enabled?: boolean
   zipcode: string
@@ -28,18 +28,18 @@ export function useAddress({
     isSuccess: isAddressSuccess,
     error: addressError,
     isError: isAddressError,
-    refetch: refetchAddress,
+    refetch: refetchAddress
   } = useQuery({
     queryKey: ['address', { zipcode }],
     queryFn: async () => {
       const result = await executeJourneyService<AddressAPIResponse>({
         fields: {
-          zipcode: zipcode.replace(/[^\d]/g, ''),
+          zipcode: zipcode.replace(/[^\d]/g, '')
         },
         product: 'postal-guide',
         action: 'zipcode-search',
         module: 'support',
-        recaptchaAction: 'zipcode_search',
+        recaptchaAction: 'zipcode_search'
       })
 
       return {
@@ -48,11 +48,11 @@ export function useAddress({
         localidade: result.data?.localidade ?? '',
         estado: result.data?.estado ?? '',
         uf: result.data?.uf ?? '',
-        cep: result.data?.cep ?? '',
+        cep: result.data?.cep ?? ''
       }
     },
     enabled: enabled || !!zipcode,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false
   })
 
   return {
@@ -61,6 +61,6 @@ export function useAddress({
     isAddressLoading,
     isAddressError,
     isAddressSuccess,
-    addressError,
+    addressError
   }
 }

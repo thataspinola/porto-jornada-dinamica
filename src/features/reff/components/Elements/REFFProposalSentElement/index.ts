@@ -1,1 +1,1 @@
-export * from "./REFFProposalSentElement";
+export * from './REFFProposalSentElement'

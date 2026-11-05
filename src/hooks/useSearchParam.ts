@@ -12,7 +12,6 @@ export function useSearchParam<T = string>(
   const router = useRouter()
   const searchParams = useSearchParams()
   const searchParam = searchParams.get(key)
-
   const value = searchParam
     ? (parser?.(searchParam) ?? (searchParam as T))
     : undefined

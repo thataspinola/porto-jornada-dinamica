@@ -1,1 +1,1 @@
-export * from "./FCDCPriceSimulationElement";
+export * from './FCDCPriceSimulationElement'

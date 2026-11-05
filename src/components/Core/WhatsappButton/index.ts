@@ -1,1 +1,1 @@
-export * from "./WhatsappButton";
+export * from './WhatsappButton'

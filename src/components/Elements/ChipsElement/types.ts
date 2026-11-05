@@ -1,4 +1,10 @@
-export type {
-	ConfiguredElementProps as ChipsElementProps,
-	ConfiguredJourneyElement as ChipsElementType,
-} from "@/components/Elements/ConfiguredElement";
+import type { JourneyDefinition } from '@/validation/schemas'
+
+type ChipsElementType = Extract<
+  JourneyDefinition['steps'][number]['elements'][number],
+  { type: 'CHIPS' }
+>
+
+export type ChipsElementProps = {
+  element: ChipsElementType
+}

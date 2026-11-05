@@ -1,8 +1,15 @@
-"use client";
-import {
-	ConfiguredElement,
-	type ConfiguredElementProps,
-} from "@/components/Elements/ConfiguredElement";
-export function LoanRecalculationButton(props: ConfiguredElementProps) {
-	return <ConfiguredElement {...props} />;
+import { Button } from '@/components/UI'
+
+type LoanRecalculationButtonProps = {
+  onRecalculate: () => void
+}
+
+export function LoanRecalculationButton({
+  onRecalculate
+}: LoanRecalculationButtonProps) {
+  return (
+    <Button type="button" onClick={onRecalculate}>
+      Recalcular
+    </Button>
+  )
 }

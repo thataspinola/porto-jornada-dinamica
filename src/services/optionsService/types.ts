@@ -1,7 +1,5 @@
-export type SelectOption = { label: string; value: string }
+export type SelectOptionItem = Record<string, unknown>
 
-export type OptionsSource = {
-  url: string
-  labelKey?: string
-  valueKey?: string
+export type SelectOptionsInput = {
+  source: string
 }

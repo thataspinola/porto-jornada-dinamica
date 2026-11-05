@@ -1,4 +1,19 @@
-.root {
-  display: block;
-  min-width: 0;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-8);
+  margin-bottom: var(--ui-spacing-32);
+}
+
+.trigger {
+  display: flex;
+  gap: var(--ui-spacing-8);
+  align-items: center;
+  color: var(--ui-colors-seguro-900);
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
 }

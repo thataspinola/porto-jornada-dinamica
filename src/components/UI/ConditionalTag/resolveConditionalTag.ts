@@ -1,10 +1,6 @@
 import { getByPath } from '@/utils'
 
-import type {
-  ConditionalTagProps,
-  ConditionalTagRule,
-  ResolvedConditionalTag,
-} from './types'
+import type { ConditionalTagProps, ResolvedConditionalTag } from './types'
 
 const normalizeCompare = (value: unknown) =>
   String(value ?? '')
@@ -14,7 +10,7 @@ const normalizeCompare = (value: unknown) =>
 export function resolveConditionalTag({
   conditionalRules,
   fields,
-  resolveLabel,
+  resolveLabel
 }: Pick<ConditionalTagProps, 'conditionalRules' | 'fields' | 'resolveLabel'>):
   | ResolvedConditionalTag
   | undefined {
@@ -22,7 +18,7 @@ export function resolveConditionalTag({
     return undefined
   }
 
-  const matched = conditionalRules.find((rule: ConditionalTagRule) => {
+  const matched = conditionalRules.find((rule) => {
     const current = normalizeCompare(getByPath(fields, rule.when.field))
 
     if (rule.when.equals !== undefined) {
@@ -45,6 +41,6 @@ export function resolveConditionalTag({
   return {
     label,
     variant: matched.variant,
-    negative: matched.negative,
+    negative: matched.negative
   }
 }

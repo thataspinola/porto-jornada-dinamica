@@ -9,12 +9,12 @@ import { textElementSchema } from './text.schema'
 const composableCardChildElementSchema = z.discriminatedUnion('type', [
   iconElementSchema,
   textElementSchema,
-  navigationElementSchema,
+  navigationElementSchema
 ])
 
 const composableCardChildSchema = z.object({
   id: z.string(),
-  element: composableCardChildElementSchema,
+  element: composableCardChildElementSchema
 })
 
 export const composableCardElementSchema = baseElementSchema.extend({
@@ -22,6 +22,6 @@ export const composableCardElementSchema = baseElementSchema.extend({
   config: z.object({
     url: z.string().optional(),
     children: z.array(composableCardChildSchema).min(1),
-    analytics: analyticsSchema,
-  }),
+    analytics: analyticsSchema
+  })
 })

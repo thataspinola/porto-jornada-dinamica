@@ -14,16 +14,12 @@ function interpolate(template: string, ctx: InterpolationContext): string {
 
 export function extractErrorCode(error: unknown): string {
   if (error instanceof ServiceError) return error.message
-
   return SERVICE_ERROR_CODE.INTERNAL_SERVER_ERROR
 }
 
 export function buildErrorInterpolationScope(error: unknown) {
   if (error instanceof ServiceError) {
-    return {
-      message: error.message,
-      statusCode: error.statusCode,
-    }
+    return { message: error.message, statusCode: error.statusCode }
   }
 
   if (error instanceof Error) {
@@ -41,7 +37,6 @@ export function interpolateFullscreenAction(
     ...action,
     attempts: action.attempts.map((attempt) => {
       const clickAction = attempt.actionButton.onClickAction
-
       return {
         ...attempt,
         title: interpolate(attempt.title, ctx),
@@ -55,12 +50,12 @@ export function interpolateFullscreenAction(
             clickAction?.kind === 'redirect'
               ? {
                   kind: 'redirect' as const,
-                  url: interpolate(clickAction.url, ctx),
+                  url: interpolate(clickAction.url, ctx)
                 }
-              : clickAction,
-        },
+              : clickAction
+        }
       }
-    }),
+    })
   }
 }
 
@@ -71,8 +66,8 @@ export const DEFAULT_ERROR_ACTION: ServiceErrorAction = {
   description:
     'Estamos trabalhando para que volte ao normal o quanto antes. Você pode tentar novamente clicando no botão abaixo.',
   actionButton: {
-    children: 'Tentar novamente',
-  },
+    children: 'Tentar novamente'
+  }
 }
 
 type ResolveInput = {
@@ -91,7 +86,7 @@ function findRule(
 export function resolveErrorAction({
   code,
   nodeErrors,
-  journeyErrors,
+  journeyErrors
 }: ResolveInput): ServiceErrorAction {
   return (
     findRule(nodeErrors, code) ??

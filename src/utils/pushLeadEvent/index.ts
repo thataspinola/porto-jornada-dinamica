@@ -30,13 +30,13 @@ export async function pushLeadEvent(input: PushLeadEventInput): Promise<void> {
     clientPhone,
     clientPhoneE164,
     clientFirstName,
-    clientLastName,
+    clientLastName
   ] = await Promise.all([
     hashOptional(input.email),
     hashOptional(input.phone),
     hashOptional(phoneE164),
     hashOptional(firstName),
-    hashOptional(lastName),
+    hashOptional(lastName)
   ])
 
   pushEvent({
@@ -51,6 +51,6 @@ export async function pushLeadEvent(input: PushLeadEventInput): Promise<void> {
     clientPhone,
     clientPhoneE164,
     clientFirstName,
-    clientLastName,
+    clientLastName
   })
 }

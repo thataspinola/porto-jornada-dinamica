@@ -4,7 +4,6 @@ type NativePayload = {
 
 export function sendNativeMessage(payload: NativePayload) {
   const webkitHandler = window.webkit?.messageHandlers?.portoNativeBridge
-
   if (webkitHandler?.postMessage) {
     webkitHandler.postMessage(payload)
     return

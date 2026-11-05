@@ -1,15 +1,31 @@
-"use client";
-import { useCallback, useState } from "react";
-export function useVehicleModelsPriceErrorHandler() {
-	const [error, setError] = useState("");
-	const handleError = useCallback(
-		(error: unknown) =>
-			setError(
-				error instanceof Error
-					? error.message
-					: "Não foi possível carregar os dados.",
-			),
-		[],
-	);
-	return { error, handleError, clearError: () => setError("") };
+'use client'
+
+import { useEffect } from 'react'
+
+import { notifyVehicleModelsEmpty } from '../utils/notifyVehicleModelsEmpty'
+import { notifyVehicleModelsPriceError } from '../utils/notifyVehicleModelsPriceError'
+
+type UseVehicleModelsPriceErrorHandlerParams = {
+  isVehicleModelsPriceError: boolean
+  isVehicleModelsPriceEmpty: boolean
+  resetOnEmpty: () => void
+}
+
+export function useVehicleModelsPriceErrorHandler({
+  isVehicleModelsPriceError,
+  isVehicleModelsPriceEmpty,
+  resetOnEmpty
+}: UseVehicleModelsPriceErrorHandlerParams) {
+  useEffect(() => {
+    if (!isVehicleModelsPriceError) return
+
+    notifyVehicleModelsPriceError()
+  }, [isVehicleModelsPriceError])
+
+  useEffect(() => {
+    if (!isVehicleModelsPriceEmpty) return
+
+    notifyVehicleModelsEmpty()
+    resetOnEmpty()
+  }, [isVehicleModelsPriceEmpty, resetOnEmpty])
 }

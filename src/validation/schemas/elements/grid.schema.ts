@@ -4,8 +4,9 @@ import { fcdcPlateInputElementSchema } from '@/features/fcdc/validation/schemas/
 
 import { addressRadioElementSchema } from './addressRadio.schema'
 import { baseElementSchema } from './baseElement.schema'
+import { biologicalSexElementSchema } from './biologicalSex.schema'
 import { birthDateInputElementSchema } from './birthDateInput.schema'
-import { cepElementSchema } from './cep.schema'
+import { cepElementSchema } from './cepElementSchema'
 import { cepInputElementSchema } from './cepInput.schema'
 import { checkboxElementSchema } from './checkbox.schema'
 import { chipsElementSchema } from './chips.schema'
@@ -25,6 +26,7 @@ import { occupationElementSchema } from './occupation.schema'
 import { optionCardListElementSchema } from './optionCardList.schema'
 import { paragraphElementSchema } from './paragraph.schema'
 import { phoneInputElementSchema } from './phoneInput.schema'
+import { priceSelectorElementSchema } from './priceSelector.schema'
 import { privacyPoliceElementSchema } from './privacyPolicy.schema'
 import { radioElementSchema } from './radio.schema'
 import { selectElementSchema } from './select.schema'
@@ -37,8 +39,6 @@ import { taxvatInputElementSchema } from './taxvatInput.schema'
 import { textElementSchema } from './text.schema'
 import { textInputElementSchema } from './textInput.schema'
 import { titleElementSchema } from './title.schema'
-import { biologicalSexElementSchema } from './biologicalSex.schema'
-import { priceSelectorElementSchema } from './priceSelector.schema'
 
 const gridChildElementSchema = z.discriminatedUnion('type', [
   addressRadioElementSchema,
@@ -76,23 +76,23 @@ const gridChildElementSchema = z.discriminatedUnion('type', [
   taxvatInputElementSchema,
   textElementSchema,
   textInputElementSchema,
-  titleElementSchema,
+  titleElementSchema
 ])
 
-const colSpanSChema = z.union([
+const colSpanSchema = z.union([
   z.number().int().min(1).max(12),
   z.object({
     desktop: z.number().int().min(1).max(12),
-    mobile: z.number().int().min(1).max(12),
-  }),
+    mobile: z.number().int().min(1).max(12)
+  })
 ])
 
 const gridItemSchema = baseElementSchema.extend({
   type: z.literal('GRID_ITEM'),
   config: z.object({
-    colSpan: colSpanSChema,
-    children: z.array(gridChildElementSchema).default([]),
-  }),
+    colSpan: colSpanSchema,
+    children: z.array(gridChildElementSchema).default([])
+  })
 })
 
 export const gridElementSchema = baseElementSchema.extend({
@@ -101,6 +101,6 @@ export const gridElementSchema = baseElementSchema.extend({
     columns: z.number().int().min(1).max(12).optional().default(12),
     gap: spacingTokenSchema.optional(),
     stretchItems: z.boolean().optional().default(false),
-    children: z.array(gridItemSchema).min(1),
-  }),
+    children: z.array(gridItemSchema).min(1)
+  })
 })

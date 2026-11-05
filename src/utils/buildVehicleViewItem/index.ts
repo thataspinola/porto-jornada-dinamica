@@ -45,29 +45,23 @@ function asStandardVehicle(value: unknown): StandardVehicle | undefined {
 
 export function buildVehicleViewItem(input: BuildVehicleViewItemInput): Item {
   const standardVehicle = asStandardVehicle(input.standardVehicle)
-
   const brand = formatGtmText(
     pickText(input.fields.vehicleBrand, standardVehicle?.brand)
   )
-
   const model = formatGtmText(
     pickText(input.fields.vehicleModel, standardVehicle?.model)
   )
-
   const manufacturingYear = pickText(
     input.fields.vehicleManufacturingYear,
     standardVehicle?.manufacturingYear
   )
-
   const modelYear = pickText(
     input.fields.vehicleModelYear,
     standardVehicle?.modelYear
   )
-
   const insurance = input.withInsurance ? 'seguro' : 'nao-seguro'
   const financialProtection = input.withInsurance ? 'sim' : 'nao'
   const vehicleValue = input.fields.vehicleValue
-
   const itemVariant = input.includeFinancialProtection
     ? `tipo-veiculo:${insurance}|valor-veiculo:${vehicleValue}|protecao-financeira:${financialProtection}`
     : `tipo-veiculo:${insurance}|valor-veiculo:${vehicleValue}`
@@ -82,8 +76,8 @@ export function buildVehicleViewItem(input: BuildVehicleViewItemInput): Item {
     quantity: input.quantity,
     ...(input.installments != null && {
       installments: input.installments,
-      installment_value: input.installmentValue,
+      installment_value: input.installmentValue
     }),
-    affiliation: 'porto',
+    affiliation: 'porto'
   }
 }

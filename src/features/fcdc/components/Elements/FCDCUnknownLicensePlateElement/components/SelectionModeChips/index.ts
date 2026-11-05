@@ -1,1 +1,1 @@
-export * from "./SelectionModeChips";
+export * from './SelectionModeChips'

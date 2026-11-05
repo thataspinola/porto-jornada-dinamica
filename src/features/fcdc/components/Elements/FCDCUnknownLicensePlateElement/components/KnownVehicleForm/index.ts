@@ -1,1 +1,1 @@
-export * from "./KnownVehicleForm";
+export * from './KnownVehicleForm'

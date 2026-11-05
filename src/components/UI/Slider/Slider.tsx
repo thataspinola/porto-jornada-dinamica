@@ -9,7 +9,7 @@ import {
   SliderTrack as RadixTrack,
   type SliderRangeProps,
   type SliderThumbProps,
-  type SliderTrackProps,
+  type SliderTrackProps
 } from '@radix-ui/react-slider'
 import { forwardRef, type ReactNode } from 'react'
 
@@ -27,7 +27,6 @@ export const SliderRoot = forwardRef<HTMLSpanElement, SliderRootProps>(
     </RadixRoot>
   )
 )
-
 SliderRoot.displayName = 'Slider.Root'
 
 export const SliderTrack = forwardRef<HTMLSpanElement, SliderTrackProps>(
@@ -37,7 +36,6 @@ export const SliderTrack = forwardRef<HTMLSpanElement, SliderTrackProps>(
     </RadixTrack>
   )
 )
-
 SliderTrack.displayName = 'Slider.Track'
 
 export const SliderRange = forwardRef<HTMLSpanElement, SliderRangeProps>(
@@ -49,7 +47,6 @@ export const SliderRange = forwardRef<HTMLSpanElement, SliderRangeProps>(
     />
   )
 )
-
 SliderRange.displayName = 'Slider.Range'
 
 type ThumbProps = SliderThumbProps & {
@@ -63,12 +60,11 @@ export const SliderThumb = forwardRef<HTMLSpanElement, ThumbProps>(
     </RadixThumb>
   )
 )
-
 SliderThumb.displayName = 'Slider.Thumb'
 
 export const Slider = {
   Root: SliderRoot,
   Track: SliderTrack,
   Range: SliderRange,
-  Thumb: SliderThumb,
+  Thumb: SliderThumb
 }

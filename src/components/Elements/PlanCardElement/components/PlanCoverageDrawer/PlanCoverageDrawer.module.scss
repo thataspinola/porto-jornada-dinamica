@@ -1,4 +1,27 @@
-.root {
-  display: block;
-  min-width: 0;
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-24);
+}
+
+.coverage,
+.services,
+.serviceList {
+  display: flex;
+  flex-direction: column;
+}
+
+.coverage,
+.services {
+  gap: var(--ui-spacing-12);
+}
+
+.coverageHeader {
+  display: flex;
+  gap: var(--ui-spacing-12);
+  justify-content: space-between;
+}
+
+.serviceList {
+  gap: var(--ui-spacing-4);
 }

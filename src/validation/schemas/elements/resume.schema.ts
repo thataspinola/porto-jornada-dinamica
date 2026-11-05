@@ -1,11 +1,13 @@
 import { z } from 'zod'
 
+import { tagVariants } from '@/components/UI/Tag/Tag'
+
 import { baseElementSchema } from './baseElement.schema'
 import { confirmNavigationButtonElementSchema } from './confirmNavigationButton.schema'
 import { navigationElementSchema } from './navigation.schema'
 import { serviceCallElementSchema } from './serviceCall.schema'
 
-const tagVariantSchema = z.string().min(1)
+const tagVariantSchema = z.enum(tagVariants)
 
 const comparableSchema = z.union([z.string(), z.boolean(), z.number()])
 
@@ -17,20 +19,20 @@ const tagRuleSchema = z.object({
     .object({
       field: z.string(),
       equals: comparableSchema.optional(),
-      notEquals: comparableSchema.optional(),
+      notEquals: comparableSchema.optional()
     })
     .refine(
       (rule) => rule.equals !== undefined || rule.notEquals !== undefined,
       {
-        message: 'Informe `equals` ou `notEquals` na regra de tag',
-      },
-    ),
+        message: 'Informe `equals` ou `notEquals` na regra da tag'
+      }
+    )
 })
 
 const resumeChildSchema = z.discriminatedUnion('type', [
   navigationElementSchema,
   serviceCallElementSchema,
-  confirmNavigationButtonElementSchema,
+  confirmNavigationButtonElementSchema
 ])
 
 export const resumeElementSchema = baseElementSchema.extend({
@@ -44,10 +46,10 @@ export const resumeElementSchema = baseElementSchema.extend({
           label: z.string(),
           value: z.string().optional(),
           tag: z.array(tagRuleSchema).optional(),
-          hasDivider: z.boolean().optional(),
-        }),
+          hasDivider: z.boolean().optional()
+        })
       )
       .optional(),
-    children: z.array(resumeChildSchema).optional(),
-  }),
+    children: z.array(resumeChildSchema).optional()
+  })
 })

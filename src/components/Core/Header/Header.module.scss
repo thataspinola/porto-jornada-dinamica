@@ -1,32 +1,39 @@
-@use "sass:map";
-@use "@/styles/tokens/breakpoints" as breakpoints;
-
-.header-acquisition-flow {
+.container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   width: 100%;
-  height: 60px;
-  padding: 0 32px;
-  box-shadow: 0 4px 6px -1px rgb(10 13 18 / 10%), 0 2px 4px -1px rgb(10 13 18 / 6%);
+  height: var(--header-height);
+  padding: 0 1rem;
 
-  @media screen and (min-width: map.get(breakpoints.$breakpoints, "portrait")) {
-    padding: 0 32px;
+  &[data-variant="app"] {
+    @media (width >= 768px) {
+      border-bottom: 1px solid var(--ui-colors-neutral-400);
+    }
+
+    @media (width <= 767px) {
+      .logo {
+        display: none
+      }
+    }
+  }
+
+  &[data-variant="web"] {
+    border-bottom: 1px solid var(--ui-colors-neutral-400);
   }
 }
 
-.item-left {
+.goBackButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   justify-self: start;
 }
 
-.item-center {
+.logo {
   justify-self: center;
 }
 
-.item-right {
+.shoppingCartButton {
   justify-self: end;
-}
-
-.button {
-  cursor: pointer;
 }

@@ -32,13 +32,13 @@
         },
         {
           "id": "cpf-identificacao",
-          "type": "CPF_INPUT",
+          "type": "TAXVAT_INPUT",
           "order": 2,
           "config": {
             "label": "CPF",
             "placeholder": "000.000.000-00",
             "required": true,
-            "name": "field_cpf-input_ident01"
+            "name": "taxvat"
           }
         },
         {
@@ -58,7 +58,6 @@
           "order": 4,
           "config": {
             "label": "Consultar elegibilidade",
-            "service": "eligibility",
             "targetStepOnSuccess": "/resultado-consulta"
           }
         }

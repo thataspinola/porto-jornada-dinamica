@@ -12,7 +12,7 @@ export type DataQualityType = 'email' | 'phone' | 'socialName'
 const ACTION_BY_TYPE: Record<DataQualityType, string> = {
   email: 'validate-email',
   phone: 'validate-phone',
-  socialName: 'validate-social-name',
+  socialName: 'validate-social-name'
 }
 
 function sanitizeForDataQuality(type: DataQualityType, value: string): string {
@@ -47,11 +47,11 @@ export function useDataQuality() {
             product: 'data-quality',
             action: ACTION_BY_TYPE[type],
             module: 'support',
-            recaptchaAction: `data_quality_${type}`,
+            recaptchaAction: `data_quality_${type}`
           })
 
           return { isValid: result.data?.isValid !== false }
-        },
+        }
       }
     },
     [executeJourneyService]

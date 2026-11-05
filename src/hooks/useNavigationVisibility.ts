@@ -10,21 +10,21 @@ type UseNavigationVisibilityParams = {
 }
 
 export function useNavigationVisibility({
-	isHidden
+  isHidden
 }: UseNavigationVisibilityParams) {
-	const { hideNavigation, showNavigation } = useNavigationStore(
-		useShallow((store) => ({
-			hideNavigation: store.hideNavigation,
-			showNavigation: store.showNavigation
-		}))
-	)
+  const { hideNavigation, showNavigation } = useNavigationStore(
+    useShallow((store) => ({
+      hideNavigation: store.hideNavigation,
+      showNavigation: store.showNavigation
+    }))
+  )
 
-	useEffect(() => {
-		if (isHidden) {
-			hideNavigation()
-			return
-		}
+  useEffect(() => {
+    if (isHidden) {
+      hideNavigation()
+      return
+    }
 
-		showNavigation()
-	}, [isHidden, hideNavigation, showNavigation])
+    showNavigation()
+  }, [isHidden, hideNavigation, showNavigation])
 }

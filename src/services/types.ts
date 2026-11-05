@@ -11,7 +11,7 @@ export const SERVICE_ERROR_CODE = {
     'INVALID_ENTRY_VALUE_MAX_APPROVED_LOAN',
   INVALID_ENTRY_VALUE_MIN_ALLOWED: 'INVALID_ENTRY_VALUE_MIN_ALLOWED',
   CONNECTION_ERROR: 'CONNECTION_ERROR',
-  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR'
 } as const
 
 export type ServiceErrorCode =
@@ -21,8 +21,6 @@ export type ServiceErrorCode =
 export type ServiceResult<TData = unknown> = {
   success: boolean
   error?: ServiceErrorCode
-  code?: ServiceErrorCode
-  message?: string
   data?: TData
   statusCode?: number
   sessionRestarted?: boolean
@@ -37,5 +35,3 @@ export class ServiceError extends Error {
     this.statusCode = statusCode
   }
 }
-
-export type ServiceHandler = (input: unknown) => Promise<ServiceResult>

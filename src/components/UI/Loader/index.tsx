@@ -31,6 +31,7 @@ type LoaderProps = HTMLAttributes<HTMLSpanElement> & {
  *
  * @returns {JSX.Element} Componente Loader renderizado
  */
+
 export const Loader = ({
   color = 'neutral-900',
   size = 24,
@@ -41,13 +42,13 @@ export const Loader = ({
 
   return (
     <span
-      role='status'
-      aria-label='Carregando'
+      role="status"
+      aria-label="Carregando"
       className={classes}
       style={{
         width: size,
-        height: size,
-        borderBottomColor: 'transparent',
+        height: size - 1,
+        borderBottomColor: 'transparent'
       }}
       {...props}
     />

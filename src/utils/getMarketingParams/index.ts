@@ -6,7 +6,7 @@ const EXTRA_KEYS = [
   'id_link',
   'gclid',
   'fbclid',
-  'msclkid',
+  'msclkid'
 ] as const
 
 const EXTRA_KEY_SET = new Set<string>(EXTRA_KEYS)
@@ -21,9 +21,12 @@ export function getMarketingParams(search: string): Record<string, string> {
 
   for (const [key, value] of params.entries()) {
     if (!value) continue
+
     const isUtm = key.startsWith('utm_')
     const isExtra = EXTRA_KEY_SET.has(key)
+
     if (!isUtm && !isExtra) continue
+
     result[snakeToCamel(key)] = value
   }
 

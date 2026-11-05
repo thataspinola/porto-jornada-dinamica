@@ -4,7 +4,7 @@ import * as AesJs from 'aes-js'
 import * as CryptoJS from 'crypto-js'
 import { env } from 'next-runtime-env'
 
-const DEFAULT_ENCRYPTION_KEY = env('GTM-ENCRYPTION') as string
+const GTM_ENCRYPTION = env('GTM-ENCRYPTION') as string
 
 function getEncryptedKeyBuffer(key: string) {
   const key256 = CryptoJS.SHA256(key)
@@ -16,8 +16,10 @@ export async function encryptGtmClientId(
   text = ''
 ): Promise<string | undefined> {
   if (!text) return
+
   const textAsBytes = AesJs.utils.utf8.toBytes(text)
-  const aes = new AesJs.AES(getEncryptedKeyBuffer(DEFAULT_ENCRYPTION_KEY))
+  const aes = new AesJs.AES(getEncryptedKeyBuffer(GTM_ENCRYPTION))
   const encryptedBytes = aes.encrypt(AesJs.padding.pkcs7.pad(textAsBytes))
+
   return AesJs.utils.hex.fromBytes(encryptedBytes)
 }

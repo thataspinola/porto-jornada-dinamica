@@ -3,13 +3,16 @@ const verticalValues = [
   'bank',
   'servico',
   'seguro',
-  'saude',
+  'saude'
 ] as const
 
 export type VerticalValue = (typeof verticalValues)[number] | ''
 
 export function normalizeVertical(value?: string | null): VerticalValue {
-  if (typeof value !== 'string') return ''
+  if (typeof value !== 'string') {
+    return ''
+  }
+
   const normalizedValue = value.trim().toLocaleLowerCase()
 
   if (

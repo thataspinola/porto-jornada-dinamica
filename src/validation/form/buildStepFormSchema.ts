@@ -12,10 +12,8 @@ function getNestedElements(element: JourneyElement): JourneyElement[] {
   const config = element.config as Record<string, unknown>
 
   switch (element.type) {
-    case 'CONDITIONAL_WRAPPER':
     case 'BOX':
     case 'FIXED_WRAPPER':
-    case 'FEEDBACK_VIEW':
     case 'RESUME':
     case 'SUMMARY_PANEL':
       return (config.children ?? []) as JourneyElement[]
@@ -23,7 +21,7 @@ function getNestedElements(element: JourneyElement): JourneyElement[] {
       return [
         ...((config.headerChildren ?? []) as JourneyElement[]),
         ...((config.bodyChildren ?? []) as JourneyElement[]),
-        ...((config.footerChildren ?? []) as JourneyElement[]),
+        ...((config.footerChildren ?? []) as JourneyElement[])
       ]
     case 'GRID':
       return (
@@ -47,7 +45,7 @@ function getNestedElements(element: JourneyElement): JourneyElement[] {
 function flattenElements(elements: JourneyElement[]): JourneyElement[] {
   return elements.flatMap((element) => [
     element,
-    ...flattenElements(getNestedElements(element)),
+    ...flattenElements(getNestedElements(element))
   ])
 }
 
@@ -56,11 +54,11 @@ export function buildStepFormSchema(step: JourneyStep) {
   const defaultValues: Record<string, unknown> = {}
   const refiners: NonNullable<ElementDefinition['refine']>[] = []
   const requiredFields = new Set<string>()
+
   const elements = flattenElements(step.elements)
 
   for (const element of elements) {
     const config = element.config as Record<string, unknown>
-
     if (config.required === true && typeof config.name === 'string') {
       requiredFields.add(config.name)
     }
@@ -68,8 +66,9 @@ export function buildStepFormSchema(step: JourneyStep) {
     const factory = elementRegistry[element.type]
     if (!factory) continue
 
+    // biome-ignore lint/suspicious/noExplicitAny: factory config is narrowed per entry in the registry, any needed for discriminated union lookup
     const definition = (factory as (config: any) => ElementDefinition)(
-      element.config,
+      element.config
     )
 
     Object.assign(shape, definition.schema)
@@ -91,6 +90,6 @@ export function buildStepFormSchema(step: JourneyStep) {
   return {
     schema,
     defaultValues,
-    requiredFields: [...requiredFields],
+    requiredFields: [...requiredFields]
   }
 }

@@ -1,0 +1,31 @@
+.addressContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-40);
+  margin-bottom: var(--ui-spacing-32);
+}
+
+.addressInputWrapper{
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-8);
+}
+
+.addressCard {
+  padding: 1.2rem;
+  background-color: var(--ui-colors-neutral-200);
+  border-radius: 0.8rem;
+
+  .editAddress {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ui-spacing-8);
+
+    .checkbox {
+      display: flex;
+      gap: var(--ui-spacing-8);
+      align-items: center;
+      cursor: pointer;
+    }
+  }
+}

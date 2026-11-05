@@ -1,33 +1,111 @@
 {
-  "id": "consorcio-veiculo",
-  "name": "Consórcio de veículo",
+  "id": "consorcioveiculo01",
+  "name": "Consórcio Veículo",
   "slug": "consorcio-veiculo",
+  "backStepSlug": "/consorcio/produto",
+  "defaultFields": {
+    "tipoBem": "AUT"
+  },
+  "completion": {
+    "type": "FINAL_SUCCESS"
+  },
   "steps": [
     {
-      "id": "consorcio-veiculo-inicio",
-      "name": "Início",
-      "slug": "inicio",
+      "id": "cnsveiculovalor",
+      "name": "Valor",
+      "slug": "valor",
+      "order": 0,
+      "backStepSlug": "/consorcio/produto",
       "elements": [
         {
-          "id": "consorcio-veiculo-title",
+          "id": "cnsveiculovalortitle",
           "type": "TITLE",
+          "order": 0,
           "config": {
-            "text": "Consórcio de veículo"
+            "text": "Qual o valor ideal para conquistar seu carro?",
+            "color": "seguro-900"
           }
         },
         {
-          "id": "consorcio-veiculo-description",
-          "type": "PARAGRAPH",
+          "id": "cnsveiculovalortabs",
+          "type": "TABS",
+          "order": 1,
           "config": {
-            "text": "Conheça as opções disponíveis para você."
+            "name": "tipoValor",
+            "items": [
+              {
+                "label": "Valor do crédito",
+                "value": "valorCarta",
+                "children": [
+                  {
+                    "id": "cnsveiculovalorcreditoselector",
+                    "type": "PRICE_SELECTOR",
+                    "order": 0,
+                    "config": {
+                      "name": "valorCartaAuto",
+                      "min": 25000,
+                      "max": 300000,
+                      "step": 2500,
+                      "defaultValue": 25000
+                    }
+                  }
+                ]
+              },
+              {
+                "label": "Valor da parcela",
+                "value": "parcelas",
+                "children": [
+                  {
+                    "id": "cnsveiculovalorparcelaselector",
+                    "type": "PRICE_SELECTOR",
+                    "order": 0,
+                    "config": {
+                      "name": "valorParcelaAuto",
+                      "min": 320,
+                      "max": 1550,
+                      "step": 10,
+                      "defaultValue": 320
+                    }
+                  }
+                ]
+              }
+            ]
           }
         },
         {
-          "id": "consorcio-veiculo-navigation",
+          "id": "cnsveiculovalorcta",
           "type": "NAVIGATION",
+          "order": 2,
           "config": {
-            "label": "Conhecer produto",
-            "url": "https://www.portoseguro.com.br/consorcio-veiculo"
+            "label": "Continuar",
+            "url": "/consorcio-veiculo/periodo",
+            "fixed": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "cnsveiculoperiodo",
+      "name": "periodo",
+      "slug": "periodo",
+      "order": 1,
+      "backStepSlug": "/consorcio-veiculo/valor",
+      "elements": [
+        {
+          "id": "cnsveiculosucessotitle",
+          "type": "TITLE",
+          "order": 0,
+          "config": {
+            "text": "Conte um pouco mais sobre os seus planos",
+            "color": "seguro-900"
+          }
+        },
+        {
+          "id": "cnsveiculosucessoparagraph",
+          "type": "PARAGRAPH",
+          "order": 1,
+          "config": {
+            "text": "Assim a gente encontra as opções de consórcio que mais combinam com o seu momento."
           }
         }
       ]

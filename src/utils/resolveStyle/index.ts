@@ -12,7 +12,7 @@ const stylePropertyParsers: Partial<
   marginRight: spacingParser,
   marginLeft: spacingParser,
   padding: spacingParser,
-  background: colorParser,
+  background: colorParser
 }
 
 type ResponsiveValue = {
@@ -36,7 +36,10 @@ const getResponsiveMode = () =>
 export function resolveStyle(
   style?: ElementStyle | CSSProperties
 ): CSSProperties | undefined {
-  if (!style) return undefined
+  if (!style) {
+    return undefined
+  }
+
   const declaredStyle = style as Record<string, unknown>
   const resolvedStyle: Record<string, unknown> = {}
   const responsiveMode = getResponsiveMode()
@@ -44,7 +47,6 @@ export function resolveStyle(
   for (const property of Object.keys(declaredStyle)) {
     const parser = stylePropertyParsers[property as keyof ElementStyle]
     const configuredValue = declaredStyle[property]
-
     const value = isResponsiveValue(configuredValue)
       ? configuredValue[responsiveMode]
       : configuredValue

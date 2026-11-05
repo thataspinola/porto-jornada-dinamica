@@ -4,7 +4,7 @@ import { baseElementSchema } from './baseElement.schema'
 import { checkboxElementSchema } from './checkbox.schema'
 import { labelValueElementSchema } from './labelValue.schema'
 import { navigationElementSchema } from './navigation.schema'
-import { productsListElementSchema } from './productList.schema'
+import { productsListElementSchema } from './productsList.schema'
 import { serviceCallElementSchema } from './serviceCall.schema'
 import { textElementSchema } from './text.schema'
 
@@ -14,12 +14,12 @@ export const boxChildSchema = z.discriminatedUnion('type', [
   navigationElementSchema,
   serviceCallElementSchema,
   labelValueElementSchema,
-  productsListElementSchema,
+  productsListElementSchema
 ])
 
 export const boxElementSchema = baseElementSchema.extend({
   type: z.literal('BOX'),
   config: z.object({
-    children: z.array(boxChildSchema).optional().default([]),
-  }),
+    children: z.array(boxChildSchema).optional().default([])
+  })
 })

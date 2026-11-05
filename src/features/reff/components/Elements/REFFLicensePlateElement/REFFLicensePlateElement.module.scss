@@ -1,4 +1,32 @@
-.root {
-  display: block;
-  min-width: 0;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-32);
+}
+
+.successContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-32);
+}
+
+.chipsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.vehicleData {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-4);
+  padding: var(--ui-spacing-16);
+  background-color: var(--ui-colors-neutral-200);
+  border-radius: var(--ui-radius-sm);
+}
+
+.chipsField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-8);
 }

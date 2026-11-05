@@ -1,1 +1,1 @@
-export * from "./REFFLicensePlateElement";
+export * from './REFFLicensePlateElement'

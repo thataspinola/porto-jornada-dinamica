@@ -4,31 +4,19 @@ export default {
   rules: {
     'custom-property-pattern': null,
     'selector-class-pattern': [
-      '^(?:[a-zA-Z][a-zA-Z0-9_-]*|--[a-zA-Z0-9_-]+)$',
-      {
-        message: 'Use camelCase ou as classes BEM existentes',
-      },
+      '^[a-z][a-zA-Z0-9]+$',
+      { message: 'Use camelCase nos nomes de classe' }
     ],
     'selector-pseudo-class-no-unknown': [
       true,
-      {
-        ignorePseudoClasses: ['global', 'local'],
-      },
+      { ignorePseudoClasses: ['global', 'local'] }
     ],
-    'scss/dollar-variable-pattern':
-      '^(?:[a-zA-Z][a-zA-Z0-9_-]*|--[a-zA-Z0-9_-]+)$',
-    'scss/at-mixin-pattern': '^(?:[a-zA-Z][a-zA-Z0-9_-]*|--[a-zA-Z0-9_-]+)$',
+    'scss/dollar-variable-pattern': '^[a-z][a-zA-Z0-9]+$',
+    'scss/at-mixin-pattern': '^[a-z][a-zA-Z0-9]+$',
     'keyframes-name-pattern': [
-      '^(?:[a-zA-Z][a-zA-Z0-9_-]*|--[a-zA-Z0-9_-]+)$',
-      {
-        message: 'Use camelCase ou kebab-case nos nomes de keyframes',
-      },
+      '^[a-z][a-zA-Z0-9]+$',
+      { message: 'Use camelCase nos nomes de keyframes' }
     ],
-    'declaration-block-no-duplicate-properties': [
-      true,
-      {
-        ignore: [],
-      },
-    ],
-  },
+    'declaration-block-no-duplicate-properties': [true, { ignore: [] }]
+  }
 }

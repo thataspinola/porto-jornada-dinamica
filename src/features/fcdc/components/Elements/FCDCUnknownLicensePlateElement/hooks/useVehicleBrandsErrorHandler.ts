@@ -1,15 +1,19 @@
-"use client";
-import { useCallback, useState } from "react";
-export function useVehicleBrandsErrorHandler() {
-	const [error, setError] = useState("");
-	const handleError = useCallback(
-		(error: unknown) =>
-			setError(
-				error instanceof Error
-					? error.message
-					: "Não foi possível carregar os dados.",
-			),
-		[],
-	);
-	return { error, handleError, clearError: () => setError("") };
+'use client'
+
+import { useEffect } from 'react'
+
+import { notifyVehicleBrandsError } from '../utils/notifyVehicleBrandsError'
+
+type UseVehicleBrandsErrorHandlerParams = {
+  isVehicleBrandsError: boolean
+}
+
+export function useVehicleBrandsErrorHandler({
+  isVehicleBrandsError
+}: UseVehicleBrandsErrorHandlerParams) {
+  useEffect(() => {
+    if (!isVehicleBrandsError) return
+
+    notifyVehicleBrandsError()
+  }, [isVehicleBrandsError])
 }

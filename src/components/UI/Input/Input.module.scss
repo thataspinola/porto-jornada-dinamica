@@ -1,4 +1,19 @@
-.root {
-  display: block;
-  min-width: 0;
+.withIcon {
+  position: relative;
+
+  :global(input) {
+    padding-right: 4.4rem;
+  }
+}
+
+.trailingIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  pointer-events: none;
 }

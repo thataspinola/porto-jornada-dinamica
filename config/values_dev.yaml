@@ -1,29 +1,42 @@
 appFramework: react
 ingress:
   enabled: true
-  contextURL: /
-  host: ""
+  contextURL: /contrate
+  host: "dynamic-form.hub-de-vendas-ecommerce.dev.awsporto"
 
 namespace: corp-hubv
 containerPort: 3000
 
 hpa:
+  enabled: true
+  enableMemory: false
+  enableCpu: true
   #Número mínimo de PODS
   minReplicas: 1
   #Número máximo de PODS
-  maxReplicas: 5
+  maxReplicas: 2
   #Porcentagem de média para escalar o POD (Quando bater a média de consumo o POD escala!), melhores detalhes consultar a documentação.
-  targetMemoryUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 85
+  targetCpuUtilizationPercentage: 85
+
+resources:
+  cpu: 250m
+  memory: 500Mi
 
 # Habilita ou não as secrets que são "puxadas" através do Backstage
-enable_secrets: false
+enable_secrets: true
+secrets:
+  RECAPTCHA: 82b537ba-4d7e-4392-9942-6e1cebb1264e
+  GTM-ENCRYPTION: 48e1a3e8-8f86-4780-9385-4d24d2f17acc
 
 configmap:
- profile: "dev"
- KEYCLOAK_CLIENT_ID: "addev"
- KEYCLOAK_CLIENT_SECRET: ""
- KEYCLOAK_ISSUER: "https://sso-interno.authcorp.dev.awsporto/auth/realms/addev"
- NEXTAUTH_URL: "https://apps.appsarquitetura.dev.awsporto/react-ssr-corp-hubv-dinamic-journey/api/auth"
- NEXTAUTH_SECRET: "my-secret-abc-123"
- NEXTAUTH_LOGOUT: "https://sso-interno.authcorp.dev.awsporto/auth/realms/addev/protocol/openid-connect/logout"
- NEXT_PUBLIC_API: "https://apps4.appsarquitetura.dev.awsporto/sboot-corp-arqt-aplicacao-referencia"
+  profile: "dev"
+  NEXT_PUBLIC_ENVIRONMENT: "development"
+  NEXT_PUBLIC_ORGANIZATION_ID: "6T4XUGKR"
+  NEXT_PUBLIC_NODE_ENV: "development"
+  NEXT_PUBLIC_RECAPTCHA_SITE_K: "6LdNVNwqAAAAAJEgi_TYTi7FyD6BIpCIePUC2vAL"
+  NEXT_PUBLIC_SENSEDIA_CLOUD_URL: "https://portoapicloud-hml.portoseguro.brasil"
+  NEXT_PUBLIC_COOKIE_DOMAIN: ".portoseguro.com.br"
+  NEXT_PUBLIC_IP_SERVICE: "https://www.portoseguro.com.br/content/rest/commerce/get/global/client-ip"
+  NEXT_PUBLIC_JORNADA_DINAMICA: "hub-vendas/cliente/v1/jornada-dinamica"
+  NEXT_PUBLIC_GA_COOKIE_SESSION_ID: "PGMXQZ7PG8"

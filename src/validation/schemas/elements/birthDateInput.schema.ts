@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { baseElementSchema } from './baseElement.schema'
-import { inputUiSchema } from './elementUi.schemas'
+import { inputUiFields } from './elementUi.schemas'
 
 export const birthDateInputElementSchema = baseElementSchema.extend({
   type: z.literal('BIRTH_DATE_INPUT'),
@@ -12,6 +12,6 @@ export const birthDateInputElementSchema = baseElementSchema.extend({
     name: z.string().default('birthDate'),
     defaultValue: z.string().default(''),
     defaultValueFrom: z.any().optional(),
-    ...inputUiSchema,
-  }),
+    ...inputUiFields
+  })
 })

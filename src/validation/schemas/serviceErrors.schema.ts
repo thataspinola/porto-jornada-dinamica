@@ -1,10 +1,10 @@
 import { z } from 'zod'
 
-import { conditionActionSchema } from '@/validation/schemas/elements/conditions.schema'
+import { conditionActionSchema } from './elements/conditions.schema'
 
 export const serviceErrorRuleSchema = z.object({
   code: z.string(),
-  action: conditionActionSchema,
+  action: conditionActionSchema
 })
 
 export const serviceErrorsSchema = z

@@ -10,7 +10,7 @@ export type EntryCalculationOutput = {
   financingValue: number
 }
 
-// remover quando tiver api
+//remover quando tiver api
 export type InitialSimulationData = {
   vehicleValue: number
   preApprovedValue: number

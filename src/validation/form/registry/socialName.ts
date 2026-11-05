@@ -1,4 +1,4 @@
-import { optionalString, optionalBoolean } from '@/validation/primitives'
+import { optionalBoolean, optionalString } from '@/validation/primitives'
 
 import type { ElementHandler } from './types'
 
@@ -7,18 +7,19 @@ export const socialName: ElementHandler<'SOCIAL_NAME'> = ({ name }) => ({
     hasSocialName: optionalBoolean(),
     [name]: optionalString().transform((value) =>
       typeof value === 'string' ? value.trim() : value
-    ),
+    )
   },
   defaultValues: { hasSocialName: false, [name]: '' },
   refine: (data, ctx) => {
-    const val = data[name]
-
-    if (data.hasSocialName === true && (!val || String(val).trim() === '')) {
-      ctx.addIssue({
-        path: [name],
-        code: 'custom',
-        message: 'Insira o seu nome social.',
-      })
+    if (data.hasSocialName === true) {
+      const val = data[name]
+      if (!val || String(val).trim() === '') {
+        ctx.addIssue({
+          path: [name],
+          code: 'custom',
+          message: 'Insira o seu nome social.'
+        })
+      }
     }
-  },
+  }
 })

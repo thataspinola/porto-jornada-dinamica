@@ -1,4 +1,160 @@
 .root {
-  display: block;
-  min-width: 0;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-32);
+  width: 28rem;
+  padding: var(--ui-spacing-32) var(--ui-spacing-20);
+  background: var(--ui-colors-neutral-white);
+  border: 1px solid var(--ui-colors-neutral-400);
+  border-radius: 1.6rem;
+}
+
+.highlighted {
+  border-color: var(--ui-colors-bank-900);
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.2rem 0.8rem;
+  white-space: nowrap;
+  background: var(--ui-colors-bank-900);
+  border: 1px solid var(--ui-colors-bank-900);
+  border-top-right-radius: 1.4rem;
+  border-bottom-left-radius: 1.4rem;
+}
+
+.title {
+  padding-top: var(--ui-spacing-16);
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-4);
+  justify-content: flex-end;
+}
+
+.price {
+  display: flex;
+  gap: 0.2rem;
+  align-items: baseline;
+}
+
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.indemnity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem var(--ui-spacing-8);
+  text-align: center;
+  background: var(--ui-colors-support-3-100);
+  border-radius: 0.6rem;
+}
+
+.coverages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.coveragesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.coveragesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.coverageItem {
+  display: flex;
+  gap: var(--ui-spacing-8);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.coverageContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.turbine {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.turbineOptions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-16);
+}
+
+.turbineOption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-8);
+  cursor: pointer;
+}
+
+.turbineOptionRow {
+  display: flex;
+  gap: var(--ui-spacing-12);
+  align-items: flex-start;
+
+  & > button {
+    flex-shrink: 0;
+  }
+}
+
+.turbineOptionText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+
+.turbinePrice {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.2rem 0.8rem;
+  background: var(--ui-colors-support-3-100);
+  border-radius: 0.6rem;
+}
+
+.details {
+  display: flex;
+  gap: var(--ui-spacing-8);
+  align-items: center;
+  justify-content: flex-start;
+  height: auto;
+  padding: 0;
+  margin-top: auto;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+
+  svg {
+    flex-shrink: 0;
+  }
 }

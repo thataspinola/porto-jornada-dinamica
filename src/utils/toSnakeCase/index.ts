@@ -1,9 +1,7 @@
 export function toSnakeCase(input: string): string
-
 export function toSnakeCase(
   input: Record<string, unknown>
 ): Record<string, unknown>
-
 export function toSnakeCase(
   input: string | Record<string, unknown>
 ): string | Record<string, unknown> {

@@ -1,4 +1,9 @@
-.root {
-  display: block;
-  min-width: 0;
+.content {
+  display: flex;
+  gap: var(--ui-spacing-16);
+  align-items: center;
+
+  p {
+    margin-top: 0;
+  }
 }

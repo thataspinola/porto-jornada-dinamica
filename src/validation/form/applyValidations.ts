@@ -16,7 +16,7 @@ function applyValidation(schema: z.ZodString, validation: FieldValidation) {
 
 export function applyValidations(
   schema: z.ZodString,
-  validations: FieldValidation[] = [],
+  validations: FieldValidation[]
 ) {
   let currentSchema = schema
 
@@ -28,9 +28,10 @@ export function applyValidations(
 }
 
 export function applyOptionalValidations(
-  validations: FieldValidation[] = [],
-  { trim = false }: { trim?: boolean } = {},
+  validations: FieldValidation[],
+  { trim = false }: { trim?: boolean } = {}
 ) {
   const base = trim ? z.string().trim() : z.string()
+
   return optionalString().pipe(applyValidations(base, validations).optional())
 }

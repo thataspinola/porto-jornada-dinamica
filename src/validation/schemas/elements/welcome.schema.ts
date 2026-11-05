@@ -4,11 +4,11 @@ import { baseElementSchema } from './baseElement.schema'
 
 const welcomeIconItemSchema = z.object({
   title: z.string(),
-  iconName: z.string(),
+  iconName: z.string()
 })
 
 const iconContentListSchema = z.object({
-  items: z.array(welcomeIconItemSchema).optional().default([]),
+  items: z.array(welcomeIconItemSchema).optional().default([])
 })
 
 export const welcomeElementSchema = baseElementSchema.extend({
@@ -17,6 +17,6 @@ export const welcomeElementSchema = baseElementSchema.extend({
     title: z.string(),
     titlePartToHighlight: z.string().optional(),
     subtitle: z.string().optional(),
-    iconContentList: iconContentListSchema.optional(),
-  }),
+    iconContentList: iconContentListSchema.optional()
+  })
 })

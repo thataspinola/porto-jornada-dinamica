@@ -1,7 +1,7 @@
 import { getAnalyticsUserId } from '../ensureAnalyticsUserId'
 import { formatGtmText } from '../formatGtm'
-import { toSnakeCase } from '../toSnakeCase/index'
-import { GtmEvent, Item } from './types'
+import { toSnakeCase } from '../toSnakeCase'
+import type { GtmEvent, Item } from './types'
 
 export type { GtmEvent, GtmEventType, Item } from './types'
 
@@ -9,11 +9,9 @@ function pickDefined<T extends Record<string, unknown>>(
   input: T
 ): Record<string, unknown> {
   const output: Record<string, unknown> = {}
-
   for (const key in input) {
     if (input[key] !== undefined) output[key] = input[key]
   }
-
   return output
 }
 
@@ -32,14 +30,14 @@ function buildPayload(event: GtmEvent): Record<string, unknown> {
         productIdentify: event.productIdentify,
         productCategory: event.productCategory,
         method: event.method,
-        status: event.status,
+        status: event.status
       })
     case 'dialog':
-      return pickDefined({
+      return {
         event: event.event,
         evLabel: formatGtmText(event.evLabel),
-        evAction: 'dialog: visualizar',
-      })
+        evAction: 'dialog:visualizar'
+      }
     case 'alert':
       return pickDefined({
         event: event.event,
@@ -49,14 +47,14 @@ function buildPayload(event: GtmEvent): Record<string, unknown> {
         errorService: event.errorService,
         alertServiceMessage: event.alertServiceMessage,
         alertType: event.alertType,
-        alertEvent: event.alertEvent,
+        alertEvent: event.alertEvent
       })
     case 'search_address':
-      return pickDefined({
+      return {
         event: event.event,
         evLabel: formatGtmText(event.evLabel),
-        evAction: event.evAction,
-      })
+        evAction: event.evAction
+      }
     case 'self_service':
       return pickDefined({
         event: event.event,
@@ -70,7 +68,7 @@ function buildPayload(event: GtmEvent): Record<string, unknown> {
         serviceHour: event.serviceHour,
         serviceDate: event.serviceDate,
         clientId: event.clientId,
-        clienteBcp: event.clienteBcp,
+        clienteBcp: event.clienteBcp
       })
     case 'view_item':
     case 'view_item_list':
@@ -82,19 +80,19 @@ function buildPayload(event: GtmEvent): Record<string, unknown> {
         evAction: event.evAction,
         currency: event.currency,
         value: event.value,
-        items: normalizeItems(event.items),
+        items: normalizeItems(event.items)
       })
     case 'select_item':
-      return pickDefined({
+      return {
         event: event.event,
         evAction: event.evAction,
-        items: normalizeItems(event.items),
-      })
+        items: normalizeItems(event.items)
+      }
     case 'page_view':
-      return pickDefined({
+      return {
         event: event.event,
-        pageLocation: event.pageLocation,
-      })
+        pageLocation: event.pageLocation
+      }
     case 'lead':
       return pickDefined({
         event: event.event,
@@ -111,7 +109,7 @@ function buildPayload(event: GtmEvent): Record<string, unknown> {
         clientPhone: event.clientPhone,
         clientPhoneE164: event.clientPhoneE164,
         clientFirstName: event.clientFirstName,
-        clientLastName: event.clientLastName,
+        clientLastName: event.clientLastName
       })
     case 'purchase':
       return pickDefined({
@@ -127,7 +125,7 @@ function buildPayload(event: GtmEvent): Record<string, unknown> {
         clientPhoneE164: event.clientPhoneE164,
         clientFirstName: event.clientFirstName,
         clientLastName: event.clientLastName,
-        items: normalizeItems(event.items),
+        items: normalizeItems(event.items)
       })
   }
 }
@@ -135,9 +133,8 @@ function buildPayload(event: GtmEvent): Record<string, unknown> {
 export function pushEvent(event: GtmEvent): void {
   if (typeof window === 'undefined') {
     console.warn(
-      'It was not possible to trigger the event in the dataLayer because the component is running on the server side'
+      'It was not possible to trigger the event in the dataLayer because the component is running on the server side.'
     )
-
     return
   }
 
@@ -152,7 +149,7 @@ export function pushEvent(event: GtmEvent): void {
   window.dataLayer.push(
     toSnakeCase({
       ...payload,
-      ...(analyticsUserId ? { userId: analyticsUserId } : {}),
+      ...(analyticsUserId ? { userId: analyticsUserId } : {})
     })
   )
 }

@@ -1,4 +1,77 @@
-.root {
-  display: block;
-  min-width: 0;
+.protectedFinancingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.protectedFinancingHeader {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.protectedFinancingInfo {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.protectedFinancingBenefits {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-left: 0.8rem;
+  list-style: none;
+
+  li {
+    display: flex;
+    gap: 1.6rem;
+    align-items: center;
+  }
+}
+
+.protectedFinancingModalBenefitItem {
+  display: flex;
+  gap: 1.6rem;
+
+  &>div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.protectedFinancingModalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+.protectedFinancingModalHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.protectedFinancingModalTitle {
+  margin: 0;
+}
+
+.protectedFinancingModalBenefits {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  list-style: none;
+}
+
+.protectedFinancingModalActions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
 }

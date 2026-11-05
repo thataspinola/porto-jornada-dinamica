@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-import { baseElementSchema } from './baseElement.schema'
 import { analyticsSchema } from './analytics.schema'
+import { baseElementSchema } from './baseElement.schema'
 
-const chipsOptionsSchema = z.object({
+const chipsOptionSchema = z.object({
   label: z.string(),
-  value: z.string(),
+  value: z.string()
 })
 
 export const chipsElementSchema = baseElementSchema.extend({
@@ -14,8 +14,8 @@ export const chipsElementSchema = baseElementSchema.extend({
     defaultValue: z.string().default(''),
     defaultValueFrom: z.any().optional(),
     required: z.boolean().default(false),
-    options: z.array(chipsOptionsSchema),
+    options: z.array(chipsOptionSchema),
     name: z.string(),
-    analytics: analyticsSchema,
-  }),
+    analytics: analyticsSchema
+  })
 })

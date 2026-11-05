@@ -1,11 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["vitest/globals"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -24,27 +21,22 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    "types": [
-      "node",
-      "vitest/globals"
-    ]
+      "@/*": ["./src/*"]
+    }
   },
   "include": [
-    "next-env.d.ts",
-    "next.config.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "test/**/*.ts",
-    "test/**/*.tsx",
+    "./src",
+    "**/*.tsx",
     ".next/types/**/*.ts",
+    "/dist/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
+    "next-env.d.ts",
+    "/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
+    "/dist/react-ssr-corp-hubv-dinamic-journey/dev/types/**/*.ts",
+    "/dist/types/**/*.ts",
+    "./config/vitest/setup.ts",
+    "/dist/dev/types/**/*.ts",
     "dist/react-ssr-corp-hubv-dinamic-journey/types/**/*.ts",
     "dist/react-ssr-corp-hubv-dinamic-journey/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

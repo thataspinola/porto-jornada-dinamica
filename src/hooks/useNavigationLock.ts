@@ -13,7 +13,7 @@ export function useNavigationLock({ isLocked }: UseNavigationLockParams) {
   const { disableNavigation, enableNavigation } = useNavigationStore(
     useShallow((store) => ({
       disableNavigation: store.disableNavigation,
-      enableNavigation: store.enableNavigation,
+      enableNavigation: store.enableNavigation
     }))
   )
 

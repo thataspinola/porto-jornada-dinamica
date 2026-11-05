@@ -1,0 +1,14 @@
+.container {
+  display: block;
+  margin-bottom: var(--ui-spacing-32);
+
+  a {
+    color: var(--ui-colors-seguro-900) !important;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  }
+}

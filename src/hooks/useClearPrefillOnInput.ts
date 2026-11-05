@@ -12,7 +12,7 @@ type UseClearPrefillOnInputParams = {
 export function useClearPrefillOnInput({
   enabled,
   value,
-  onReplace,
+  onReplace
 }: UseClearPrefillOnInputParams) {
   const initialValueRef = useRef<string | undefined>(undefined)
   const clearedPrefillRef = useRef(false)
@@ -29,15 +29,18 @@ export function useClearPrefillOnInput({
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.ctrlKey || event.metaKey) return
+      if (event.ctrlKey || event.metaKey) {
+        return
+      }
 
       if (
         !shouldReplace ||
         (event.key !== 'Backspace' &&
           event.key !== 'Delete' &&
           event.key.length !== 1)
-      )
+      ) {
         return
+      }
 
       event.preventDefault()
       clearedPrefillRef.current = true
@@ -48,7 +51,10 @@ export function useClearPrefillOnInput({
 
   const handleFocus = useCallback(
     (event: FocusEvent<HTMLInputElement>) => {
-      if (!shouldReplace) return
+      if (!shouldReplace) {
+        return
+      }
+
       event.currentTarget.select()
     },
     [shouldReplace]

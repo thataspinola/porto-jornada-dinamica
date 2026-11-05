@@ -1,4 +1,20 @@
-.root {
-  display: block;
-  min-width: 0;
+.container {
+  position: relative;
+}
+
+.editButton {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  background-color: transparent;
+  border-radius: 0.4rem;
+
+  &:hover {
+    background: var(--ui-colors-neutral-200);
+  }
 }

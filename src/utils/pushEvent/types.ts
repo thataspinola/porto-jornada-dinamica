@@ -8,6 +8,7 @@ export type Item = {
   item_list_id?: string
   item_price?: number | string
   item_quantity?: number | string
+  installment_value?: number | string
   installments?: number | string
   affiliation?: string
   creative_name?: string

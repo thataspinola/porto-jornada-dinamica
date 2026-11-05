@@ -8,7 +8,7 @@
 .progressBarFill {
   width: 0;
   height: 100%;
-	background-color: var(--ui-colors-seguro-900);
-  border-radius: 0 2px 2px 0;
-  transition: width 600ms ease-in-out,
+  background-color: var(--ui-colors-seguro-900);
+  border-radius: 2rem;
+  transition: width 0.5s ease-in-out;
 }

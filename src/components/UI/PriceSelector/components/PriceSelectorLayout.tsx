@@ -46,5 +46,5 @@ export const PriceSelectorLayout = {
   Root,
   Stepper,
   Bottom,
-  Bounds,
+  Bounds
 }

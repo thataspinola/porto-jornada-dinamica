@@ -1,19 +1,19 @@
 import { z } from 'zod'
 
 import { baseElementSchema } from './baseElement.schema'
-import { inputUiSchema } from './elementUi.schemas'
+import { inputUiFields } from './elementUi.schemas'
 
 export const phoneInputElementSchema = baseElementSchema.extend({
   type: z.literal('PHONE_INPUT'),
   config: z.object({
-    label: z.string('Celular'),
-    placeholder: z.string().optional(),
+    label: z.string().default('Celular'),
+    placeholder: z.string().default(''),
     required: z.boolean().default(false),
-    name: z.string('phone'),
-    defaultValue: z.string().optional(),
+    name: z.string().default('phone'),
+    defaultValue: z.string().default(''),
     defaultValueFrom: z.any().optional(),
     clearOnInput: z.boolean().optional(),
     trailingIcon: z.string().optional(),
-    ...inputUiSchema,
-  }),
+    ...inputUiFields
+  })
 })

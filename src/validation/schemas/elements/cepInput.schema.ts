@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { baseElementSchema } from './baseElement.schema'
-import { inputUiSchema } from './elementUi.schemas'
+import { inputUiFields } from './elementUi.schemas'
 
 export const cepInputElementSchema = baseElementSchema.extend({
   type: z.literal('CEP_INPUT'),
@@ -11,7 +11,7 @@ export const cepInputElementSchema = baseElementSchema.extend({
     required: z.boolean().default(false),
     name: z.string().default('addressZipCode'),
     defaultValue: z.string().default(''),
-    defaultValueFrom: z.unknown().optional(),
-    ...inputUiSchema,
-  }),
+    defaultValueFrom: z.any().optional(),
+    ...inputUiFields
+  })
 })

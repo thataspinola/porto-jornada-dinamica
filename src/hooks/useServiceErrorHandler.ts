@@ -5,13 +5,13 @@ import { useCallback, useRef } from 'react'
 import {
   type FieldValues,
   type UseFormReturn,
-  useFormContext,
+  useFormContext
 } from 'react-hook-form'
 import { useShallow } from 'zustand/shallow'
 
 import { interpolateTemplate } from '@/utils'
 
-import { useJourneyStore, type JourneyState } from '@/store/journeyStore'
+import { useJourneyStore } from '@/store/journeyStore'
 
 import { useJourneyNavigation } from '@/hooks/useJourneyNavigation'
 
@@ -19,19 +19,17 @@ import type { ServiceErrorsConfig } from '@/validation/schemas'
 
 import {
   type AlertEventContext,
-  dispatchAlert,
+  dispatchAlert
 } from './serviceErrorHandlers/dispatchAlert'
-
 import {
   buildErrorInterpolationScope,
   extractErrorCode,
   interpolateFullscreenAction,
-  resolveErrorAction,
+  resolveErrorAction
 } from './serviceErrorHandlers/resolveErrorAction'
-
 import type {
   FullscreenAction,
-  ServiceErrorAction,
+  ServiceErrorAction
 } from './serviceErrorHandlers/types'
 
 export type { AlertEventContext }
@@ -39,10 +37,7 @@ export type { AlertEventContext }
 type InterpolationContext = Record<string, unknown>
 
 function interpolate(template: string, ctx: InterpolationContext): string {
-  const result = interpolateTemplate(template, ctx, {
-    keepMissing: true,
-  })
-
+  const result = interpolateTemplate(template, ctx, { keepMissing: true })
   return result ?? template
 }
 
@@ -51,7 +46,7 @@ function applyAction(
   ctx: InterpolationContext,
   methods: UseFormReturn<FieldValues> | null,
   navigateTo: (destination: string) => void,
-  onFullscreen: (action: FullscreenAction) => void
+  onFullscreen?: (action: FullscreenAction) => void
 ) {
   switch (action.kind) {
     case 'notify': {
@@ -73,47 +68,35 @@ function applyAction(
                   navigateTo,
                   onFullscreen
                 )
-            : undefined,
-        },
+            : undefined
+        }
       })
-
       return
     }
-
     case 'fieldError': {
       const message = interpolate(action.message, ctx)
 
       if (methods) {
         methods.setError(action.field as never, {
           type: 'server',
-          message,
+          message
         })
-
         if (action.focus) {
           methods.setFocus(action.field as never)
         }
-
         return
       }
 
-      notify({
-        type: 'error',
-        title: message,
-        description: '',
-      })
-
+      notify({ type: 'error', title: message, description: '' })
       return
     }
-
     case 'redirect':
       navigateTo(interpolate(action.url, ctx))
       return
-
     case 'fullscreen': {
       if (onFullscreen) {
         onFullscreen(interpolateFullscreenAction(action, ctx))
       }
-
       return
     }
   }
@@ -129,7 +112,6 @@ export function useServiceErrorHandler<TFieldValues extends FieldValues>(
   methodsParam?: UseFormReturn<TFieldValues>
 ) {
   const contextMethods = useFormContext<TFieldValues>()
-
   const methods = (methodsParam ??
     contextMethods ??
     null) as UseFormReturn<FieldValues> | null
@@ -138,12 +120,12 @@ export function useServiceErrorHandler<TFieldValues extends FieldValues>(
 
   const { fields, parameters, services, business, journeyErrors } =
     useJourneyStore(
-      useShallow((state: JourneyState) => ({
+      useShallow((state) => ({
         fields: state.fields,
         parameters: state.parameters,
         services: state.services,
         business: state.business,
-        journeyErrors: state.errors,
+        journeyErrors: state.errors
       }))
     )
 
@@ -157,9 +139,8 @@ export function useServiceErrorHandler<TFieldValues extends FieldValues>(
     parameters,
     services,
     business,
-    journeyErrors,
+    journeyErrors
   })
-
   latestRef.current = {
     methods,
     navigateTo,
@@ -167,7 +148,7 @@ export function useServiceErrorHandler<TFieldValues extends FieldValues>(
     parameters,
     services,
     business,
-    journeyErrors,
+    journeyErrors
   }
 
   const handleServiceError = useCallback(
@@ -179,15 +160,14 @@ export function useServiceErrorHandler<TFieldValues extends FieldValues>(
         parameters: currentParameters,
         services: currentServices,
         business: currentBusiness,
-        journeyErrors: currentJourneyErrors,
+        journeyErrors: currentJourneyErrors
       } = latestRef.current
 
       const code = extractErrorCode(error)
-
       const action = resolveErrorAction({
         code,
         nodeErrors: options?.nodeErrors,
-        journeyErrors: currentJourneyErrors,
+        journeyErrors: currentJourneyErrors
       })
 
       const ctx: InterpolationContext = {
@@ -195,7 +175,7 @@ export function useServiceErrorHandler<TFieldValues extends FieldValues>(
         parameters: currentParameters,
         services: currentServices,
         business: currentBusiness,
-        error: buildErrorInterpolationScope(error),
+        error: buildErrorInterpolationScope(error)
       }
 
       applyAction(

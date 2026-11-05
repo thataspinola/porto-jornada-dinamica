@@ -1,7 +1,7 @@
-import { getByPath } from '../getByPath/index'
-import { interpolateTemplate } from '../interpolateTemplate/index'
+import { getByPath } from '../getByPath'
+import { interpolateTemplate } from '../interpolateTemplate'
 
-const FULL_PLACEHOLDER_REGEX = /^\s*\{\{\s*([\w.-]+)\s*\}\}\s*$/
+const FULL_PLACEHOLDER_REGEX = /^\s*\{\{\s*([\w.]+)\s*\}\}\s*$/
 const COOKIES_SCOPE_PREFIX = 'cookies.'
 
 function isMissing(value: unknown): boolean {
@@ -23,27 +23,21 @@ export function resolveTemplates<T>(
 function resolve(value: unknown, data: Record<string, unknown>): unknown {
   if (typeof value === 'string') return resolveString(value, data)
   if (Array.isArray(value)) return resolveArray(value, data)
-
   if (value !== null && typeof value === 'object') {
     return resolveObject(value as Record<string, unknown>, data)
   }
-
   return value
 }
 
 function resolveString(value: string, data: Record<string, unknown>): unknown {
   const fullMatch = value.match(FULL_PLACEHOLDER_REGEX)
-
   if (fullMatch) {
     const path = fullMatch?.[1]
-
     if (path.startsWith(COOKIES_SCOPE_PREFIX) && !('cookies' in data)) {
       return value
     }
-
     return readPath(data, path)
   }
-
   return interpolateTemplate(value, data)
 }
 
@@ -53,7 +47,7 @@ function resolveArray(
 ): unknown[] {
   return items
     .map((item) => resolve(item, data))
-    .filter((item) => item != undefined)
+    .filter((item) => item !== undefined)
 }
 
 function resolveObject(

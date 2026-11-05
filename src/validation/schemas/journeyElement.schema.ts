@@ -4,70 +4,64 @@ import { fcdcPlateInputElementSchema } from '@/features/fcdc/validation/schemas/
 import { fcdcPriceSimulationElementSchema } from '@/features/fcdc/validation/schemas/elements/fcdcPriceSimulation.schema'
 import { fcdcProposalSentElementSchema } from '@/features/fcdc/validation/schemas/elements/fcdcProposalSent.schema'
 import { fcdcResumeElementSchema } from '@/features/fcdc/validation/schemas/elements/fcdcResume.schema'
-import { fcdcUnknownLicensePlateElementSchema } from '@/features/fcdc/validation/schemas/elements/fcdcUnknownLicensePlate.schema'
+import { fcdcUnknownLicensePlateElementSchema } from '@/features/fcdc/validation/schemas/elements/fcdcUnknownLicensePlateElement.schema'
 import { reffPlateInputElementSchema } from '@/features/reff/validation/schemas/elements/reffPlateInput.schema'
 import { reffProposalSentElementSchema } from '@/features/reff/validation/schemas/elements/reffProposalSent.schema'
 import { reffResumeElementSchema } from '@/features/reff/validation/schemas/elements/reffResume.schema'
 import { reffSimulationElementSchema } from '@/features/reff/validation/schemas/elements/reffSimulation.schema'
 
-import { cpfInputElementSchema } from '@/validation/schemas/elements/cpfInput.schema'
-import { addressRadioElementSchema } from '@/validation/schemas/elements/addressRadio.schema'
-import { biologicalSexElementSchema } from '@/validation/schemas/elements/biologicalSex.schema'
-import { birthDateInputElementSchema } from '@/validation/schemas/elements/birthDateInput.schema'
-import { boxElementSchema } from '@/validation/schemas/elements/box.schema'
-import { cepElementSchema } from '@/validation/schemas/elements/cep.schema'
-import { cepInputElementSchema } from '@/validation/schemas/elements/cepInput.schema'
-import { checkboxElementSchema } from '@/validation/schemas/elements/checkbox.schema'
-import { checklistElementSchema } from '@/validation/schemas/elements/checklist.schema'
-import { chipsElementSchema } from '@/validation/schemas/elements/chips.schema'
-import { chipsImageElementSchema } from '@/validation/schemas/elements/chipsImage.schema'
-import { composableCardElementSchema } from '@/validation/schemas/elements/composableCard.schema'
-import { conditionalWrapperElementSchema } from '@/validation/schemas/elements/conditionalWrapper.schema'
-import { confirmNavigationButtonElementSchema } from '@/validation/schemas/elements/confirmNavigationButton.schema'
-import { drawerElementSchema } from '@/validation/schemas/elements/drawer.schema'
-import { emailInputElementSchema } from '@/validation/schemas/elements/emailInput.schema'
-import { feedbackViewElementSchema } from '@/validation/schemas/elements/feedbackView.schema'
-import { fixedWrapperElementSchema } from '@/validation/schemas/elements/fixedWrapper.schema'
-import { fullNameInputElementSchema } from '@/validation/schemas/elements/fullNameInput.schema'
-import { gridElementSchema } from '@/validation/schemas/elements/grid.schema'
-import { iconElementSchema } from '@/validation/schemas/elements/icon.schema'
-import { iconContentListElementSchema } from '@/validation/schemas/elements/iconContentList.schema'
-import { inputHiddenElementSchema } from '@/validation/schemas/elements/inputHidden.schema'
-import { labelValueElementSchema } from '@/validation/schemas/elements/labelValue.schema'
-import { locationBoxElementSchema } from '@/validation/schemas/elements/locationBox.schema'
-import { maritalStatusElementSchema } from '@/validation/schemas/elements/maritalStatus.schema'
-import { marketingOptinElementSchema } from '@/validation/schemas/elements/marketingOptinElement.schema'
-import { miniBannerHighlightElementSchema } from '@/validation/schemas/elements/miniBannerHighlight.schema'
-import { nationalityElementSchema } from '@/validation/schemas/elements/nationality.schema'
-import { navigationElementSchema } from '@/validation/schemas/elements/navigation.schema'
-import { notificationElementSchema } from '@/validation/schemas/elements/notification.schema'
-import { numericInputElementSchema } from '@/validation/schemas/elements/numericInput.schema'
-import { occupationElementSchema } from '@/validation/schemas/elements/occupation.schema'
-import { optionCardListElementSchema } from '@/validation/schemas/elements/optionCardList.schema'
-import { paragraphElementSchema } from '@/validation/schemas/elements/paragraph.schema'
-import { phoneInputElementSchema } from '@/validation/schemas/elements/phoneInput.schema'
-import { planCardElementSchema } from '@/validation/schemas/elements/planCard.schema'
-import { priceSelectorElementSchema } from '@/validation/schemas/elements/priceSelector.schema'
-import { privacyPoliceElementSchema } from '@/validation/schemas/elements/privacyPolicy.schema'
-import { productCardConsorcioElementSchema } from '@/validation/schemas/elements/productCardConsorcio.schema'
-import { productsListElementSchema } from '@/validation/schemas/elements/productList.schema'
-import { radioElementSchema } from '@/validation/schemas/elements/radio.schema'
-import { resumeElementSchema } from '@/validation/schemas/elements/resume.schema'
-import { selectElementSchema } from '@/validation/schemas/elements/select.schema'
-import { serviceCallElementSchema } from '@/validation/schemas/elements/serviceCall.schema'
-import { socialNameElementSchema } from '@/validation/schemas/elements/socialName.schema'
-import { summaryPanelElementSchema } from '@/validation/schemas/elements/summaryPanel.schema'
-import { summaryProductCardElementSchema } from '@/validation/schemas/elements/summaryProductCard.schema'
-import { tabsElementSchema } from '@/validation/schemas/elements/tabs.schema'
-import { taxvatInputElementSchema } from '@/validation/schemas/elements/taxvatInput.schema'
-import { textElementSchema } from '@/validation/schemas/elements/text.schema'
-import { textInputElementSchema } from '@/validation/schemas/elements/textInput.schema'
-import { titleElementSchema } from '@/validation/schemas/elements/title.schema'
-import { welcomeElementSchema } from '@/validation/schemas/elements/welcome.schema'
+import { addressRadioElementSchema } from './elements/addressRadio.schema'
+import { biologicalSexElementSchema } from './elements/biologicalSex.schema'
+import { birthDateInputElementSchema } from './elements/birthDateInput.schema'
+import { boxElementSchema } from './elements/box.schema'
+import { cepElementSchema } from './elements/cepElementSchema'
+import { cepInputElementSchema } from './elements/cepInput.schema'
+import { checkboxElementSchema } from './elements/checkbox.schema'
+import { checklistElementSchema } from './elements/checklist.schema'
+import { chipsElementSchema } from './elements/chips.schema'
+import { composableCardElementSchema } from './elements/composableCard.schema'
+import { conditionalWrapperElementSchema } from './elements/conditionalWrapper.schema'
+import { confirmNavigationButtonElementSchema } from './elements/confirmNavigationButton.schema'
+import { drawerElementSchema } from './elements/drawer.schema'
+import { emailInputElementSchema } from './elements/emailInput.schema'
+import { fixedWrapperElementSchema } from './elements/fixedWrapper.schema'
+import { fullNameInputElementSchema } from './elements/fullNameInput.schema'
+import { gridElementSchema } from './elements/grid.schema'
+import { iconElementSchema } from './elements/icon.schema'
+import { iconContentListElementSchema } from './elements/iconContentList.schema'
+import { inputHiddenElementSchema } from './elements/inputHidden.schema'
+import { labelValueElementSchema } from './elements/labelValue.schema'
+import { locationBoxElementSchema } from './elements/locationBox.schema'
+import { maritalStatusElementSchema } from './elements/maritalStatus.schema'
+import { marketingOptinElementSchema } from './elements/marketingOptinElement.schema'
+import { nationalityElementSchema } from './elements/nationality.schema'
+import { navigationElementSchema } from './elements/navigation.schema'
+import { notificationElementSchema } from './elements/notification.schema'
+import { numericInputElementSchema } from './elements/numericInput.schema'
+import { occupationElementSchema } from './elements/occupation.schema'
+import { optionCardListElementSchema } from './elements/optionCardList.schema'
+import { paragraphElementSchema } from './elements/paragraph.schema'
+import { phoneInputElementSchema } from './elements/phoneInput.schema'
+import { planCardElementSchema } from './elements/planCard.schema'
+import { priceSelectorElementSchema } from './elements/priceSelector.schema'
+import { privacyPoliceElementSchema } from './elements/privacyPolicy.schema'
+import { productsListElementSchema } from './elements/productsList.schema'
+import { radioElementSchema } from './elements/radio.schema'
+import { resumeElementSchema } from './elements/resume.schema'
+import { selectElementSchema } from './elements/select.schema'
+import { serviceCallElementSchema } from './elements/serviceCall.schema'
+import { socialNameElementSchema } from './elements/socialName.schema'
+import { summaryPanelElementSchema } from './elements/summaryPanel.schema'
+import { summaryProductCardElementSchema } from './elements/summaryProductCard.schema'
+import { tabsElementSchema } from './elements/tabs.schema'
+import { taxvatInputElementSchema } from './elements/taxvatInput.schema'
+import { textElementSchema } from './elements/text.schema'
+import { textInputElementSchema } from './elements/textInput.schema'
+import { titleElementSchema } from './elements/title.schema'
+import { welcomeElementSchema } from './elements/welcome.schema'
 
 export const journeyElementSchema = z.discriminatedUnion('type', [
   addressRadioElementSchema,
-  cpfInputElementSchema,
   boxElementSchema,
   fullNameInputElementSchema,
   titleElementSchema,
@@ -79,7 +73,6 @@ export const journeyElementSchema = z.discriminatedUnion('type', [
   selectElementSchema,
   checkboxElementSchema,
   chipsElementSchema,
-  chipsImageElementSchema,
   composableCardElementSchema,
   phoneInputElementSchema,
   socialNameElementSchema,
@@ -98,7 +91,6 @@ export const journeyElementSchema = z.discriminatedUnion('type', [
   notificationElementSchema,
   numericInputElementSchema,
   fixedWrapperElementSchema,
-  feedbackViewElementSchema,
   resumeElementSchema,
   welcomeElementSchema,
   inputHiddenElementSchema,
@@ -111,9 +103,7 @@ export const journeyElementSchema = z.discriminatedUnion('type', [
   locationBoxElementSchema,
   summaryPanelElementSchema,
   summaryProductCardElementSchema,
-  productCardConsorcioElementSchema,
   tabsElementSchema,
-  miniBannerHighlightElementSchema,
   priceSelectorElementSchema,
   productsListElementSchema,
   planCardElementSchema,
@@ -130,5 +120,5 @@ export const journeyElementSchema = z.discriminatedUnion('type', [
   reffSimulationElementSchema,
   reffResumeElementSchema,
   reffProposalSentElementSchema,
-  reffPlateInputElementSchema,
+  reffPlateInputElementSchema
 ])

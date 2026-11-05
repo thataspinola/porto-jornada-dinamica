@@ -7,6 +7,6 @@ export const maritalStatusElementSchema = baseElementSchema.extend({
   config: z.object({
     name: z.string().default('maritalStatus'),
     label: z.string().default('Estado civil'),
-    required: z.boolean().default(false),
-  }),
+    required: z.boolean().default(false)
+  })
 })

@@ -1,4 +1,10 @@
-export const VEHICLE_CONDITIONS = [
-	{ label: "Novo", value: "new" },
-	{ label: "Usado", value: "used" },
-] as const;
+export const FIELD_NAMES = {
+  knowsVehicleModel: 'knowsVehicleModel',
+  isZeroKm: 'isZeroKm',
+  vehicleManufacturingYear: 'vehicleManufacturingYear',
+  vehicleModelYear: 'vehicleModelYear',
+  vehicleBrandCode: 'vehicleBrandCode',
+  vehicleModelCode: 'vehicleModelCode',
+  vehicleModelFipeCode: 'vehicleModelFipeCode',
+  vehicleValue: 'vehicleValue'
+} as const

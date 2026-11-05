@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { baseElementSchema } from './baseElement.schema'
-import { inputUiSchema } from './elementUi.schemas'
+import { inputUiFields } from './elementUi.schemas'
 import { validationsSchema } from './validations.schema'
 
 export const numericInputElementSchema = baseElementSchema.extend({
@@ -14,6 +14,6 @@ export const numericInputElementSchema = baseElementSchema.extend({
     validations: validationsSchema,
     defaultValue: z.string().default(''),
     defaultValueFrom: z.any().optional(),
-    ...inputUiSchema,
-  }),
+    ...inputUiFields
+  })
 })

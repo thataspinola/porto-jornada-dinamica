@@ -1,4 +1,10 @@
-export type {
-	ConfiguredElementProps as TitleElementProps,
-	ConfiguredJourneyElement as TitleElementType,
-} from "@/components/Elements/ConfiguredElement";
+import type { JourneyDefinition } from '@/validation/schemas'
+
+type TitleElementType = Extract<
+  JourneyDefinition['steps'][number]['elements'][number],
+  { type: 'TITLE' }
+>
+
+export type TitleElementProps = {
+  element: TitleElementType
+}

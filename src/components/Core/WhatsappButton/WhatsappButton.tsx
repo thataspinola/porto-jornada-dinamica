@@ -1,7 +1,48 @@
-export function WhatsappButton({ url }: { url: string }) {
-	return (
-		<a href={url} target="_blank" rel="noopener noreferrer">
-			Fale com a Porto no WhatsApp
-		</a>
-	);
+'use client'
+
+import { usePathname } from 'next/navigation'
+
+import styles from './WhatsappButton.module.scss'
+
+type WhatsappButtonProps = {
+  link: string
+  exclude?: string[]
+}
+
+export function WhatsappButton({ link, exclude = [] }: WhatsappButtonProps) {
+  const pathname = usePathname()
+
+  if (exclude?.includes(pathname)) {
+    return null
+  }
+
+  return (
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Ir para o WhatsApp"
+      className={styles.container}>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <mask
+          id="a"
+          width="24"
+          height="24"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          style={{ maskType: 'luminance' }}>
+          <path fill="#fff" d="M0 0h24v24H0z" />
+        </mask>
+        <g mask="url(#a)">
+          <path
+            fill="#fff"
+            fillRule="evenodd"
+            d="M20.503 3.485A11.9 11.9 0 0 0 12.05 0C5.463 0 .103 5.33.1 11.883c0 2.095.55 4.14 1.595 5.94L0 23.984l6.335-1.653a12 12 0 0 0 5.71 1.446h.005c6.586 0 11.948-5.33 11.95-11.883a11.78 11.78 0 0 0-3.497-8.407zM12.05 21.77h-.004a9.96 9.96 0 0 1-5.055-1.376l-.363-.215-3.76.981 1.004-3.645-.236-.374a9.8 9.8 0 0 1-1.518-5.256c.002-5.446 4.458-9.877 9.937-9.877a9.9 9.9 0 0 1 7.021 2.897 9.8 9.8 0 0 1 2.907 6.988c-.003 5.446-4.458 9.877-9.933 9.877m5.448-7.397c-.298-.149-1.766-.867-2.04-.966-.274-.1-.473-.149-.672.15-.198.296-.77.965-.945 1.163s-.348.223-.647.074c-.298-.149-1.26-.462-2.401-1.473-.888-.788-1.487-1.76-1.661-2.058-.175-.297-.019-.458.13-.605.134-.134.299-.347.448-.52s.2-.298.299-.496c.1-.198.05-.37-.025-.52-.074-.149-.671-1.61-.92-2.205-.243-.578-.49-.5-.672-.51a13 13 0 0 0-.572-.01c-.2 0-.523.074-.797.372-.274.297-1.045 1.016-1.045 2.477s1.07 2.873 1.22 3.072 2.105 3.197 5.1 4.483c.712.306 1.268.49 1.702.626.715.226 1.366.195 1.88.118.574-.085 1.767-.718 2.016-1.412.249-.693.249-1.288.174-1.412-.074-.124-.274-.198-.572-.347"
+            clipRule="evenodd"
+          />
+        </g>
+      </svg>
+    </a>
+  )
 }

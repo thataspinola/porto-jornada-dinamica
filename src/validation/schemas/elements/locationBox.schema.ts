@@ -7,6 +7,6 @@ export const locationBoxElementSchema = baseElementSchema.extend({
   config: z.object({
     firstLine: z.string(),
     secondLine: z.string(),
-    redirectTo: z.string().optional(),
-  }),
+    redirectTo: z.string().optional()
+  })
 })

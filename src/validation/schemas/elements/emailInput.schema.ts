@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { baseElementSchema } from './baseElement.schema'
-import { inputUiSchema } from './elementUi.schemas'
+import { inputUiFields } from './elementUi.schemas'
 
 export const emailInputElementSchema = baseElementSchema.extend({
   type: z.literal('EMAIL_INPUT'),
@@ -14,6 +14,6 @@ export const emailInputElementSchema = baseElementSchema.extend({
     defaultValueFrom: z.any().optional(),
     clearOnInput: z.boolean().optional(),
     trailingIcon: z.string().optional(),
-    ...inputUiSchema,
-  }),
+    ...inputUiFields
+  })
 })

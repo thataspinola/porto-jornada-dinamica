@@ -1,4 +1,10 @@
-export type {
-	ConfiguredElementProps as DrawerElementProps,
-	ConfiguredJourneyElement as DrawerElementType,
-} from "@/components/Elements/ConfiguredElement";
+import type { JourneyDefinition } from '@/validation/schemas'
+
+type DrawerElementType = Extract<
+  JourneyDefinition['steps'][number]['elements'][number],
+  { type: 'DRAWER' }
+>
+
+export type DrawerElementProps = {
+  element: DrawerElementType
+}

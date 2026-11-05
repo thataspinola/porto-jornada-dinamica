@@ -1,12 +1,12 @@
 export const PRODUCT_ANALYTICS = {
   'financing-loans-vehicle': {
     branchId: 18,
-    product: 'financiamento',
+    product: 'financiamento'
   },
   'financing-loans-vehicle-guarantee': {
     branchId: 20,
-    product: 'emprestimo-com-garantia-de-veiculo',
-  },
+    product: 'emprestimo-com-garantia-de-veiculo'
+  }
 } as const
 
 export type JourneyProductId = keyof typeof PRODUCT_ANALYTICS

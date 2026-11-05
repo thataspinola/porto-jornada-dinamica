@@ -1,7 +1,6 @@
-import { formatPrice } from '../formatPrice'
 import { getByPath } from '../getByPath'
 
-const PLACEHOLDER_REGEX = /\{\{\s*([\w.-]+)(?:\|([\w]+))?\s*\}\}/g
+const PLACEHOLDER_REGEX = /\{\{\s*([\w.]+)\s*\}\}/g
 
 type InterpolateOptions = {
   keepMissing?: boolean
@@ -12,29 +11,28 @@ export function interpolateTemplate(
   data: Record<string, unknown>,
   options: InterpolateOptions = {}
 ): string | undefined {
-  if (template == null) return template
+  if (template == null) {
+    return template
+  }
+
   const { keepMissing = false } = options
+
   let hasMissing = false
 
-  const result = template.replace(
-    PLACEHOLDER_REGEX,
-    (match, key: string, formatter?: string) => {
-      const value = getByPath(data, key)
+  const result = template.replace(PLACEHOLDER_REGEX, (match, key: string) => {
+    const value = getByPath(data, key)
 
-      if (value == null || value === '') {
-        hasMissing = true
-        return keepMissing ? match : ''
-      }
-
-      if (formatter === 'currency') {
-        const numericValue = Number(value)
-        return Number.isFinite(numericValue) ? formatPrice(numericValue) : match
-      }
-
-      return formatter ? match : String(value)
+    if (value == null || value === '') {
+      hasMissing = true
+      return keepMissing ? match : ''
     }
-  )
 
-  if (hasMissing && !keepMissing) return undefined
+    return String(value)
+  })
+
+  if (hasMissing && !keepMissing) {
+    return undefined
+  }
+
   return result
 }

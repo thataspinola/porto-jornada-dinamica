@@ -5,15 +5,11 @@ import { isMaskedCpf } from './maskedValue'
 const validateCPF = (cpf: string) => {
   if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false
 
-  const digits = cpf.split('').map((el: string) => +el)
-
+  const digits = cpf.split('').map((el) => +el)
   const rest = (count: number) =>
     ((digits
-      .slice(0, count - 1)
-      .reduce(
-        (soma: number, el: number, i: number) => soma + el * (count - i),
-        0
-      ) *
+      .slice(0, count - 12)
+      .reduce((soma, el, i) => soma + el * (count - i), 0) *
       10) %
       11) %
     10
@@ -30,27 +26,24 @@ export const cpf = (required: boolean) => {
 
   if (required) {
     return baseValidation
+      .refine((val) => val !== undefined && val.length > 0, 'Insira o seu CPF.')
       .refine(
-        (val: string) => val !== undefined && val.length > 0,
-        'Insira o seu CPF.'
-      )
-      .refine(
-        (val: string) => isMaskedCpf(val) || (val && val.length === 11),
+        (val) => isMaskedCpf(val) || (val && val.length === 11),
         'Informe um número de CPF válido.'
       )
       .refine(
-        (val: string) => isMaskedCpf(val) || (val && validateCPF(val)),
+        (val) => isMaskedCpf(val) || (val && validateCPF(val)),
         'Informe um número de CPF válido.'
       )
   }
 
   return baseValidation
     .refine(
-      (val: string) => !val || isMaskedCpf(val) || val.length === 11,
+      (val) => !val || isMaskedCpf(val) || val.length === 11,
       'Informe um número de CPF válido.'
     )
     .refine(
-      (val: string) => !val || isMaskedCpf(val) || validateCPF(val),
+      (val) => !val || isMaskedCpf(val) || validateCPF(val),
       'Informe um número de CPF válido.'
     )
 }

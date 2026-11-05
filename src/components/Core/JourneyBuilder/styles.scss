@@ -1,0 +1,20 @@
+.animateItem {
+  opacity: 0;
+  animation: fadeInItem 0.5s ease-out forwards;
+}
+
+@for $i from 1 through 20 {
+  .animateItemDelay#{$i} {
+    animation-delay: #{$i * 0.04s};
+  }
+}
+
+@keyframes fadeInItem {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

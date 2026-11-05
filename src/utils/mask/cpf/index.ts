@@ -4,6 +4,8 @@
  * @returns The formatted CPF string in the format XXX.XXX.XXX-XX.
  */
 export const cpfMask = (value: string): string => {
+  if (typeof value !== 'string') return ''
+
   const cpfNumbers = value.replace(/\D/g, '').slice(0, 11)
 
   return cpfNumbers

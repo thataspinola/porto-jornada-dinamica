@@ -1,4 +1,10 @@
-export type {
-	ConfiguredElementProps as BiologicalSexElementProps,
-	ConfiguredJourneyElement as BiologicalSexElementType,
-} from "@/components/Elements/ConfiguredElement";
+import type { JourneyDefinition } from '@/validation/schemas'
+
+type BiologicalSexElementType = Extract<
+  JourneyDefinition['steps'][number]['elements'][number],
+  { type: 'BIOLOGICAL_SEX' }
+>
+
+export type BiologicalSexElementProps = {
+  element: BiologicalSexElementType
+}

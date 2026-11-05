@@ -1,1 +1,1 @@
-export * from "./EditableInput";
+export * from './EditableInput'

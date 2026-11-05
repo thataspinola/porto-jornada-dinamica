@@ -12,11 +12,11 @@ export type IconContentActionProps = {
 export function Action({
   text,
   onClick,
-  align = 'start',
+  align = 'start'
 }: IconContentActionProps) {
   return (
     <Link asChild className={clsx(s.action, align === 'end' && s.actionEnd)}>
-      <button type='button' onClick={onClick}>
+      <button type="button" onClick={onClick}>
         {text}
       </button>
     </Link>

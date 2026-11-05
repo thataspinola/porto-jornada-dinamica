@@ -1,4 +1,10 @@
-export type {
-	ConfiguredElementProps as NotificationElementProps,
-	ConfiguredJourneyElement as NotificationElementType,
-} from "@/components/Elements/ConfiguredElement";
+import type { JourneyDefinition } from '@/validation/schemas'
+
+type NotificationElementType = Extract<
+  JourneyDefinition['steps'][number]['elements'][number],
+  { type: 'NOTIFICATION' }
+>
+
+export type NotificationElementProps = {
+  element: NotificationElementType
+}
