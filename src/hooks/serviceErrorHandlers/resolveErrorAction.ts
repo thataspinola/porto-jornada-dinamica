@@ -1,6 +1,6 @@
 import { SERVICE_ERROR_CODE, ServiceError } from '@/services/types'
 
-import { interpolateTemplate } from '@/utils'
+import { interpolateTemplate } from '@/utils/interpolateTemplate'
 
 import type { ServiceErrorsConfig } from '@/validation/schemas'
 

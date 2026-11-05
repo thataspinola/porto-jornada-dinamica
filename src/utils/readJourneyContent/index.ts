@@ -7,6 +7,9 @@ import type { JourneyDefinition } from '@/validation/schemas'
 
 export const readJourneyContent = cache(
   async (slug: string): Promise<JourneyDefinition> => {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+      throw new Error('Slug de jornada inválido')
+    }
     const root = process.cwd()
     const contentDirPath = path.join(root, 'public', 'jsonContent')
 

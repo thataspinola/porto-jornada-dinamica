@@ -2,7 +2,8 @@ import type { Metadata, ResolvingMetadata } from 'next'
 import { redirect } from 'next/navigation'
 import { env } from 'next-runtime-env'
 
-import { injectProgressToSteps, readJourneyContent } from '@/utils'
+import { injectProgressToSteps } from '@/utils'
+import { readJourneyContent } from '@/utils/readJourneyContent'
 
 import { JourneyBuilder, JourneyParseError } from '@/components/Core'
 

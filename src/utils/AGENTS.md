@@ -1,69 +1,11 @@
-# AGENTS.md — `src/utils`
+# Utilitários
 
-Funções **puras, sem dependências de React, sem side-effects globais**. Reutilizáveis em qualquer camada (server, client, services, components).
+Preservar o padrão de uma pasta por util, com `index.ts`, e as máscaras agrupadas em `mask/`. Preferir funções puras para transformações e tipos derivados dos contratos existentes. Specs ficam somente em `test/src/utils/`, com `.spec.ts`; nunca ao lado da implementação dentro de src.
 
-## Estrutura
+Separar funções puras de adaptadores com efeitos: analytics usa window/dataLayer, cookies e metadados têm fronteiras próprias, e leitura de arquivos/headers é de servidor. Usar guardas apropriadas e manter `'use server'` nos adaptadores que o exigem. Não exportar funções que dependem de filesystem pelo barrel usado no cliente; importar esses módulos diretamente no servidor.
 
-Padrão: **uma pasta por util, com `index.ts` (implementação) e `index.spec.ts` (teste)**.
+O barrel `utils/index.ts` oferece utilitários compartilháveis; imports diretos são aceitos para preservar cliente/servidor, evitar ciclos ou dependências desnecessárias. Não importar UI, hooks ou transporte nas funções puras. Tipos de schemas podem ser usados sem importar o runtime.
 
-```
-utils/
-├── index.ts                ← barrel raiz (re-exporta tudo)
-├── <util>/
-│   ├── index.ts            ← implementação
-│   └── index.spec.ts       ← teste (obrigatório quando util tem ramos lógicos)
-└── mask/                   ← exceção: agrupa máscaras correlatas
-    ├── birthDate/
-    ├── cep/
-    ├── cnpj/
-    ├── cpf/
-    ├── phone/
-    ├── plate/
-    ├── onlyLetters.ts
-    └── onlyNumbers.ts
-```
+`buildRecommendedProductsPromotion` monta o payload da sugestão de CPF sem efeitos. Ele aceita apenas o wrapper e as jornadas REFF/FCDC previstos, percorre os containers existentes e envia os dois cards completos. O wrapper decide visibilidade e disparo único; `pushEvent` mantém a serialização nativa. Não acrescentar preços, moeda, valor, SKU ou campo URL fora do contrato aprovado.
 
-## Convenções
-
-- **Função pura**: mesmas entradas → mesma saída, sem mutar args, sem I/O.
-- **Named export** com o mesmo nome do arquivo/pasta: `cepMask`, `getByPath`.
-- Sem `'use client'` / `'use server'` — utils rodam dos dois lados.
-- Sem importar de `@/components`, `@/store`, `@/hooks`, `@/services`. Utils estão na camada mais baixa.
-- Pode importar de outras `utils/` (use caminho relativo `./outraUtil` ou `../outraUtil`).
-- Pode importar tipos de `@/validation/schemas` (apenas tipos, nunca runtime).
-
-## Máscaras (`mask/*`)
-
-Cada máscara recebe `string` e devolve `string` formatada. Exemplo:
-
-```ts
-// utils/mask/cpf/index.ts
-export const cpfMask = (value: string): string => { /* ... */ }
-```
-
-Quando criar uma máscara nova:
-1. `utils/mask/<nome>/index.ts` + `index.spec.ts`.
-2. Adicione no barrel raiz `utils/index.ts`: `export { xxxMask } from './mask/<nome>'`.
-3. Use no `Element` correspondente via `import { xxxMask } from '@/utils'`.
-
-## Sanitize
-
-[utils/sanitize](sanitize) expõe um objeto `sanitize` com utilitários puros (`digits`, `text`, `email`, `alphanumeric`, `pureAscii`, `dom`, `isoDate`, `currencyToNumber`). Use direto no callsite (elementos de form, hooks de data quality, etc.) para limpar strings antes de armazenar/comparar.
-
-## Testes
-
-- Cobertura esperada: ramos lógicos + edge cases (input vazio, formato inválido, limites).
-- Use `describe('<utilName>', ...)` e `it('should ...', ...)`.
-- Veja exemplos em [utils/mask/cpf/index.spec.ts](mask/cpf/index.spec.ts).
-
-## Barrel
-
-Toda função exportada do utils precisa estar em [utils/index.ts](index.ts) — assim os imports ficam `import { x, y, z } from '@/utils'`.
-
-## Anti-padrões
-
-- ❌ Hooks React (`useXxx`) aqui — vão para `@/hooks/` ou para o controller do container.
-- ❌ Acesso a `window`/`document` sem guarda. Se o util é client-only, repense se ele é mesmo um util.
-- ❌ Importar de `@/services`, `@/store`, `@/components`.
-- ❌ Funções com side-effects (fetch, localStorage, mutação global).
-- ❌ Criar nova pasta de util só para uma função de uma linha — coloque inline no callsite.
+Testar entradas válidas/limites e regressões reais; não espelhar apenas a implementação. Não excluir código de produção da cobertura nem reduzir limites. Manter mensagens e contratos fornecidos pela jornada, sem inventar dados.

@@ -17,9 +17,17 @@ pre-commit:
       run: npm run lint:style {staged_files}
       stage_fixed: true
 
+commit-msg:
+  jobs:
+    - name: conventional-commits
+      run: node scripts/check-commits.mjs --file "{1}"
+
 pre-push:
   parallel: false
   jobs:
+    - name: structure-and-docs
+      run: npm run check:imports && npm run check:empty && npm run check:names && npm run docs:check
+
     - name: type-check
       tags:
         - frontend
@@ -31,7 +39,7 @@ pre-push:
         - frontend
         - unit tests
         - integration tests
-      run: npm run test
+      run: npm run test:coverage
 
     - name: build
       tags:

@@ -66,3 +66,7 @@ Se duas features precisam compartilhar código, **promova para o nível raiz** (
 - ❌ Colocar código genérico em `features/` para "não poluir" o raiz.
 - ❌ Duplicar a query no app inteiro — se for transversal, vire hook em `@/hooks/`.
 - ❌ Misturar `'use server'` e `'use client'` no mesmo arquivo.
+
+## Testes e preservação dos contratos
+
+Specs deste escopo ficam em `test/src/features/`, fora de src, com sufixo `.spec`. Consultar o AGENTS da raiz e `test/AGENTS.md`; não criar setup, fixtures ou declarações de testes nesta pasta. Preservar os contratos da versão de produção e corrigir imports/casing ao mover arquivos. Não substituir dependências corporativas para declarar aprovação; registrar limites da validação.

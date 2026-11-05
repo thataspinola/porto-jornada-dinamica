@@ -18,10 +18,10 @@ UI/
 ├── Loader/
 │   ├── index.tsx
 │   ├── styles.scss         ← também aceito .scss puro aqui
-│   └── index.spec.tsx
+│   └── types.ts
 └── ProgressBar/
     ├── index.tsx
-    └── index.spec.tsx
+    └── types.ts
 ```
 
 ## Convenções
@@ -51,3 +51,7 @@ Adicione novos componentes em [src/components/UI/index.ts](index.ts) com export 
 - ❌ Hardcode de textos específicos de uma jornada (use props).
 - ❌ Lógica condicional baseada em `type` de elemento.
 - ❌ `useEffect` para data fetching.
+
+## Testes e preservação dos contratos
+
+Specs deste escopo ficam em `test/src/components/UI/`, fora de src, com sufixo `.spec`. Consultar o AGENTS da raiz e `test/AGENTS.md`; não criar setup, fixtures ou declarações de testes nesta pasta. Preservar os contratos da versão de produção e corrigir imports/casing ao mover arquivos. Não substituir dependências corporativas para declarar aprovação; registrar limites da validação.

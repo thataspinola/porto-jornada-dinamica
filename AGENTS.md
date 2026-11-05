@@ -23,8 +23,8 @@ npm run build        # next build
 npm run lint         # biome check ./src
 npm run format       # biome check --write ./src (autofix)
 npm run type-check   # tsc --noEmit
-npm run test         # vitest
-npm run test:watch   # vitest --watch
+npm run test         # vitest run
+npm run test:watch   # vitest
 ```
 
 **Antes de finalizar qualquer alteração:** rode `npm run type-check` e `npm run lint`.
@@ -53,7 +53,7 @@ src/
 ### Imports
 - **Sempre** use o alias `@/...` para imports cross-folder. Nunca `../../../`.
 - Imports relativos `./xxx` só dentro da mesma pasta.
-- Importe pelo **barrel** da pasta (`@/utils`, `@/components/UI`) em vez de caminho profundo.
+- Prefira o barrel da pasta quando não misturar fronteiras cliente/servidor ou gerar ciclos. Imports diretos são necessários nesses casos.
 - Ordem (Biome organiza automaticamente): externos → `@/...` → relativos.
 
 ### Nomes
@@ -100,3 +100,13 @@ src/
 - Não crie helpers/abstrações para uso único.
 - Não valide cenários impossíveis — só nas bordas do sistema.
 - Não crie markdowns de documentação sem ser pedido.
+
+## Testes, validação e manutenção
+
+- Todos os testes, setup, fixtures e tipos exclusivos de teste ficam em `test/` na raiz, fora de `src/`. Usar `.spec.ts`/`.spec.tsx`; não usar `.test` ou `__test__`. Consultar [test/AGENTS.md](test/AGENTS.md).
+- Preservar os testes da versão de produção ao movê-los. Usar somente Vitest, sem `--passWithNoTests`. Integração usa `.integration.spec.*`, funcional `.functional.spec.*`; E2E fica em `test/e2e/` e usa aplicação real com Playwright.
+- Executar check:imports, check:empty, check:names, format:check, type-check, lint e test:coverage. `npm run verify` reúne essas verificações. Manter no mínimo 90% em linhas, instruções, funções e branches de toda a produção, sem excluir arquivos para atingir a meta. Relatar suítes bloqueadas e cobertura não medida.
+- Manter o padrão de componentes da base (`index.tsx` ou arquivo nomeado com barrel), tipos `.ts`, schemas `.schema.ts` e estilos existentes. Não reintroduzir implementações antigas por cima dos contratos de produção.
+- Não criar aliases globais, tipos falsos ou substitutos de pacotes corporativos para simular validação. Não versionar dados de homologação, credenciais, artefatos gerados ou paths de máquina.
+- O wrapper de sugestões de CPF só envia a promoção em REFF/FCDC, uma vez por montagem após ficar visível. Montagem do payload fica no util puro, sem alterar dispatchAlert.
+- Atualizar README/AGENTS e CHANGELOG com as alterações; gerar docs:generate e validar docs:check. Commits seguem Conventional Commits. O diário `npm run changelog -- BASE..HEAD` é regenerável. Preservar Lefthook e a entrega GitLab/Jenkins.

@@ -3,7 +3,7 @@
 import { useFormContext, useFormState, useWatch } from 'react-hook-form'
 import { useShallow } from 'zustand/shallow'
 
-import { evaluateRule } from '@/utils'
+import { evaluateRule } from '@/utils/evaluateConditions'
 
 import { useJourneyStore } from '@/store/journeyStore'
 

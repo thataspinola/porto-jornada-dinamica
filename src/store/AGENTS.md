@@ -70,3 +70,7 @@ Antes de criar:
 - ❌ Exportar ações fora do `create` (quebra o padrão e o tree-shaking).
 - ❌ Usar `set` sem o callback quando depende do estado anterior — sempre `set((state) => ...)`.
 - ❌ Importar de `@/components` ou `@/services` aqui.
+
+## Testes e preservação dos contratos
+
+Specs deste escopo ficam em `test/src/store/`, fora de src, com sufixo `.spec`. Consultar o AGENTS da raiz e `test/AGENTS.md`; não criar setup, fixtures ou declarações de testes nesta pasta. Preservar os contratos da versão de produção e corrigir imports/casing ao mover arquivos. Não substituir dependências corporativas para declarar aprovação; registrar limites da validação.
