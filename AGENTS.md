@@ -20,8 +20,8 @@ Regras gerais do projeto. Cada pasta importante tem seu próprio `AGENTS.md` com
 ```sh
 npm run dev          # next dev --turbopack
 npm run build        # next build
-npm run lint         # biome check ./src
-npm run format       # biome check --write ./src (autofix)
+npm run lint         # biome check ./src ./test
+npm run format       # biome format --write ./src ./test
 npm run type-check   # tsc --noEmit
 npm run test         # vitest run
 npm run test:watch   # vitest
@@ -61,7 +61,7 @@ src/
 - Hooks: `useNomeDoHook.ts` em camelCase.
 - Funções e variáveis: camelCase.
 - Tipos e componentes: PascalCase.
-- Schemas Zod: `<nome>.schema.ts` (apenas em `src/validation/schemas/`).
+- Schemas Zod: `<nome>.schema.ts` em `src/validation/schemas/` ou na validação da feature correspondente.
 - Constantes globais: `SCREAMING_SNAKE_CASE`.
 - Mensagens de UI e erro em **português** (padrão do projeto).
 
@@ -105,8 +105,11 @@ src/
 
 - Todos os testes, setup, fixtures e tipos exclusivos de teste ficam em `test/` na raiz, fora de `src/`. Usar `.spec.ts`/`.spec.tsx`; não usar `.test` ou `__test__`. Consultar [test/AGENTS.md](test/AGENTS.md).
 - Preservar os testes da versão de produção ao movê-los. Usar somente Vitest, sem `--passWithNoTests`. Integração usa `.integration.spec.*`, funcional `.functional.spec.*`; E2E fica em `test/e2e/` e usa aplicação real com Playwright.
-- Executar check:imports, check:empty, check:names, format:check, type-check, lint e test:coverage. `npm run verify` reúne essas verificações. Manter no mínimo 90% em linhas, instruções, funções e branches de toda a produção, sem excluir arquivos para atingir a meta. Relatar suítes bloqueadas e cobertura não medida.
+- Executar check:imports, check:empty, check:names, check:journeys, format:check, type-check, lint e test:coverage. `npm run verify` reúne essas verificações. Manter no mínimo 90% em linhas, instruções, funções e branches de toda a produção, sem excluir arquivos para atingir a meta. Relatar suítes bloqueadas e cobertura não medida.
 - Manter o padrão de componentes da base (`index.tsx` ou arquivo nomeado com barrel), tipos `.ts`, schemas `.schema.ts` e estilos existentes. Não reintroduzir implementações antigas por cima dos contratos de produção.
 - Não criar aliases globais, tipos falsos ou substitutos de pacotes corporativos para simular validação. Não versionar dados de homologação, credenciais, artefatos gerados ou paths de máquina.
 - O wrapper de sugestões de CPF só envia a promoção em REFF/FCDC, uma vez por montagem após ficar visível. Montagem do payload fica no util puro, sem alterar dispatchAlert.
 - Atualizar README/AGENTS e CHANGELOG com as alterações; gerar docs:generate e validar docs:check. Commits seguem Conventional Commits. O diário `npm run changelog -- BASE..HEAD` é regenerável. Preservar Lefthook e a entrega GitLab/Jenkins.
+
+- `noUnusedLocals` e `noUnusedParameters` ficam ativos no TypeScript. Não manter serviços mockados sem referências ou desativar esses checks para contornar código morto.
+- Executar `check:journeys` ao alterar schemas, renderizadores ou JSONs; ele confere a cobertura dos tipos e não substitui a validação Zod completa. Consultar `docs/component-compatibility.md` antes de reintroduzir componentes do protótipo.

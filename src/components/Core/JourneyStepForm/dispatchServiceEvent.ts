@@ -28,7 +28,6 @@ export type DispatchServiceEventInput = {
   formData: Values
   fields: Values
   services: Values
-  analyticsProduct?: string
   product?: string
   parameters: Values
 }
@@ -74,7 +73,7 @@ async function dispatchLeadSupport(input: DispatchServiceEventInput) {
     return
   }
 
-  const cpf = pickString(input.formData.taxvar, input.fields.taxvat)
+  const cpf = pickString(input.formData.taxvat, input.fields.taxvat)
   const clientId = cpf ? await encryptGtmClientId(cpf) : undefined
 
   await pushLeadEvent({
@@ -241,5 +240,10 @@ export async function dispatchServiceEvent(
         await dispatchLeadQuotation(input)
         break
     }
-  } catch {}
+  } catch {
+    console.warn(
+      '[analytics] Falha ao registrar evento de sucesso do serviço:',
+      key
+    )
+  }
 }

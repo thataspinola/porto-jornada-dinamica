@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react'
 import { vi } from 'vitest'
+import { StrictMode } from 'react'
 
 import { TolkitLexis } from '@/scripts/lexis/index'
 
@@ -31,6 +32,7 @@ describe('<TolkitLexis />', () => {
 
   afterEach(() => {
     vi.restoreAllMocks()
+    vi.unstubAllGlobals()
   })
 
   it('should be exported as a function', () => {
@@ -55,5 +57,49 @@ describe('<TolkitLexis />', () => {
     render(<TolkitLexis sessionId="" organizationId="org-456" />)
 
     expect(document.body.querySelector('noscript')).toBeNull()
+  })
+
+  it('mantém um fallback por montagem e limpa ao atualizar ou desmontar', () => {
+    const { rerender, unmount } = render(
+      <StrictMode>
+        <TolkitLexis sessionId="first" organizationId="org" />
+      </StrictMode>
+    )
+    expect(document.body.querySelectorAll('noscript')).toHaveLength(1)
+    rerender(
+      <StrictMode>
+        <TolkitLexis sessionId="second" organizationId="org" />
+      </StrictMode>
+    )
+    expect(document.body.querySelectorAll('noscript')).toHaveLength(1)
+    expect(
+      document.body
+        .querySelector('noscript')
+        ?.firstElementChild?.getAttribute('src')
+    ).toContain('session_id=second')
+    unmount()
+    expect(document.body.querySelector('noscript')).toBeNull()
+  })
+
+  it('chama o SDK com valores literais, sem eval ou duplicação no StrictMode', () => {
+    const profile = vi.fn()
+    vi.stubGlobal('threatmetrix', { profile })
+    const sessionId = 'session-"literal'
+    const { rerender } = render(
+      <StrictMode>
+        <TolkitLexis sessionId={sessionId} organizationId="org" />
+      </StrictMode>
+    )
+    expect(profile).toHaveBeenCalledExactlyOnceWith(
+      'apicorporativops.portoseguro.com.br',
+      'org',
+      sessionId
+    )
+    rerender(
+      <StrictMode>
+        <TolkitLexis sessionId="updated" organizationId="org" />
+      </StrictMode>
+    )
+    expect(profile).toHaveBeenCalledTimes(2)
   })
 })

@@ -16,7 +16,6 @@ type JourneyStepFormProps = {
   step: JourneyStep
   sortedElements: JourneyElement[]
   product?: string
-  analyticsProduct?: string
   journeyId: string
 }
 
@@ -24,7 +23,6 @@ export function JourneyStepForm({
   step,
   sortedElements,
   product,
-  analyticsProduct,
   journeyId
 }: JourneyStepFormProps) {
   const {
@@ -44,7 +42,6 @@ export function JourneyStepForm({
   } = useJourneyStepFormController({
     step,
     product,
-    analyticsProduct,
     journeyId
   })
 
@@ -71,12 +68,14 @@ export function JourneyStepForm({
           navigateTo,
           isStepComplete,
           stepTitle: step.name
-        }}>
+        }}
+      >
         <form {...formProps}>
           {sortedElements.map((element, index) => (
             <div
               className={`animateItem animateItemDelay${index + 2}`}
-              key={element.id}>
+              key={element.id}
+            >
               {renderJourneyElement(element)}
             </div>
           ))}

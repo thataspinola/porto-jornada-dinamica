@@ -20,7 +20,7 @@ import { EmptyList } from './components/EmptyList'
 import { useAddressErrorHandler } from './hooks/useAddressErrorHandler'
 import { useAddressForm } from './hooks/useAddressForm'
 import { useAddressSearch } from './hooks/useAddressSearch'
-import { useAddressSearchController } from './hooks/useAddressSearchController'
+import { useAddressSearchController } from './hooks'
 import { useAddressStatus } from './hooks/useAddressStatus'
 import { useModalState } from './hooks/useModalState'
 import s from './styles.module.scss'
@@ -175,7 +175,8 @@ export function ModalWithoutCep() {
           <form
             noValidate
             onSubmit={handleAddressSearchSubmit}
-            className={s.form}>
+            className={s.form}
+          >
             <Controller
               control={control}
               name="state"
@@ -190,11 +191,13 @@ export function ModalWithoutCep() {
                   isValid={!!field.value && !fieldState.error?.message}
                   isLoading={isStatesLoading}
                   disabled={isStatesLoading}
-                  value={field.value ?? ''}>
+                  value={field.value ?? ''}
+                >
                   {statesData?.states.map((state) => (
                     <Select.Item
                       value={state.siglaEstado}
-                      key={state.siglaEstado}>
+                      key={state.siglaEstado}
+                    >
                       {state.nomeEstado} ({state.siglaEstado})
                     </Select.Item>
                   ))}
@@ -216,7 +219,8 @@ export function ModalWithoutCep() {
                   isValid={!!field.value && !fieldState.error?.message}
                   isLoading={isLocalitiesLoading}
                   disabled={isCityDisabled}
-                  value={field.value ?? ''}>
+                  value={field.value ?? ''}
+                >
                   {localitiesData?.localities.map((locality) => (
                     <Select.Item value={locality} key={locality}>
                       {locality}
@@ -243,7 +247,8 @@ export function ModalWithoutCep() {
                 aria-label="Buscar endereço"
                 className={s.searchButton}
                 isLoading={showAddressLoading}
-                disabled={isAddressesLoading || !formState.isValid}>
+                disabled={isAddressesLoading || !formState.isValid}
+              >
                 <IconMagnifierGlass size={24} aria-hidden />
               </Button>
             </div>
@@ -261,7 +266,8 @@ export function ModalWithoutCep() {
               <Radio.Group
                 value={values.addressOptionValue}
                 onValueChange={handleAddressOptionChange}
-                className={s.radioGroup}>
+                className={s.radioGroup}
+              >
                 {addressesData?.addresses.map(({ address, zipcode }, index) => {
                   return (
                     <Radio.Item
@@ -284,7 +290,8 @@ export function ModalWithoutCep() {
             {...confirmGtmAttrs}
             disabled={!values.zipcode}
             className={s.confirmButton}
-            onClick={handleConfirmZipcode}>
+            onClick={handleConfirmZipcode}
+          >
             Confirmar CEP
           </Button>
         </Modal.Footer>

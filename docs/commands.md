@@ -9,6 +9,7 @@ Node: ^22.12.0 || ^24.0.0 || >=26.0.0.
 | npm run changelog | node scripts/change-journal.mjs |
 | npm run check:empty | node scripts/check-empty.mjs |
 | npm run check:imports | node scripts/check-imports.mjs |
+| npm run check:journeys | node scripts/check-journeys.mjs |
 | npm run check:names | node scripts/check-file-names.mjs |
 | npm run commits:check | node scripts/check-commits.mjs |
 | npm run dev | next dev --turbopack |
@@ -36,4 +37,4 @@ Node: ^22.12.0 || ^24.0.0 || >=26.0.0.
 | npm run test:unit | vitest run --exclude "**/*.integration.spec.*" --exclude "**/*.functional.spec.*" |
 | npm run test:watch | vitest |
 | npm run type-check | tsc --noEmit |
-| npm run verify | npm run check:imports && npm run check:empty && npm run check:names && npm run docs:check && npm run format:check && npm run type-check && npm run lint && npm run lint:style && npm run test:coverage |
+| npm run verify | npm run check:imports && npm run check:empty && npm run check:names && npm run check:journeys && npm run docs:check && npm run format:check && npm run type-check && npm run lint && npm run lint:style && npm run test:coverage |

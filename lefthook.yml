@@ -26,7 +26,7 @@ pre-push:
   parallel: false
   jobs:
     - name: structure-and-docs
-      run: npm run check:imports && npm run check:empty && npm run check:names && npm run docs:check
+      run: npm run check:imports && npm run check:empty && npm run check:names && npm run check:journeys && npm run docs:check
 
     - name: type-check
       tags:

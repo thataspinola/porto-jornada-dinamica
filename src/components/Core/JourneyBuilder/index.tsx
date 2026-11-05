@@ -26,7 +26,6 @@ export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
         key={controller.currentStep.id}
         step={controller.currentStep}
         product={journey.product}
-        analyticsProduct={journey.analytics?.product}
         journeyId={journey.id}
         sortedElements={controller.sortedElements}
       />
@@ -38,7 +37,8 @@ export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
       config={controller.currentStep.prefetch}
       product={journey.product ?? ''}
       queryKey={['step', journey.id, controller.currentStep.id]}
-      fieldsCount={controller.sortedElements.length}>
+      fieldsCount={controller.sortedElements.length}
+    >
       {stepContent}
     </PrefetchedStep>
   ) : (
@@ -58,13 +58,15 @@ export function JourneyBuilder({ journey }: { journey: JourneyDefinition }) {
         contentWidth={controller.currentStep.contentWidth ?? 'grid'}
         gridColumn={controller.currentStep.gridColumn ?? '4/10'}
         showProgressBar={controller.currentStep.showProgressBar ?? true}
-        whatsapp={journey.whatsapp}>
+        whatsapp={journey.whatsapp}
+      >
         {journey.prefetch ? (
           <PrefetchedStep
             config={journey.prefetch}
             product={journey.product ?? ''}
             queryKey={['journey', journey.id]}
-            fieldsCount={controller.sortedElements.length}>
+            fieldsCount={controller.sortedElements.length}
+          >
             {content}
           </PrefetchedStep>
         ) : (

@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
 'use client'
 
 import { usePathname } from 'next/navigation'

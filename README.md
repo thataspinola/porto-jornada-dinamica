@@ -54,6 +54,8 @@ docs/                          documentação
 
 Preservar o padrão de produção: componentes em `index.tsx` ou arquivos nomeados com barrel `index.ts`, tipos em `.ts`, hooks `useNome.ts` e estilos `*.module.scss` (`styles.module.scss` e nome do componente são aceitos). Schemas usam `.schema.ts`/`.schemas.ts`. Testes usam somente `.spec.ts`/`.spec.tsx` dentro de `test/` na raiz; setup, tipos e helpers de teste também ficam fora de `src/`.
 
+TypeScript também verifica declarações e parâmetros sem uso. `check:journeys` confere os tipos de elementos usados nos JSONs contra schemas e renderizadores; a validação completa da definição continua sendo do Zod. A conciliação dos componentes anteriores está em [Compatibilidade de componentes](docs/component-compatibility.md).
+
 Usar `@/` para imports entre módulos e respeitar o casing real dos arquivos. Barrels não devem misturar código de servidor com dependências do cliente; importar diretamente quando necessário para manter essa fronteira. Regras adicionais estão no [AGENTS.md](AGENTS.md) e nos AGENTS por diretório.
 
 ## Contratos da jornada
@@ -62,7 +64,7 @@ O caminho de execução é JSON → [schemas](src/validation/schemas/journey.sch
 
 Preservar `executeJourneyService`, os descritores produto/módulo/ação, o `ServiceResult` no servidor e o `ServiceError` no hook cliente. As regras declarativas de erro seguem `useServiceErrorHandler`. Navegação usa `navigateTo`/`goBack`, mantendo os parâmetros previstos no contrato. O QueryClient é criado por provider, evitando compartilhar cache entre instâncias.
 
-Não copiar lógica de transporte para componentes ou duplicar hooks de serviço. UI recebe dados e callbacks; coordenação fica nos controllers; transformação de evento fica em uma função pura. Aplicar SOLID e Clean Code a essas responsabilidades, preservando os contratos existentes.
+Não copiar lógica de transporte para componentes ou duplicar hooks de serviço. UI recebe dados e callbacks; coordenação fica nos controllers; transformação de evento fica em uma função pura. No formulário, `useStepFormState` cuida de hidratação/prefill, `validateStepDataQuality` valida contatos e `executeStepServices` preserva a sessão e a sequência dos serviços. Aplicar SOLID e Clean Code a essas responsabilidades, preservando os contratos existentes.
 
 ### Promoção na negativa de CPF
 
@@ -88,6 +90,7 @@ O `pushEvent` recebe `evAction` e serializa para `ev_action`. Não incluir `curr
 npm run check:imports
 npm run check:empty
 npm run check:names
+npm run check:journeys
 npm run format:check
 npm run type-check
 npm run lint

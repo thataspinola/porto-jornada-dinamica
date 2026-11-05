@@ -14,7 +14,7 @@ import { useVehicleBrands } from '../../hooks/useVehicleBrands'
 import { useVehicleBrandsErrorHandler } from '../../hooks/useVehicleBrandsErrorHandler'
 import { useVehicleModelsPrice } from '../../hooks/useVehicleModelsPrice'
 import { useVehicleModelsPriceErrorHandler } from '../../hooks/useVehicleModelsPriceErrorHandler'
-import { SelectedVehicleCard } from '../SelectedVehicleCard/SelectedVehicleCard'
+import { SelectedVehicleCard } from '../SelectedVehicleCard'
 import { VehicleConditionChips } from '../VehicleConditionChips'
 import s from './KnownVehicleForm.module.scss'
 
@@ -134,7 +134,8 @@ export function KnownVehicleForm() {
                 })}
                 isValid={!!field.value && !fieldState.error?.message}
                 errorMessage={fieldState.error?.message}
-                disabled={field.disabled}>
+                disabled={field.disabled}
+              >
                 {manufacturingYearsArray.map((year) => (
                   <Select.Item key={year} value={String(year)}>
                     {year}
@@ -164,7 +165,8 @@ export function KnownVehicleForm() {
                 })}
                 isValid={!!field.value && !fieldState.error?.message}
                 disabled={field.disabled}
-                errorMessage={fieldState.error?.message}>
+                errorMessage={fieldState.error?.message}
+              >
                 {modelYearsArray.map((year) => (
                   <Select.Item key={year} value={String(year)}>
                     {year}
@@ -198,7 +200,8 @@ export function KnownVehicleForm() {
                 isValid={!!field.value && !fieldState.error?.message}
                 isLoading={isVehicleBrandsLoading}
                 disabled={field.disabled}
-                errorMessage={fieldState.error?.message}>
+                errorMessage={fieldState.error?.message}
+              >
                 {vehicleBrandsData?.brands?.map((item) => (
                   <Select.Item value={item.code} key={item.code}>
                     {item.description}
@@ -232,7 +235,8 @@ export function KnownVehicleForm() {
                 isValid={!!field.value && !fieldState.error?.message}
                 isLoading={isVehicleModelsPriceLoading}
                 disabled={field.disabled}
-                errorMessage={fieldState.error?.message}>
+                errorMessage={fieldState.error?.message}
+              >
                 {vehicleModelsPriceData?.models?.map((item) => (
                   <Select.Item value={item.code} key={item.code}>
                     {item.description}

@@ -1,4 +1,4 @@
-export { Button } from './Button/Button'
+export { Button } from './Button'
 export { ConditionalTag } from './ConditionalTag'
 export { Dialog } from './Dialog/Dialog'
 export { FixedWrapper } from './FixedWrapper/FixedWrapper'

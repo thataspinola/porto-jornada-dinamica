@@ -31,11 +31,12 @@
     "check:imports": "node scripts/check-imports.mjs",
     "check:empty": "node scripts/check-empty.mjs",
     "check:names": "node scripts/check-file-names.mjs",
-    "verify": "npm run check:imports && npm run check:empty && npm run check:names && npm run docs:check && npm run format:check && npm run type-check && npm run lint && npm run lint:style && npm run test:coverage",
+    "verify": "npm run check:imports && npm run check:empty && npm run check:names && npm run check:journeys && npm run docs:check && npm run format:check && npm run type-check && npm run lint && npm run lint:style && npm run test:coverage",
     "docs:generate": "node scripts/generate-reference.mjs",
     "docs:check": "node scripts/generate-reference.mjs --check",
     "changelog": "node scripts/change-journal.mjs",
-    "commits:check": "node scripts/check-commits.mjs"
+    "commits:check": "node scripts/check-commits.mjs",
+    "check:journeys": "node scripts/check-journeys.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.1161.0",

@@ -26,7 +26,10 @@ JourneyBuilder/
 
 JourneyStepForm/
 ├── index.tsx                          ← form + render de elementos
-└── useJourneyStepFormController.ts    ← estado do form, submit, service calls
+├── useJourneyStepFormController.ts    ← coordenação de submit, erro e navegação
+├── useStepFormState.ts               ← formulário, hidratação e prefill
+├── validateStepDataQuality.ts        ← validações de contatos
+└── executeStepServices.ts            ← sessão, payloads e sequência de serviços
 ```
 
 Regras:
@@ -80,3 +83,5 @@ Cada Core é exportado por nome em [src/components/Core/index.ts](index.ts). Adi
 ## Testes e preservação dos contratos
 
 Specs deste escopo ficam em `test/src/components/Core/`, fora de src, com sufixo `.spec`. Consultar o AGENTS da raiz e `test/AGENTS.md`; não criar setup, fixtures ou declarações de testes nesta pasta. Preservar os contratos da versão de produção e corrigir imports/casing ao mover arquivos. Não substituir dependências corporativas para declarar aprovação; registrar limites da validação.
+
+Manter os contratos nativos ao refatorar: sessão antes das chamadas, sequência por índice, payload explícito vazio, estado atualizado entre serviços, tratamento de erro e ações de sucesso. Regredir esses caminhos com formulário/TanStack reais e mocks explícitos de fronteiras. Eventos de analytics podem falhar sem bloquear a jornada, mas não devem usar catch vazio nem registrar dados pessoais.

@@ -1,23 +1,25 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: </> */
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 import type { ServiceErrorsConfig } from '@/validation/schemas'
 
+// biome-ignore lint/suspicious/noExplicitAny: preserva o contrato de dados dinâmicos definido pelos schemas das jornadas e serviços
+type JourneyData = Record<string, any>
+
 type JourneyState = {
-  fields: Record<string, any>
-  error: Record<string, any>
-  business: Record<string, any>
-  services: Record<string, any>
-  parameters: Record<string, any>
+  fields: JourneyData
+  error: JourneyData
+  business: JourneyData
+  services: JourneyData
+  parameters: JourneyData
   errors: ServiceErrorsConfig
   _hasHydrated: boolean
   setHasHydrated: (value: boolean) => void
-  mergeFields: (partial: Record<string, any>) => void
-  setError: (error: Record<string, any>) => void
-  mergeBusiness: (partial: Record<string, any>) => void
-  mergeServices: (partial: Record<string, any>) => void
-  mergeParameters: (partial: Record<string, any>) => void
+  mergeFields: (partial: JourneyData) => void
+  setError: (error: JourneyData) => void
+  mergeBusiness: (partial: JourneyData) => void
+  mergeServices: (partial: JourneyData) => void
+  mergeParameters: (partial: JourneyData) => void
   setErrors: (errors: ServiceErrorsConfig) => void
   reset: () => void
 }
