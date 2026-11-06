@@ -10,8 +10,7 @@ Padrão de uma pasta `XxxElement/`:
 XxxElement/
 ├── index.tsx                ← componente, default export NÃO; named export
 ├── types.ts                 ← Props derivados do JourneyDefinition
-├── XxxElement.module.scss   ← ou styles.module.scss (ambos aceitos)
-└── index.spec.tsx           ← opcional; coloque quando houver lógica não-trivial
+└── XxxElement.module.scss   ← ou styles.module.scss (ambos aceitos)
 ```
 
 ## Convenções
@@ -64,3 +63,7 @@ Sequência completa quando o JSON da jornada ganha um novo `type`:
 - ❌ Adicionar `useEffect` para fazer fetch — use `useJourneyService`, `@tanstack/react-query`, ou suba para o `Core`.
 - ❌ Lógica de máscara duplicada — use `@/utils/mask/*`.
 - ❌ Mensagens de erro/labels hardcoded em inglês.
+
+## Testes e preservação dos contratos
+
+Specs deste escopo ficam em `test/src/components/Elements/`, fora de src, com sufixo `.spec`. Consultar o AGENTS da raiz e `test/AGENTS.md`; não criar setup, fixtures ou declarações de testes nesta pasta. Preservar os contratos da versão de produção e corrigir imports/casing ao mover arquivos. Não substituir dependências corporativas para declarar aprovação; registrar limites da validação.

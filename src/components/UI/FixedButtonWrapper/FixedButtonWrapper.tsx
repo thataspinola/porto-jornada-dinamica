@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { clsx } from '@porto-stack/ui/utils'
 
 import styles from './FixedButtonWrapper.module.scss'
 

@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
   distDir: 'dist/react-ssr-corp-hubv-dinamic-journey',
   basePath: '/contrate',
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: false
   },
   poweredByHeader: false,
   async headers() {

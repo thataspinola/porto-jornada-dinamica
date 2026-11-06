@@ -1,8 +1,6 @@
-/** biome-ignore-all lint/correctness/useHookAtTopLevel: <nesse caso precisamos do hook top level> */
-/** biome-ignore-all lint/security/noGlobalEval: <nesse caso precisamos do eval> */
 'use client'
 import Head from 'next/head'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 /**
  * @param {string} sessionId - O parâmetro sessionId precisa gerado
@@ -23,39 +21,44 @@ export const TolkitLexis = ({
   sessionId,
   organizationId
 }: TolkitLexisProps) => {
-  if (typeof window === 'undefined') return
+  const lastProfile = useRef<string | undefined>(undefined)
 
   useEffect(() => {
     if (sessionId) {
       const url = `https://apicorporativops.portoseguro.com.br/fp/tags?org_id=${organizationId}&session_id=${sessionId}`
       const styles =
-        'width: 100px; height: 100px; border: 0; position: absolut; top: -5000px'
+        'width: 100px; height: 100px; border: 0; position: absolute; top: -5000px'
       const iframeNode = document.createElement('iframe')
       iframeNode.src = url
       iframeNode.setAttribute('style', styles)
       const noscriptNode = document.createElement('noscript')
       noscriptNode.appendChild(iframeNode)
       document.body?.appendChild(noscriptNode)
+      return () => noscriptNode.remove()
     }
   }, [sessionId, organizationId])
 
   useEffect(() => {
-    if (sessionId) {
-      // @ts-expect-error
-      if (typeof threatmetrix !== 'undefined') {
-        const code = `
-        var session_id = "${sessionId}"
-        threatmetrix.profile("apicorporativops.portoseguro.com.br", "${organizationId}", "${sessionId}")
-      `
-        const textNode = document.createTextNode(
-          code.replace(/\${(.*?)}/g, (_, g) => eval(g))
-        )
-        const scriptNode = document.createElement('script')
-        scriptNode.type = 'text/javascript'
-        scriptNode.appendChild(textNode)
-        document.body?.appendChild(scriptNode)
+    if (!sessionId) return
+    const toolkit = (
+      window as Window & {
+        threatmetrix?: {
+          profile: (
+            host: string,
+            organizationId: string,
+            sessionId: string
+          ) => void
+        }
       }
-    }
+    ).threatmetrix
+    const key = JSON.stringify([organizationId, sessionId])
+    if (!toolkit?.profile || lastProfile.current === key) return
+    toolkit.profile(
+      'apicorporativops.portoseguro.com.br',
+      organizationId,
+      sessionId
+    )
+    lastProfile.current = key
   }, [sessionId, organizationId])
 
   return (

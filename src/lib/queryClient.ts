@@ -19,13 +19,14 @@ function shouldRetry(failureCount: number, error: unknown): boolean {
   return statusCode === 0 || statusCode >= 500
 }
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5000,
-      refetchOnWindowFocus: false,
-      retry: shouldRetry,
-      gcTime: QUERY_CACHE_LIFETIME_MS
+export const createQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5000,
+        refetchOnWindowFocus: false,
+        retry: shouldRetry,
+        gcTime: QUERY_CACHE_LIFETIME_MS
+      }
     }
-  }
-})
+  })

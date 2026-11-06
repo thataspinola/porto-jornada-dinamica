@@ -1,6 +1,6 @@
 'use client'
 
-import { IconCircleQuestion, IconClose } from '@porto-stack/icons'
+import { IconCircleQuestion } from '@porto-stack/icons'
 import { Typography } from '@porto-stack/ui'
 
 import { Button, Dialog } from '@/components/UI'

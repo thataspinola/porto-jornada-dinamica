@@ -19,18 +19,14 @@ import type { ServiceErrorsConfig } from '@/validation/schemas'
 
 import {
   type AlertEventContext,
-  dispatchAlert
-} from './serviceErrorHandlers/dispatchAlert'
-import {
+  type FullscreenAction,
+  type ServiceErrorAction,
   buildErrorInterpolationScope,
+  dispatchAlert,
   extractErrorCode,
   interpolateFullscreenAction,
   resolveErrorAction
-} from './serviceErrorHandlers/resolveErrorAction'
-import type {
-  FullscreenAction,
-  ServiceErrorAction
-} from './serviceErrorHandlers/types'
+} from './serviceErrorHandlers'
 
 export type { AlertEventContext }
 

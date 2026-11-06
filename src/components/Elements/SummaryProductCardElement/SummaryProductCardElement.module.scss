@@ -2,13 +2,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  min-width: 0;
   height: 100%;
   padding: var(--ui-spacing-16);
   margin-bottom: var(--ui-spacing-32);
+  overflow-wrap: anywhere;
   border: 1px solid var(--ui-colors-neutral-400);
   border-radius: 16px;
-  min-width: 0;
-  overflow-wrap: anywhere;
 }
 
 .cardAction {
